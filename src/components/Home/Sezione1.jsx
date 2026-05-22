@@ -33,31 +33,6 @@ export default function Sezione1() {
       );
     };
 
-    // Animazione specifica per la X (stile Pixar)
-    if (xLetterRef.current) {
-      gsap.fromTo(xLetterRef.current,
-        {
-          x: -500, // Parti da fuori a sinistra
-          opacity: 0,
-          rotation: -180,
-          scale: 0.5
-        },
-        {
-          x: 0,
-          opacity: 1,
-          rotation: 0,
-          scale: 1,
-          duration: 1.2,
-          ease: "back.out(1.7)", // Effetto elastico tipo Pixar
-          delay: 0.5, // Ritardo per farla apparire dopo le altre lettere
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse',
-          }
-        }
-      );
-    }
 
     animateLetters3(OxoStudioRef.current);
     animateLetters3(CreativeStudio.current, 0.2);

@@ -74,13 +74,13 @@ useEffect(() => {
         {/* Icona in alto a destra */}
         <FontAwesomeIcon
   icon={faArrowRight}
-  className="text-gray-500 absolute top-32 right-2 text-[20px] md:text-2xl transition-transform duration-500 group-hover:-rotate-45"
+  className="text-gray-500 absolute top-32 right-2 md:-top-12 text-[20px] md:text-2xl transition-transform duration-500 group-hover:-rotate-45"
 />
 
       </div>
 
       {/* Titolo in alto */}
-      <div className="absolute top-[-15px] left-[3px]   md:left-[25px] md:mt-[25px] lg:mt-[-20px] lg:ml-[140px]">
+      <div className="absolute top-[-15px] left-[3px]   md:left-[25px] md:mt-[25px] lg:mt-[0px] lg:ml-[140px]">
         <h3 className="text-white text-2xl  md:text-4xl font-bold antonio2">{lavoro.titolo}</h3>
       </div>
 

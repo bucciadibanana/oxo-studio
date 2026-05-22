@@ -18,14 +18,14 @@ const Categorie = () => {
 
       {/* Categorie a destra */}
       <div className="flex flex-wrap gap-4 md:gap-6 lg:gap-8 py-2">
-        <Link to="/WebDesign" className="text-white hover:text-gray-600 hover:decoration-transparent transition text-[13px] md:text-2xl">
-          Web Design
+        <Link to="/categoria/software-developer" className="text-white hover:text-gray-600 hover:decoration-transparent transition text-[13px] md:text-2xl">
+          Software Developer
         </Link>
-        <Link to="/WebDeveloper" className="text-white hover:text-gray-600 hover:decoration-transparent transition text-[13px]  md:text-2xl">
+        <Link to="/categoria/web-developer" className="text-white hover:text-gray-600 hover:decoration-transparent transition text-[13px]  md:text-2xl">
           Web Developer
         </Link>
-        <Link to="/LodoDesign" className="text-white hover:text-gray-600 hover:decoration-transparent transition text-[13px]  md:text-2xl">
-          Logo Design
+        <Link to="/categoria/intelligenza-artificiale" className="text-white hover:text-gray-600 hover:decoration-transparent transition text-[13px]  md:text-2xl">
+          Intelligenza Artificiale
         </Link>
         
       </div>

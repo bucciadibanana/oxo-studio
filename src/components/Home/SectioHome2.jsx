@@ -178,10 +178,6 @@ const splitWords = (text, ref) => {
   ));
 };
 
-
-
-
-
   return (
     <>
       {/* VERSIONE DESKTOP */}
@@ -196,7 +192,7 @@ const splitWords = (text, ref) => {
           </h1>
 
           <h1 className="absolute top-10 text-5xl antonio2  text-gray-400">
-            {splitLetters('Web design', refText2Lg)}
+            {splitLetters('Softw dev ', refText2Lg)}
           </h1>
           <p className="absolute top-28 w-1/2 text-lg lg:text-2xl text-white text-center antonio">
             {splitWords(
@@ -216,11 +212,11 @@ const splitWords = (text, ref) => {
           </p>
 
           <h1 className="absolute left-[150px] top-[400px] -translate-y-1/2 text-5xl antonio2  text-gray-400">
-            {splitLetters('Logo design', refText4Lg)}
+            {splitLetters('Intell. AI ', refText4Lg)}
           </h1>
           <p className="absolute left-[20px] top-[450px]  max-w-[500px] text-lg lg:text-2xl text-white antonio text-center">
             {splitWords(
-              "Creiamo loghi distintivi e memorabili che rappresentano l'identità del tuo brand, combinando estetica e strategia visiva.",
+              "Implementiamo intelligenza artificiale nel software, automatizzando processi e analizzando dati per risultati migliori.  ",
               refText8Lg
             )}
           </p>
@@ -250,7 +246,7 @@ const splitWords = (text, ref) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-24 md:gap-y-16 max-w-6xl mx-auto">
           <div>
-            <h2 className="md:text-5xl text-center text-4xl antonio2 mb-3">{splitLetters('Web design', refText2Sm)}</h2>
+            <h2 className="md:text-5xl text-center text-4xl antonio2 mb-3">{splitLetters('Softw dev ', refText2Sm)}</h2>
             <p className="text-lg text-white text-center antonio">
               {splitLetters(
                 'Creiamo interfacce intuitive, moderne e responsive che riflettono l’identità del tuo brand e migliorano l’esperienza utente su ogni dispositivo.',
@@ -270,10 +266,10 @@ const splitWords = (text, ref) => {
           </div>
 
           <div>
-            <h2 className="md:text-5xl text-center text-4xl antonio2 mb-3">{splitLetters('Logo design', refText4Sm)}</h2>
+            <h2 className="md:text-5xl text-center text-4xl antonio2 mb-3">{splitLetters('Intell. AI ', refText4Sm)}</h2>
             <p className="text-lg text-white text-center antonio">
               {splitLetters(
-                "Creiamo loghi distintivi e memorabili che rappresentano l'identità del tuo brand, combinando estetica e strategia visiva.",
+                "Implementiamo intelligenza artificiale nel software, automatizzando processi e analizzando dati per risultati migliori.  ",
                 refText8Sm
               )}
             </p>
