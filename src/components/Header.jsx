@@ -133,7 +133,7 @@ export default function Header() {
         <div className="menu-items flex flex-col justify-center items-center gap-8 h-screen text-white text-3xl antonio">
           <Link to="/">HOME</Link>
           <Link to="/ChiSiamo">CHI SIAMO</Link>
-          <Link to="/Portfolio">PORTFOLIO</Link>
+         
           <Link to="/Contatti">CONTATTI</Link>
         </div>
       </div>
