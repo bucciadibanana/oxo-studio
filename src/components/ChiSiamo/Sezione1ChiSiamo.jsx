@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import MouseLight from "../shader/MauseLight";
+
 
 const Sezione1ChiSiamo = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -72,15 +72,13 @@ const Sezione1ChiSiamo = () => {
   }, [isVisible]);
 
   return (
+
+    <>
     <section
       ref={sectionRef}
       className="w-screen h-screen relative overflow-hidden "
     >
-      {/* Mouse Light Effect */}
-      <div className="hidden md:block absolute inset-0 z-10">
-        <MouseLight />
-      </div>
-
+   
       {/* Contenuto principale */}
       <div className="relative z-hidden md:z-[9999]  h-full ">
         <div className="max-w-7xl mx-auto h-full grid grid-cols-1 md:grid-cols-2 items-center gap-6 px-4 md:px-12 lg:px-0 lg:ml-[50px] ">
@@ -89,7 +87,7 @@ const Sezione1ChiSiamo = () => {
           <div className="relative text-center md:text-left space-y-4  lg:mt-[0px] md:mt-[-300px] mt-[-100px]  ">
             <h1
                ref={matteoRef}
-              className="text-white font-bold  ml-[-50px] text-[80px] md:text-[180px] lg:text-[400px] md:ml-[-60px]  lg:block  antonio leading-none transition-all duration-1000 ease-out"
+              className="text-white font-bold  ml-[-50px] text-[80px] md:text-[180px] lg:text-[360px] md:ml-[-60px]  lg:block  antonio leading-none transition-all duration-1000 ease-out"
               style={{
                 transform: "translateX(-100px) translateZ(-50px)",
                 opacity: 0,
@@ -141,10 +139,58 @@ const Sezione1ChiSiamo = () => {
 
 
 
+
+
       
         </div>
       </div>
+
+      
     </section>
+    <section>
+      <div
+  ref={imageRef}
+  className="absolute inset-0 transition-all duration-1200 ease-out z-hidden md:z-[9999]"
+  style={{
+    opacity: 0,
+    transform: "scale(0.3) translateZ(-30px)",
+  }}
+>
+  {/* Lavoratore a destra */}
+  <img
+    src="/SvgCode/mia.svg"
+    alt="Lavoratore destra"
+    className="
+      absolute object-contain max-w-none
+      w-[850px] h-[850px]
+      md:w-[1200px] md:h-[1200px]
+      lg:w-[1700px] lg:h-[1700px]
+
+      right-[-420px] top-[120px]
+      md:right-[-520px] md:top-[-80px]
+      lg:right-[-600px] lg:top-[-220px]
+    "
+  />
+
+  {/* Altro lavoratore sotto a sinistra */}
+  <img
+    src="/SvgCode/altro-lavoratore.svg"
+    alt="Lavoratore sinistra"
+    className="
+      absolute object-contain max-w-none
+      w-[700px] h-[700px]
+      md:w-[1000px] md:h-[1000px]
+      lg:w-[1400px] lg:h-[1400px]
+
+      left-[-320px] bottom-[-260px]
+      md:left-[-420px] md:bottom-[-360px]
+      lg:left-[-520px] lg:bottom-[-460px]
+    "
+  />
+</div>
+
+    </section>
+    </>
   );
 };
 

@@ -98,10 +98,10 @@ const Sudime = () => {
           </h1>
 
           <h3 className="text-white text-[20px] w-[330px] md:text-3xl md:w-[600px] lg:text-4xl lg:w-[1000px] lg:max-w-[1000px] text-center lg:mt-10 text-shadow-black ombra2 antonio">
-            {splitText(
-              "Da sempre appassionato di tecnologia, mi dedico allo sviluppo web e al design digitale. Amo creare progetti che combinano estetica e funzionalità, spingendomi sempre a innovare e migliorare.",
-              descrRef
-            )}
+             {splitText(
+             "Sviluppiamo software intelligenti che integrano l'intelligenza artificiale per automatizzare la metadatazione, l'archiviazione documentale e l'organizzazione delle informazioni.",
+             descrRef
+             )}
           </h3>
         </div>
       </div>

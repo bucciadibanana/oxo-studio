@@ -115,7 +115,7 @@ export default function Header() {
           <ul className="gap-2 md:gap-8 lg:gap-8 md:mr-6 hidden md:flex">
             <li><Link to="/" className="antonio roll-link" data-text="HOME"><span>HOME</span></Link></li>
             <li><Link to="/ChiSiamo" className="antonio roll-link" data-text="CHI SIAMO"><span>CHI SIAMO</span></Link></li>
-
+             <li><Link to="/Prodotti" className="antonio roll-link" data-text="PRODOTTI"><span>PRODOTTI</span></Link></li>
             <li><Link to="/Contatti" className="antonio roll-link" data-text="CONTATTI"><span>CONTATTI</span></Link></li>
           </ul>
         </nav>

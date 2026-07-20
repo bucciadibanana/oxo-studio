@@ -58,7 +58,7 @@ const SectionHome2 = () => {
         const animateLetters2 = (letters, delay = 0) => { 
             gsap.fromTo(
         letters,
-            { opacity: 0, y: 30 },
+            { opacity: 0, y: 80 },
             {
               duration: 1,
               opacity: 1,
@@ -214,9 +214,9 @@ const splitWords = (text, ref) => {
           <h1 className="absolute left-[150px] top-[400px] -translate-y-1/2 text-5xl antonio2  text-gray-400">
             {splitLetters('Intell. AI ', refText4Lg)}
           </h1>
-          <p className="absolute left-[20px] top-[450px]  max-w-[500px] text-lg lg:text-2xl text-white antonio text-center">
+          <p className="absolute left-[-10px] top-[450px]  max-w-[500px] text-lg lg:text-2xl text-white antonio text-center">
             {splitWords(
-              "Implementiamo intelligenza artificiale nel software, automatizzando processi e analizzando dati per risultati migliori.  ",
+              "Integriamo l'intelligenza artificiale nel software per automatizzare i processi e valorizzare i dati.",
               refText8Lg
             )}
           </p>
@@ -269,7 +269,7 @@ const splitWords = (text, ref) => {
             <h2 className="md:text-5xl text-center text-4xl antonio2 mb-3">{splitLetters('Intell. AI ', refText4Sm)}</h2>
             <p className="text-lg text-white text-center antonio">
               {splitLetters(
-                "Implementiamo intelligenza artificiale nel software, automatizzando processi e analizzando dati per risultati migliori.  ",
+                "Integriamo l'intelligenza artificiale nel software per automatizzare i processi e valorizzare i dati.",
                 refText8Sm
               )}
             </p>

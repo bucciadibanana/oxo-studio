@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import MauseLight from "../shader/MauseLight"
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,10 +75,7 @@ const Sezione2ChiSiamo = () => {
   return (
     <div ref={sectionRef} className="relative  lg:mt-[200px]">
 
-      <div className="hidden md:block">
-       < MauseLight />
-       </div>
-
+    
       <h1
         className="text-8xl md:text-8xl pl-[70px] text-white"
         style={{ fontFamily: "Human" }}

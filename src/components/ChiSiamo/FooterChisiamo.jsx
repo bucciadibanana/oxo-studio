@@ -7,8 +7,8 @@ const Footer = () => {
         
         {/* Left Side: Text Info */}
         <div className="text-left">
-          <p className="antonio2 text-sm">Oxo Studi tutti i diritti riservati</p>
-          <p className="antonio2 text-sm">P.Iva 00000000000</p>
+          <p className="antonio2 text-sm">Oxo Studi S.R.L </p>
+          <p className="antonio2 text-sm">P.Iva 01609600117</p>
           <p className="antonio2 text-sm">Privacy & Cooky Policy</p>
         </div>
 
