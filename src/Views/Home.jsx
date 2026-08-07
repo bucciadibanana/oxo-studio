@@ -100,6 +100,14 @@ const SIGNAL_ROWS = [
   "CODE WITH A POINT OF VIEW —",
 ];
 
+const FULL_CLIP = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
+const CAPABILITY_TILTS = [-1.8, 1.4, 1.2, -1.5];
+const PROJECT_REVEALS = [
+  "polygon(0% 0%, 0% 0%, 18% 100%, 18% 100%)",
+  "polygon(100% 0%, 100% 0%, 82% 100%, 82% 100%)",
+  "polygon(0% 44%, 100% 32%, 100% 62%, 0% 56%)",
+];
+
 function SplitLetters({ text, attribute = "data-home-v2-letter" }) {
   return text.split("").map((char, index) => (
     <span
@@ -159,7 +167,6 @@ export default function Home() {
     const mm = gsap.matchMedia();
     const projectVideos = Array.from(projects.querySelectorAll("video"));
     let pointerMoveHandler = null;
-    let videoObserver = null;
 
     const ctx = gsap.context(() => {
       const heroLetters = gsap.utils.toArray(
@@ -295,6 +302,96 @@ export default function Home() {
         (mediaContext) => {
           const { desktop, reduceMotion } = mediaContext.conditions;
 
+          const signalRows = gsap.utils.toArray(
+            signal.querySelectorAll("[data-signal-row]")
+          );
+          const signalWindow = signal.querySelector("[data-signal-window]");
+          const signalCopy = signal.querySelector("[data-signal-copy]");
+          const signalCross = signal.querySelector("[data-signal-cross]");
+
+          const capabilityCards = gsap.utils.toArray(
+            capabilities.querySelectorAll("[data-capability-panel]")
+          );
+
+          const projectStage = projects.querySelector("[data-project-stage]");
+          const projectPanels = projectStage
+            ? gsap.utils.toArray(
+                projectStage.querySelectorAll("[data-project-panel]")
+              )
+            : [];
+          const projectContents = projectPanels
+            .map((panel) => panel.querySelector("[data-project-content]"))
+            .filter(Boolean);
+          const projectRail = projectStage
+            ? gsap.utils.toArray(
+                projectStage.querySelectorAll("[data-project-rail]")
+              )
+            : [];
+          const projectProgress = projectStage?.querySelector(
+            "[data-project-progress]"
+          );
+
+          let signalTimeline;
+          let projectTimeline;
+          let activeProject = 0;
+          let activeVideo = -1;
+
+          const pauseProjectVideos = () => {
+            projectVideos.forEach((video) => video.pause());
+            activeVideo = -1;
+          };
+
+          const playProjectVideo = (index) => {
+            if (activeVideo === index) return;
+            activeVideo = index;
+
+            projectVideos.forEach((video, videoIndex) => {
+              if (videoIndex !== index) {
+                video.pause();
+                return;
+              }
+
+              const request = video.play();
+              if (request && typeof request.catch === "function") {
+                request.catch(() => {});
+              }
+            });
+          };
+
+          const setProjectRail = (index) => {
+            projectRail.forEach((item, itemIndex) => {
+              const active = itemIndex === index;
+              const accent = PROJECTS[itemIndex]?.accent || "#ffffff";
+              const line = item.querySelector("[data-project-rail-line]");
+              const label = item.querySelector("[data-project-rail-label]");
+
+              gsap.to(item, {
+                opacity: active ? 1 : 0.28,
+                duration: 0.24,
+                overwrite: true,
+              });
+
+              if (line) {
+                gsap.to(line, {
+                  scaleX: active ? 1 : 0.28,
+                  backgroundColor: active
+                    ? accent
+                    : "rgba(255,255,255,.24)",
+                  duration: 0.28,
+                  overwrite: true,
+                });
+              }
+
+              if (label) {
+                gsap.to(label, {
+                  color: active ? accent : "rgba(255,255,255,.50)",
+                  duration: 0.28,
+                  overwrite: true,
+                });
+              }
+            });
+          };
+
           if (reduceMotion) {
             gsap.set(
               page.querySelectorAll(
@@ -303,7 +400,24 @@ export default function Home() {
               { clearProps: "all", opacity: 1 }
             );
 
-            return undefined;
+            if (projectStage && projectPanels.length) {
+              gsap.set(projectStage, { height: "auto", overflow: "visible" });
+              gsap.set(projectPanels, {
+                position: "relative",
+                autoAlpha: 1,
+                clipPath: FULL_CLIP,
+                minHeight: "100svh",
+              });
+              gsap.set(projectContents, { autoAlpha: 1, x: 0, y: 0 });
+              if (projectProgress) {
+                gsap.set(projectProgress, {
+                  scaleX: 1,
+                  transformOrigin: "left center",
+                });
+              }
+            }
+
+            return () => pauseProjectVideos();
           }
 
           const heroOxo = hero.querySelector("[data-hero-oxo]");
@@ -381,16 +495,9 @@ export default function Home() {
               0
             );
 
-          const signalRows = gsap.utils.toArray(
-            signal.querySelectorAll("[data-signal-row]")
-          );
-          const signalWindow = signal.querySelector("[data-signal-window]");
-          const signalCopy = signal.querySelector("[data-signal-copy]");
-          const signalCross = signal.querySelector("[data-signal-cross]");
-
           gsap.set(signalCopy, { autoAlpha: 0, y: 45 });
 
-          const signalTimeline = gsap.timeline({
+          signalTimeline = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: signal,
@@ -455,16 +562,16 @@ export default function Home() {
               0.45
             );
 
-          const capabilityCards = gsap.utils.toArray(
-            capabilities.querySelectorAll("[data-capability-panel]")
-          );
-
+          /* TERZA SEZIONE: le quattro card restano volutamente inclinate. */
           capabilityCards.forEach((card, index) => {
             const content = card.querySelector("[data-capability-content]");
             const number = card.querySelector("[data-capability-number]");
             const line = card.querySelector("[data-capability-line]");
             const glow = card.querySelector("[data-capability-glow]");
             const direction = index % 2 === 0 ? -1 : 1;
+            const finalTilt = desktop
+              ? CAPABILITY_TILTS[index]
+              : CAPABILITY_TILTS[index] * 0.55;
 
             gsap.fromTo(
               card,
@@ -473,14 +580,16 @@ export default function Home() {
                   direction < 0
                     ? "polygon(0 0, 0 0, 0 100%, 0 100%)"
                     : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
-                y: desktop ? 90 : 48,
-                rotate: desktop ? direction * 1.2 : 0,
-                scale: desktop ? 0.965 : 0.985,
+                x: desktop ? direction * 34 : direction * 14,
+                y: desktop ? 92 : 48,
+                rotate: finalTilt + direction * 3.4,
+                scale: desktop ? 0.955 : 0.985,
               },
               {
-                clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                clipPath: FULL_CLIP,
+                x: 0,
                 y: 0,
-                rotate: 0,
+                rotate: finalTilt,
                 scale: 1,
                 duration: 1.15,
                 ease: "power4.inOut",
@@ -519,10 +628,7 @@ export default function Home() {
             if (number) {
               gsap.fromTo(
                 number,
-                {
-                  yPercent: 18,
-                  rotate: direction * 7,
-                },
+                { yPercent: 18, rotate: direction * 7 },
                 {
                   yPercent: -24,
                   rotate: direction * -4,
@@ -578,120 +684,301 @@ export default function Home() {
             }
           });
 
+          /* QUARTA SEZIONE: stage fermo; le card cambiano con wipe cromatici. */
+          if (projectStage && projectPanels.length) {
+            const projectWashes = projectPanels
+              .map((panel) => panel.querySelector("[data-project-color-wash]"))
+              .filter(Boolean);
+            const projectChromas = projectPanels
+              .map((panel) => panel.querySelector("[data-project-chroma]"))
+              .filter(Boolean);
+
+            gsap.set(projectPanels, {
+              autoAlpha: 0,
+              clipPath: FULL_CLIP,
+            });
+            gsap.set(projectContents, {
+              autoAlpha: 0,
+              y: desktop ? 72 : 40,
+            });
+            gsap.set(projectVideos, {
+              scale: 1.1,
+              filter: "brightness(1) saturate(1)",
+              transformOrigin: "50% 50%",
+            });
+            gsap.set(projectWashes, { autoAlpha: 0, xPercent: -115 });
+            gsap.set(projectChromas, { autoAlpha: 0 });
+
+            projectPanels.forEach((panel, index) => {
+              gsap.set(panel, { zIndex: index + 1 });
+            });
+
+            gsap.set(projectPanels[0], { autoAlpha: 1, clipPath: FULL_CLIP });
+            if (projectContents[0]) {
+              gsap.set(projectContents[0], { autoAlpha: 1, x: 0, y: 0 });
+            }
+            if (projectVideos[0]) {
+              gsap.set(projectVideos[0], { scale: 1 });
+            }
+            if (projectProgress) {
+              gsap.set(projectProgress, {
+                scaleX: 0,
+                transformOrigin: "left center",
+              });
+            }
+            setProjectRail(0);
+
+            projectTimeline = gsap.timeline({
+              defaults: { ease: "none" },
+              scrollTrigger: {
+                trigger: projectStage,
+                start: "top top",
+                end: () => {
+                  const distance =
+                    window.innerHeight * projectPanels.length * (desktop ? 1.28 : 1.02);
+                  return `+=${Math.max(distance, desktop ? 3600 : 2700)}`;
+                },
+                pin: true,
+                scrub: desktop ? 1 : 0.68,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                onEnter: () => playProjectVideo(0),
+                onEnterBack: () => playProjectVideo(activeProject),
+                onLeave: pauseProjectVideos,
+                onLeaveBack: pauseProjectVideos,
+                onUpdate: (self) => {
+                  if (projectProgress) {
+                    gsap.set(projectProgress, { scaleX: self.progress });
+                  }
+
+                  if (!projectTimeline) return;
+
+                  let nextProject = 0;
+                  const currentTime = projectTimeline.time();
+
+                  for (let index = 1; index < projectPanels.length; index += 1) {
+                    const labelTime =
+                      projectTimeline.labels[`project-${index}`];
+                    if (
+                      typeof labelTime === "number" &&
+                      currentTime >= labelTime
+                    ) {
+                      nextProject = index;
+                    }
+                  }
+
+                  if (nextProject !== activeProject) {
+                    activeProject = nextProject;
+                    setProjectRail(activeProject);
+                    playProjectVideo(activeProject);
+                  }
+                },
+              },
+            });
+
+            const firstChroma = projectPanels[0].querySelector(
+              "[data-project-chroma]"
+            );
+            if (firstChroma) {
+              projectTimeline.fromTo(
+                firstChroma,
+                { autoAlpha: 0.62 },
+                { autoAlpha: 0, duration: 0.72, ease: "power2.out" },
+                0
+              );
+            }
+            if (projectVideos[0]) {
+              projectTimeline.to(
+                projectVideos[0],
+                { scale: desktop ? 1.045 : 1.025, duration: 0.82 },
+                0
+              );
+            }
+
+            projectPanels.forEach((panel, index) => {
+              if (index === 0) return;
+
+              const previous = projectPanels[index - 1];
+              const currentContent = panel.querySelector(
+                "[data-project-content]"
+              );
+              const previousContent = previous.querySelector(
+                "[data-project-content]"
+              );
+              const currentVideo = panel.querySelector("video");
+              const previousVideo = previous.querySelector("video");
+              const currentWash = panel.querySelector(
+                "[data-project-color-wash]"
+              );
+              const currentChroma = panel.querySelector(
+                "[data-project-chroma]"
+              );
+              const currentGhost = panel.querySelector("[data-project-ghost]");
+              const currentLine = panel.querySelector("[data-project-line]");
+              const direction = index % 2 === 0 ? -1 : 1;
+              const label = `project-${index}`;
+
+              projectTimeline.addLabel(label, `+=${desktop ? 0.22 : 0.14}`);
+              projectTimeline.set(panel, { autoAlpha: 1 }, label);
+
+              projectTimeline.fromTo(
+                panel,
+                {
+                  clipPath:
+                    PROJECT_REVEALS[(index - 1) % PROJECT_REVEALS.length],
+                },
+                {
+                  clipPath: FULL_CLIP,
+                  duration: 1.02,
+                  ease: "power3.inOut",
+                },
+                label
+              );
+
+              if (currentWash) {
+                projectTimeline.fromTo(
+                  currentWash,
+                  {
+                    autoAlpha: 0.92,
+                    xPercent: direction * 112,
+                  },
+                  {
+                    autoAlpha: 0,
+                    xPercent: direction * -112,
+                    duration: 1.05,
+                    ease: "power2.inOut",
+                  },
+                  label
+                );
+              }
+
+              if (currentChroma) {
+                projectTimeline.fromTo(
+                  currentChroma,
+                  { autoAlpha: 0.8, scale: 0.82 },
+                  {
+                    autoAlpha: 0,
+                    scale: 1.35,
+                    duration: 0.86,
+                    ease: "power2.out",
+                  },
+                  label
+                );
+              }
+
+              if (currentVideo) {
+                projectTimeline.fromTo(
+                  currentVideo,
+                  {
+                    scale: desktop ? 1.2 : 1.13,
+                    filter: `brightness(1.45) saturate(2.4) contrast(1.22) hue-rotate(${direction * 70}deg)`,
+                  },
+                  {
+                    scale: 1,
+                    filter: "brightness(1) saturate(1) contrast(1) hue-rotate(0deg)",
+                    duration: 1.08,
+                  },
+                  label
+                );
+              }
+
+              if (previousVideo) {
+                projectTimeline.to(
+                  previousVideo,
+                  {
+                    scale: desktop ? 1.1 : 1.06,
+                    filter: `brightness(.28) saturate(.45) hue-rotate(${direction * -48}deg)`,
+                    duration: 1,
+                  },
+                  label
+                );
+              }
+
+              if (previousContent) {
+                projectTimeline.to(
+                  previousContent,
+                  {
+                    autoAlpha: 0,
+                    x: direction * -80,
+                    y: -28,
+                    duration: 0.42,
+                    ease: "power2.out",
+                  },
+                  label
+                );
+              }
+
+              if (currentContent) {
+                projectTimeline.fromTo(
+                  currentContent,
+                  {
+                    autoAlpha: 0,
+                    x: direction * (desktop ? 120 : 42),
+                    y: desktop ? 46 : 28,
+                  },
+                  {
+                    autoAlpha: 1,
+                    x: 0,
+                    y: 0,
+                    duration: 0.72,
+                    ease: "power3.out",
+                  },
+                  `${label}+=0.28`
+                );
+              }
+
+              if (currentGhost) {
+                projectTimeline.fromTo(
+                  currentGhost,
+                  { xPercent: direction * 14, skewX: direction * 7 },
+                  { xPercent: direction * -10, skewX: 0, duration: 1 },
+                  label
+                );
+              }
+
+              if (currentLine) {
+                projectTimeline.fromTo(
+                  currentLine,
+                  {
+                    scaleX: 0,
+                    transformOrigin:
+                      direction > 0 ? "left center" : "right center",
+                    autoAlpha: 1,
+                  },
+                  {
+                    scaleX: 1,
+                    duration: 0.55,
+                    ease: "power2.out",
+                  },
+                  label
+                );
+                projectTimeline.to(
+                  currentLine,
+                  {
+                    autoAlpha: 0.25,
+                    duration: 0.38,
+                  },
+                  `${label}+=0.62`
+                );
+              }
+
+              projectTimeline.set(previous, { autoAlpha: 0 }, `${label}+=1.01`);
+              projectTimeline.to({}, { duration: desktop ? 0.36 : 0.23 });
+            });
+          }
+
           return () => {
-            heroTimeline.scrollTrigger?.kill();
-            heroTimeline.kill();
-            signalTimeline.scrollTrigger?.kill();
-            signalTimeline.kill();
+            pauseProjectVideos();
+
+            heroTimeline?.scrollTrigger?.kill();
+            heroTimeline?.kill();
+            signalTimeline?.scrollTrigger?.kill();
+            signalTimeline?.kill();
+            projectTimeline?.scrollTrigger?.kill();
+            projectTimeline?.kill();
           };
         }
       );
-
-      const projectShells = gsap.utils.toArray(
-        projects.querySelectorAll("[data-project-shell]")
-      );
-
-      projectShells.forEach((shell, index) => {
-        const panel = shell.querySelector("[data-project-panel]");
-        const media = shell.querySelector("[data-project-media]");
-        const content = shell.querySelector("[data-project-content]");
-        const ghost = shell.querySelector("[data-project-ghost]");
-        const line = shell.querySelector("[data-project-line]");
-
-        if (!panel) return;
-
-        gsap.fromTo(
-          panel,
-          {
-            clipPath: "inset(8% 5% 8% 5% round 34px)",
-          },
-          {
-            clipPath: "inset(0% 0% 0% 0% round 0px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: shell,
-              start: "top 92%",
-              end: "top top",
-              scrub: 1,
-              invalidateOnRefresh: true,
-            },
-          }
-        );
-
-        if (content) {
-          gsap.fromTo(
-            content,
-            {
-              x: index % 2 === 0 ? -90 : 90,
-              y: 55,
-              opacity: 0,
-            },
-            {
-              x: 0,
-              y: 0,
-              opacity: 1,
-              duration: 0.95,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: shell,
-                start: "top 58%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        }
-
-        if (media) {
-          gsap.fromTo(
-            media,
-            {
-              scale: 1.12,
-              filter: "brightness(1) saturate(1)",
-            },
-            {
-              scale: 1.24,
-              filter: "brightness(.3) saturate(.55)",
-              ease: "none",
-              scrollTrigger: {
-                trigger: shell,
-                start: "top top",
-                end: "bottom top",
-                scrub: 1,
-              },
-            }
-          );
-        }
-
-        if (ghost) {
-          gsap.to(ghost, {
-            xPercent: index % 2 === 0 ? -18 : 18,
-            ease: "none",
-            scrollTrigger: {
-              trigger: shell,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1,
-            },
-          });
-        }
-
-        if (line) {
-          gsap.fromTo(
-            line,
-            { scaleX: 0, transformOrigin: index % 2 === 0 ? "left" : "right" },
-            {
-              scaleX: 1,
-              duration: 0.85,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: shell,
-                start: "top 62%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        }
-      });
 
       const manifestoTrack = manifesto.querySelector(
         "[data-manifesto-track]"
@@ -763,31 +1050,6 @@ export default function Home() {
       );
     }, page);
 
-    if ("IntersectionObserver" in window) {
-      videoObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const video = entry.target.querySelector("video");
-            if (!video) return;
-
-            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-              const request = video.play();
-              if (request && typeof request.catch === "function") {
-                request.catch(() => {});
-              }
-            } else {
-              video.pause();
-            }
-          });
-        },
-        { threshold: [0, 0.5, 0.75] }
-      );
-
-      projects
-        .querySelectorAll("[data-project-panel]")
-        .forEach((panel) => videoObserver.observe(panel));
-    }
-
     const refresh = () => ScrollTrigger.refresh();
     const refreshTimer = window.setTimeout(refresh, 180);
     window.addEventListener("load", refresh);
@@ -800,7 +1062,6 @@ export default function Home() {
         window.removeEventListener("pointermove", pointerMoveHandler);
       }
 
-      videoObserver?.disconnect();
       projectVideos.forEach((video) => video.pause());
       mm.revert();
       ctx.revert();
@@ -850,6 +1111,16 @@ export default function Home() {
 
           .oxo-v2-core-ring:nth-child(3) {
             animation-delay: -3.2s;
+          }
+
+          .oxo-project-color-wash {
+            mix-blend-mode: screen;
+            filter: blur(8px) saturate(1.55);
+          }
+
+          .oxo-project-chroma {
+            mix-blend-mode: color-dodge;
+            filter: blur(28px) saturate(1.8);
           }
 
           .oxo-capability-v2:hover .oxo-capability-v2-title {
@@ -1181,10 +1452,12 @@ export default function Home() {
                   }
                 }}
                 className={`oxo-capability-v2 group relative min-h-[60svh] overflow-hidden border border-white/18 bg-[#030304] p-7 md:min-h-[66svh] md:p-10 lg:min-h-[72svh] lg:p-[3vw] ${
-                  index % 2 === 1 ? "lg:translate-y-[7vh]" : ""
+                  index % 2 === 1 ? "lg:mt-[6vh]" : ""
                 }`}
                 style={{
-                  clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)",
+                  clipPath: FULL_CLIP,
+                  transform: `rotate(${CAPABILITY_TILTS[index]}deg)`,
+                  transformOrigin: index % 2 === 0 ? "35% 55%" : "65% 55%",
                 }}
               >
                 <div
@@ -1273,24 +1546,31 @@ export default function Home() {
               <h2 className="antonio2 ombra2 text-[21vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[14vw] lg:text-[10vw]">
                 WORK THAT
                 <br />
-                MOVES.
+                CHANGES.
               </h2>
               <p className="antonio max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl">
-                Non mostriamo schermate. Mettiamo in scena sistemi, ritmo e
-                comportamento.
+                Lo schermo resta fermo. Il progetto cambia pelle, colore e ritmo
+                mentre continui a scorrere.
               </p>
             </div>
           </div>
 
-          {PROJECTS.map((project, index) => (
-            <div
-              key={project.id}
-              data-project-shell
-              className="relative min-h-[132svh]"
-            >
+          <div
+            data-project-stage
+            className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-black"
+          >
+            {PROJECTS.map((project, index) => (
               <article
+                key={project.id}
                 data-project-panel
-                className="oxo-project-v2 oxo-v2-noise sticky top-0 h-[100svh] min-h-[650px] overflow-hidden bg-black"
+                className="oxo-project-v2 oxo-v2-noise absolute inset-0 overflow-hidden bg-black"
+                style={{
+                  opacity: index === 0 ? 1 : 0,
+                  visibility: index === 0 ? "visible" : "hidden",
+                  zIndex: index + 1,
+                  clipPath: FULL_CLIP,
+                  willChange: "clip-path, opacity, transform, filter",
+                }}
               >
                 <div
                   className="absolute inset-0"
@@ -1306,6 +1586,7 @@ export default function Home() {
                   loop
                   playsInline
                   preload="metadata"
+                  autoPlay={index === 0}
                   onLoadedMetadata={() => ScrollTrigger.refresh()}
                   onError={(event) => {
                     event.currentTarget.style.display = "none";
@@ -1313,20 +1594,42 @@ export default function Home() {
                   }}
                 />
 
-                <div className="pointer-events-none absolute inset-0 bg-black/25" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/5 to-black/68" />
                 <div
-                  className={`pointer-events-none absolute inset-0 ${
+                  data-project-chroma
+                  aria-hidden="true"
+                  className="oxo-project-chroma pointer-events-none absolute -inset-[18%] z-[4] rounded-full"
+                  style={{
+                    background: `radial-gradient(circle at ${
+                      index % 2 === 0 ? "70% 30%" : "30% 66%"
+                    }, ${project.accent}cc 0%, ${project.accent}44 28%, transparent 62%)`,
+                    opacity: index === 0 ? 0.2 : 0,
+                  }}
+                />
+
+                <div
+                  data-project-color-wash
+                  aria-hidden="true"
+                  className="oxo-project-color-wash pointer-events-none absolute -left-[18%] top-[-20%] z-[8] h-[140%] w-[136%] -skew-x-[14deg]"
+                  style={{
+                    background: `linear-gradient(100deg, transparent 14%, ${project.accent}00 30%, ${project.accent} 48%, rgba(255,255,255,.95) 50%, ${project.accent} 52%, ${project.accent}00 70%, transparent 86%)`,
+                    opacity: 0,
+                  }}
+                />
+
+                <div className="pointer-events-none absolute inset-0 z-[5] bg-black/23" />
+                <div className="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-t from-black via-black/5 to-black/68" />
+                <div
+                  className={`pointer-events-none absolute inset-0 z-[5] ${
                     index % 2 === 0
-                      ? "bg-gradient-to-r from-black/82 via-black/12 to-black/25"
-                      : "bg-gradient-to-l from-black/82 via-black/12 to-black/25"
+                      ? "bg-gradient-to-r from-black/82 via-black/10 to-black/22"
+                      : "bg-gradient-to-l from-black/82 via-black/10 to-black/22"
                   }`}
                 />
 
                 <p
                   data-project-ghost
                   aria-hidden="true"
-                  className="antonio2 pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[20vw] uppercase leading-none tracking-[-0.08em] text-white/[0.06]"
+                  className="antonio2 pointer-events-none absolute left-1/2 top-1/2 z-[6] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[20vw] uppercase leading-none tracking-[-0.08em] text-white/[0.065]"
                 >
                   {project.statement}
                 </p>
@@ -1388,12 +1691,41 @@ export default function Home() {
                   className="pointer-events-none absolute bottom-[3.2vh] left-[5vw] z-30 h-px w-[90vw]"
                   style={{
                     background: `linear-gradient(90deg, transparent, ${project.accent}, transparent)`,
-                    boxShadow: `0 0 20px ${project.accent}`,
+                    boxShadow: `0 0 22px ${project.accent}`,
                   }}
                 />
               </article>
+            ))}
+
+            <aside className="pointer-events-none absolute right-7 top-1/2 z-[70] hidden -translate-y-1/2 flex-col gap-5 md:flex lg:right-[3vw]">
+              {PROJECTS.map((project, index) => (
+                <div
+                  key={project.id}
+                  data-project-rail
+                  className="flex items-center justify-end gap-3 opacity-30"
+                >
+                  <span
+                    data-project-rail-label
+                    className="antonio2 text-[9px] uppercase tracking-[0.24em] text-white/55"
+                  >
+                    {project.id}
+                  </span>
+                  <span
+                    data-project-rail-line
+                    className="h-px w-10 origin-right bg-white/25"
+                    style={{ transform: index === 0 ? "scaleX(1)" : "scaleX(.28)" }}
+                  />
+                </div>
+              ))}
+            </aside>
+
+            <div className="pointer-events-none absolute bottom-0 left-0 z-[80] h-px w-full bg-white/20">
+              <div
+                data-project-progress
+                className="h-full w-full origin-left bg-gradient-to-r from-cyan-300 via-violet-500 to-fuchsia-400"
+              />
             </div>
-          ))}
+          </div>
         </section>
 
         <section
