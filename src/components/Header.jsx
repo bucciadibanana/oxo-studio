@@ -97,19 +97,7 @@ export default function Header() {
   return (
     <>
       <header className="w-full z-50 top-0 left-0 header lg:fixed relative px-4 py-2 flex justify-between items-center bg-black">
-        <h1 className="lg:text-3xl md:text-3xl text-[20px] mt-20 md:mt-2 lg:ml-6 md:ml-6 md:block">
-          <a 
-            href="mailto:oxostudio.dev@gmail.com" 
-            className="antonio lg:inline text-white hover:text-gray-300 transition-colors cursor-pointer"
-            id="oxo-studio"
-          >
-            {"oxostudio.dev@gmail.com".split("").map((char, i) => (
-              <span key={i} className="split-char inline-block">
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
-          </a>
-        </h1>
+       
 
         <nav className="ml-auto">
           <ul className="gap-2 md:gap-8 lg:gap-8 md:mr-6 hidden md:flex">
@@ -133,7 +121,7 @@ export default function Header() {
         <div className="menu-items flex flex-col justify-center items-center gap-8 h-screen text-white text-3xl antonio">
           <Link to="/">HOME</Link>
           <Link to="/ChiSiamo">CHI SIAMO</Link>
-         
+         <li><Link to="/Prodotti" className="antonio roll-link" data-text="PRODOTTI"><span>PRODOTTI</span></Link></li>
           <Link to="/Contatti">CONTATTI</Link>
         </div>
       </div>
