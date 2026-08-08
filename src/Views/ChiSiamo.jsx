@@ -799,9 +799,24 @@ export default function ChiSiamo() {
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
             mix-blend-mode: soft-light;
           }
+          .oxo-team-card {
+            transition:
+              border-radius .7s cubic-bezier(.16,1,.3,1),
+              border-color .5s ease,
+              box-shadow .7s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-team-card:hover {
+            border-radius: 82px;
+            border-color: rgba(255,255,255,.30);
+            box-shadow:
+              0 30px 90px rgba(0,0,0,.34),
+              inset 0 0 70px rgba(255,255,255,.02);
+          }
+
           .oxo-team-card:hover .oxo-team-image {
-            transform: scale(1.045);
-            filter: saturate(1.12) contrast(1.04);
+            transform: scale(1.055);
+            filter: saturate(1.14) contrast(1.05);
           }
           .oxo-process-row:hover .oxo-process-title {
             transform: translateX(1.2vw);
@@ -1155,7 +1170,7 @@ export default function ChiSiamo() {
               <article
                 key={member.id}
                 data-team-card
-                className={`oxo-team-card group relative min-h-[72svh] overflow-hidden border border-white/20 ${
+                className={`oxo-team-card group relative min-h-[72svh] overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
                   index === 1 ? "lg:mt-[10vh]" : ""
                 }`}
                 style={{ clipPath: FULL_CLIP }}
@@ -1189,7 +1204,7 @@ export default function ChiSiamo() {
                   {member.initials}
                 </p>
 
-                <div className="absolute inset-[14px] border border-white/25 md:inset-[22px]" />
+                <div className="absolute inset-[14px] rounded-[24px] border border-white/25 md:inset-[22px] md:rounded-[34px] lg:rounded-[48px]" />
 
                 <div className="absolute left-7 top-7 z-10 flex items-center gap-3 md:left-10 md:top-10">
                   <span className="antonio2 text-[10px] uppercase tracking-[0.28em]">
