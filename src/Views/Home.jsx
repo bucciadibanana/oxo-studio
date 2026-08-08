@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SeoMetaTags from "../components/SeoMetaTags";
+import "../styles/avant-legato.css";
 
 
 
@@ -1074,9 +1075,55 @@ export default function Home() {
 
       <main
         ref={pageRef}
-        className="relative overflow-x-hidden bg-[#020203] text-white"
+        className="oxo-home-avant relative overflow-x-hidden bg-[#020203] text-white"
       >
         <style>{`
+          /* AVANT LEGATO SAFE:
+             cambia SOLO la famiglia tipografica.
+             Niente scaleX, display:inline-block o letter-spacing globale. */
+          .oxo-home-avant,
+          .oxo-home-avant * {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif;
+          }
+
+          .avant-legato-font {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif !important;
+
+            font-style: normal;
+            font-weight: 400;
+            font-stretch: normal;
+
+            /* IMPORTANTISSIMO:
+               non altera box, dimensioni o trasformazioni */
+            display: revert;
+            transform: none;
+            text-transform: inherit;
+          }
+
+          /* Solo i display title mantengono un sapore Avant più largo,
+             ma con intensità molto minore rispetto alla versione rotta. */
+          h1.avant-legato-font,
+          h2.avant-legato-font,
+          h3.avant-legato-font {
+            font-stretch: expanded;
+            transform: scaleX(.96);
+            transform-origin: left center;
+          }
+
           .oxo-v2-grid {
             background-image:
               linear-gradient(rgba(255,255,255,.038) 1px, transparent 1px),
@@ -1216,7 +1263,7 @@ export default function Home() {
           <p
             data-hero-ghost
             aria-hidden="true"
-            className="antonio2 pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[47vw] uppercase leading-none tracking-[-0.11em] text-white/[0.018]"
+            className="avant-legato-font pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[40vw] uppercase leading-none tracking-[-0.11em] text-white/[0.018]"
           >
             X
           </p>
@@ -1236,27 +1283,27 @@ export default function Home() {
 
           <div
             data-home-v2-pointer
-            className="relative z-10 my-auto py-8 [transform-style:preserve-3d]"
+            className="relative z-10 my-auto py-10 md:py-12 lg:py-14 [transform-style:preserve-3d]"
           >
             <div className="relative">
               <p
                 data-home-v2-meta
-                className="antonio2 mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
+                className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
               >
                 Software / AI / Interactive worlds
               </p>
 
-              <div className="relative ">
+              <div className="relative py-[0.6vw] md:py-[0.4vw]">
                 <h1
                   data-hero-oxo
-                  className="antonio2 ombra2 relative z-[4] overflow-hidden text-[35vw] uppercase leading-[0.61] tracking-[-0.105em] md:text-[29vw] lg:text-[25vw]"
+                  className="avant-legato-font ombra2 relative z-[4] overflow-hidden py-[0.14em] text-[29vw] uppercase leading-[0.76] tracking-[-0.105em] md:py-[0.13em] md:text-[24vw] lg:text-[17vw]"
                 >
                   <SplitLetters text="OXO" />
                 </h1>
 
                 <h1
                   data-hero-studio
-                  className="antonio2 ombra2 relative z-[4] ml-auto mt-[-1.6vw] w-fit overflow-hidden text-[23vw] uppercase leading-[0.66] tracking-[-0.09em] md:text-[19vw] lg:text-[16vw]"
+                  className="avant-legato-font ombra2 relative z-[4] ml-auto mt-[-1.25vw] w-fit overflow-hidden py-[0.15em] text-[19vw] uppercase leading-[0.79] tracking-[-0.09em] md:py-[0.14em] md:text-[13.5vw] lg:text-[13.5vw]"
                 >
                   <SplitLetters text="STUDIO" />
                 </h1>
@@ -1294,7 +1341,7 @@ export default function Home() {
           >
             <p
               data-home-v2-meta
-              className="antonio max-w-[980px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.55rem]"
+              className="avant-legato-font max-w-[980px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.55rem]"
             >
               Progettiamo sistemi digitali con una voce precisa: software,
               intelligenza artificiale e mondi interattivi che non sembrano già
@@ -1303,7 +1350,7 @@ export default function Home() {
 
             <p
               data-home-v2-meta
-              className="antonio2 shrink-0 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-xs"
+              className="avant-legato-font shrink-0 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-xs"
             >
               Scroll / Break the surface ↓
             </p>
@@ -1321,12 +1368,12 @@ export default function Home() {
               <div
                 key={row}
                 data-signal-row
-                className={`antonio2 flex w-max whitespace-nowrap uppercase leading-[.72] tracking-[-0.065em] ${
+                className={`avant-legato-font flex w-max whitespace-nowrap uppercase leading-[.72] tracking-[-0.065em] ${
                   index === 1
-                    ? "text-[18vw] md:text-[13vw]"
+                    ? "text-[15vw] md:text-[10.5vw]"
                     : index === 2
-                      ? "text-[16vw] text-white/[0.12] md:text-[11vw]"
-                      : "text-[20vw] text-white/[0.055] md:text-[14vw]"
+                      ? "text-[13.5vw] text-white/[0.12] md:text-[9vw]"
+                      : "text-[16.5vw] text-white/[0.055] md:text-[9vw]"
                 }`}
                 style={{
                   transform: `translateX(${index % 2 === 0 ? -9 : -22}vw)`,
@@ -1363,10 +1410,10 @@ export default function Home() {
             data-signal-copy
             className="absolute left-1/2 top-1/2 z-40 w-[86vw] max-w-[900px] -translate-x-1/2 -translate-y-1/2 text-center"
           >
-            <p className="antonio2 mb-5 text-[9px] uppercase tracking-[0.4em] text-cyan-300 md:text-xs">
+            <p className="avant-legato-font mb-5 text-[9px] uppercase tracking-[0.4em] text-cyan-300 md:text-xs">
               One studio / one signal
             </p>
-            <h2 className="antonio2 ombra2 text-[14vw] uppercase leading-[.76] tracking-[-0.07em] md:text-[8vw]">
+            <h2 className="avant-legato-font ombra2 text-[11.5vw] uppercase leading-[.76] tracking-[-0.07em] md:text-[6.8vw]">
               NOISE OUT.
               <br />
               MEANING IN.
@@ -1388,14 +1435,14 @@ export default function Home() {
                 <span>04 SYSTEMS</span>
               </div>
 
-              <h2 className="antonio2 ombra2 text-[20vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[13vw] lg:text-[9.5vw]">
+              <h2 className="avant-legato-font ombra2 text-[16.5vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[10.5vw] lg:text-[7.8vw]">
                 BUILT
                 <br />
                 AS ONE.
               </h2>
             </div>
 
-            <p className="antonio max-w-[720px] text-xl leading-snug text-gray-300 md:justify-self-end md:text-3xl">
+            <p className="avant-legato-font max-w-[720px] text-xl leading-snug text-gray-300 md:justify-self-end md:text-3xl">
               Strategia, interfaccia e ingegneria non passano da un reparto
               all'altro. Nascono insieme, nello stesso sistema.
             </p>
@@ -1510,7 +1557,7 @@ export default function Home() {
                 <p
                   data-capability-number
                   aria-hidden="true"
-                  className="antonio2 pointer-events-none absolute -right-[2vw] -top-[6vw] text-[38vw] leading-none tracking-[-0.11em] text-white/[0.04] md:text-[28vw] lg:text-[20vw]"
+                  className="avant-legato-font pointer-events-none absolute -right-[2vw] -top-[6vw] text-[31vw] leading-none tracking-[-0.11em] text-white/[0.04] md:text-[23vw] lg:text-[16.5vw]"
                 >
                   {item.id}
                 </p>
@@ -1534,17 +1581,17 @@ export default function Home() {
                       }}
                     />
 
-                    <h3 className="oxo-capability-v2-title antonio2 ombra2 text-[18vw] uppercase leading-[.68] tracking-[-0.09em] transition-transform duration-700 ease-out md:text-[11vw] lg:text-[7.6vw]">
+                    <h3 className="oxo-capability-v2-title avant-legato-font ombra2 text-[15vw] uppercase leading-[.68] tracking-[-0.09em] transition-transform duration-700 ease-out md:text-[9vw] lg:text-[6.2vw]">
                       {item.title}
                     </h3>
 
                     <div className="mt-8 flex items-end justify-between gap-7">
-                      <p className="antonio max-w-[650px] text-lg leading-snug text-gray-300 md:text-2xl lg:text-[1.75rem]">
+                      <p className="avant-legato-font max-w-[650px] text-lg leading-snug text-gray-300 md:text-2xl lg:text-[1.75rem]">
                         {item.copy}
                       </p>
 
                       <span
-                        className="oxo-capability-v2-arrow antonio2 shrink-0 text-4xl transition-transform duration-700 ease-out md:text-6xl"
+                        className="oxo-capability-v2-arrow avant-legato-font shrink-0 text-4xl transition-transform duration-700 ease-out md:text-6xl"
                         style={{ color: item.accent }}
                       >
                         ↗
@@ -1567,16 +1614,16 @@ export default function Home() {
           className="relative bg-[#020203]"
         >
           <div className="relative z-20 border-b border-white/15 px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[14vh]">
-            <p className="antonio2 mb-5 text-[10px] uppercase tracking-[0.38em] text-fuchsia-400 md:text-xs">
+            <p className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-fuchsia-400 md:text-xs">
               Selected systems
             </p>
             <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
-              <h2 className="antonio2 ombra2 text-[21vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[14vw] lg:text-[10vw]">
+              <h2 className="avant-legato-font ombra2 text-[17vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw]">
                 WORK THAT
                 <br />
                 CHANGES.
               </h2>
-              <p className="antonio max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl">
                 Lo schermo resta fermo. Il progetto cambia pelle, colore e ritmo
                 mentre continui a scorrere.
               </p>
@@ -1657,14 +1704,14 @@ export default function Home() {
                 <p
                   data-project-ghost
                   aria-hidden="true"
-                  className="antonio2 pointer-events-none absolute left-1/2 top-1/2 z-[6] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[20vw] uppercase leading-none tracking-[-0.08em] text-white/[0.065]"
+                  className="avant-legato-font pointer-events-none absolute left-1/2 top-1/2 z-[6] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[16.5vw] uppercase leading-none tracking-[-0.08em] text-white/[0.065]"
                 >
                   {project.statement}
                 </p>
 
                 <div className="pointer-events-none absolute inset-[14px] z-10 border border-white/28 md:inset-[26px] lg:inset-[2.2vw]" />
 
-                <div className="antonio2 absolute left-7 top-7 z-20 flex items-center gap-3 text-[9px] uppercase tracking-[0.31em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
+                <div className="avant-legato-font absolute left-7 top-7 z-20 flex items-center gap-3 text-[9px] uppercase tracking-[0.31em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
                   <span>{project.id}</span>
                   <span
                     className="h-px w-12 md:w-20"
@@ -1673,7 +1720,7 @@ export default function Home() {
                   <span className="text-gray-300">{project.category}</span>
                 </div>
 
-                <p className="antonio absolute right-7 top-7 z-20 max-w-[48vw] text-right text-[8px] uppercase tracking-[0.24em] text-gray-300 md:right-12 md:top-12 md:text-[11px] lg:right-[4.4vw] lg:top-[4.4vw]">
+                <p className="avant-legato-font absolute right-7 top-7 z-20 max-w-[48vw] text-right text-[8px] uppercase tracking-[0.24em] text-gray-300 md:right-12 md:top-12 md:text-[11px] lg:right-[4.4vw] lg:top-[4.4vw]">
                   {project.meta}
                 </p>
 
@@ -1684,18 +1731,18 @@ export default function Home() {
                   }`}
                 >
                   <p
-                    className="antonio2 mb-3 text-[9px] uppercase tracking-[0.37em] md:text-xs"
+                    className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.37em] md:text-xs"
                     style={{ color: project.accent }}
                   >
                     Selected work / {project.statement}
                   </p>
 
-                  <h3 className="oxo-project-v2-title antonio2 ombra2 text-[clamp(3.5rem,10vw,10rem)] uppercase leading-[.72] tracking-[-0.075em] transition-[letter-spacing] duration-700">
+                  <h3 className="oxo-project-v2-title avant-legato-font ombra2 text-[clamp(3rem,8.2vw,8.2rem)] uppercase leading-[.72] tracking-[-0.075em] transition-[letter-spacing] duration-700">
                     {project.title}
                   </h3>
 
                   <p
-                    className={`antonio mt-6 max-w-[760px] text-lg leading-snug text-gray-200 md:text-2xl lg:text-3xl ${
+                    className={`avant-legato-font mt-6 max-w-[760px] text-lg leading-snug text-gray-200 md:text-2xl lg:text-3xl ${
                       index % 2 === 0 ? "" : "ml-auto"
                     }`}
                   >
@@ -1704,7 +1751,7 @@ export default function Home() {
 
                   <Link
                     to={project.link}
-                    className="antonio2 group mt-8 inline-flex items-center gap-5 border-b border-white/70 pb-2 text-sm uppercase tracking-[0.28em] md:mt-10 md:text-base"
+                    className="avant-legato-font group mt-8 inline-flex items-center gap-5 border-b border-white/70 pb-2 text-sm uppercase tracking-[0.28em] md:mt-10 md:text-base"
                   >
                     <span>Entra nel progetto</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-2">
@@ -1734,7 +1781,7 @@ export default function Home() {
                 >
                   <span
                     data-project-rail-label
-                    className="antonio2 text-[9px] uppercase tracking-[0.24em] text-white/55"
+                    className="avant-legato-font text-[9px] uppercase tracking-[0.24em] text-white/55"
                   >
                     {project.id}
                   </span>
@@ -1765,7 +1812,7 @@ export default function Home() {
           <div
             data-manifesto-track
             aria-hidden="true"
-            className="antonio2 pointer-events-none relative z-[1] flex w-max whitespace-nowrap text-[25vw] uppercase leading-[.7] tracking-[-0.08em] text-white/[0.045] md:text-[18vw] lg:text-[14vw]"
+            className="avant-legato-font pointer-events-none relative z-[1] flex w-max whitespace-nowrap text-[20vw] uppercase leading-[.7] tracking-[-0.08em] text-white/[0.045] md:text-[15vw] lg:text-[11.5vw]"
           >
             <span>NO TEMPLATES — NO NOISE — NO EMPTY MOTION —&nbsp;</span>
             <span>NO TEMPLATES — NO NOISE — NO EMPTY MOTION —&nbsp;</span>
@@ -1773,11 +1820,11 @@ export default function Home() {
 
           <div className="relative z-10 mx-auto mt-[-2vw] flex min-h-[68vh] max-w-[1500px] items-center px-6 md:px-10 lg:px-[5vw]">
             <div className="max-w-[1250px]">
-              <p className="antonio2 mb-7 text-[10px] uppercase tracking-[0.38em] text-violet-400 md:text-xs">
+              <p className="avant-legato-font mb-7 text-[10px] uppercase tracking-[0.38em] text-violet-400 md:text-xs">
                 Oxo point of view
               </p>
 
-              <p className="antonio text-[clamp(2.3rem,6.2vw,6.7rem)] leading-[.94] tracking-[-0.045em] text-gray-100 [perspective:900px]">
+              <p className="avant-legato-font text-[clamp(2rem,5.2vw,5.6rem)] leading-[.94] tracking-[-0.045em] text-gray-100 [perspective:900px]">
                 <SplitWords text="NON AGGIUNGIAMO EFFETTI A UN PRODOTTO. PROGETTIAMO IL MODO IN CUI IL PRODOTTO SI FA CAPIRE, SI FA USARE E SI FA RICORDARE." />
               </p>
             </div>
@@ -1805,7 +1852,7 @@ export default function Home() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="antonio2 ombra2 overflow-hidden text-[20vw] uppercase leading-[.68] tracking-[-0.09em] md:text-[16vw] lg:text-[13.6vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16.5vw] uppercase leading-[.68] tracking-[-0.09em] md:text-[13.5vw] lg:text-[10.8vw]">
               <SplitLetters
                 text="BREAK FORM"
                 attribute="data-home-final-letter"
@@ -1813,14 +1860,14 @@ export default function Home() {
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
-              <p className="antonio max-w-[840px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p className="avant-legato-font max-w-[840px] text-xl leading-snug text-gray-300 md:text-3xl">
                 Hai un prodotto che non deve assomigliare al prossimo sito che
                 scorrerai domani?
               </p>
 
               <Link
                 to="/Contatti"
-                className="antonio2 group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.29em] md:text-base"
+                className="avant-legato-font group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.29em] md:text-base"
               >
                 <span>Costruiamolo</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-2">

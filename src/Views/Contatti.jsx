@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SeoMetaTags from "../components/SeoMetaTags";
+import "../styles/avant-legato.css";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -328,9 +329,48 @@ export default function Contatti() {
 
       <main
         ref={pageRef}
-        className="relative overflow-x-hidden bg-[#030303] text-white"
+        className="oxo-contact-avant relative overflow-x-hidden bg-[#030303] text-white"
       >
         <style>{`
+          /* AVANT LEGATO SAFE */
+          .oxo-contact-avant,
+          .oxo-contact-avant * {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif;
+          }
+
+          .avant-legato-font {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif !important;
+
+            font-style: normal;
+            font-weight: 400;
+            font-stretch: normal;
+            display: revert;
+            transform: none;
+            text-transform: inherit;
+          }
+
+          h1.avant-legato-font,
+          h2.avant-legato-font,
+          h3.avant-legato-font {
+            font-stretch: expanded;
+            transform: scaleX(.96);
+            transform-origin: left center;
+          }
+
           @keyframes oxoContactPulse {
             0%, 100% { opacity: .22; transform: scaleX(.7); }
             50% { opacity: .95; transform: scaleX(1); }
@@ -367,6 +407,14 @@ export default function Contatti() {
           .oxo-contact-card:hover .oxo-contact-card-arrow {
             transform: translate(.55rem, -.35rem) rotate(-45deg);
           }
+
+          @media (min-width: 1024px) {
+            .oxo-contact-card[href^="mailto:"] .avant-legato-font.break-words {
+              white-space: nowrap;
+              font-size: clamp(1rem, 1.7vw, 1.9rem);
+              letter-spacing: -0.025em;
+            }
+          }
         `}</style>
 
         <section
@@ -394,22 +442,18 @@ export default function Contatti() {
 
           <div className="relative z-10 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
             <p data-contact-meta>OXO STUDIO®</p>
-            <p data-contact-meta className="text-right">
-              PROJECT INQUIRIES
-              <br />
-              LA SPEZIA / ITALY
-            </p>
+          
           </div>
 
           <div data-contact-title className="relative z-10 my-auto py-14">
             <p
               data-contact-meta
-              className="antonio2 mb-4 text-[10px] uppercase tracking-[0.36em] text-violet-400 md:text-xs"
+              className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] text-violet-400 md:text-xs"
             >
               Start a conversation
             </p>
 
-            <h1 className="antonio2 ombra2 overflow-hidden text-[21vw] uppercase leading-[0.71] tracking-[-0.075em] md:text-[18vw] lg:text-[15vw]">
+            <h1 className="avant-legato-font ombra2 overflow-hidden text-[17.5vw] uppercase leading-[0.71] tracking-[-0.075em] md:text-[12vw] lg:text-[12.5vw]">
               <SplitLetters text="CONTATTI" />
             </h1>
           </div>
@@ -417,7 +461,7 @@ export default function Contatti() {
           <div className="relative z-10 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
             <p
               data-contact-meta
-              className="antonio max-w-[900px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
+              className="avant-legato-font max-w-[900px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
             >
               Raccontaci cosa deve esistere, cosa non funziona ancora o quale idea
               vuoi trasformare in un prodotto reale.
@@ -425,7 +469,7 @@ export default function Contatti() {
 
             <p
               data-contact-meta
-              className="antonio2 shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
+              className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
               Scroll to write ↓
             </p>
@@ -439,10 +483,10 @@ export default function Contatti() {
           <div className="oxo-contact-grid pointer-events-none absolute inset-0 opacity-60" />
 
           <div className="relative z-10 mb-14 border-b border-white/20 pb-8 md:mb-20">
-            <p className="antonio2 mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
+            <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
               Project brief
             </p>
-            <h2 className="antonio2 ombra2 text-[17vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[11vw] lg:text-[8vw]">
+            <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9.3vw] lg:text-[6.8vw]">
               PARLIAMONE
             </h2>
           </div>
@@ -467,7 +511,7 @@ export default function Contatti() {
                   data-contact-form-row
                   className="oxo-contact-field relative block border-b border-white/25 pb-3"
                 >
-                  <span className="antonio2 mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                  <span className="avant-legato-font mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
                     01 / Nome *
                   </span>
                   <input
@@ -476,7 +520,7 @@ export default function Contatti() {
                     value={formData.name}
                     onChange={handleChange}
                     autoComplete="name"
-                    className="antonio w-full bg-transparent text-xl text-white outline-none placeholder:text-white/25 md:text-2xl"
+                    className="avant-legato-font w-full bg-transparent text-xl text-white outline-none placeholder:text-white/25 md:text-2xl"
                     placeholder="Il tuo nome"
                   />
                   <span className="oxo-contact-field-line absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-cyan-300 opacity-0 transition-all duration-500" />
@@ -486,7 +530,7 @@ export default function Contatti() {
                   data-contact-form-row
                   className="oxo-contact-field relative block border-b border-white/25 pb-3"
                 >
-                  <span className="antonio2 mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                  <span className="avant-legato-font mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
                     02 / Email *
                   </span>
                   <input
@@ -495,7 +539,7 @@ export default function Contatti() {
                     value={formData.email}
                     onChange={handleChange}
                     autoComplete="email"
-                    className="antonio w-full bg-transparent text-xl text-white outline-none placeholder:text-white/25 md:text-2xl"
+                    className="avant-legato-font w-full bg-transparent text-xl text-white outline-none placeholder:text-white/25 md:text-2xl"
                     placeholder="nome@email.it"
                   />
                   <span className="oxo-contact-field-line absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-violet-400 opacity-0 transition-all duration-500" />
@@ -505,7 +549,7 @@ export default function Contatti() {
                   data-contact-form-row
                   className="oxo-contact-field relative block border-b border-white/25 pb-3"
                 >
-                  <span className="antonio2 mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                  <span className="avant-legato-font mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
                     03 / Azienda
                   </span>
                   <input
@@ -514,7 +558,7 @@ export default function Contatti() {
                     value={formData.company}
                     onChange={handleChange}
                     autoComplete="organization"
-                    className="antonio w-full bg-transparent text-xl text-white outline-none placeholder:text-white/25 md:text-2xl"
+                    className="avant-legato-font w-full bg-transparent text-xl text-white outline-none placeholder:text-white/25 md:text-2xl"
                     placeholder="Nome azienda"
                   />
                   <span className="oxo-contact-field-line absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-fuchsia-400 opacity-0 transition-all duration-500" />
@@ -524,14 +568,14 @@ export default function Contatti() {
                   data-contact-form-row
                   className="oxo-contact-field relative block border-b border-white/25 pb-3"
                 >
-                  <span className="antonio2 mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                  <span className="avant-legato-font mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
                     04 / Tipo di progetto
                   </span>
                   <select
                     name="projectType"
                     value={formData.projectType}
                     onChange={handleChange}
-                    className="antonio w-full appearance-none bg-transparent text-xl text-white outline-none md:text-2xl"
+                    className="avant-legato-font w-full appearance-none bg-transparent text-xl text-white outline-none md:text-2xl"
                   >
                     {PROJECT_TYPES.map((type) => (
                       <option key={type} value={type} className="bg-black text-white">
@@ -549,14 +593,14 @@ export default function Contatti() {
                   data-contact-form-row
                   className="oxo-contact-field relative block border-b border-white/25 pb-3 md:col-span-2"
                 >
-                  <span className="antonio2 mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                  <span className="avant-legato-font mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
                     05 / Budget indicativo
                   </span>
                   <select
                     name="budget"
                     value={formData.budget}
                     onChange={handleChange}
-                    className="antonio w-full appearance-none bg-transparent text-xl text-white outline-none md:text-2xl"
+                    className="avant-legato-font w-full appearance-none bg-transparent text-xl text-white outline-none md:text-2xl"
                   >
                     {BUDGETS.map((budget) => (
                       <option
@@ -578,7 +622,7 @@ export default function Contatti() {
                   data-contact-form-row
                   className="oxo-contact-field relative block border-b border-white/25 pb-3 md:col-span-2"
                 >
-                  <span className="antonio2 mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                  <span className="avant-legato-font mb-3 block text-[10px] uppercase tracking-[0.3em] text-gray-500">
                     06 / Il progetto *
                   </span>
                   <textarea
@@ -586,7 +630,7 @@ export default function Contatti() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={6}
-                    className="antonio w-full resize-none bg-transparent text-xl leading-snug text-white outline-none placeholder:text-white/25 md:text-2xl"
+                    className="avant-legato-font w-full resize-none bg-transparent text-xl leading-snug text-white outline-none placeholder:text-white/25 md:text-2xl"
                     placeholder="Descrivi obiettivo, problema, contesto e risultato atteso."
                   />
                   <span className="oxo-contact-field-line absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-fuchsia-400 opacity-0 transition-all duration-500" />
@@ -598,12 +642,12 @@ export default function Contatti() {
                 className="relative z-10 mt-10 flex flex-col gap-5 border-t border-white/15 pt-7 md:flex-row md:items-center md:justify-between"
               >
                 <div>
-                  <p className="antonio max-w-[610px] text-sm leading-snug text-gray-500 md:text-base">
+                  <p className="avant-legato-font max-w-[610px] text-sm leading-snug text-gray-500 md:text-base">
                     Il pulsante apre il tuo programma email con il brief già
                     compilato. Nessun dato viene salvato da questa pagina.
                   </p>
                   {formError ? (
-                    <p className="antonio mt-3 text-sm text-fuchsia-400">
+                    <p className="avant-legato-font mt-3 text-sm text-fuchsia-400">
                       {formError}
                     </p>
                   ) : null}
@@ -611,7 +655,7 @@ export default function Contatti() {
 
                 <button
                   type="submit"
-                  className="antonio2 group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
+                  className="avant-legato-font group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
                 >
                   <span>Apri la richiesta</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-2">
@@ -636,10 +680,10 @@ export default function Contatti() {
 
               <div className="relative z-10 flex h-full min-h-[500px] flex-col justify-between">
                 <div>
-                  <p className="antonio2 mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
+                  <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
                     Direct contact
                   </p>
-                  <h3 className="antonio2 ombra2 text-[15vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9vw] lg:text-[5.6vw]">
+                  <h3 className="avant-legato-font ombra2 text-[12vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[7.5vw] lg:text-[4.7vw]">
                     SCRIVI
                     <br />
                     DIRETTO
@@ -647,14 +691,14 @@ export default function Contatti() {
                 </div>
 
                 <div>
-                  <p className="antonio mb-6 text-lg leading-snug text-gray-300 md:text-2xl">
+                  <p className="avant-legato-font mb-6 text-lg leading-snug text-gray-300 md:text-2xl">
                     Preferisci saltare il form? Invia direttamente una mail con
                     materiali, riferimenti e obiettivi del progetto.
                   </p>
 
                   <a
                     href={`mailto:${CONTACT_EMAIL}`}
-                    className="antonio2 group inline-flex items-center gap-4 border-b border-white/70 pb-2 text-xs uppercase tracking-[0.22em] md:text-sm"
+                    className="avant-legato-font group inline-flex items-center gap-4 border-b border-white/70 pb-2 text-xs uppercase tracking-[0.22em] md:text-sm"
                   >
                     <span>{CONTACT_EMAIL}</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-2">
@@ -676,7 +720,7 @@ export default function Contatti() {
           <div
             data-contact-track
             aria-hidden="true"
-            className="antonio2 pointer-events-none absolute left-0 top-[8vh] z-[1] flex w-max whitespace-nowrap text-[23vw] uppercase leading-[0.72] tracking-[-0.065em] text-white/[0.045] md:text-[17vw] lg:text-[13vw]"
+            className="avant-legato-font pointer-events-none absolute left-0 top-[8vh] z-[1] flex w-max whitespace-nowrap text-[18vw] uppercase leading-[0.72] tracking-[-0.065em] text-white/[0.045] md:text-[14vw] lg:text-[10.5vw]"
           >
             <span>LET'S BUILD SOMETHING REAL —&nbsp;</span>
             <span>LET'S BUILD SOMETHING REAL —&nbsp;</span>
@@ -684,15 +728,15 @@ export default function Contatti() {
 
           <div className="relative z-10 mb-16 mt-[16vw] flex flex-col gap-7 border-b border-white/20 pb-8 md:mb-24 md:mt-[11vw] md:flex-row md:items-end md:justify-between lg:mt-[8vw]">
             <div>
-              <p className="antonio2 mb-4 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
+              <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
                 Coordinates
               </p>
-              <h2 className="antonio2 ombra2 text-[17vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[11vw] lg:text-[8vw]">
+              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9.3vw] lg:text-[6.8vw]">
                 DOVE TROVARCI
               </h2>
             </div>
 
-            <p className="antonio max-w-[620px] text-lg leading-snug text-gray-300 md:text-2xl">
+            <p className="avant-legato-font max-w-[620px] text-lg leading-snug text-gray-300 md:text-2xl">
               Lavoriamo da La Spezia con progetti, team e organizzazioni anche a
               distanza.
             </p>
@@ -703,7 +747,7 @@ export default function Contatti() {
               const content = (
                 <>
                   <div className="flex items-center justify-between">
-                    <span className="antonio2 text-[10px] uppercase tracking-[0.3em] text-gray-500">
+                    <span className="avant-legato-font text-[10px] uppercase tracking-[0.3em] text-gray-500">
                       {block.id}
                     </span>
                     <span
@@ -714,17 +758,17 @@ export default function Contatti() {
 
                   <div>
                     <p
-                      className="antonio2 mb-4 text-[10px] uppercase tracking-[0.34em] md:text-xs"
+                      className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] md:text-xs"
                       style={{ color: block.accent }}
                     >
                       {block.label}
                     </p>
-                    <p className="antonio2 break-words text-[9vw] uppercase leading-[0.82] tracking-[-0.05em] md:text-[5vw] lg:text-[3.25vw]">
+                    <p className="avant-legato-font break-words text-[5.8vw] uppercase leading-[0.88] tracking-[-0.035em] md:text-[3.3vw] lg:text-[2.05vw]">
                       {block.value}
                     </p>
                   </div>
 
-                  <span className="oxo-contact-card-arrow antonio2 self-end text-3xl transition-transform duration-500 ease-out md:text-5xl">
+                  <span className="oxo-contact-card-arrow avant-legato-font self-end text-3xl transition-transform duration-500 ease-out md:text-5xl">
                     ↗
                   </span>
                 </>
@@ -773,7 +817,7 @@ export default function Contatti() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="antonio2 ombra2 overflow-hidden text-[20vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[17vw] lg:text-[14.5vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[14vw] lg:text-[11.5vw]">
               <SplitLetters
                 text="SCRIVICI"
                 attribute="data-contact-final-letter"
@@ -781,14 +825,14 @@ export default function Contatti() {
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
-              <p className="antonio max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p className="avant-legato-font max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl">
                 Una buona collaborazione comincia da un problema raccontato bene.
               </p>
 
               <div className="flex flex-col items-start gap-4 md:items-end">
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
-                  className="antonio2 group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
+                  className="avant-legato-font group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
                 >
                   <span>Invia una mail</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-2">
@@ -798,7 +842,7 @@ export default function Contatti() {
 
                 <Link
                   to="/prodotti"
-                  className="antonio2 text-[10px] uppercase tracking-[0.28em] text-gray-500 transition-colors hover:text-white md:text-xs"
+                  className="avant-legato-font text-[10px] uppercase tracking-[0.28em] text-gray-500 transition-colors hover:text-white md:text-xs"
                 >
                   Prima guarda i prodotti ↗
                 </Link>

@@ -1,0 +1,144 @@
+/*
+  AVANT LEGATO — web treatment
+  --------------------------------------------------
+  Questo file ricrea il linguaggio del concept:
+  futuristico, largo, sottile, geometrico, collegato.
+
+  NOTA:
+  non è ancora un .woff/.ttf proprietario.
+  È un trattamento tipografico CSS riutilizzabile
+  immediatamente in React/JSX.
+*/
+
+:root {
+  --avant-cyan: #35d8ff;
+  --avant-violet: #8b5cf6;
+  --avant-magenta: #ff4fd8;
+  --avant-white: #f4f4f1;
+}
+
+.avant-legato {
+  display: inline-block;
+
+  /* fallback volutamente geometrico */
+  font-family:
+    "Eurostile",
+    "Microgramma",
+    "Bank Gothic",
+    "Orbitron",
+    "Michroma",
+    "Arial Narrow",
+    sans-serif;
+
+  font-weight: 400;
+  font-style: normal;
+
+  text-transform: uppercase;
+
+  /* look largo / Awwwards */
+  font-stretch: expanded;
+  letter-spacing: 0.12em;
+  line-height: 0.9;
+
+  color: var(--avant-white);
+
+  /* alleggerisce otticamente il font */
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+
+  /* lieve deformazione orizzontale */
+  transform: scaleX(1.08);
+  transform-origin: left center;
+
+  transition:
+    letter-spacing 0.55s cubic-bezier(.16, 1, .3, 1),
+    transform 0.55s cubic-bezier(.16, 1, .3, 1),
+    filter 0.55s ease;
+}
+
+/*
+  Effetto "legato":
+  riduce lo spazio e fa percepire i caratteri come
+  un'unica struttura, senza distruggere la leggibilità.
+*/
+.avant-legato--connected {
+  letter-spacing: 0.055em;
+  word-spacing: 0.34em;
+}
+
+/*
+  Glow coerente con la palette OXO.
+  Molto più elegante del classico neon aggressivo.
+*/
+.avant-legato--glow {
+  text-shadow:
+    -1px 0 14px rgba(53, 216, 255, 0.16),
+     1px 0 18px rgba(255, 79, 216, 0.12),
+     0 0 34px rgba(139, 92, 246, 0.08);
+}
+
+/* Hover da sito Awwwards */
+.avant-legato:hover {
+  letter-spacing: 0.085em;
+  transform: scaleX(1.115);
+}
+
+/*
+  Classi utility opzionali
+*/
+
+.avant-legato-title {
+  font-size: clamp(3.5rem, 11vw, 11rem);
+  letter-spacing: 0.025em;
+}
+
+.avant-legato-display {
+  font-size: clamp(2.4rem, 7vw, 8rem);
+}
+
+.avant-legato-small {
+  font-size: clamp(0.7rem, 1vw, 0.95rem);
+  letter-spacing: 0.28em;
+}
+
+/*
+  Variante outline molto simile al linguaggio visivo
+  già presente nel sito OXO.
+*/
+.avant-legato-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(244, 244, 241, 0.72);
+
+  text-shadow:
+    0 0 22px rgba(53, 216, 255, 0.08),
+    0 0 32px rgba(255, 79, 216, 0.06);
+}
+
+/*
+  Accento gradiente OXO
+*/
+.avant-legato-gradient {
+  color: transparent;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f4f4f1 0%,
+      #35d8ff 36%,
+      #8b5cf6 66%,
+      #ff4fd8 100%
+    );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/*
+  Uso consigliato per hero:
+  <AvantLegatoText
+    as="h1"
+    className="avant-legato-title avant-legato-gradient"
+  >
+    CREATIVE TECHNOLOGY
+  </AvantLegatoText>
+*/

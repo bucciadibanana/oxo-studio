@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SeoMetaTags from "../components/SeoMetaTags";
+import "../styles/avant-legato.css";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -768,9 +769,48 @@ export default function ChiSiamo() {
 
       <main
         ref={pageRef}
-        className="relative overflow-x-hidden bg-[#030303] text-white"
+        className="oxo-about-avant relative overflow-x-hidden bg-[#030303] text-white"
       >
         <style>{`
+          /* AVANT LEGATO SAFE:
+             cambia solo la famiglia, senza alterare box o layout */
+          .oxo-about-avant,
+          .oxo-about-avant * {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif;
+          }
+
+          .avant-legato-font {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif !important;
+            font-style: normal;
+            font-weight: 400;
+            font-stretch: normal;
+            display: revert;
+            transform: none;
+            text-transform: inherit;
+          }
+
+          h1.avant-legato-font,
+          h2.avant-legato-font,
+          h3.avant-legato-font {
+            font-stretch: expanded;
+            transform: scaleX(.96);
+            transform-origin: left center;
+          }
+
           @keyframes oxoAboutPulse {
             0%, 100% { opacity: .22; transform: scaleX(.74); }
             50% { opacity: .92; transform: scaleX(1); }
@@ -951,22 +991,18 @@ export default function ChiSiamo() {
 
           <div className="relative z-10 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
             <p data-about-meta>OXO STUDIO®</p>
-            <p data-about-meta className="text-right">
-              CREATIVE TECHNOLOGY
-              <br />
-              LA SPEZIA / ITALY
-            </p>
+          
           </div>
 
           <div data-hero-title className="relative z-10 my-auto py-14">
             <p
               data-about-meta
-              className="antonio2 mb-4 text-[10px] uppercase tracking-[0.36em] text-cyan-300 md:text-xs"
+              className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] text-cyan-300 md:text-xs"
             >
               Independent digital studio
             </p>
 
-            <h1 className="antonio2 ombra2 overflow-hidden text-[21vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[18vw] lg:text-[15.5vw]">
+            <h1 className="avant-legato-font ombra2 overflow-hidden text-[17.5vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[12.5vw] lg:text-[12.8vw]">
               <SplitLetters text="CHI SIAMO" />
             </h1>
           </div>
@@ -974,7 +1010,7 @@ export default function ChiSiamo() {
           <div className="relative z-10 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
             <p
               data-about-meta
-              className="antonio max-w-[870px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
+              className="avant-legato-font max-w-[870px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
             >
               Un piccolo studio con una convinzione enorme: tecnologia e
               creatività funzionano davvero soltanto quando diventano la stessa
@@ -983,7 +1019,7 @@ export default function ChiSiamo() {
 
             <p
               data-about-meta
-              className="antonio2 shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
+              className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
               Scroll to discover ↓
             </p>
@@ -1000,7 +1036,7 @@ export default function ChiSiamo() {
           <p
             data-field-ghost
             aria-hidden="true"
-            className="oxo-field-outline antonio2 pointer-events-none absolute left-[-4vw] top-1/2 -translate-y-1/2 whitespace-nowrap text-[24vw] uppercase leading-none tracking-[-0.09em] opacity-55"
+            className="oxo-field-outline avant-legato-font pointer-events-none absolute left-[-4vw] top-1/2 -translate-y-1/2 whitespace-nowrap text-[16.5vw] uppercase leading-none tracking-[-0.09em] opacity-55"
           >
             SIGNAL / SYSTEM / FORM
           </p>
@@ -1092,7 +1128,7 @@ export default function ChiSiamo() {
                   <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
                     <div>
                       <p
-                        className="antonio2 mb-4 text-[10px] uppercase tracking-[0.36em] md:text-xs"
+                        className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] md:text-xs"
                         style={{ color: phase.accent }}
                       >
                         {phase.id} / {phase.eyebrow}
@@ -1101,7 +1137,7 @@ export default function ChiSiamo() {
                       <div className="overflow-hidden pb-[2vw]">
                         <h2
                           data-field-title
-                          className="antonio2 ombra2 text-[21vw] uppercase leading-[0.67] tracking-[-0.085em] md:text-[15vw] lg:text-[10.8vw]"
+                          className="avant-legato-font ombra2 text-[17.5vw] uppercase leading-[0.67] tracking-[-0.085em] md:text-[12.5vw] lg:text-[8.8vw]"
                         >
                           {phase.title}
                         </h2>
@@ -1109,7 +1145,7 @@ export default function ChiSiamo() {
 
                       <p
                         data-field-copy
-                        className="antonio mt-5 max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl"
+                        className="avant-legato-font mt-5 max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl"
                       >
                         {phase.copy}
                       </p>
@@ -1118,7 +1154,7 @@ export default function ChiSiamo() {
                     <p
                       data-field-statement
                       aria-hidden="true"
-                      className="oxo-field-outline antonio2 hidden text-right text-[6.8vw] uppercase leading-[0.8] tracking-[-0.055em] lg:block"
+                      className="oxo-field-outline avant-legato-font hidden text-right text-[5.8vw] uppercase leading-[0.8] tracking-[-0.055em] lg:block"
                     >
                       {phase.statement}
                     </p>
@@ -1150,15 +1186,15 @@ export default function ChiSiamo() {
 
           <div className="relative z-10 mb-16 flex flex-col gap-7 border-b border-white/20 pb-8 md:mb-24 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="antonio2 mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
+              <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
                 The people behind Oxo
               </p>
-              <h2 className="antonio2 ombra2 text-[18vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[12vw] lg:text-[9vw]">
+              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[10vw] lg:text-[7.5vw]">
                 IL TEAM
               </h2>
             </div>
 
-            <p className="antonio max-w-[620px] text-lg leading-snug text-gray-300 md:text-2xl">
+            <p className="avant-legato-font max-w-[620px] text-lg leading-snug text-gray-300 md:text-2xl">
               Competenze diverse, una sola direzione: costruire esperienze in
               cui ogni scelta visiva abbia una ragione tecnica e ogni scelta
               tecnica migliori l'esperienza.
@@ -1199,7 +1235,7 @@ export default function ChiSiamo() {
 
                 <p
                   aria-hidden="true"
-                  className="antonio2 pointer-events-none absolute right-[-1vw] top-[-3vw] text-[24vw] leading-none tracking-[-0.08em] text-white/[0.055]"
+                  className="avant-legato-font pointer-events-none absolute right-[-1vw] top-[-3vw] text-[16.5vw] leading-none tracking-[-0.08em] text-white/[0.055]"
                 >
                   {member.initials}
                 </p>
@@ -1207,7 +1243,7 @@ export default function ChiSiamo() {
                 <div className="absolute inset-[14px] rounded-[24px] border border-white/25 md:inset-[22px] md:rounded-[34px] lg:rounded-[48px]" />
 
                 <div className="absolute left-7 top-7 z-10 flex items-center gap-3 md:left-10 md:top-10">
-                  <span className="antonio2 text-[10px] uppercase tracking-[0.28em]">
+                  <span className="avant-legato-font text-[10px] uppercase tracking-[0.28em]">
                     {member.id}
                   </span>
                   <span
@@ -1221,17 +1257,17 @@ export default function ChiSiamo() {
                   className="absolute bottom-8 left-7 right-7 z-10 md:bottom-11 md:left-10 md:right-10"
                 >
                   <p
-                    className="antonio2 mb-3 text-[10px] uppercase tracking-[0.32em] md:text-xs"
+                    className="avant-legato-font mb-3 text-[10px] uppercase tracking-[0.32em] md:text-xs"
                     style={{ color: member.accent }}
                   >
                     {member.role}
                   </p>
 
-                  <h3 className="antonio2 ombra2 text-[clamp(3.1rem,7.6vw,7.4rem)] uppercase leading-[0.78] tracking-[-0.055em]">
+                  <h3 className="avant-legato-font ombra2 text-[clamp(2.8rem,6.3vw,6.4rem)] uppercase leading-[0.78] tracking-[-0.055em]">
                     {member.name}
                   </h3>
 
-                  <p className="antonio mt-5 max-w-[610px] text-base leading-snug text-gray-200 md:text-xl lg:text-2xl">
+                  <p className="avant-legato-font mt-5 max-w-[610px] text-base leading-snug text-gray-200 md:text-xl lg:text-2xl">
                     {member.description}
                   </p>
                 </div>
@@ -1249,11 +1285,11 @@ export default function ChiSiamo() {
 
           <div className="relative z-10 grid gap-14 lg:grid-cols-[.75fr_1.25fr] lg:gap-[8vw]">
             <div>
-              <p className="antonio2 mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
+              <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
                 Il nostro metodo
               </p>
 
-              <h2 className="antonio2 ombra2 text-[17vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[11vw] lg:sticky lg:top-[12vh] lg:text-[7.6vw]">
+              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[9.2vw] lg:sticky lg:top-[12vh] lg:text-[6.2vw]">
                 COME
                 <br />
                 LAVORIAMO
@@ -1267,20 +1303,20 @@ export default function ChiSiamo() {
                   data-process-row
                   className="oxo-process-row group grid min-h-[180px] grid-cols-[48px_1fr_auto] items-center gap-4 border-b border-white/20 py-8 md:min-h-[220px] md:grid-cols-[70px_1fr_auto] md:gap-7"
                 >
-                  <span className="antonio2 self-start pt-2 text-[10px] tracking-[0.28em] text-gray-500 md:text-xs">
+                  <span className="avant-legato-font self-start pt-2 text-[10px] tracking-[0.28em] text-gray-500 md:text-xs">
                     {step.id}
                   </span>
 
                   <div>
-                    <h3 className="oxo-process-title antonio2 text-[12vw] uppercase leading-[0.8] tracking-[-0.055em] transition-transform duration-500 ease-out md:text-[7vw] lg:text-[5.8vw]">
+                    <h3 className="oxo-process-title avant-legato-font text-[10vw] uppercase leading-[0.8] tracking-[-0.055em] transition-transform duration-500 ease-out md:text-[5.8vw] lg:text-[4.8vw]">
                       {step.title}
                     </h3>
-                    <p className="antonio mt-4 max-w-[640px] text-base leading-snug text-gray-400 md:text-xl">
+                    <p className="avant-legato-font mt-4 max-w-[640px] text-base leading-snug text-gray-400 md:text-xl">
                       {step.copy}
                     </p>
                   </div>
 
-                  <span className="oxo-process-arrow antonio2 text-2xl transition-transform duration-500 ease-out md:text-4xl">
+                  <span className="oxo-process-arrow avant-legato-font text-2xl transition-transform duration-500 ease-out md:text-4xl">
                     ↗
                   </span>
                 </article>
@@ -1311,19 +1347,19 @@ export default function ChiSiamo() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="antonio2 ombra2 overflow-hidden text-[20vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[17vw] lg:text-[14.5vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16.5vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[14vw] lg:text-[11.8vw]">
               <SplitLetters text="PARLIAMONE" attribute="data-final-letter" />
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
-              <p className="antonio max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p className="avant-legato-font max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl">
                 Hai un prodotto da costruire, un processo da rendere più
                 intelligente o un mondo da mettere in movimento?
               </p>
 
               <Link
                 to="/contatti"
-                className="antonio2 group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
+                className="avant-legato-font group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
               >
                 <span>Contattaci</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-2">

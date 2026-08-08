@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SeoMetaTags from "../components/SeoMetaTags";
+import "../styles/avant-legato.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1571,6 +1572,70 @@ export default function Prodotti() {
 
       /*
        * =========================
+       * STATIC TEXT REVEALS
+       * =========================
+       */
+
+      const staticRevealNodes = gsap.utils.toArray(
+        page.querySelectorAll("[data-static-reveal]")
+      );
+
+      staticRevealNodes.forEach((node, index) => {
+        const direction = index % 2 === 0 ? -1 : 1;
+
+        gsap.fromTo(
+          node,
+          {
+            y: 34,
+            x: direction * 12,
+            opacity: 0,
+            filter: "blur(8px)",
+            clipPath: "inset(0 0 38% 0)",
+          },
+          {
+            y: 0,
+            x: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            clipPath: "inset(0 0 0% 0)",
+            duration: 0.82,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: node,
+              start: "top 86%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+
+      const staticSlideNodes = gsap.utils.toArray(
+        page.querySelectorAll("[data-static-slide]")
+      );
+
+      staticSlideNodes.forEach((node, index) => {
+        gsap.fromTo(
+          node,
+          {
+            xPercent: index % 2 === 0 ? -8 : 8,
+            opacity: 0,
+          },
+          {
+            xPercent: 0,
+            opacity: 1,
+            duration: 0.72,
+            ease: "expo.out",
+            scrollTrigger: {
+              trigger: node,
+              start: "top 88%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+
+      /*
+       * =========================
        * PRINCIPLES
        * =========================
        */
@@ -1884,7 +1949,7 @@ export default function Prodotti() {
       <main
         key={location.key}
         ref={pageRef}
-        className="relative overflow-x-hidden bg-[#030303] text-white"
+        className="oxo-products-avant relative overflow-x-hidden bg-[#030303] text-white"
       >
         {/* CURSOR AWARD */}
 
@@ -1901,6 +1966,46 @@ export default function Prodotti() {
         />
 
         <style>{`
+          /* AVANT LEGATO SAFE:
+             solo famiglia tipografica, nessuna trasformazione globale */
+          .oxo-products-avant,
+          .oxo-products-avant * {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif;
+          }
+
+          .avant-legato-font {
+            font-family:
+              "Eurostile",
+              "Microgramma",
+              "Bank Gothic",
+              "Orbitron",
+              "Michroma",
+              "Arial Narrow",
+              sans-serif !important;
+
+            font-style: normal;
+            font-weight: 400;
+            font-stretch: normal;
+            display: revert;
+            transform: none;
+            text-transform: inherit;
+          }
+
+          h1.avant-legato-font,
+          h2.avant-legato-font,
+          h3.avant-legato-font {
+            font-stretch: expanded;
+            transform: scaleX(.96);
+            transform-origin: left center;
+          }
+
           @keyframes oxoProductsScan {
             0% {
               transform: translate3d(-15vw,0,0);
@@ -2372,14 +2477,14 @@ export default function Prodotti() {
 
           <span
             data-products-coordinate
-            className="antonio2 pointer-events-none absolute left-[4vw] top-[15vh] z-[4] text-[9px] tracking-[0.3em] text-white/35"
+            className="avant-legato-font pointer-events-none absolute left-[4vw] top-[15vh] z-[4] text-[9px] tracking-[0.3em] text-white/35"
           >
             X / 046.118
           </span>
 
           <span
             data-products-coordinate
-            className="antonio2 pointer-events-none absolute bottom-[16vh] right-[4vw] z-[4] text-[9px] tracking-[0.3em] text-white/35"
+            className="avant-legato-font pointer-events-none absolute bottom-[16vh] right-[4vw] z-[4] text-[9px] tracking-[0.3em] text-white/35"
           >
             Y / 009.823
           </span>
@@ -2389,7 +2494,7 @@ export default function Prodotti() {
           <p
             data-products-hero-ghost
             aria-hidden="true"
-            className="antonio2 pointer-events-none absolute -left-[2vw] top-[18vh] whitespace-nowrap text-[25vw] uppercase leading-none tracking-[-0.075em] text-white/[0.025]"
+            className="avant-legato-font pointer-events-none absolute -left-[2vw] top-[18vh] whitespace-nowrap text-[14vw] uppercase leading-none tracking-[-0.075em] text-white/[0.025]"
           >
             DIGITAL OBJECTS
           </p>
@@ -2397,18 +2502,11 @@ export default function Prodotti() {
           {/* top */}
 
           <div className="relative z-10 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
-            <p data-products-meta>
+            <p data-products-meta data-static-slide>
               OXO STUDIO® / PRODUCT LAB
             </p>
 
-            <p
-              data-products-meta
-              className="text-right"
-            >
-              SOFTWARE / AI / GAME
-              <br />
-              LA SPEZIA / ITALY
-            </p>
+         
           </div>
 
           {/* title */}
@@ -2419,12 +2517,12 @@ export default function Prodotti() {
           >
             <p
               data-products-meta
-              className="antonio2 mb-4 text-[10px] uppercase tracking-[0.36em] text-cyan-300 md:text-xs"
+              className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] text-cyan-300 md:text-xs"
             >
               Digital systems with a point of view
             </p>
 
-            <h1 className="antonio2 ombra2 overflow-hidden text-[22vw] uppercase leading-[0.7] tracking-[-0.075em] md:text-[19vw] lg:text-[16vw]">
+            <h1 className="avant-legato-font ombra2 overflow-hidden text-[13vw] uppercase leading-[0.7] tracking-[-0.075em] md:text-[14vw] lg:text-[8.8vw]">
               <SplitLetters text="PRODOTTI" />
             </h1>
           </div>
@@ -2434,7 +2532,7 @@ export default function Prodotti() {
           <div className="relative z-10 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
             <p
               data-products-meta
-              className="antonio max-w-[920px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
+              className="avant-legato-font max-w-[920px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
             >
               Software, intelligenza artificiale e
               mondi interattivi progettati per
@@ -2444,7 +2542,7 @@ export default function Prodotti() {
 
             <p
               data-products-meta
-              className="antonio2 shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
+              className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
               Enter the product lab ↓
             </p>
@@ -2568,7 +2666,7 @@ export default function Prodotti() {
                 <p
                   data-product-ghost
                   aria-hidden="true"
-                  className="antonio2 pointer-events-none absolute left-[2vw] top-[12vh] z-[3] whitespace-nowrap text-[19vw] uppercase leading-none tracking-[-0.07em] text-white/[0.045]"
+                  className="avant-legato-font pointer-events-none absolute left-[2vw] top-[12vh] z-[3] whitespace-nowrap text-[13vw] uppercase leading-none tracking-[-0.07em] text-white/[0.045]"
                   style={{
                     opacity:
                       productIndex === 0 ? 1 : 0,
@@ -2579,7 +2677,7 @@ export default function Prodotti() {
 
                 {/* top left */}
 
-                <div className="antonio2 absolute left-7 top-7 z-50 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
+                <div data-static-slide className="avant-legato-font absolute left-7 top-7 z-50 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
                   <span>{product.id}</span>
 
                   <span
@@ -2597,7 +2695,7 @@ export default function Prodotti() {
 
                 {/* meta */}
 
-                <p className="antonio absolute right-7 top-7 z-50 max-w-[48vw] text-right text-[9px] uppercase tracking-[0.23em] text-gray-300 md:right-12 md:top-12 md:text-[11px] lg:right-[4.4vw] lg:top-[4.4vw]">
+                <p data-static-slide className="avant-legato-font absolute right-7 top-7 z-50 max-w-[48vw] text-right text-[9px] uppercase tracking-[0.23em] text-gray-300 md:right-12 md:top-12 md:text-[11px] lg:right-[4.4vw] lg:top-[4.4vw]">
                   {product.meta}
                 </p>
 
@@ -2617,7 +2715,7 @@ export default function Prodotti() {
                   }}
                 >
                   <p
-                    className="antonio2 mb-3 text-[10px] uppercase tracking-[0.34em] md:text-xs"
+                    className="avant-legato-font mb-3 text-[10px] uppercase tracking-[0.34em] md:text-xs"
                     style={{
                       color:
                         product.accent,
@@ -2628,12 +2726,12 @@ export default function Prodotti() {
 
                   <h2
                     data-product-title
-                    className="antonio2 ombra2 max-w-[1200px] text-[clamp(3.1rem,9.2vw,9.4rem)] uppercase leading-[0.76] tracking-[-0.06em]"
+                    className="avant-legato-font ombra2 max-w-[1200px] text-[clamp(2.6rem,6.4vw,6.6rem)] uppercase leading-[0.76] tracking-[-0.06em]"
                   >
                     {product.title}
                   </h2>
 
-                  <p className="antonio mt-6 max-w-[710px] text-lg leading-snug text-gray-200 md:text-2xl lg:text-3xl">
+                  <p className="avant-legato-font mt-6 max-w-[710px] text-lg leading-snug text-gray-200 md:text-2xl lg:text-3xl">
                     {product.description}
                   </p>
 
@@ -2642,7 +2740,7 @@ export default function Prodotti() {
                       (tag) => (
                         <span
                           key={tag}
-                          className="antonio2 border px-3 py-2 text-[9px] uppercase tracking-[0.24em] text-gray-200 md:text-[10px]"
+                          className="avant-legato-font border px-3 py-2 text-[9px] uppercase tracking-[0.24em] text-gray-200 md:text-[10px]"
                           style={{
                             borderColor:
                               `${product.accent}66`,
@@ -2660,7 +2758,7 @@ export default function Prodotti() {
                   <Link
                     to={product.link}
                     data-magnetic
-                    className="oxo-products-link antonio2 relative mt-8 inline-flex items-center gap-5 pb-2 text-xs uppercase tracking-[0.28em] md:mt-10 md:text-sm"
+                    className="oxo-products-link avant-legato-font relative mt-8 inline-flex items-center gap-5 pb-2 text-xs uppercase tracking-[0.28em] md:mt-10 md:text-sm"
                     style={{
                       color:
                         product.accent,
@@ -2698,11 +2796,11 @@ export default function Prodotti() {
                         data-product-spec-row
                         className="grid grid-cols-[76px_1fr] gap-5 border-b border-white/18 py-4"
                       >
-                        <span className="antonio2 text-[9px] uppercase tracking-[0.26em] text-gray-500">
+                        <span className="avant-legato-font text-[9px] uppercase tracking-[0.26em] text-gray-500">
                           {label}
                         </span>
 
-                        <span className="antonio2 text-right text-[10px] uppercase tracking-[0.22em] text-gray-200">
+                        <span className="avant-legato-font text-right text-[10px] uppercase tracking-[0.22em] text-gray-200">
                           {value}
                         </span>
                       </div>
@@ -2725,7 +2823,7 @@ export default function Prodotti() {
                 >
                   <span
                     data-product-rail-label
-                    className="antonio2 text-[9px] uppercase tracking-[0.24em] text-white/50"
+                    className="avant-legato-font text-[9px] uppercase tracking-[0.24em] text-white/50"
                   >
                     {product.id}
                   </span>
@@ -2750,12 +2848,12 @@ export default function Prodotti() {
           <div className="pointer-events-none absolute bottom-8 right-8 z-[70] flex items-end gap-2 md:bottom-12 md:right-12 lg:bottom-[4.5vh] lg:right-[3vw]">
             <span
               data-product-counter
-              className="antonio2 text-5xl leading-none tracking-[-0.06em] md:text-7xl"
+              className="avant-legato-font text-5xl leading-none tracking-[-0.06em] md:text-7xl"
             >
               01
             </span>
 
-            <span className="antonio2 mb-1 text-[10px] uppercase tracking-[0.26em] text-gray-500 md:mb-2">
+            <span className="avant-legato-font mb-1 text-[10px] uppercase tracking-[0.26em] text-gray-500 md:mb-2">
               /{" "}
               {String(
                 PRODUCTS.length
@@ -2789,21 +2887,21 @@ export default function Prodotti() {
 
             <header className="flex min-h-[100svh] w-full shrink-0 flex-col justify-between px-6 py-8 md:px-10 md:py-10 lg:w-[72vw] lg:px-[5vw] lg:py-[5vh]">
               <div className="flex items-start justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.3em] text-gray-500 md:text-[11px]">
-                <span>
+                <span data-static-slide>
                   THE PRODUCT ENGINE
                 </span>
 
-                <span>
+                <span data-static-slide>
                   04 CAPABILITIES
                 </span>
               </div>
 
               <div>
-                <p className="antonio2 mb-5 text-[10px] uppercase tracking-[0.35em] text-cyan-300 md:text-xs">
+                <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.35em] text-cyan-300 md:text-xs">
                   Dietro ogni prodotto
                 </p>
 
-                <h2 className="antonio2 ombra2 text-[20vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[15vw] lg:text-[10vw]">
+                <h2 data-static-reveal className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[10.8vw] lg:text-[5.8vw]">
                   COME
                   <br />
                   PRENDE
@@ -2812,7 +2910,7 @@ export default function Prodotti() {
                 </h2>
               </div>
 
-              <p className="antonio max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
+              <p data-static-reveal className="avant-legato-font max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
                 Quattro competenze che non
                 lavorano in sequenza: si
                 contaminano dall’inizio alla
@@ -2842,7 +2940,7 @@ export default function Prodotti() {
 
                     <p
                       aria-hidden="true"
-                      className="oxo-capability-ghost antonio2 pointer-events-none absolute -right-[1vw] -top-[4vw] text-[28vw] leading-none tracking-[-0.09em] text-white/[0.055]"
+                      className="oxo-capability-ghost avant-legato-font pointer-events-none absolute -right-[1vw] -top-[4vw] text-[23vw] leading-none tracking-[-0.09em] text-white/[0.055]"
                     >
                       {capability.id}
                     </p>
@@ -2850,7 +2948,7 @@ export default function Prodotti() {
                     <div className="relative z-10 flex h-full flex-col justify-between">
                       <div className="flex items-center justify-between border-b border-white/20 pb-5">
                         <div className="flex items-center gap-3">
-                          <span className="antonio2 text-[10px] tracking-[0.28em]">
+                          <span className="avant-legato-font text-[10px] tracking-[0.28em]">
                             {
                               capability.id
                             }
@@ -2865,14 +2963,14 @@ export default function Prodotti() {
                           />
                         </div>
 
-                        <span className="oxo-capability-arrow antonio2 text-2xl transition-transform duration-500 ease-out md:text-4xl">
+                        <span className="oxo-capability-arrow avant-legato-font text-2xl transition-transform duration-500 ease-out md:text-4xl">
                           ↗
                         </span>
                       </div>
 
                       <div data-capability-detail>
                         <p
-                          className="antonio2 mb-4 text-[10px] uppercase tracking-[0.32em] md:text-xs"
+                          data-static-reveal className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.32em] md:text-xs"
                           style={{
                             color:
                               capability.accent,
@@ -2883,24 +2981,24 @@ export default function Prodotti() {
                           }
                         </p>
 
-                        <h3 className="antonio2 ombra2 text-[14vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[9vw] lg:text-[6.4vw]">
+                        <h3 data-static-reveal className="avant-legato-font ombra2 text-[8.8vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[6.4vw] lg:text-[4.6vw]">
                           {
                             capability.title
                           }
                         </h3>
 
-                        <p className="antonio mt-6 max-w-[660px] text-lg leading-snug text-gray-200 md:text-2xl">
+                        <p data-static-reveal className="avant-legato-font mt-6 max-w-[660px] text-lg leading-snug text-gray-200 md:text-2xl">
                           {
                             capability.copy
                           }
                         </p>
 
-                        <div className="mt-8 flex flex-wrap gap-2">
+                        <div data-static-reveal className="mt-8 flex flex-wrap gap-2">
                           {capability.tags.map(
                             (tag) => (
                               <span
                                 key={tag}
-                                className="antonio2 border border-white/20 px-3 py-2 text-[9px] uppercase tracking-[0.23em] text-gray-300"
+                                className="avant-legato-font border border-white/20 px-3 py-2 text-[9px] uppercase tracking-[0.23em] text-gray-300"
                               >
                                 {tag}
                               </span>
@@ -2918,11 +3016,11 @@ export default function Prodotti() {
 
             <div className="flex min-h-[72svh] w-full shrink-0 items-center justify-center border-t border-white/15 px-6 py-20 md:px-10 lg:min-h-[100svh] lg:w-[58vw] lg:border-l lg:border-t-0 lg:px-[6vw] lg:py-0">
               <div className="max-w-[620px]">
-                <p className="antonio2 mb-5 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
+                <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
                   One studio / one system
                 </p>
 
-                <p className="antonio text-[clamp(2.4rem,5.2vw,5.4rem)] leading-[0.96] tracking-[-0.04em]">
+                <p data-static-reveal className="avant-legato-font text-[clamp(2.2rem,4.5vw,4.7rem)] leading-[0.96] tracking-[-0.04em]">
                   La qualità nasce quando
                   strategia, design e codice
                   smettono di passarsi il
@@ -2944,11 +3042,11 @@ export default function Prodotti() {
 
           <div className="relative z-10 grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-[8vw]">
             <div>
-              <p className="antonio2 mb-5 text-[10px] uppercase tracking-[0.35em] text-violet-400 md:text-xs">
+              <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.35em] text-violet-400 md:text-xs">
                 Product principles
               </p>
 
-              <h2 className="antonio2 ombra2 text-[18vw] uppercase leading-[0.74] tracking-[-0.07em] md:text-[12vw] lg:sticky lg:top-[11vh] lg:text-[8vw]">
+              <h2 className="avant-legato-font ombra2 text-[13vw] uppercase leading-[0.74] tracking-[-0.07em] md:text-[8.8vw] lg:sticky lg:top-[11vh] lg:text-[5.8vw]">
                 <SplitWords text="NON SOLO BELLO. NECESSARIO." />
               </h2>
             </div>
@@ -2981,18 +3079,18 @@ export default function Prodotti() {
                       data-principle-content
                       className="grid grid-cols-[50px_1fr] gap-4 md:grid-cols-[78px_1fr] md:gap-8"
                     >
-                      <span className="antonio2 pt-2 text-[10px] tracking-[0.28em] text-gray-500 md:text-xs">
+                      <span className="avant-legato-font pt-2 text-[9px] tracking-[0.24em] text-gray-500 md:text-[10px]">
                         {principle.id}
                       </span>
 
                       <div>
-                        <h3 className="oxo-principle-title antonio2 text-[12vw] uppercase leading-[0.8] tracking-[-0.06em] md:text-[7vw] lg:text-[5.6vw]">
+                        <h3 className="oxo-principle-title avant-legato-font text-[7.2vw] uppercase leading-[0.86] tracking-[-0.045em] md:text-[4.3vw] lg:text-[3.45vw]">
                           {
                             principle.title
                           }
                         </h3>
 
-                        <p className="antonio mt-5 max-w-[690px] text-lg leading-snug text-gray-400 md:text-2xl">
+                        <p className="avant-legato-font mt-5 max-w-[660px] text-[15px] leading-[1.45] text-gray-400 md:text-lg lg:text-xl">
                           {
                             principle.copy
                           }
@@ -3045,7 +3143,7 @@ export default function Prodotti() {
               </span>
             </div>
 
-            <h2 className="antonio2 ombra2 overflow-hidden text-[19.5vw] uppercase leading-[0.71] tracking-[-0.075em] md:text-[16.5vw] lg:text-[14vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[13.5vw] uppercase leading-[0.71] tracking-[-0.075em] md:text-[11.5vw] lg:text-[8.8vw]">
               <SplitLetters
                 text="COSTRUIAMOLO"
                 attribute="data-final-letter"
@@ -3053,7 +3151,7 @@ export default function Prodotti() {
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
-              <p className="antonio max-w-[820px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p data-static-reveal className="avant-legato-font max-w-[820px] text-xl leading-snug text-gray-300 md:text-3xl">
                 Hai un software da rendere
                 reale, un processo da
                 automatizzare o un’esperienza
@@ -3063,7 +3161,7 @@ export default function Prodotti() {
               <Link
                 to="/contatti"
                 data-magnetic
-                className="oxo-products-link antonio2 relative inline-flex w-fit items-center gap-5 pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
+                data-static-reveal className="oxo-products-link avant-legato-font relative inline-flex w-fit items-center gap-5 pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
               >
                 <span>
                   Parliamo del progetto
