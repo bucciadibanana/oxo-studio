@@ -1123,8 +1123,23 @@ export default function Home() {
             filter: blur(28px) saturate(1.8);
           }
 
+          .oxo-capability-v2 {
+            transition:
+              border-radius .7s cubic-bezier(.16,1,.3,1),
+              border-color .5s ease,
+              box-shadow .7s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-capability-v2:hover {
+            border-radius: 86px;
+            border-color: rgba(255,255,255,.28);
+            box-shadow:
+              0 30px 90px rgba(0,0,0,.35),
+              inset 0 0 70px rgba(255,255,255,.018);
+          }
+
           .oxo-capability-v2:hover .oxo-capability-v2-title {
-            transform: translateX(1.5vw) skewX(-4deg);
+            transform: translateX(1.1vw) skewX(-2.5deg);
           }
 
           .oxo-capability-v2:hover .oxo-capability-v2-arrow {
@@ -1451,7 +1466,7 @@ export default function Home() {
                     });
                   }
                 }}
-                className={`oxo-capability-v2 group relative min-h-[60svh] overflow-hidden border border-white/18 bg-[#030304] p-7 md:min-h-[66svh] md:p-10 lg:min-h-[72svh] lg:p-[3vw] ${
+                className={`oxo-capability-v2 group relative min-h-[60svh] overflow-hidden rounded-[34px] border border-white/18 bg-[#030304] p-7 md:min-h-[66svh] md:rounded-[46px] md:p-10 lg:min-h-[72svh] lg:rounded-[64px] lg:p-[3vw] ${
                   index % 2 === 1 ? "lg:mt-[6vh]" : ""
                 }`}
                 style={{
@@ -1478,6 +1493,19 @@ export default function Home() {
                 />
 
                 <div className="oxo-v2-grid pointer-events-none absolute inset-0 opacity-65" />
+
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-[12px] rounded-[26px] border border-white/[0.07] md:inset-[16px] md:rounded-[36px] lg:inset-[20px] lg:rounded-[50px]"
+                />
+
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -bottom-[14%] -left-[8%] h-[44%] w-[44%] rounded-full border border-white/[0.06]"
+                  style={{
+                    boxShadow: `0 0 70px ${item.soft}`,
+                  }}
+                />
 
                 <p
                   data-capability-number

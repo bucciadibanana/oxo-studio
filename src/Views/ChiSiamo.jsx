@@ -8,58 +8,30 @@ import SeoMetaTags from "../components/SeoMetaTags";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STORY = [
+const FIELD_PHASES = [
   {
     id: "01",
-    eyebrow: "IDENTITÀ",
-    title: "NON SEGUIAMO IL RUMORE",
-    statement: "DIAMO FORMA AL SEGNALE.",
-    description:
-      "Oxo Studio unisce pensiero creativo e sviluppo tecnologico per costruire prodotti digitali con una voce precisa, riconoscibile e utile.",
-    meta: "CREATIVE TECHNOLOGY STUDIO",
-    video: "/videos/about/oxo-studio.mp4",
+    eyebrow: "INPUT",
+    title: "COMPLEXITY",
+    statement: "READ THE SIGNAL",
+    copy: "Entriamo nel problema senza semplificarlo troppo presto. Osserviamo flussi, attriti, dati e comportamento.",
     accent: "#35d8ff",
-    fallback:
-      "radial-gradient(circle at 72% 30%, rgba(53,216,255,.30), transparent 33%), radial-gradient(circle at 18% 76%, rgba(80,70,255,.19), transparent 38%), linear-gradient(135deg, #031018 0%, #050711 50%, #010101 100%)",
   },
   {
     id: "02",
-    eyebrow: "SOFTWARE",
-    title: "DAL PROBLEMA AL SISTEMA",
-    statement: "LA COMPLESSITÀ DIVENTA CHIARA.",
-    description:
-      "Progettiamo interfacce, architetture e flussi capaci di trasformare processi complessi in strumenti semplici da usare e solidi nel tempo.",
-    meta: "PRODUCT / UX / ENGINEERING",
-    video: "/videos/about/software.mp4",
+    eyebrow: "PROCESS",
+    title: "REDUCE",
+    statement: "REMOVE THE NOISE",
+    copy: "Riduciamo il rumore fino a lasciare soltanto ciò che serve: struttura, gerarchia, ritmo e funzione.",
     accent: "#8b5cf6",
-    fallback:
-      "radial-gradient(circle at 25% 42%, rgba(139,92,246,.34), transparent 36%), radial-gradient(circle at 82% 74%, rgba(255,79,216,.13), transparent 35%), linear-gradient(135deg, #10041b 0%, #080810 52%, #010101 100%)",
   },
   {
     id: "03",
-    eyebrow: "INTELLIGENZA ARTIFICIALE",
-    title: "L'AI NON È DECORAZIONE",
-    statement: "È PARTE DEL PROGETTO.",
-    description:
-      "La integriamo dove crea valore reale: automazione, classificazione, ricerca, elaborazione dei dati e supporto alle decisioni.",
-    meta: "DATA / AUTOMATION / KNOWLEDGE",
-    video: "/videos/about/artificial-intelligence.mp4",
-    accent: "#20f0c7",
-    fallback:
-      "radial-gradient(circle at 76% 56%, rgba(32,240,199,.28), transparent 35%), radial-gradient(circle at 12% 22%, rgba(41,121,255,.24), transparent 38%), linear-gradient(135deg, #001313 0%, #020711 52%, #010101 100%)",
-  },
-  {
-    id: "04",
-    eyebrow: "INTERACTIVE WORLDS",
-    title: "TECNOLOGIA CHE SI SENTE",
-    statement: "NON SOLO CHE SI VEDE.",
-    description:
-      "Videogame, prototipi e ambienti interattivi diventano territori in cui design, ritmo, suono e codice costruiscono un'esperienza unica.",
-    meta: "GAME / MOTION / REAL TIME",
-    video: "/videos/about/interactive-worlds.mp4",
+    eyebrow: "OUTPUT",
+    title: "CLARITY",
+    statement: "BUILD THE SYSTEM",
+    copy: "Il risultato non è un effetto. È un sistema digitale leggibile, riconoscibile e capace di evolvere.",
     accent: "#ff4fd8",
-    fallback:
-      "radial-gradient(circle at 30% 35%, rgba(255,79,216,.29), transparent 36%), radial-gradient(circle at 78% 75%, rgba(87,74,255,.22), transparent 38%), linear-gradient(135deg, #180417 0%, #08040f 54%, #010101 100%)",
   },
 ];
 
@@ -142,7 +114,6 @@ export default function ChiSiamo() {
   const pageRef = useRef(null);
   const heroRef = useRef(null);
   const storyRef = useRef(null);
-  const manifestoRef = useRef(null);
   const teamRef = useRef(null);
   const processRef = useRef(null);
   const finalRef = useRef(null);
@@ -151,17 +122,18 @@ export default function ChiSiamo() {
     const page = pageRef.current;
     const hero = heroRef.current;
     const story = storyRef.current;
-    const manifesto = manifestoRef.current;
     const team = teamRef.current;
     const process = processRef.current;
     const finalSection = finalRef.current;
 
-    if (!page || !hero || !story || !manifesto || !team || !process || !finalSection) {
+    if (!page || !hero || !story || !team || !process || !finalSection) {
       return undefined;
     }
 
     const mm = gsap.matchMedia();
     let storyVideos = [];
+    let fieldPointerMoveHandler = null;
+    let fieldPointerLeaveHandler = null;
 
     const ctx = gsap.context(() => {
       const heroLetters = gsap.utils.toArray(
@@ -224,6 +196,49 @@ export default function ChiSiamo() {
         },
       });
 
+      const fieldNodes = gsap.utils.toArray(
+        story.querySelectorAll("[data-field-node]")
+      );
+
+      if (fieldNodes.length && !window.matchMedia("(pointer: coarse)").matches) {
+        fieldPointerMoveHandler = (event) => {
+          fieldNodes.forEach((node) => {
+            const rect = node.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const distance = Math.hypot(event.clientX - cx, event.clientY - cy);
+            const influence = Math.max(0, 1 - distance / 220);
+
+            gsap.to(node, {
+              scale: 1 + influence * 2.8,
+              opacity: 0.45 + influence * 0.55,
+              boxShadow: influence > 0.02
+                ? `0 0 ${18 + influence * 42}px currentColor, 0 0 ${42 + influence * 90}px currentColor`
+                : "0 0 14px currentColor",
+              duration: 0.22,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          });
+        };
+
+        fieldPointerLeaveHandler = () => {
+          gsap.to(fieldNodes, {
+            scale: 1,
+            opacity: 0.55,
+            boxShadow: "0 0 14px currentColor",
+            duration: 0.45,
+            ease: "power3.out",
+            overwrite: true,
+          });
+        };
+
+        story.addEventListener("pointermove", fieldPointerMoveHandler, {
+          passive: true,
+        });
+        story.addEventListener("pointerleave", fieldPointerLeaveHandler);
+      }
+
       mm.add(
         {
           desktop: "(min-width: 1024px)",
@@ -231,361 +246,361 @@ export default function ChiSiamo() {
         },
         (mediaContext) => {
           const { desktop, reduceMotion } = mediaContext.conditions;
-          const panels = gsap.utils.toArray(
-            story.querySelectorAll("[data-story-panel]")
+          const phases = gsap.utils.toArray(
+            story.querySelectorAll("[data-field-phase]")
           );
-          const contents = panels
-            .map((panel) => panel.querySelector("[data-story-content]"))
-            .filter(Boolean);
-          const statements = panels
-            .map((panel) => panel.querySelector("[data-story-statement]"))
-            .filter(Boolean);
-          const cutLines = panels
-            .map((panel) => panel.querySelector("[data-story-cut-line]"))
-            .filter(Boolean);
-          const railItems = gsap.utils.toArray(
-            story.querySelectorAll("[data-story-rail-item]")
+          const blades = gsap.utils.toArray(
+            story.querySelectorAll("[data-field-blade]")
           );
-          const progress = story.querySelector("[data-story-progress]");
-
-          storyVideos = panels
-            .map((panel) => panel.querySelector("video"))
+          const phaseTitles = phases
+            .map((phase) => phase.querySelector("[data-field-title]"))
             .filter(Boolean);
+          const phaseCopies = phases
+            .map((phase) => phase.querySelector("[data-field-copy]"))
+            .filter(Boolean);
+          const phaseStatements = phases
+            .map((phase) => phase.querySelector("[data-field-statement]"))
+            .filter(Boolean);
+          const core = story.querySelector("[data-field-core]");
+          const coreInner = story.querySelector("[data-field-core-inner]");
+          const scan = story.querySelector("[data-field-scan]");
+          const progress = story.querySelector("[data-field-progress]");
+          const counter = story.querySelector("[data-field-counter]");
+          const ghost = story.querySelector("[data-field-ghost]");
 
-          if (!panels.length) return undefined;
+          if (!phases.length) return undefined;
 
-          let activeVideo = -1;
-          let activePanel = 0;
-          let timeline;
-
-          const setRail = (index) => {
-            railItems.forEach((item, itemIndex) => {
-              const line = item.querySelector("[data-story-rail-line]");
-              const label = item.querySelector("[data-story-rail-label]");
-              const active = itemIndex === index;
-              const accent = STORY[itemIndex]?.accent || "#ffffff";
-
-              gsap.to(item, {
-                opacity: active ? 1 : 0.35,
-                duration: 0.28,
-                overwrite: true,
-              });
-              if (line) {
-                gsap.to(line, {
-                  scaleX: active ? 1 : 0.3,
-                  backgroundColor: active
-                    ? accent
-                    : "rgba(255,255,255,.28)",
-                  duration: 0.3,
-                  overwrite: true,
-                });
-              }
-              if (label) {
-                gsap.to(label, {
-                  color: active ? accent : "rgba(255,255,255,.55)",
-                  duration: 0.3,
-                  overwrite: true,
-                });
-              }
-            });
-          };
-
-          const pauseAll = () => {
-            storyVideos.forEach((video) => video.pause());
-            activeVideo = -1;
-          };
-
-          const playVideo = (index) => {
-            if (activeVideo === index) return;
-            activeVideo = index;
-
-            storyVideos.forEach((video, videoIndex) => {
-              if (videoIndex !== index) {
-                video.pause();
-                return;
-              }
-
-              const request = video.play();
-              if (request && typeof request.catch === "function") {
-                request.catch(() => {});
-              }
-            });
+          const setActivePhase = (index) => {
+            if (counter) {
+              counter.textContent = String(index + 1).padStart(2, "0");
+            }
           };
 
           if (reduceMotion) {
             gsap.set(story, { height: "auto", overflow: "visible" });
-            gsap.set(panels, {
+            gsap.set(phases, {
               position: "relative",
               autoAlpha: 1,
-              clipPath: FULL_CLIP,
-              minHeight: "100svh",
+              minHeight: "82svh",
+              clipPath: "inset(0 0 0 0)",
             });
-            gsap.set(contents, { autoAlpha: 1, x: 0, y: 0 });
-            gsap.set(statements, { autoAlpha: 1, x: 0 });
-            gsap.set(cutLines, { autoAlpha: 0 });
+            gsap.set(blades, { display: "none" });
             gsap.set(progress, { scaleX: 1, transformOrigin: "left center" });
-
-            return () => pauseAll();
+            return undefined;
           }
 
-          gsap.set(panels, { autoAlpha: 0, clipPath: FULL_CLIP });
-          gsap.set(contents, {
-            autoAlpha: 0,
-            y: desktop ? 90 : 46,
+          gsap.set(phases, { autoAlpha: 0 });
+          gsap.set(phases[0], { autoAlpha: 1 });
+          gsap.set(phaseTitles, {
+            yPercent: 115,
+            rotateX: -72,
+            transformOrigin: "50% 100%",
           });
-          gsap.set(statements, {
-            autoAlpha: 0,
-            xPercent: desktop ? 8 : 3,
-          });
-          gsap.set(cutLines, { autoAlpha: 0, scaleX: 0 });
-          gsap.set(storyVideos, {
-            scale: 1.1,
-            filter: "brightness(1)",
-            transformOrigin: "50% 50%",
-          });
-
-          panels.forEach((panel, index) => {
-            gsap.set(panel, { zIndex: index + 1 });
-          });
-
-          gsap.set(panels[0], { autoAlpha: 1, clipPath: FULL_CLIP });
-          gsap.set(contents[0], { autoAlpha: 1, x: 0, y: 0 });
-          gsap.set(statements[0], { autoAlpha: 1, xPercent: 0 });
-          if (storyVideos[0]) gsap.set(storyVideos[0], { scale: 1 });
+          gsap.set(phaseTitles[0], { yPercent: 0, rotateX: 0 });
+          gsap.set(phaseCopies, { y: 45, autoAlpha: 0 });
+          gsap.set(phaseCopies[0], { y: 0, autoAlpha: 1 });
+          gsap.set(phaseStatements, { xPercent: 10, autoAlpha: 0 });
+          gsap.set(phaseStatements[0], { xPercent: 0, autoAlpha: 1 });
           gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
-          setRail(0);
+          gsap.set(blades, {
+            scaleY: 0.12,
+            transformOrigin: "center center",
+          });
+          setActivePhase(0);
 
-          const cuts = desktop ? DESKTOP_CUTS : MOBILE_CUTS;
-
-          timeline = gsap.timeline({
+          const fieldTimeline = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
               trigger: story,
               start: "top top",
-              end: () => {
-                const distance =
-                  window.innerHeight * panels.length * (desktop ? 1.2 : 0.95);
-                return `+=${Math.max(distance, desktop ? 3800 : 2900)}`;
-              },
+              end: () =>
+                `+=${window.innerHeight * (desktop ? 3.2 : 2.45)}`,
               pin: true,
-              scrub: desktop ? 1 : 0.65,
+              scrub: desktop ? 1 : 0.72,
               anticipatePin: 1,
               invalidateOnRefresh: true,
-              onEnter: () => playVideo(0),
-              onEnterBack: () => playVideo(activePanel),
-              onLeave: pauseAll,
-              onLeaveBack: pauseAll,
               onUpdate: (self) => {
-                gsap.set(progress, { scaleX: self.progress });
-                if (!timeline) return;
-
-                let nextPanel = 0;
-                const time = timeline.time();
-
-                for (let index = 1; index < panels.length; index += 1) {
-                  const labelTime = timeline.labels[`story-${index}`];
-                  if (typeof labelTime === "number" && time >= labelTime) {
-                    nextPanel = index;
-                  }
+                if (progress) {
+                  gsap.set(progress, { scaleX: self.progress });
                 }
 
-                if (nextPanel !== activePanel) {
-                  activePanel = nextPanel;
-                  setRail(activePanel);
-                  playVideo(activePanel);
-                }
+                const active = Math.min(
+                  FIELD_PHASES.length - 1,
+                  Math.floor(self.progress * FIELD_PHASES.length)
+                );
+                setActivePhase(active);
               },
             },
           });
 
-          if (storyVideos[0]) {
-            timeline.to(storyVideos[0], {
-              scale: desktop ? 1.045 : 1.03,
-              duration: 0.85,
-            });
+          blades.forEach((blade, index) => {
+            fieldTimeline.to(
+              blade,
+              {
+                scaleY: index % 2 === 0 ? 1 : 0.72,
+                yPercent: index % 2 === 0 ? -10 : 10,
+                duration: 0.65,
+                ease: "power3.inOut",
+              },
+              0
+            );
+          });
+
+          if (core) {
+            fieldTimeline.fromTo(
+              core,
+              {
+                scale: 0.58,
+                rotate: -10,
+                borderRadius: "38%",
+              },
+              {
+                scale: 1,
+                rotate: 0,
+                borderRadius: "3%",
+                duration: 0.72,
+                ease: "power3.inOut",
+              },
+              0
+            );
           }
 
-          panels.forEach((panel, index) => {
+          if (coreInner) {
+            fieldTimeline.to(
+              coreInner,
+              {
+                rotate: 90,
+                scale: 0.72,
+                duration: 0.72,
+              },
+              0
+            );
+          }
+
+          if (scan) {
+            fieldTimeline.fromTo(
+              scan,
+              { yPercent: -120, autoAlpha: 0 },
+              {
+                yPercent: 120,
+                autoAlpha: 0.9,
+                duration: 0.72,
+                ease: "none",
+              },
+              0
+            );
+          }
+
+          if (ghost) {
+            fieldTimeline.to(
+              ghost,
+              {
+                xPercent: -18,
+                skewX: -8,
+                duration: 0.72,
+              },
+              0
+            );
+          }
+
+          phases.forEach((phase, index) => {
             if (index === 0) return;
 
-            const previous = panels[index - 1];
-            const currentContent = panel.querySelector("[data-story-content]");
-            const previousContent = previous.querySelector(
-              "[data-story-content]"
-            );
-            const currentStatement = panel.querySelector(
-              "[data-story-statement]"
-            );
+            const previous = phases[index - 1];
+            const previousTitle = previous.querySelector("[data-field-title]");
+            const previousCopy = previous.querySelector("[data-field-copy]");
             const previousStatement = previous.querySelector(
-              "[data-story-statement]"
+              "[data-field-statement]"
             );
-            const currentVideo = panel.querySelector("video");
-            const previousVideo = previous.querySelector("video");
-            const cutLine = panel.querySelector("[data-story-cut-line]");
+            const currentTitle = phase.querySelector("[data-field-title]");
+            const currentCopy = phase.querySelector("[data-field-copy]");
+            const currentStatement = phase.querySelector(
+              "[data-field-statement]"
+            );
+            const accent = FIELD_PHASES[index].accent;
             const direction = index % 2 === 0 ? -1 : 1;
-            const label = `story-${index}`;
+            const label = `field-${index}`;
 
-            timeline.addLabel(label, `+=${desktop ? 0.2 : 0.12}`);
-            timeline.set(panel, { autoAlpha: 1 }, label);
+            fieldTimeline.addLabel(label, `+=${desktop ? 0.22 : 0.14}`);
 
-            timeline.fromTo(
-              panel,
-              { clipPath: cuts[(index - 1) % cuts.length] },
-              { clipPath: FULL_CLIP, duration: 1 },
-              label
-            );
-
-            if (currentVideo) {
-              timeline.fromTo(
-                currentVideo,
-                { scale: desktop ? 1.2 : 1.14 },
-                { scale: 1, duration: 1.05 },
-                label
-              );
-            }
-
-            if (previousVideo) {
-              timeline.to(
-                previousVideo,
+            if (previousTitle) {
+              fieldTimeline.to(
+                previousTitle,
                 {
-                  scale: desktop ? 1.11 : 1.06,
-                  filter: "brightness(.37)",
-                  duration: 1,
+                  yPercent: -110,
+                  rotateX: 62,
+                  autoAlpha: 0,
+                  duration: 0.36,
+                  ease: "power2.in",
                 },
                 label
               );
             }
 
-            if (previousContent) {
-              timeline.to(
-                previousContent,
+            if (previousCopy) {
+              fieldTimeline.to(
+                previousCopy,
                 {
+                  y: -35,
                   autoAlpha: 0,
-                  y: desktop ? -54 : -28,
-                  duration: 0.4,
-                  ease: "power2.out",
+                  duration: 0.3,
                 },
                 label
               );
             }
 
             if (previousStatement) {
-              timeline.to(
+              fieldTimeline.to(
                 previousStatement,
                 {
+                  xPercent: direction * -12,
                   autoAlpha: 0,
-                  xPercent: direction * -5,
-                  duration: 0.36,
+                  duration: 0.28,
                 },
                 label
               );
             }
 
-            if (currentContent) {
-              timeline.fromTo(
-                currentContent,
+            fieldTimeline.set(previous, { autoAlpha: 0 }, `${label}+=0.34`);
+            fieldTimeline.set(phase, { autoAlpha: 1 }, `${label}+=0.28`);
+
+            if (currentTitle) {
+              fieldTimeline.fromTo(
+                currentTitle,
                 {
+                  yPercent: 120,
+                  rotateX: -76,
+                  skewX: direction * 8,
                   autoAlpha: 0,
-                  x: direction * (desktop ? 118 : 38),
-                  y: desktop ? 42 : 24,
                 },
                 {
+                  yPercent: 0,
+                  rotateX: 0,
+                  skewX: 0,
                   autoAlpha: 1,
-                  x: 0,
+                  duration: 0.52,
+                  ease: "power4.out",
+                },
+                `${label}+=0.31`
+              );
+            }
+
+            if (currentCopy) {
+              fieldTimeline.fromTo(
+                currentCopy,
+                {
+                  y: 46,
+                  autoAlpha: 0,
+                },
+                {
                   y: 0,
-                  duration: 0.68,
+                  autoAlpha: 1,
+                  duration: 0.46,
                   ease: "power3.out",
                 },
-                `${label}+=.27`
+                `${label}+=0.38`
               );
             }
 
             if (currentStatement) {
-              timeline.fromTo(
+              fieldTimeline.fromTo(
                 currentStatement,
-                { autoAlpha: 0, xPercent: direction * 9 },
                 {
-                  autoAlpha: 1,
+                  xPercent: direction * 12,
+                  autoAlpha: 0,
+                },
+                {
                   xPercent: 0,
-                  duration: 0.75,
+                  autoAlpha: 1,
+                  duration: 0.5,
                   ease: "power3.out",
                 },
-                `${label}+=.3`
+                `${label}+=0.35`
               );
             }
 
-            if (cutLine) {
-              timeline.fromTo(
-                cutLine,
+            blades.forEach((blade, bladeIndex) => {
+              fieldTimeline.to(
+                blade,
                 {
-                  autoAlpha: 0,
-                  scaleX: 0,
-                  transformOrigin:
-                    direction > 0 ? "left center" : "right center",
-                },
-                {
-                  autoAlpha: 1,
-                  scaleX: 1,
-                  duration: 0.42,
-                  ease: "power2.out",
+                  xPercent:
+                    direction *
+                    (bladeIndex % 2 === 0 ? 22 + bladeIndex * 5 : -18),
+                  scaleY: bladeIndex % 2 === index % 2 ? 0.38 : 1,
+                  backgroundColor:
+                    bladeIndex === index
+                      ? accent
+                      : "rgba(255,255,255,.055)",
+                  duration: 0.68,
+                  ease: "power3.inOut",
                 },
                 label
               );
-              timeline.to(
-                cutLine,
+            });
+
+            if (core) {
+              fieldTimeline.to(
+                core,
                 {
-                  autoAlpha: 0,
-                  scaleX: 0,
-                  transformOrigin:
-                    direction > 0 ? "right center" : "left center",
-                  duration: 0.42,
-                  ease: "power2.in",
+                  rotate: direction * 7,
+                  scale: index === 2 ? 1.16 : 0.88,
+                  borderColor: accent,
+                  duration: 0.68,
+                  ease: "power3.inOut",
                 },
-                `${label}+=.55`
+                label
               );
             }
 
-            timeline.set(previous, { autoAlpha: 0 }, `${label}+=.99`);
-            timeline.to({}, { duration: desktop ? 0.34 : 0.22 });
+            if (coreInner) {
+              fieldTimeline.to(
+                coreInner,
+                {
+                  rotate: index * 90 + direction * 28,
+                  scale: index === 2 ? 1.25 : 0.72,
+                  duration: 0.68,
+                },
+                label
+              );
+            }
+
+            if (scan) {
+              fieldTimeline.fromTo(
+                scan,
+                {
+                  yPercent: -120,
+                  autoAlpha: 0,
+                  backgroundColor: accent,
+                },
+                {
+                  yPercent: 120,
+                  autoAlpha: 0.85,
+                  duration: 0.62,
+                  ease: "none",
+                },
+                label
+              );
+            }
+
+            if (ghost) {
+              fieldTimeline.to(
+                ghost,
+                {
+                  xPercent: direction * (index === 2 ? -30 : 24),
+                  skewX: direction * -6,
+                  duration: 0.68,
+                },
+                label
+              );
+            }
+
+            fieldTimeline.to({}, { duration: desktop ? 0.38 : 0.25 });
           });
 
           return () => {
-            pauseAll();
-            if (timeline?.scrollTrigger) timeline.scrollTrigger.kill();
-            timeline?.kill();
+            fieldTimeline.scrollTrigger?.kill();
+            fieldTimeline.kill();
           };
-        }
-      );
-
-      const manifestoTrack = manifesto.querySelector(
-        "[data-manifesto-track]"
-      );
-      const manifestoCopy = manifesto.querySelector("[data-manifesto-copy]");
-
-      gsap.to(manifestoTrack, {
-        xPercent: -38,
-        ease: "none",
-        scrollTrigger: {
-          trigger: manifesto,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-        },
-      });
-
-      gsap.fromTo(
-        manifestoCopy,
-        { y: 70, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: manifesto,
-            start: "top 66%",
-            toggleActions: "play none none reverse",
-          },
         }
       );
 
@@ -734,6 +749,13 @@ export default function ChiSiamo() {
       window.removeEventListener("load", refresh);
       storyVideos.forEach((video) => video.pause());
 
+      if (fieldPointerMoveHandler) {
+        story.removeEventListener("pointermove", fieldPointerMoveHandler);
+      }
+      if (fieldPointerLeaveHandler) {
+        story.removeEventListener("pointerleave", fieldPointerLeaveHandler);
+      }
+
       // Eliminano soltanto animazioni, timeline e pin creati da questa pagina.
       mm.revert();
       ctx.revert();
@@ -787,11 +809,111 @@ export default function ChiSiamo() {
           .oxo-process-row:hover .oxo-process-arrow {
             transform: translateX(.6rem) rotate(-45deg);
           }
+          @keyframes oxoFieldFlicker {
+            0%, 84%, 100% { opacity: .28; }
+            86%, 90% { opacity: .95; }
+          }
+
+          .oxo-field-grid {
+            background-image:
+              linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: linear-gradient(to bottom, transparent, black 8%, black 92%, transparent);
+          }
+
+          .oxo-field-blade {
+            will-change: transform, background-color;
+            box-shadow:
+              inset 1px 0 rgba(255,255,255,.08),
+              inset -1px 0 rgba(255,255,255,.04);
+          }
+
+          .oxo-field-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.14);
+          }
+
+          .oxo-field-flicker {
+            animation: oxoFieldFlicker 3.8s linear infinite;
+          }
+
+          .oxo-field-node {
+            color: var(--node-color);
+            opacity: .55;
+            transition:
+              transform .22s cubic-bezier(.16,1,.3,1),
+              opacity .22s ease,
+              filter .22s ease;
+            will-change: transform, opacity, box-shadow;
+          }
+
+          .oxo-field-node:hover {
+            transform: scale(3.2);
+            opacity: 1;
+            filter: saturate(1.8) brightness(1.4);
+          }
+
+          /* SAFE CONTINUOUS FLOW: solo gradienti locali, nessun layer fixed */
+          .oxo-flow-safe {
+            position: relative;
+            isolation: isolate;
+          }
+
+          .oxo-flow-safe::before,
+          .oxo-flow-safe::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: min(26vh, 280px);
+            pointer-events: none;
+            z-index: 1;
+          }
+
+          .oxo-flow-safe::before {
+            top: 0;
+            background: linear-gradient(to bottom, var(--flow-in, transparent), transparent 92%);
+          }
+
+          .oxo-flow-safe::after {
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 8%, var(--flow-out, transparent));
+          }
+
+          .oxo-flow-hero-safe { --flow-out: rgba(53,216,255,.09); }
+          .oxo-flow-field-safe { --flow-in: rgba(53,216,255,.09); --flow-out: rgba(139,92,246,.10); }
+          .oxo-flow-team-safe { --flow-in: rgba(139,92,246,.10); --flow-out: rgba(139,92,246,.07); }
+          .oxo-flow-process-safe { --flow-in: rgba(139,92,246,.07); --flow-out: rgba(53,216,255,.07); }
+          .oxo-flow-final-safe { --flow-in: rgba(53,216,255,.07); }
+
+          .oxo-flow-glow {
+            position: absolute;
+            left: 50%;
+            width: min(90vw, 1200px);
+            height: min(38vw, 520px);
+            transform: translateX(-50%);
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: .22;
+            pointer-events: none;
+            z-index: 0;
+          }
+
+          @keyframes oxoFlowDrift {
+            0%, 100% { transform: translateX(-52%) scale(.92); opacity: .16; }
+            50% { transform: translateX(-48%) scale(1.08); opacity: .28; }
+          }
+
+          .oxo-flow-drift {
+            animation: oxoFlowDrift 10s ease-in-out infinite;
+          }
+
         `}</style>
 
         <section
           ref={heroRef}
-          className="oxo-about-noise relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden px-6 pb-8 pt-7 md:px-10 md:pb-10 md:pt-9 lg:px-[4vw] lg:pb-[4vh] lg:pt-[3.5vh]"
+          className="oxo-flow-safe oxo-flow-hero-safe oxo-about-noise relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden px-6 pb-8 pt-7 md:px-10 md:pb-10 md:pt-9 lg:px-[4vw] lg:pb-[4vh] lg:pt-[3.5vh]"
         >
           <div className="oxo-about-grid pointer-events-none absolute inset-0" />
 
@@ -855,166 +977,160 @@ export default function ChiSiamo() {
 
         <section
           ref={storyRef}
-          className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black"
+          className="oxo-flow-safe oxo-flow-field-safe oxo-about-noise relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-[#020203]"
         >
-          {STORY.map((item, index) => (
-            <article
-              key={item.id}
-              data-story-panel
-              className="oxo-about-noise absolute inset-0 overflow-hidden"
-              style={{
-                opacity: index === 0 ? 1 : 0,
-                visibility: index === 0 ? "visible" : "hidden",
-                zIndex: index + 1,
-                clipPath: FULL_CLIP,
-                willChange: "clip-path, opacity, transform",
-              }}
-            >
-              <div
-                className="absolute inset-0"
-                style={{ background: item.fallback }}
-              />
+          <div className="oxo-flow-glow oxo-flow-drift bottom-[-16vh] bg-[radial-gradient(circle,rgba(139,92,246,.55),rgba(53,216,255,.18)_42%,transparent_72%)]" />
+          <div className="oxo-field-grid pointer-events-none absolute inset-0 opacity-70" />
 
-              <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-65" />
+          <p
+            data-field-ghost
+            aria-hidden="true"
+            className="oxo-field-outline antonio2 pointer-events-none absolute left-[-4vw] top-1/2 -translate-y-1/2 whitespace-nowrap text-[24vw] uppercase leading-none tracking-[-0.09em] opacity-55"
+          >
+            SIGNAL / SYSTEM / FORM
+          </p>
 
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
-                src={item.video}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                autoPlay={index === 0}
-                onLoadedMetadata={() => ScrollTrigger.refresh()}
-                onError={(event) => {
-                  event.currentTarget.style.display = "none";
-                  ScrollTrigger.refresh();
-                }}
-              />
-
-              <div className="pointer-events-none absolute inset-0 bg-black/24" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/5 to-black/68" />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/78 via-black/10 to-black/24" />
-
-              <div className="pointer-events-none absolute inset-[14px] z-10 border border-white/30 md:inset-[26px] lg:inset-[2.2vw]" />
-
-              <div className="antonio2 absolute left-7 top-7 z-20 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
-                <span>{item.id}</span>
-                <span
-                  className="h-px w-10 md:w-16"
-                  style={{ backgroundColor: item.accent }}
-                />
-                <span className="text-gray-300">{item.eyebrow}</span>
-              </div>
-
-              <p className="antonio absolute right-7 top-7 z-20 max-w-[46vw] text-right text-[9px] uppercase tracking-[0.23em] text-gray-300 md:right-12 md:top-12 md:text-[11px] lg:right-[4.4vw] lg:top-[4.4vw]">
-                {item.meta}
-              </p>
-
-              <div
-                data-story-content
-                className="absolute bottom-12 left-7 z-20 max-w-[920px] pr-7 md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
-              >
-                <p
-                  className="antonio2 mb-3 text-[10px] uppercase tracking-[0.34em] md:text-xs"
-                  style={{ color: item.accent }}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-[2] grid grid-cols-4"
+          >
+            {["#35d8ff", "#8b5cf6", "#20f0c7", "#ff4fd8"].map(
+              (accent, index) => (
+                <div
+                  key={accent}
+                  data-field-blade
+                  className="oxo-field-blade relative h-full border-x border-white/[0.04]"
+                  style={{
+                    background:
+                      index === 0
+                        ? "linear-gradient(to bottom, rgba(53,216,255,.16), rgba(255,255,255,.02), transparent)"
+                        : "rgba(255,255,255,.025)",
+                  }}
                 >
-                  Oxo manifesto
-                </p>
+                  <span
+                    data-field-node
+                    className="oxo-field-node pointer-events-auto absolute left-1/2 top-[8%] h-2.5 w-2.5 -translate-x-1/2 rounded-[2px]"
+                    style={{
+                      "--node-color": accent,
+                      backgroundColor: accent,
+                      color: accent,
+                      boxShadow: `0 0 14px ${accent}`,
+                    }}
+                  />
+                </div>
+              )
+            )}
+          </div>
 
-                <h2 className="antonio2 ombra2 max-w-[1150px] text-[clamp(3.1rem,8.8vw,8.8rem)] uppercase leading-[0.78] tracking-[-0.055em]">
-                  {item.title}
-                </h2>
-
-                <p className="antonio mt-6 max-w-[720px] text-lg leading-snug text-gray-200 md:text-2xl lg:text-3xl">
-                  {item.description}
-                </p>
-              </div>
-
-              <p
-                data-story-statement
-                aria-hidden="true"
-                className="antonio2 pointer-events-none absolute right-[4vw] top-[27%] z-[3] hidden max-w-[46vw] text-right text-[5.6vw] uppercase leading-[0.82] tracking-[-0.055em] text-white/[0.12] lg:block"
-              >
-                {item.statement}
-              </p>
-
-              <div
-                data-story-cut-line
-                aria-hidden="true"
-                className="pointer-events-none absolute left-[-10%] top-1/2 z-30 h-px w-[120%] -rotate-[7deg]"
-                style={{
-                  backgroundColor: item.accent,
-                  boxShadow: `0 0 18px ${item.accent}, 0 0 42px ${item.accent}`,
-                }}
-              />
-            </article>
-          ))}
-
-          <aside className="pointer-events-none absolute right-7 top-1/2 z-[60] hidden -translate-y-1/2 flex-col gap-5 md:flex lg:right-[3vw]">
-            {STORY.map((item, index) => (
-              <div
-                key={item.id}
-                data-story-rail-item
-                className="flex items-center justify-end gap-3 opacity-40"
-              >
-                <span
-                  data-story-rail-label
-                  className="antonio2 text-[9px] uppercase tracking-[0.24em] text-white/60"
-                >
-                  {item.id}
-                </span>
-                <span
-                  data-story-rail-line
-                  className="h-px w-10 origin-right bg-white/30"
-                  style={{ transform: index === 0 ? "scaleX(1)" : "scaleX(.3)" }}
-                />
-              </div>
-            ))}
-          </aside>
-
-          <div className="pointer-events-none absolute bottom-0 left-0 z-[70] h-px w-full bg-white/20">
+          <div
+            data-field-core
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[34vw] w-[34vw] min-h-[260px] min-w-[260px] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 border border-cyan-300/45"
+          >
             <div
-              data-story-progress
+              data-field-core-inner
+              className="absolute inset-[18%] border border-violet-400/35"
+            >
+              <div className="absolute left-1/2 top-[-18%] h-[136%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/35 to-transparent" />
+              <div className="absolute left-[-18%] top-1/2 h-px w-[136%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+            </div>
+
+            <div className="oxo-field-flicker absolute left-3 top-3 h-2 w-2 bg-cyan-300 shadow-[0_0_18px_rgba(53,216,255,.95)]" />
+            <div className="oxo-field-flicker absolute bottom-3 right-3 h-2 w-2 bg-fuchsia-400 shadow-[0_0_18px_rgba(255,79,216,.95)]" />
+          </div>
+
+          <div
+            data-field-scan
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-1/2 z-[6] h-px w-full bg-cyan-300 shadow-[0_0_16px_rgba(53,216,255,.9),0_0_42px_rgba(53,216,255,.48)]"
+          />
+
+          <div className="relative z-10 flex h-full flex-col justify-between px-6 pb-8 pt-8 md:px-10 md:pb-10 lg:px-[4vw] lg:pb-[4vh]">
+            <div className="flex items-start justify-between border-b border-white/15 pb-5 text-[9px] uppercase tracking-[0.3em] text-white/45 md:text-[11px]">
+              <p>
+                CREATIVE OPERATING SYSTEM
+                <br />
+                OXO / FIELD 001
+              </p>
+
+              <p className="text-right">
+                LIVE PROCESS
+                <br />
+                <span data-field-counter className="text-cyan-300">
+                  01
+                </span>{" "}
+                / 03
+              </p>
+            </div>
+
+            <div className="relative my-auto min-h-[58vh]">
+              {FIELD_PHASES.map((phase, index) => (
+                <article
+                  key={phase.id}
+                  data-field-phase
+                  className="absolute inset-0 flex flex-col justify-center"
+                  style={{
+                    opacity: index === 0 ? 1 : 0,
+                    visibility: index === 0 ? "visible" : "hidden",
+                  }}
+                >
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
+                    <div>
+                      <p
+                        className="antonio2 mb-4 text-[10px] uppercase tracking-[0.36em] md:text-xs"
+                        style={{ color: phase.accent }}
+                      >
+                        {phase.id} / {phase.eyebrow}
+                      </p>
+
+                      <div className="overflow-hidden pb-[2vw]">
+                        <h2
+                          data-field-title
+                          className="antonio2 ombra2 text-[21vw] uppercase leading-[0.67] tracking-[-0.085em] md:text-[15vw] lg:text-[10.8vw]"
+                        >
+                          {phase.title}
+                        </h2>
+                      </div>
+
+                      <p
+                        data-field-copy
+                        className="antonio mt-5 max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl"
+                      >
+                        {phase.copy}
+                      </p>
+                    </div>
+
+                    <p
+                      data-field-statement
+                      aria-hidden="true"
+                      className="oxo-field-outline antonio2 hidden text-right text-[6.8vw] uppercase leading-[0.8] tracking-[-0.055em] lg:block"
+                    >
+                      {phase.statement}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="flex items-end justify-between border-t border-white/15 pt-5 text-[9px] uppercase tracking-[0.29em] text-white/40 md:text-[11px]">
+              <span>INPUT → PROCESS → OUTPUT</span>
+              <span>SCROLL / TRANSFORM ↓</span>
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute bottom-0 left-0 z-[80] h-px w-full bg-white/15">
+            <div
+              data-field-progress
               className="h-full w-full origin-left bg-gradient-to-r from-cyan-300 via-violet-500 to-fuchsia-400"
             />
           </div>
         </section>
 
         <section
-          ref={manifestoRef}
-          className="oxo-about-noise relative min-h-[100svh] overflow-hidden border-y border-white/15 bg-[#050505] py-24 md:py-32 lg:py-[16vh]"
-        >
-          <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-70" />
-
-          <div
-            data-manifesto-track
-            aria-hidden="true"
-            className="antonio2 pointer-events-none relative z-[1] flex w-max whitespace-nowrap text-[24vw] uppercase leading-[0.72] tracking-[-0.065em] text-white/[0.055] md:text-[18vw] lg:text-[14vw]"
-          >
-            <span>MAKE IT CLEAR — MAKE IT POWERFUL — MAKE IT REAL —&nbsp;</span>
-            <span>MAKE IT CLEAR — MAKE IT POWERFUL — MAKE IT REAL —&nbsp;</span>
-          </div>
-
-          <div className="relative z-10 mx-auto mt-[-4vw] flex min-h-[55vh] max-w-[1500px] items-center px-6 md:px-10 lg:px-[5vw]">
-            <div data-manifesto-copy className="max-w-[1120px]">
-              <p className="antonio2 mb-6 text-[10px] uppercase tracking-[0.35em] text-cyan-300 md:text-xs">
-                Il nostro punto di vista
-              </p>
-
-              <p className="antonio text-[clamp(2rem,5.3vw,5.6rem)] leading-[0.98] tracking-[-0.035em] text-gray-100">
-                Non ci interessa aggiungere tecnologia a un progetto. Ci
-                interessa capire quale tecnologia lo renda più chiaro, più
-                veloce e più umano.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section
           ref={teamRef}
-          className="relative overflow-hidden bg-[#030303] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
+          className="oxo-flow-safe oxo-flow-team-safe relative overflow-hidden bg-[#020203] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
         >
+          <div className="oxo-flow-glow top-[-18vh] bg-[radial-gradient(circle,rgba(255,79,216,.36),rgba(139,92,246,.12)_45%,transparent_72%)]" />
           <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-55" />
 
           <div className="relative z-10 mb-16 flex flex-col gap-7 border-b border-white/20 pb-8 md:mb-24 md:flex-row md:items-end md:justify-between">
@@ -1111,8 +1227,9 @@ export default function ChiSiamo() {
 
         <section
           ref={processRef}
-          className="relative overflow-hidden border-t border-white/15 bg-[#050505] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
+          className="oxo-flow-safe oxo-flow-process-safe relative overflow-hidden bg-[#020203] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
         >
+          <div className="oxo-flow-glow top-[-18vh] bg-[radial-gradient(circle,rgba(139,92,246,.30),rgba(53,216,255,.10)_48%,transparent_72%)]" />
           <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-55" />
 
           <div className="relative z-10 grid gap-14 lg:grid-cols-[.75fr_1.25fr] lg:gap-[8vw]">
@@ -1159,8 +1276,9 @@ export default function ChiSiamo() {
 
         <section
           ref={finalRef}
-          className="oxo-about-noise relative flex min-h-[92svh] items-end overflow-hidden bg-black px-6 pb-10 pt-28 md:px-10 md:pb-14 lg:px-[4vw] lg:pb-[5vh]"
+          className="oxo-flow-safe oxo-flow-final-safe oxo-about-noise relative flex min-h-[92svh] items-end overflow-hidden bg-[#020203] px-6 pb-10 pt-28 md:px-10 md:pb-14 lg:px-[4vw] lg:pb-[5vh]"
         >
+          <div className="oxo-flow-glow top-[-20vh] bg-[radial-gradient(circle,rgba(53,216,255,.28),rgba(139,92,246,.10)_46%,transparent_72%)]" />
           <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-65" />
 
           <div
