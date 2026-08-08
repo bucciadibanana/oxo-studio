@@ -1303,7 +1303,7 @@ export default function Home() {
 
                 <h1
                   data-hero-studio
-                  className="avant-legato-font ombra2 relative z-[4] ml-auto mt-[-1.25vw] w-fit overflow-hidden py-[0.15em] text-[19vw] uppercase leading-[0.79] tracking-[-0.09em] md:py-[0.14em] md:text-[13.5vw] lg:text-[13.5vw]"
+                  className="avant-legato-font ombra2 relative z-[4] ml-auto mt-[-1.25vw] w-fit overflow-hidden py-[0.15em] pr-[0.12em] text-[19vw] uppercase leading-[0.79] tracking-[-0.09em] md:py-[0.14em] md:pr-[0.14em] md:text-[13.5vw] lg:pr-[0.16em] lg:text-[13.5vw]"
                 >
                   <SplitLetters text="STUDIO" />
                 </h1>
