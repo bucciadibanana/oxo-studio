@@ -61,6 +61,66 @@ const TEAM = [
     fallback:
       "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 34%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
   },
+  {
+    id: "03",
+    name: "NOME COGNOME",
+    role: "ROLE / SPECIALIZATION",
+    initials: "03",
+    image: "/images/team/team-03.webp",
+    accent: "#20f0c7",
+    description:
+      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 72% 26%, rgba(32,240,199,.28), transparent 34%), linear-gradient(145deg, #041815, #05070a 56%, #010101)",
+  },
+  {
+    id: "04",
+    name: "NOME COGNOME",
+    role: "ROLE / SPECIALIZATION",
+    initials: "04",
+    image: "/images/team/team-04.webp",
+    accent: "#ff4fd8",
+    description:
+      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 30% 28%, rgba(255,79,216,.28), transparent 34%), linear-gradient(145deg, #190515, #08060b 56%, #010101)",
+  },
+  {
+    id: "05",
+    name: "NOME COGNOME",
+    role: "ROLE / SPECIALIZATION",
+    initials: "05",
+    image: "/images/team/team-05.webp",
+    accent: "#35d8ff",
+    description:
+      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 64% 32%, rgba(53,216,255,.26), transparent 34%), linear-gradient(145deg, #06131b, #05060a 56%, #010101)",
+  },
+  {
+    id: "06",
+    name: "NOME COGNOME",
+    role: "ROLE / SPECIALIZATION",
+    initials: "06",
+    image: "/images/team/team-06.webp",
+    accent: "#8b5cf6",
+    description:
+      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 28% 30%, rgba(139,92,246,.30), transparent 34%), linear-gradient(145deg, #12071d, #06070c 56%, #010101)",
+  },
+  {
+    id: "07",
+    name: "NOME COGNOME",
+    role: "ROLE / SPECIALIZATION",
+    initials: "07",
+    image: "/images/team/team-07.webp",
+    accent: "#20f0c7",
+    description:
+      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 68% 24%, rgba(32,240,199,.26), transparent 34%), linear-gradient(145deg, #041713, #050708 56%, #010101)",
+  },
 ];
 
 const PROCESS = [
@@ -1201,13 +1261,13 @@ export default function ChiSiamo() {
             </p>
           </div>
 
-          <div className="relative z-10 grid gap-6 lg:grid-cols-2 lg:gap-[2vw]">
+          <div className="relative z-10 grid gap-6 md:grid-cols-2 lg:grid-cols-2 lg:gap-[2vw]">
             {TEAM.map((member, index) => (
               <article
                 key={member.id}
                 data-team-card
                 className={`oxo-team-card group relative min-h-[72svh] overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
-                  index === 1 ? "lg:mt-[10vh]" : ""
+                  index % 2 === 1 ? "lg:mt-[10vh]" : ""
                 }`}
                 style={{ clipPath: FULL_CLIP }}
               >
