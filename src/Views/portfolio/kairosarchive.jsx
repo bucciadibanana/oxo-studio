@@ -87,27 +87,28 @@ export default function KairosArchive() {
   const heroRef = useRef(null);
   const introRef = useRef(null);
   const usersRef = useRef(null);
-  const featuresRef = useRef(null);
   const interfaceRef = useRef(null);
   const techRef = useRef(null);
   const finalRef = useRef(null);
+  const auraRef = useRef(null);
+  const cursorHaloRef = useRef(null);
 
   useLayoutEffect(() => {
     const page = pageRef.current;
     const hero = heroRef.current;
     const intro = introRef.current;
     const users = usersRef.current;
-    const features = featuresRef.current;
     const interfaceSection = interfaceRef.current;
     const tech = techRef.current;
     const finalSection = finalRef.current;
+    const aura = auraRef.current;
+    const cursorHalo = cursorHaloRef.current;
 
     if (
       !page ||
       !hero ||
       !intro ||
       !users ||
-      !features ||
       !interfaceSection ||
       !tech ||
       !finalSection
@@ -126,11 +127,107 @@ export default function KairosArchive() {
       if (reduce) {
         gsap.set(
           page.querySelectorAll(
-            "[data-kairos-letter], [data-kairos-copy], [data-user-row], [data-feature-card], [data-stack-row]"
+            "[data-kairos-letter], [data-kairos-copy], [data-user-row], [data-stack-row]"
           ),
           { clearProps: "all", opacity: 1 }
         );
         return;
+      }
+
+      /*
+       * ============================================================
+       * AWWWARDS / CINEMATIC FIELD
+       * ============================================================
+       */
+
+      const cinematicBlocks = gsap.utils.toArray(
+        page.querySelectorAll("[data-cinematic-block]")
+      );
+
+      cinematicBlocks.forEach((block, index) => {
+        const direction = index % 2 === 0 ? -1 : 1;
+
+        gsap.fromTo(
+          block,
+          {
+            y: 70,
+            x: direction * 18,
+            opacity: 0,
+            clipPath:
+              direction < 0
+                ? "inset(0 100% 0 0)"
+                : "inset(0 0 0 100%)",
+          },
+          {
+            y: 0,
+            x: 0,
+            opacity: 1,
+            clipPath: "inset(0 0% 0 0)",
+            duration: 1.15,
+            ease: "power4.inOut",
+            scrollTrigger: {
+              trigger: block,
+              start: "top 88%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+
+      const parallaxLines = gsap.utils.toArray(
+        page.querySelectorAll("[data-kairos-parallax-line]")
+      );
+
+      parallaxLines.forEach((line, index) => {
+        gsap.to(line, {
+          xPercent: index % 2 === 0 ? 18 : -18,
+          ease: "none",
+          scrollTrigger: {
+            trigger: line.closest("section") || page,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        });
+      });
+
+      if (aura) {
+        gsap.to(aura, {
+          rotate: 360,
+          duration: 40,
+          repeat: -1,
+          ease: "none",
+        });
+      }
+
+      if (
+        cursorHalo &&
+        !window.matchMedia("(pointer: coarse)").matches
+      ) {
+        const haloX = gsap.quickTo(cursorHalo, "x", {
+          duration: 1.15,
+          ease: "power4.out",
+        });
+        const haloY = gsap.quickTo(cursorHalo, "y", {
+          duration: 1.15,
+          ease: "power4.out",
+        });
+
+        const moveHalo = (event) => {
+          haloX(event.clientX);
+          haloY(event.clientY);
+        };
+
+        window.addEventListener("pointermove", moveHalo, {
+          passive: true,
+        });
+
+        const oldPointerCleanup = pointerMove;
+
+        pointerMove = (event) => {
+          oldPointerCleanup?.(event);
+          moveHalo(event);
+        };
       }
 
       /* HERO */
@@ -248,7 +345,22 @@ export default function KairosArchive() {
           mobile: "(max-width: 767px)",
         },
         ({ conditions }) => {
-          const { desktop, tablet } = conditions;
+          const { desktop, tablet, mobile } = conditions;
+
+          /*
+           * KAIROS / RESPONSIVE 3D PROFILE
+           * Stesso effetto su tutti i device, ma più morbido.
+           */
+          const interfaceMotion = {
+            startScale: desktop ? 0.955 : tablet ? 0.975 : 0.993,
+            startRotateX: desktop ? 3.8 : tablet ? 2.4 : 0.9,
+            startRotateY: desktop ? -3.2 : tablet ? -1.7 : -0.55,
+            startBrightness: desktop ? 0.82 : tablet ? 0.88 : 0.94,
+            startSaturation: desktop ? 0.88 : tablet ? 0.92 : 0.96,
+            endScale: desktop ? 1 : tablet ? 0.995 : 1,
+            scrollDistance: desktop ? 1.15 : tablet ? 0.92 : 0.62,
+            scrub: desktop ? 0.55 : tablet ? 0.45 : 0.3,
+          };
 
           /* HERO PIN */
           const heroTl = gsap.timeline({
@@ -409,63 +521,6 @@ export default function KairosArchive() {
             }
           });
 
-          /* FEATURES */
-          const featureCards = gsap.utils.toArray(
-            features.querySelectorAll("[data-feature-card]")
-          );
-
-          featureCards.forEach((card, index) => {
-            const direction = index % 2 === 0 ? -1 : 1;
-            const content = card.querySelector("[data-feature-content]");
-
-            gsap.fromTo(
-              card,
-              {
-                y: desktop ? 90 : 54,
-                x: direction * (desktop ? 38 : 18),
-                rotate: direction * 2.4,
-                opacity: 0,
-                clipPath:
-                  direction < 0
-                    ? "polygon(0 0,0 0,0 100%,0 100%)"
-                    : "polygon(100% 0,100% 0,100% 100%,100% 100%)",
-              },
-              {
-                y: 0,
-                x: 0,
-                rotate: direction * (desktop ? 0.8 : 0.3),
-                opacity: 1,
-                clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)",
-                duration: 1.05,
-                ease: "power4.inOut",
-                scrollTrigger: {
-                  trigger: card,
-                  start: "top 84%",
-                  toggleActions: "play none none reverse",
-                },
-              }
-            );
-
-            if (content) {
-              gsap.fromTo(
-                content,
-                { y: 30, opacity: 0 },
-                {
-                  y: 0,
-                  opacity: 1,
-                  duration: 0.72,
-                  delay: 0.14,
-                  ease: "power3.out",
-                  scrollTrigger: {
-                    trigger: card,
-                    start: "top 80%",
-                    toggleActions: "play none none reverse",
-                  },
-                }
-              );
-            }
-          });
-
           /* INTERFACE PINNED DEMO */
           const interfaceStage = interfaceSection.querySelector(
             "[data-interface-stage]"
@@ -511,9 +566,11 @@ export default function KairosArchive() {
                 trigger: interfaceStage,
                 start: "top top",
                 end: () =>
-                  `+=${window.innerHeight * (desktop ? 1.7 : 1.25)}`,
-                pin: desktop,
-                scrub: desktop ? 1 : 0.7,
+                  `+=${window.innerHeight * interfaceMotion.scrollDistance}`,
+                pin: true,
+                pinSpacing: true,
+                scrub: interfaceMotion.scrub,
+                anticipatePin: 1,
                 invalidateOnRefresh: true,
               },
             });
@@ -521,30 +578,31 @@ export default function KairosArchive() {
             uiTl.fromTo(
               uiFrame,
               {
-                scale: 0.86,
-                rotateX: 12,
-                rotateY: -10,
-                filter: "brightness(.55) saturate(.7)",
-                transformPerspective: 1400,
+                scale: interfaceMotion.startScale,
+                rotateX: interfaceMotion.startRotateX,
+                rotateY: interfaceMotion.startRotateY,
+                filter: `brightness(${interfaceMotion.startBrightness}) saturate(${interfaceMotion.startSaturation})`,
+                transformPerspective: desktop ? 1600 : tablet ? 1300 : 1050,
+                transformOrigin: "50% 52%",
               },
               {
-                scale: 1,
+                scale: interfaceMotion.endScale,
                 rotateX: 0,
                 rotateY: 0,
                 filter: "brightness(1) saturate(1)",
                 duration: 1,
-                ease: "power3.inOut",
+                ease: "power2.inOut",
               }
             );
 
             uiRows.forEach((row, index) => {
               uiTl.fromTo(
                 row,
-                { xPercent: 5, opacity: 0.18 },
+                { xPercent: desktop ? 2.5 : 1.2, opacity: 0.42 },
                 {
                   xPercent: 0,
                   opacity: 1,
-                  duration: 0.2,
+                  duration: 0.28,
                   ease: "power2.out",
                 },
                 0.16 + index * 0.045
@@ -555,16 +613,16 @@ export default function KairosArchive() {
               uiTl.fromTo(
                 panel,
                 {
-                  y: 24,
-                  opacity: 0,
-                  filter: "blur(6px)",
+                  y: desktop ? 12 : 7,
+                  opacity: 0.28,
+                  filter: desktop ? "blur(3px)" : "blur(1.5px)",
                 },
                 {
                   y: 0,
                   opacity: 1,
                   filter: "blur(0px)",
-                  duration: 0.3,
-                  ease: "power3.out",
+                  duration: 0.38,
+                  ease: "power2.out",
                 },
                 0.2 + index * 0.07
               );
@@ -723,6 +781,18 @@ export default function KairosArchive() {
         ref={pageRef}
         className="kairos-page relative overflow-x-hidden bg-[#020203] text-white"
       >
+        <div
+          ref={auraRef}
+          className="kairos-cinematic-aura"
+          aria-hidden="true"
+        />
+
+        <div
+          ref={cursorHaloRef}
+          className="kairos-cursor-halo hidden md:block"
+          aria-hidden="true"
+        />
+
         <style>{`
           .kairos-page,
           .kairos-page * {
@@ -734,6 +804,218 @@ export default function KairosArchive() {
               "Michroma",
               "Arial Narrow",
               sans-serif;
+          }
+
+          .kairos-page {
+            --kairos-cyan:#35d8ff;
+            --kairos-violet:#8b5cf6;
+            --kairos-green:#20f0c7;
+            --kairos-pink:#ff4fd8;
+          }
+
+          .kairos-cinematic-aura {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: min(92vw, 1200px);
+            height: min(92vw, 1200px);
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .14;
+            background:
+              conic-gradient(
+                from 20deg,
+                transparent 0 18deg,
+                rgba(53,216,255,.16) 22deg,
+                transparent 52deg 124deg,
+                rgba(139,92,246,.14) 130deg,
+                transparent 164deg 230deg,
+                rgba(32,240,199,.12) 236deg,
+                transparent 268deg 324deg,
+                rgba(255,79,216,.1) 330deg,
+                transparent 358deg
+              );
+            -webkit-mask:
+              radial-gradient(
+                circle,
+                transparent 0 56%,
+                black 57% 58%,
+                transparent 59% 72%,
+                black 73% 73.4%,
+                transparent 74%
+              );
+            mask:
+              radial-gradient(
+                circle,
+                transparent 0 56%,
+                black 57% 58%,
+                transparent 59% 72%,
+                black 73% 73.4%,
+                transparent 74%
+              );
+          }
+
+          .kairos-cursor-halo {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 260px;
+            margin-left: -130px;
+            margin-top: -130px;
+            border-radius: 999px;
+            pointer-events: none;
+            z-index: 3;
+            opacity: .12;
+            background:
+              radial-gradient(
+                circle,
+                rgba(53,216,255,.16),
+                rgba(139,92,246,.08) 38%,
+                transparent 70%
+              );
+            filter: blur(18px);
+            mix-blend-mode: screen;
+          }
+
+          .kairos-section-shell {
+            position: relative;
+          }
+
+          .kairos-section-shell::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            pointer-events:none;
+            background:
+              radial-gradient(
+                circle at 12% 20%,
+                rgba(53,216,255,.035),
+                transparent 30%
+              ),
+              radial-gradient(
+                circle at 88% 78%,
+                rgba(139,92,246,.035),
+                transparent 34%
+              );
+          }
+
+          .kairos-display-line {
+            position: relative;
+            overflow: hidden;
+          }
+
+          .kairos-display-line::after {
+            content:"";
+            position:absolute;
+            left:0;
+            bottom:.07em;
+            width:100%;
+            height:1px;
+            transform:scaleX(.12);
+            transform-origin:left;
+            background:
+              linear-gradient(
+                90deg,
+                var(--kairos-cyan),
+                rgba(139,92,246,.8),
+                transparent
+              );
+            opacity:.32;
+            transition:
+              transform .7s cubic-bezier(.16,1,.3,1),
+              opacity .7s cubic-bezier(.16,1,.3,1);
+          }
+
+          .kairos-display-line:hover::after {
+            transform:scaleX(.86);
+            opacity:.7;
+          }
+
+          .kairos-ghost-word {
+            position:absolute;
+            pointer-events:none;
+            user-select:none;
+            white-space:nowrap;
+            font-size:clamp(90px, 15vw, 280px);
+            line-height:.75;
+            letter-spacing:-.08em;
+            color:rgba(255,255,255,.018);
+          }
+
+          .kairos-micro-ruler {
+            position:absolute;
+            top:0;
+            bottom:0;
+            width:1px;
+            pointer-events:none;
+            background:
+              repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,.18) 0 1px,
+                transparent 1px 14px
+              );
+            opacity:.15;
+          }
+
+          .kairos-record-glass {
+            background:
+              linear-gradient(
+                140deg,
+                rgba(255,255,255,.035),
+                rgba(255,255,255,.012) 42%,
+                transparent 70%
+              );
+            box-shadow:
+              inset 0 1px 0 rgba(255,255,255,.04),
+              0 30px 90px rgba(0,0,0,.22);
+            backdrop-filter: blur(12px);
+          }
+
+          .kairos-interface-vignette {
+            pointer-events:none;
+            position:absolute;
+            inset:0;
+            z-index:2;
+            background:
+              radial-gradient(
+                ellipse at center,
+                transparent 54%,
+                rgba(0,0,0,.16) 78%,
+                rgba(0,0,0,.44) 100%
+              );
+          }
+
+          .kairos-ui-shell {
+            transform-style: preserve-3d;
+            will-change: transform, filter;
+          }
+
+          .kairos-ui-shell::before {
+            content:"";
+            position:absolute;
+            inset:-1px;
+            pointer-events:none;
+            z-index:3;
+            border:1px solid rgba(255,255,255,.05);
+            box-shadow:
+              inset 0 0 0 1px rgba(255,255,255,.015),
+              0 0 0 1px rgba(53,216,255,.02);
+          }
+
+          .kairos-final-orbit {
+            position:absolute;
+            right:-14vw;
+            top:-22vw;
+            width:55vw;
+            height:55vw;
+            border-radius:999px;
+            border:1px solid rgba(255,255,255,.04);
+            box-shadow:
+              0 0 0 12vw rgba(255,255,255,.008),
+              0 0 0 24vw rgba(255,255,255,.005);
           }
 
           .kairos-grid {
@@ -786,25 +1068,6 @@ export default function KairosArchive() {
                 transparent calc(100% - 1px),
                 #000 calc(100% - 1px)
               );
-          }
-
-          .kairos-feature {
-            transition:
-              border-color .45s ease,
-              border-radius .65s cubic-bezier(.16,1,.3,1),
-              box-shadow .65s cubic-bezier(.16,1,.3,1);
-          }
-
-          .kairos-feature:hover {
-            border-radius: 54px;
-            border-color: rgba(255,255,255,.26);
-            box-shadow:
-              0 30px 90px rgba(0,0,0,.35),
-              inset 0 0 60px rgba(255,255,255,.015);
-          }
-
-          .kairos-feature:hover .kairos-feature-title {
-            transform: translateX(.6vw) skewX(-2deg);
           }
 
           .kairos-ui-shell {
@@ -918,20 +1181,76 @@ export default function KairosArchive() {
             scrollbar-color:#5f5f5f #141414;
           }
 
+          @media (max-width: 1023px) {
+            [data-interface-stage] {
+              perspective: 1100px;
+            }
+
+            [data-ui-frame] {
+              transform-style: preserve-3d;
+              backface-visibility: hidden;
+              will-change: transform, filter;
+            }
+
+            .kairos-real-dashboard {
+              width: 100%;
+              overflow: hidden;
+            }
+          }
+
           @media (max-width: 767px) {
+            .kairos-cursor-halo {
+              display:none !important;
+            }
+
+            .kairos-cinematic-aura {
+              opacity:.08;
+              width:120vw;
+              height:120vw;
+            }
+
+            .kairos-ghost-word {
+              font-size:28vw;
+            }
+
             .kairos-grid {
               background-size: 44px 44px;
             }
 
-            .kairos-feature:hover {
-              border-radius: 30px;
+            [data-interface-stage] {
+              padding-left: 10px;
+              padding-right: 10px;
+              perspective: 900px;
+            }
+
+            [data-ui-frame] {
+              border-radius: 16px !important;
+              transform-style: preserve-3d;
+              transform-origin: 50% 48%;
+            }
+
+            /*
+             * Mobile = vera dashboard responsive:
+             * layout interno a griglia, niente canvas desktop ridotto.
+             * L'effetto 3D resta sul frame esterno.
+             */
+            .kairos-real-dashboard {
+              width: 100%;
+              min-width: 0;
+              transform-origin: 50% 50%;
+            }
+
+            .kairos-real-dashboard .kd-card,
+            .kairos-real-dashboard .kd-panel {
+              min-width: 0;
+            }
+
+            .kairos-real-dashboard .kd-chart-grid {
+              background-size: 100% 42px;
             }
           }
 
           @media (prefers-reduced-motion: reduce) {
-            .kairos-feature {
-              transition: none;
-            }
           }
         `}</style>
 
@@ -943,6 +1262,23 @@ export default function KairosArchive() {
           className="kairos-noise relative flex min-h-[100svh] flex-col justify-between overflow-hidden px-5 pb-7 pt-[92px] md:px-9 md:pb-10 lg:px-[4vw] lg:pb-[5vh]"
         >
           <div className="kairos-grid pointer-events-none absolute inset-0" />
+
+          <span
+            data-kairos-parallax-line
+            className="pointer-events-none absolute left-[-12%] top-[31%] h-px w-[58%] bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent"
+          />
+          <span
+            data-kairos-parallax-line
+            className="pointer-events-none absolute right-[-14%] top-[66%] h-px w-[62%] bg-gradient-to-r from-transparent via-violet-400/22 to-transparent"
+          />
+
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-[7%] top-[16%] h-[68%] w-[86%] border border-white/[0.035]"
+          />
+
+          <div className="kairos-micro-ruler left-[3.2vw]" aria-hidden="true" />
+          <div className="kairos-micro-ruler right-[3.2vw]" aria-hidden="true" />
 
           <div
             aria-hidden="true"
@@ -1016,14 +1352,14 @@ export default function KairosArchive() {
             <div className="[perspective:1200px]">
               <h1
                 data-kairos-title-a
-                className="avant-legato-font ombra2 overflow-hidden text-[19vw] uppercase leading-[.7] tracking-[-0.09em] md:text-[14vw] lg:text-[10.8vw]"
+                className="kairos-display-line avant-legato-font ombra2 overflow-hidden text-[19vw] uppercase leading-[.7] tracking-[-0.09em] md:text-[14vw] lg:text-[10.8vw]"
               >
                 <SplitLetters text="KAIROS" />
               </h1>
 
               <h1
                 data-kairos-title-b
-                className="avant-legato-font ombra2 ml-auto w-fit overflow-hidden text-[18vw] uppercase leading-[.7] tracking-[-0.09em] md:text-[13vw] lg:text-[10.2vw]"
+                className="kairos-display-line avant-legato-font ombra2 ml-auto w-fit overflow-hidden text-[18vw] uppercase leading-[.7] tracking-[-0.09em] md:text-[13vw] lg:text-[10.2vw]"
               >
                 <SplitLetters text="ARCHIVE" />
               </h1>
@@ -1053,11 +1389,21 @@ export default function KairosArchive() {
         ====================================================== */}
         <section
           ref={introRef}
-          className="kairos-noise relative overflow-hidden border-y border-white/12 bg-[#050506] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[16vh]"
+          className="kairos-section-shell kairos-noise relative overflow-hidden border-y border-white/12 bg-[#050506] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[16vh]"
         >
           <div className="kairos-grid pointer-events-none absolute inset-0 opacity-60" />
 
-          <div className="relative z-10 grid gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-[8vw]">
+          <span
+            aria-hidden="true"
+            className="kairos-ghost-word avant-legato-font -left-[4vw] top-[8%]"
+          >
+            SYSTEM
+          </span>
+
+          <div
+            data-cinematic-block
+            className="relative z-10 grid gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-[8vw]"
+          >
             <div>
               <p
                 data-kairos-copy
@@ -1101,11 +1447,20 @@ export default function KairosArchive() {
         ====================================================== */}
         <section
           ref={usersRef}
-          className="relative overflow-hidden bg-[#020203] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
+          className="kairos-section-shell relative overflow-hidden bg-[#020203] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
         >
           <div className="kairos-grid pointer-events-none absolute inset-0 opacity-45" />
 
-          <div className="relative z-10 mb-16 flex flex-col gap-6 border-b border-white/14 pb-8 md:flex-row md:items-end md:justify-between lg:mb-24">
+          <span
+            aria-hidden="true"
+            className="kairos-ghost-word avant-legato-font right-[-4vw] top-[8%]"
+          >
+            PEOPLE
+          </span>
+
+          <div
+            data-cinematic-block
+            className="relative z-10 mb-16 flex flex-col gap-6 border-b border-white/14 pb-8 md:flex-row md:items-end md:justify-between lg:mb-24">
             <div>
               <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-fuchsia-400 md:text-xs">
                 02 / DESTINATARI
@@ -1162,83 +1517,18 @@ export default function KairosArchive() {
         </section>
 
         {/* =====================================================
-            FEATURES
-        ====================================================== */}
-        <section
-          ref={featuresRef}
-          className="kairos-noise relative overflow-hidden border-y border-white/12 bg-[#050506] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
-        >
-          <div className="kairos-grid pointer-events-none absolute inset-0 opacity-55" />
-
-          <div className="relative z-10 mb-16 md:mb-24">
-            <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-cyan-300 md:text-xs">
-              03 / FUNZIONALITÀ
-            </p>
-
-            <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
-              COMPLESSO
-              <br />
-              FUORI. CHIARO DENTRO.
-            </h2>
-          </div>
-
-          <div className="relative z-10 grid gap-5 md:grid-cols-2 lg:gap-6">
-            {FEATURES.map((item) => (
-              <article
-                key={item.id}
-                data-feature-card
-                className="kairos-feature relative min-h-[48svh] overflow-hidden rounded-[30px] border border-white/14 bg-[#030304] p-7 md:min-h-[52svh] md:rounded-[42px] md:p-9 lg:p-[2.6vw]"
-              >
-                <div
-                  className="pointer-events-none absolute -right-[15%] -top-[15%] h-[65%] w-[65%] rounded-full blur-[85px]"
-                  style={{
-                    background: `radial-gradient(circle, ${item.accent}26, transparent 68%)`,
-                  }}
-                />
-
-                <div className="kairos-grid pointer-events-none absolute inset-0 opacity-45" />
-
-                <div
-                  data-feature-content
-                  className="relative z-10 flex h-full min-h-[42svh] flex-col justify-between"
-                >
-                  <div className="flex items-start justify-between text-[9px] uppercase tracking-[0.3em] text-white/38 md:text-xs">
-                    <span>{item.id}</span>
-                    <span>{item.meta}</span>
-                  </div>
-
-                  <div>
-                    <div
-                      className="mb-7 h-px w-full"
-                      style={{
-                        background: `linear-gradient(90deg, ${item.accent}, transparent)`,
-                      }}
-                    />
-
-                    <h3 className="kairos-feature-title avant-legato-font ombra2 text-[12vw] uppercase leading-[.72] tracking-[-0.075em] transition-transform duration-700 md:text-[7vw] lg:text-[4.8vw]">
-                      {item.title}
-                    </h3>
-
-                    <p className="avant-legato-font mt-7 max-w-[720px] text-lg leading-snug text-gray-300 md:text-2xl">
-                      {item.copy}
-                    </p>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        {/* =====================================================
             INTERFACE
         ====================================================== */}
         <section
           ref={interfaceRef}
-          className="relative bg-[#020203]"
+          className="kairos-section-shell relative bg-[#020203]"
         >
-          <div className="relative z-10 px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[14vh]">
+          <div
+            data-cinematic-block
+            className="relative z-10 px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[14vh]"
+          >
             <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-violet-400 md:text-xs">
-              04 / INTERFACCIA
+              03 / INTERFACCIA
             </p>
 
             <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
@@ -1259,7 +1549,7 @@ export default function KairosArchive() {
 
           <div
             data-interface-stage
-            className="kairos-noise relative flex min-h-[100svh] items-center overflow-hidden border-y border-white/12 bg-[#050506] px-3 py-10 md:px-6 md:py-14 lg:px-[3vw]"
+            className="kairos-noise relative flex min-h-[100svh] items-center overflow-hidden border-y border-white/12 bg-[#050506] px-3 py-8 md:px-6 md:py-12 lg:px-[3vw] lg:py-14"
           >
             <div className="kairos-grid pointer-events-none absolute inset-0 opacity-40" />
 
@@ -1294,14 +1584,15 @@ export default function KairosArchive() {
 
               <div
                 data-ui-frame
-                className="kairos-ui-shell kairos-real-dashboard relative overflow-hidden rounded-[18px] border border-white/10"
+                className="kairos-ui-shell kairos-record-glass kairos-real-dashboard relative overflow-hidden rounded-[18px] border border-white/10"
               >
+                <div className="kairos-interface-vignette" aria-hidden="true" />
                 {/* TOP APP TITLE */}
                 <div className="kd-topbar flex h-10 items-center justify-center px-4 text-[9px] font-medium text-white/85">
                   KairosArchive - Next Shadcn Dashboard Starter
                 </div>
 
-                <div className="grid min-h-[760px] grid-cols-1 md:grid-cols-[230px_1fr] lg:min-h-[820px]">
+                <div className="grid min-h-[620px] grid-cols-1 md:min-h-[760px] md:grid-cols-[190px_minmax(0,1fr)] lg:min-h-[820px] lg:grid-cols-[230px_1fr]">
                   {/* SIDEBAR */}
                   <aside className="kd-sidebar hidden min-w-0 flex-col md:flex">
                     <div className="flex h-[58px] items-center gap-3 border-b border-[#292929] px-3">
@@ -1310,16 +1601,16 @@ export default function KairosArchive() {
                       </div>
 
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-[11px] text-white">
+                        <p className="truncate text-[9px] text-white md:text-[10px] lg:text-[11px]">
                           KAIROS ARCHIVE
                         </p>
-                        <p className="text-[9px] text-white/38">DEMO WORKSPACE</p>
+                        <p className="text-[7px] text-white/38 md:text-[8px] lg:text-[9px]">DEMO WORKSPACE</p>
                       </div>
 
                       <span className="text-[12px] text-white/70">⌃⌄</span>
                     </div>
 
-                    <nav className="flex-1 overflow-hidden px-2 py-4 text-[10px] text-white/78">
+                    <nav className="flex-1 overflow-hidden px-2 py-4 text-[8px] text-white/78 md:text-[9px] lg:text-[10px]">
                       <p className="mb-2 px-1 text-[9px] text-white/42">
                         Overview
                       </p>
@@ -1421,11 +1712,53 @@ export default function KairosArchive() {
                     </div>
                   </aside>
 
+                  {/* MOBILE APP NAV */}
+                  <div className="border-b border-[#292929] bg-[#181818] md:hidden">
+                    <div className="flex items-center justify-between px-3 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="grid h-7 w-7 place-items-center bg-indigo-600 text-[12px] text-white">
+                          ▰
+                        </div>
+                        <div>
+                          <p className="text-[9px] text-white">KAIROS ARCHIVE</p>
+                          <p className="text-[7px] text-white/38">DEMO WORKSPACE</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-[8px] text-white/56">
+                        <span className="border border-[#303030] px-2 py-1">Overview</span>
+                        <span className="border border-[#303030] px-2 py-1">☰</span>
+                      </div>
+                    </div>
+
+                    <div className="kd-scrollbar flex gap-2 overflow-x-auto border-t border-[#242424] px-3 py-2 text-[8px] text-white/60">
+                      {[
+                        "Dashboard",
+                        "Catalogazione",
+                        "Digitali",
+                        "Localizzate",
+                        "Workspaces",
+                        "Teams",
+                      ].map((item, index) => (
+                        <span
+                          key={item}
+                          className={`shrink-0 border px-2.5 py-1.5 ${
+                            index === 0
+                              ? "border-white/18 bg-white/[0.07] text-white"
+                              : "border-white/[0.07]"
+                          }`}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* MAIN APP */}
                   <div className="min-w-0 bg-[#0d0d0e]">
                     {/* INNER TOPBAR */}
-                    <div className="flex h-[58px] items-center justify-between border-b border-[#242424] px-4 md:px-5">
-                      <div className="flex items-center gap-4 text-[10px] text-white/78">
+                    <div className="flex h-[52px] items-center justify-between border-b border-[#242424] px-3 md:h-[58px] md:px-5">
+                      <div className="flex items-center gap-2 text-[8px] text-white/78 md:gap-4 md:text-[10px]">
                         <span className="text-white/80">▣</span>
                         <span className="text-white/45">Dashboard</span>
                         <span className="text-white/26">/</span>
@@ -1450,9 +1783,9 @@ export default function KairosArchive() {
                       </div>
                     </div>
 
-                    <div className="kd-scrollbar overflow-x-auto p-4 md:p-5">
+                    <div className="kd-scrollbar overflow-x-hidden p-3 md:overflow-x-auto md:p-5">
                       {/* KPI ROW */}
-                      <div className="grid min-w-[760px] grid-cols-4 gap-3">
+                      <div className="grid grid-cols-2 gap-2 md:min-w-[700px] md:grid-cols-4 md:gap-3">
                         {[
                           {
                             label: "In revisione",
@@ -1486,7 +1819,7 @@ export default function KairosArchive() {
                           <article
                             key={item.label}
                             data-ui-panel
-                            className="kd-card min-h-[132px] p-4"
+                            className="kd-card min-h-[118px] p-3 md:min-h-[132px] md:p-4"
                           >
                             <div className="flex items-start justify-between gap-3">
                               <span className="text-[9px] text-white/45">
@@ -1497,7 +1830,7 @@ export default function KairosArchive() {
                               </span>
                             </div>
 
-                            <p className="mt-2 text-[28px] font-semibold leading-none tracking-[-.05em] text-white">
+                            <p className="mt-2 text-[22px] font-semibold leading-none tracking-[-.05em] text-white md:text-[28px]">
                               {item.value}
                             </p>
 
@@ -1514,9 +1847,9 @@ export default function KairosArchive() {
                       {/* MAIN CHART */}
                       <section
                         data-ui-panel
-                        className="kd-panel mt-3 min-w-[760px]"
+                        className="kd-panel mt-3 w-full"
                       >
-                        <div className="grid grid-cols-[1fr_120px_120px] border-b border-[#2b2b2b]">
+                        <div className="grid grid-cols-1 border-b border-[#2b2b2b] sm:grid-cols-[1fr_92px_92px] md:grid-cols-[1fr_120px_120px]">
                           <div className="p-4">
                             <h4 className="text-[11px] font-semibold text-white/92">
                               Andamento lavorazione record
@@ -1526,7 +1859,7 @@ export default function KairosArchive() {
                             </p>
                           </div>
 
-                          <div className="border-l border-[#2b2b2b] p-4">
+                          <div className="border-t border-[#2b2b2b] p-3 sm:border-l sm:border-t-0 md:p-4">
                             <p className="text-[8px] text-white/42">
                               Schede generate
                             </p>
@@ -1535,7 +1868,7 @@ export default function KairosArchive() {
                             </p>
                           </div>
 
-                          <div className="border-l border-[#2b2b2b] p-4">
+                          <div className="border-t border-[#2b2b2b] p-3 sm:border-l sm:border-t-0 md:p-4">
                             <p className="text-[8px] text-white/42">
                               Localizzate
                             </p>
@@ -1545,7 +1878,7 @@ export default function KairosArchive() {
                           </div>
                         </div>
 
-                        <div className="kd-chart-grid relative h-[270px] overflow-hidden px-5 pt-5">
+                        <div className="kd-chart-grid relative h-[220px] overflow-hidden px-3 pt-5 md:h-[270px] md:px-5">
                           <div className="absolute inset-x-5 bottom-8 top-5 flex items-end justify-between gap-3">
                             {[18, 29, 41, 58, 76, 121, 184].map((v, i) => (
                               <div
@@ -1575,7 +1908,7 @@ export default function KairosArchive() {
                       </section>
 
                       {/* LOWER PANELS */}
-                      <div className="mt-3 grid min-w-[760px] grid-cols-2 gap-3">
+                      <div className="mt-3 grid grid-cols-1 gap-3 md:min-w-[700px] lg:grid-cols-2">
                         <section
                           data-ui-panel
                           className="kd-panel min-h-[300px] p-4"
@@ -1587,9 +1920,9 @@ export default function KairosArchive() {
                             Ripartizione dei record per stato
                           </p>
 
-                          <div className="grid min-h-[225px] grid-cols-[170px_1fr] items-center gap-5">
+                          <div className="grid min-h-[225px] grid-cols-1 items-center gap-4 sm:grid-cols-[150px_1fr] md:grid-cols-[170px_1fr] md:gap-5">
                             <div className="flex items-center justify-center">
-                              <div className="kd-donut relative h-[150px] w-[150px] rounded-full">
+                              <div className="kd-donut relative h-[128px] w-[128px] rounded-full md:h-[150px] md:w-[150px]">
                                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
                                   <span className="text-[26px] font-semibold leading-none text-white">
                                     184
@@ -1656,12 +1989,12 @@ export default function KairosArchive() {
                               <div
                                 key={code}
                                 data-ui-row
-                                className="grid grid-cols-[82px_1fr_auto] items-center gap-3 border-b border-white/[0.07] py-3 text-[8px]"
+                                className="grid grid-cols-[64px_minmax(0,1fr)] items-center gap-2 border-b border-white/[0.07] py-3 text-[7px] sm:grid-cols-[82px_1fr_auto] sm:gap-3 sm:text-[8px]"
                               >
                                 <span className="text-white/34">{code}</span>
                                 <span className="truncate text-white/72">{title}</span>
                                 <span
-                                  className="border px-2 py-1 uppercase tracking-[0.18em]"
+                                  className="col-span-2 w-fit border px-2 py-1 uppercase tracking-[0.18em] sm:col-span-1"
                                   style={{
                                     color: accent,
                                     borderColor: `${accent}55`,
@@ -1681,7 +2014,7 @@ export default function KairosArchive() {
               </div>
 
               {/* PROMO STRIP AROUND THE REAL UI */}
-              <div className="mt-5 grid gap-3 md:grid-cols-4">
+              <div className="mt-5 grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3">
                 {[
                   ["01", "CATALOGAZIONE", "Schede / frontespizio / topografia", "#35d8ff"],
                   ["02", "DIGITALI", "Generate / approvate / revisione", "#8b5cf6"],
@@ -1725,14 +2058,24 @@ export default function KairosArchive() {
         ====================================================== */}
         <section
           ref={techRef}
-          className="kairos-noise relative overflow-hidden bg-[#050506] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
+          className="kairos-section-shell kairos-noise relative overflow-hidden bg-[#050506] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[15vh]"
         >
           <div className="kairos-grid pointer-events-none absolute inset-0 opacity-55" />
 
-          <div className="relative z-10 grid gap-16 lg:grid-cols-[1fr_.9fr] lg:gap-[8vw]">
+          <span
+            aria-hidden="true"
+            className="kairos-ghost-word avant-legato-font -left-[3vw] top-[9%]"
+          >
+            STACK
+          </span>
+
+          <div
+            data-cinematic-block
+            className="relative z-10 grid gap-16 lg:grid-cols-[1fr_.9fr] lg:gap-[8vw]"
+          >
             <div>
               <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-emerald-300 md:text-xs">
-                05 / TECNOLOGIA E SICUREZZA
+                04 / TECNOLOGIA E SICUREZZA
               </p>
 
               <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
@@ -1783,6 +2126,16 @@ export default function KairosArchive() {
           className="kairos-noise relative flex min-h-[100svh] items-end overflow-hidden border-t border-white/12 bg-black px-6 pb-10 pt-28 md:px-10 md:pb-14 lg:px-[4vw] lg:pb-[5vh]"
         >
           <div className="kairos-grid pointer-events-none absolute inset-0 opacity-50" />
+          <div className="kairos-final-orbit" aria-hidden="true" />
+
+          <span
+            data-kairos-parallax-line
+            className="pointer-events-none absolute left-[-12%] top-[32%] h-px w-[64%] bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent"
+          />
+          <span
+            data-kairos-parallax-line
+            className="pointer-events-none absolute right-[-16%] top-[62%] h-px w-[68%] bg-gradient-to-r from-transparent via-fuchsia-400/20 to-transparent"
+          />
 
           <div
             aria-hidden="true"
@@ -1793,7 +2146,7 @@ export default function KairosArchive() {
             }}
           />
 
-          <div className="relative z-10 w-full">
+          <div data-cinematic-block className="relative z-10 w-full">
             <div
               data-final-kairos-copy
               className="mb-8 flex items-center justify-between border-b border-white/18 pb-5 text-[9px] uppercase tracking-[0.31em] text-white/34 md:text-[11px]"

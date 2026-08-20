@@ -929,6 +929,7 @@ export default function SplashScreen({ onFinish }) {
           <span className="h-px bg-fuchsia-400/22" />
         </div>
       </div>
+      
 
       {/* BOTTOM META */}
       <div
