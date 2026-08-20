@@ -208,8 +208,6 @@ export default function Prodotti() {
   const principlesRef = useRef(null);
   const finalRef = useRef(null);
 
-  const cursorGlowRef = useRef(null);
-  const cursorDotRef = useRef(null);
 
   /*
    * RESET DELLO SCROLL
@@ -473,16 +471,15 @@ export default function Prodotti() {
 
       /*
        * =========================
-       * CURSOR + MAGNETIC + TILT
+       * MAGNETIC + TILT
        * =========================
+       * Il custom cursor luminoso è stato rimosso.
+       * Restano soltanto le micro-interazioni sui componenti.
        */
 
       mm.add(
         "(pointer: fine) and (prefers-reduced-motion: no-preference)",
         () => {
-          const glow = cursorGlowRef.current;
-          const dot = cursorDotRef.current;
-
           const magnetic = gsap.utils.toArray(
             page.querySelectorAll("[data-magnetic]")
           );
@@ -492,44 +489,6 @@ export default function Prodotti() {
           );
 
           const cleanup = [];
-
-          if (glow && dot) {
-            const gx = gsap.quickTo(glow, "x", {
-              duration: 0.65,
-              ease: "power3.out",
-            });
-
-            const gy = gsap.quickTo(glow, "y", {
-              duration: 0.65,
-              ease: "power3.out",
-            });
-
-            const dx = gsap.quickTo(dot, "x", {
-              duration: 0.1,
-              ease: "power2.out",
-            });
-
-            const dy = gsap.quickTo(dot, "y", {
-              duration: 0.1,
-              ease: "power2.out",
-            });
-
-            const onPointerMove = (event) => {
-              gx(event.clientX);
-              gy(event.clientY);
-
-              dx(event.clientX);
-              dy(event.clientY);
-            };
-
-            window.addEventListener("pointermove", onPointerMove, {
-              passive: true,
-            });
-
-            cleanup.push(() =>
-              window.removeEventListener("pointermove", onPointerMove)
-            );
-          }
 
           magnetic.forEach((element) => {
             const move = (event) => {
@@ -633,12 +592,60 @@ export default function Prodotti() {
       mm.add(
         {
           desktop: "(min-width: 1024px)",
+          tablet: "(min-width: 768px) and (max-width: 1023px)",
+          mobile: "(max-width: 767px)",
+          coarse: "(pointer: coarse)",
           reduceMotion: "(prefers-reduced-motion: reduce)",
         },
 
         (mediaContext) => {
-          const { desktop, reduceMotion } =
-            mediaContext.conditions;
+          const {
+            desktop,
+            tablet,
+            mobile,
+            coarse,
+            reduceMotion,
+          } = mediaContext.conditions;
+
+          /*
+           * RESPONSIVE MOTION PROFILE
+           * Desktop resta identico.
+           * Tablet/mobile mantengono le stesse animazioni,
+           * con distanze, scale e scrub calibrati sulla viewport.
+           */
+          const motion = {
+            contentStartY: desktop ? 90 : tablet ? 64 : 42,
+            specsStartX: desktop ? 80 : tablet ? 52 : 28,
+
+            /*
+             * IMPORTANT:
+             * su mobile serve abbastanza corsa di scroll per vedere
+             * chiaramente TUTTI e 4 i prodotti.
+             */
+            distanceFactor: desktop ? 1.35 : tablet ? 1.45 : 1.55,
+            minDistance: desktop ? 4400 : tablet ? 4300 : 3900,
+
+            scrub: desktop ? 1 : tablet ? 0.82 : 0.68,
+            labelGap: desktop ? 0.3 : tablet ? 0.24 : 0.2,
+
+            frameStartScale: desktop ? 0.74 : tablet ? 0.82 : 0.9,
+            frameStartX: desktop ? 14 : tablet ? 9 : 4,
+            frameRotateY: desktop ? 8 : tablet ? 4 : 0,
+            videoStartScale: desktop ? 1.23 : tablet ? 1.18 : 1.13,
+            previousFrameScale: desktop ? 0.72 : tablet ? 0.8 : 0.88,
+            previousFrameX: desktop ? 13 : tablet ? 9 : 5,
+            previousFrameRotateY: desktop ? 7 : tablet ? 4 : 0,
+            previousContentY: desktop ? -65 : tablet ? -48 : -34,
+            previousSpecsX: desktop ? 50 : tablet ? 34 : 22,
+            contentEnterY: desktop ? 95 : tablet ? 68 : 44,
+            specsEnterX: desktop ? 80 : tablet ? 54 : 30,
+
+            /*
+             * pausa visiva tra una slide e l'altra.
+             * Su mobile NON deve essere troppo corta.
+             */
+            hold: desktop ? 0.45 : tablet ? 0.42 : 0.4,
+          };
 
           const panels = gsap.utils.toArray(
             showcase.querySelectorAll("[data-product-panel]")
@@ -803,12 +810,12 @@ export default function Prodotti() {
 
           gsap.set(contents, {
             autoAlpha: 0,
-            y: desktop ? 90 : 46,
+            y: motion.contentStartY,
           });
 
           gsap.set(specs, {
             autoAlpha: 0,
-            x: desktop ? 80 : 32,
+            x: motion.specsStartX,
           });
 
           gsap.set(frames, {
@@ -889,21 +896,31 @@ export default function Prodotti() {
               start: "top top",
 
               end: () => {
+                /*
+                 * clientHeight è più stabile di visualViewport durante
+                 * lo scroll mobile e impedisce che la timeline "salti".
+                 */
+                const viewportHeight =
+                  document.documentElement.clientHeight ||
+                  window.innerHeight;
+
                 const distance =
-                  window.innerHeight *
+                  viewportHeight *
                   panels.length *
-                  (desktop ? 1.35 : 1.05);
+                  motion.distanceFactor;
 
                 return `+=${Math.max(
                   distance,
-                  desktop ? 4400 : 3200
+                  motion.minDistance
                 )}`;
               },
 
               pin: true,
-              scrub: desktop ? 1 : 0.7,
+              pinSpacing: true,
+              scrub: motion.scrub,
               anticipatePin: 1,
               invalidateOnRefresh: true,
+              fastScrollEnd: false,
 
               onEnter: () => playVideo(0),
 
@@ -922,29 +939,17 @@ export default function Prodotti() {
 
                 if (!timeline) return;
 
-                let nextPanel = 0;
-
-                const time = timeline.time();
-
-                for (
-                  let index = 1;
-                  index < panels.length;
-                  index += 1
-                ) {
-                  const labelTime =
-                    timeline.labels[`product-${index}`];
-
-                  if (
-                    typeof labelTime === "number" &&
-                    time >= labelTime
-                  ) {
-                    nextPanel = index;
-                  }
-                }
+                /*
+                 * Selezione pannello robusta anche su touch/mobile:
+                 * dividiamo lo scroll totale in 4 fasce.
+                 */
+                const nextPanel = Math.min(
+                  panels.length - 1,
+                  Math.floor(self.progress * panels.length)
+                );
 
                 if (nextPanel !== activePanel) {
                   activePanel = nextPanel;
-
                   setRail(activePanel);
                   playVideo(activePanel);
                 }
@@ -1040,7 +1045,7 @@ export default function Prodotti() {
 
             timeline.addLabel(
               label,
-              `+=${desktop ? 0.3 : 0.16}`
+              `+=${motion.labelGap}`
             );
 
             timeline.set(
@@ -1079,13 +1084,13 @@ export default function Prodotti() {
               timeline.fromTo(
                 currentFrame,
                 {
-                  scale: desktop ? 0.74 : 0.9,
+                  scale: motion.frameStartScale,
                   xPercent:
                     direction *
-                    (desktop ? 14 : 4),
+                    motion.frameStartX,
                   rotateY:
                     direction *
-                    (desktop ? 8 : 0),
+                    motion.frameRotateY,
                   clipPath: CLOSED_CLIP,
                 },
                 {
@@ -1105,7 +1110,7 @@ export default function Prodotti() {
                 currentVideo,
                 {
                   scale:
-                    desktop ? 1.23 : 1.14,
+                    motion.videoStartScale,
                 },
                 {
                   scale: 1,
@@ -1140,13 +1145,13 @@ export default function Prodotti() {
                 previousFrame,
                 {
                   scale:
-                    desktop ? 0.72 : 0.88,
+                    motion.previousFrameScale,
 
                   xPercent:
-                    direction * -13,
+                    direction * -motion.previousFrameX,
 
                   rotateY:
-                    direction * -7,
+                    direction * -motion.previousFrameRotateY,
 
                   clipPath: CLOSED_CLIP,
 
@@ -1178,7 +1183,7 @@ export default function Prodotti() {
                 previousContent,
                 {
                   autoAlpha: 0,
-                  y: -65,
+                  y: motion.previousContentY,
                   filter: "blur(10px)",
                   duration: 0.4,
                 },
@@ -1192,7 +1197,7 @@ export default function Prodotti() {
                 {
                   autoAlpha: 0,
                   x:
-                    direction * -50,
+                    direction * -motion.previousSpecsX,
 
                   duration: 0.35,
                 },
@@ -1220,7 +1225,7 @@ export default function Prodotti() {
                 currentContent,
                 {
                   autoAlpha: 0,
-                  y: 95,
+                  y: motion.contentEnterY,
                   filter: "blur(12px)",
                 },
                 {
@@ -1259,7 +1264,7 @@ export default function Prodotti() {
                 {
                   autoAlpha: 0,
                   x:
-                    direction * 80,
+                    direction * motion.specsEnterX,
                 },
                 {
                   autoAlpha: 1,
@@ -1330,8 +1335,12 @@ export default function Prodotti() {
             timeline.to(
               {},
               {
-                duration:
-                  desktop ? 0.45 : 0.26,
+                /*
+                 * segmento vuoto intenzionale:
+                 * dà tempo alla slide corrente di restare visibile
+                 * prima della transizione successiva.
+                 */
+                duration: motion.hold,
               }
             );
           });
@@ -1354,13 +1363,21 @@ export default function Prodotti() {
       mm.add(
         {
           desktop: "(min-width: 1024px)",
+          tablet: "(min-width: 768px) and (max-width: 1023px)",
+          mobile: "(max-width: 767px)",
+          coarse: "(pointer: coarse)",
           reduceMotion:
             "(prefers-reduced-motion: reduce)",
         },
 
         (mediaContext) => {
-          const { desktop, reduceMotion } =
-            mediaContext.conditions;
+          const {
+            desktop,
+            tablet,
+            mobile,
+            coarse,
+            reduceMotion,
+          } = mediaContext.conditions;
 
           const track =
             capabilities.querySelector(
@@ -1388,13 +1405,13 @@ export default function Prodotti() {
               gsap.fromTo(
                 inner,
                 {
-                  y: 60,
+                  y: tablet ? 48 : 34,
                   opacity: 0,
 
                   rotateZ:
                     index % 2 === 0
-                      ? -1.4
-                      : 1.4,
+                      ? (tablet ? -1.2 : -0.9)
+                      : (tablet ? 1.2 : 0.9),
                 },
                 {
                   y: 0,
@@ -1586,8 +1603,19 @@ export default function Prodotti() {
         gsap.fromTo(
           node,
           {
-            y: 34,
-            x: direction * 12,
+            y:
+              window.innerWidth >= 1024
+                ? 34
+                : window.innerWidth >= 768
+                  ? 28
+                  : 22,
+            x:
+              direction *
+              (window.innerWidth >= 1024
+                ? 12
+                : window.innerWidth >= 768
+                  ? 9
+                  : 6),
             opacity: 0,
             filter: "blur(8px)",
             clipPath: "inset(0 0 38% 0)",
@@ -1617,7 +1645,10 @@ export default function Prodotti() {
         gsap.fromTo(
           node,
           {
-            xPercent: index % 2 === 0 ? -8 : 8,
+            xPercent:
+              index % 2 === 0
+                ? (window.innerWidth >= 1024 ? -8 : window.innerWidth >= 768 ? -6 : -4)
+                : (window.innerWidth >= 1024 ? 8 : window.innerWidth >= 768 ? 6 : 4),
             opacity: 0,
           },
           {
@@ -1856,8 +1887,18 @@ export default function Prodotti() {
         );
 
         gsap.to(finalBeam, {
-          xPercent: 30,
-          rotate: 5,
+          xPercent:
+            window.innerWidth >= 1024
+              ? 30
+              : window.innerWidth >= 768
+                ? 22
+                : 16,
+          rotate:
+            window.innerWidth >= 1024
+              ? 5
+              : window.innerWidth >= 768
+                ? 3.5
+                : 2.5,
 
           ease: "none",
 
@@ -1872,10 +1913,30 @@ export default function Prodotti() {
 
       if (finalOrb) {
         gsap.to(finalOrb, {
-          xPercent: -20,
-          yPercent: -16,
-          rotate: 85,
-          scale: 1.2,
+          xPercent:
+            window.innerWidth >= 1024
+              ? -20
+              : window.innerWidth >= 768
+                ? -14
+                : -9,
+          yPercent:
+            window.innerWidth >= 1024
+              ? -16
+              : window.innerWidth >= 768
+                ? -11
+                : -7,
+          rotate:
+            window.innerWidth >= 1024
+              ? 85
+              : window.innerWidth >= 768
+                ? 58
+                : 36,
+          scale:
+            window.innerWidth >= 1024
+              ? 1.2
+              : window.innerWidth >= 768
+                ? 1.14
+                : 1.08,
 
           ease: "none",
 
@@ -1942,6 +2003,68 @@ export default function Prodotti() {
     };
   }, [location.key]);
 
+  /*
+   * RESPONSIVE REFRESH SICURO
+   *
+   * Su mobile la barra del browser cambia continuamente l'altezza
+   * della viewport durante lo scroll. NON facciamo refresh per quei
+   * cambi di sola altezza, altrimenti il pin delle 4 slide viene
+   * continuamente ricalcolato.
+   */
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    let resizeTimer = 0;
+    let lastWidth = window.innerWidth;
+
+    const refreshResponsiveAnimations = (force = false) => {
+      const currentWidth = window.innerWidth;
+      const widthChanged = Math.abs(currentWidth - lastWidth) > 2;
+
+      if (!force && !widthChanged) {
+        return;
+      }
+
+      lastWidth = currentWidth;
+      window.clearTimeout(resizeTimer);
+
+      resizeTimer = window.setTimeout(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh(true);
+        ScrollTrigger.update();
+      }, 180);
+    };
+
+    const onResize = () => {
+      refreshResponsiveAnimations(false);
+    };
+
+    const onOrientationChange = () => {
+      window.setTimeout(() => {
+        refreshResponsiveAnimations(true);
+      }, 250);
+    };
+
+    window.addEventListener("resize", onResize, {
+      passive: true,
+    });
+
+    window.addEventListener(
+      "orientationchange",
+      onOrientationChange,
+      { passive: true }
+    );
+
+    return () => {
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener(
+        "orientationchange",
+        onOrientationChange
+      );
+    };
+  }, [location.key]);
+
   return (
     <>
       <SeoMetaTags />
@@ -1951,21 +2074,7 @@ export default function Prodotti() {
         ref={pageRef}
         className="oxo-products-avant relative overflow-x-hidden bg-[#030303] text-white"
       >
-        {/* CURSOR AWARD */}
-
-        <div
-          ref={cursorGlowRef}
-          aria-hidden="true"
-          className="oxo-cursor-glow"
-        />
-
-        <div
-          ref={cursorDotRef}
-          aria-hidden="true"
-          className="oxo-cursor-dot"
-        />
-
-        <style>{`
+<style>{`
           /* AVANT LEGATO SAFE:
              solo famiglia tipografica, nessuna trasformazione globale */
           .oxo-products-avant,
@@ -2086,74 +2195,6 @@ export default function Prodotti() {
               url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 
             mix-blend-mode: soft-light;
-          }
-
-          /*
-           * CUSTOM CURSOR
-           */
-
-          .oxo-cursor-glow {
-            position: fixed;
-
-            left: 0;
-            top: 0;
-
-            width: 38rem;
-            height: 38rem;
-
-            transform:
-              translate3d(-50%,-50%,0);
-
-            border-radius: 999px;
-
-            pointer-events: none;
-
-            z-index: 90;
-
-            opacity: .36;
-
-            background:
-              radial-gradient(
-                circle,
-                rgba(53,216,255,.14) 0%,
-                rgba(139,92,246,.08) 28%,
-                rgba(255,79,216,.04) 48%,
-                transparent 69%
-              );
-
-            filter: blur(22px);
-
-            mix-blend-mode: screen;
-
-            will-change: transform;
-          }
-
-          .oxo-cursor-dot {
-            position: fixed;
-
-            left: 0;
-            top: 0;
-
-            width: 7px;
-            height: 7px;
-
-            transform:
-              translate3d(-50%,-50%,0);
-
-            border-radius: 999px;
-
-            pointer-events: none;
-
-            z-index: 100;
-
-            background:
-              rgba(255,255,255,.95);
-
-            box-shadow:
-              0 0 16px rgba(53,216,255,.9),
-              0 0 34px rgba(139,92,246,.5);
-
-            mix-blend-mode: screen;
           }
 
           /*
@@ -2401,15 +2442,169 @@ export default function Prodotti() {
               left center;
           }
 
-          @media
-          (pointer: coarse),
-          (prefers-reduced-motion: reduce) {
 
-            .oxo-cursor-glow,
-            .oxo-cursor-dot {
-              display: none;
+          .oxo-final-cta {
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: #fff !important;
+            transition:
+              background-color .35s ease,
+              border-color .35s ease,
+              transform .45s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-final-cta::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+              linear-gradient(
+                90deg,
+                rgba(53,216,255,.10),
+                rgba(139,92,246,.08),
+                rgba(255,79,216,.08)
+              );
+            opacity: 0;
+            transition: opacity .35s ease;
+          }
+
+          .oxo-final-cta:hover {
+            border-color: rgba(255,255,255,.7);
+          }
+
+          .oxo-final-cta:hover::before {
+            opacity: 1;
+          }
+
+
+          /* ==========================================
+             RESPONSIVE ANIMATION SAFETY
+             Nessun redesign: solo stabilità viewport/GPU.
+             ========================================== */
+
+          @media (max-width: 1023px) {
+            .oxo-products-avant {
+              overflow-x: clip;
+            }
+
+            .oxo-products-grid {
+              background-size: 54px 54px;
+            }
+
+            .oxo-product-frame,
+            [data-product-panel],
+            [data-product-content],
+            [data-capability-inner],
+            [data-principle-card],
+            [data-principle-content],
+            [data-final-letter] {
+              backface-visibility: hidden;
+            }
+
+            .oxo-product-chromatic {
+              mix-blend-mode: normal;
             }
           }
+
+          @media (max-width: 1023px) {
+            /*
+             * Le slide restano assolute e pinnate anche su mobile/tablet.
+             * Nessuna conversione in lista verticale.
+             */
+            [data-product-panel] {
+              position: absolute !important;
+              inset: 0 !important;
+              height: 100% !important;
+            }
+
+            [data-product-frame] {
+              position: absolute !important;
+              inset: 0 !important;
+            }
+          }
+
+          @media (max-width: 767px) {
+            .oxo-products-grid {
+              background-size: 44px 44px;
+            }
+
+            .oxo-hero-beam {
+              box-shadow:
+                0 0 14px rgba(53,216,255,.34),
+                0 0 28px rgba(139,92,246,.16);
+            }
+
+            .oxo-product-frame::before {
+              opacity: .14;
+            }
+
+            .oxo-product-chromatic {
+              opacity: 0 !important;
+            }
+
+            [data-product-panel] {
+              min-height: 100svh;
+            }
+
+            [data-product-content] {
+              max-width: 100%;
+            }
+
+            [data-capability-inner] {
+              transform-style: preserve-3d;
+            }
+
+            .oxo-final-cta {
+              max-width: 100%;
+              white-space: normal;
+            }
+          }
+
+          @media (max-width: 479px) {
+            .oxo-products-grid {
+              background-size: 38px 38px;
+            }
+
+            [data-product-panel] {
+              min-height: max(620px, 100svh);
+            }
+          }
+
+          @media (hover: none) and (pointer: coarse) {
+            [data-product-panel]:hover
+            .oxo-product-frame::before {
+              transform: translate3d(-125%,0,0);
+            }
+
+            .oxo-capability-card:hover::after {
+              opacity: 0;
+              transform: scale(.96);
+            }
+
+            .oxo-capability-card:hover
+            .oxo-capability-arrow {
+              transform: none;
+            }
+
+            .oxo-capability-card:hover
+            .oxo-capability-ghost {
+              opacity: inherit;
+            }
+
+            .oxo-principle-card:hover::before {
+              opacity: 0;
+              transform: translateX(-8%);
+            }
+
+            .oxo-principle-card:hover
+            .oxo-principle-title {
+              transform: none;
+              letter-spacing: inherit;
+            }
+          }
+
+
         `}</style>
 
         {/* ================= HERO ================= */}
@@ -3159,15 +3354,15 @@ export default function Prodotti() {
               </p>
 
               <Link
-                to="/contatti"
+                to="/Contatti"
                 data-magnetic
-                data-static-reveal className="oxo-products-link avant-legato-font relative inline-flex w-fit items-center gap-5 pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
+                className="oxo-final-cta avant-legato-font relative z-20 inline-flex w-fit items-center gap-5 border border-white/35 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[0.28em] text-white opacity-100 md:px-6 md:py-4 md:text-base"
               >
                 <span>
                   Parliamo del progetto
                 </span>
 
-                <span className="text-xl">
+                <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
                   ↗
                 </span>
               </Link>

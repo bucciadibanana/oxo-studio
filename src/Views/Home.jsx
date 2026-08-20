@@ -168,6 +168,8 @@ export default function Home() {
     const mm = gsap.matchMedia();
     const projectVideos = Array.from(projects.querySelectorAll("video"));
     let pointerMoveHandler = null;
+    let finalPointerMoveHandler = null;
+    let finalPointerLeaveHandler = null;
 
     const ctx = gsap.context(() => {
       const heroLetters = gsap.utils.toArray(
@@ -298,10 +300,53 @@ export default function Home() {
       mm.add(
         {
           desktop: "(min-width: 1024px)",
+          tablet: "(min-width: 768px) and (max-width: 1023px)",
+          mobile: "(max-width: 767px)",
+          coarse: "(pointer: coarse)",
           reduceMotion: "(prefers-reduced-motion: reduce)",
         },
         (mediaContext) => {
-          const { desktop, reduceMotion } = mediaContext.conditions;
+          const {
+            desktop,
+            tablet,
+            mobile,
+            coarse,
+            reduceMotion,
+          } = mediaContext.conditions;
+
+          /*
+           * RESPONSIVE MOTION PROFILE
+           * Desktop resta identico.
+           * Tablet e mobile mantengono gli stessi effetti con ampiezze,
+           * blur, pin e scrub più adatti alla viewport.
+           */
+          const motion = {
+            heroDistance: desktop ? 2.15 : tablet ? 1.65 : 1.38,
+            signalDistance: desktop ? 1.9 : tablet ? 1.52 : 1.3,
+            heroOxoX: desktop ? -38 : tablet ? -29 : -21,
+            heroOxoScale: desktop ? 1.38 : tablet ? 1.28 : 1.18,
+            heroStudioX: desktop ? 34 : tablet ? 26 : 18,
+            heroStudioScale: desktop ? 1.32 : tablet ? 1.23 : 1.14,
+            heroBrainScale: desktop ? 3.15 : tablet ? 2.65 : 2.2,
+            heroBrainRotate: desktop ? 16 : tablet ? 12 : 8,
+            heroCopyY: desktop ? -80 : tablet ? -58 : -38,
+            signalWindowScale: desktop ? 5.8 : tablet ? 4.9 : 4.05,
+            capabilityX: desktop ? 34 : tablet ? 22 : 12,
+            capabilityY: desktop ? 92 : tablet ? 66 : 42,
+            capabilityScale: desktop ? 0.955 : tablet ? 0.972 : 0.988,
+            capabilityContentX: desktop ? 70 : tablet ? 44 : 24,
+            capabilityContentY: desktop ? 42 : tablet ? 32 : 20,
+            projectContentX: desktop ? 120 : tablet ? 72 : 36,
+            projectContentY: desktop ? 46 : tablet ? 34 : 24,
+            projectVideoEnterScale: desktop ? 1.2 : tablet ? 1.16 : 1.11,
+            projectVideoExitScale: desktop ? 1.1 : tablet ? 1.075 : 1.045,
+            projectFirstScale: desktop ? 1.045 : tablet ? 1.035 : 1.022,
+            projectDistanceFactor: desktop ? 1.28 : tablet ? 1.12 : 0.98,
+            projectMinDistance: desktop ? 3600 : tablet ? 3100 : 2450,
+            projectScrub: desktop ? 1 : tablet ? 0.82 : 0.58,
+            projectGap: desktop ? 0.22 : tablet ? 0.18 : 0.12,
+            projectHold: desktop ? 0.36 : tablet ? 0.29 : 0.2,
+          };
 
           const signalRows = gsap.utils.toArray(
             signal.querySelectorAll("[data-signal-row]")
@@ -432,7 +477,7 @@ export default function Home() {
             scrollTrigger: {
               trigger: hero,
               start: "top top",
-              end: () => `+=${window.innerHeight * (desktop ? 2.15 : 1.35)}`,
+              end: () => `+=${window.innerHeight * motion.heroDistance}`,
               pin: true,
               scrub: 1,
               anticipatePin: 1,
@@ -444,8 +489,8 @@ export default function Home() {
             .to(
               heroOxo,
               {
-                xPercent: desktop ? -38 : -22,
-                scaleX: desktop ? 1.38 : 1.2,
+                xPercent: motion.heroOxoX,
+                scaleX: motion.heroOxoScale,
                 skewX: -8,
                 opacity: 0.16,
                 filter: "blur(3px)",
@@ -456,8 +501,8 @@ export default function Home() {
             .to(
               heroStudio,
               {
-                xPercent: desktop ? 34 : 19,
-                scaleX: desktop ? 1.32 : 1.16,
+                xPercent: motion.heroStudioX,
+                scaleX: motion.heroStudioScale,
                 skewX: 7,
                 opacity: 0.15,
                 filter: "blur(3px)",
@@ -468,8 +513,8 @@ export default function Home() {
             .to(
               heroBrain,
               {
-                scale: desktop ? 3.15 : 2.35,
-                rotateZ: desktop ? 16 : 9,
+                scale: motion.heroBrainScale,
+                rotateZ: motion.heroBrainRotate,
                 opacity: 0,
                 filter: "blur(14px)",
                 duration: 1,
@@ -479,7 +524,7 @@ export default function Home() {
             .to(
               heroCopy,
               {
-                y: -80,
+                y: motion.heroCopyY,
                 opacity: 0,
                 duration: 0.55,
               },
@@ -503,7 +548,7 @@ export default function Home() {
             scrollTrigger: {
               trigger: signal,
               start: "top top",
-              end: () => `+=${window.innerHeight * (desktop ? 1.9 : 1.25)}`,
+              end: () => `+=${window.innerHeight * motion.signalDistance}`,
               pin: true,
               scrub: 1,
               anticipatePin: 1,
@@ -527,7 +572,7 @@ export default function Home() {
             .to(
               signalWindow,
               {
-                scale: desktop ? 5.8 : 4.2,
+                scale: motion.signalWindowScale,
                 rotate: 210,
                 borderRadius: "12%",
                 duration: 1,
@@ -572,7 +617,9 @@ export default function Home() {
             const direction = index % 2 === 0 ? -1 : 1;
             const finalTilt = desktop
               ? CAPABILITY_TILTS[index]
-              : CAPABILITY_TILTS[index] * 0.55;
+              : tablet
+                ? CAPABILITY_TILTS[index] * 0.72
+                : CAPABILITY_TILTS[index] * 0.38;
 
             gsap.fromTo(
               card,
@@ -581,10 +628,10 @@ export default function Home() {
                   direction < 0
                     ? "polygon(0 0, 0 0, 0 100%, 0 100%)"
                     : "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
-                x: desktop ? direction * 34 : direction * 14,
-                y: desktop ? 92 : 48,
+                x: direction * motion.capabilityX,
+                y: motion.capabilityY,
                 rotate: finalTilt + direction * 3.4,
-                scale: desktop ? 0.955 : 0.985,
+                scale: motion.capabilityScale,
               },
               {
                 clipPath: FULL_CLIP,
@@ -606,8 +653,8 @@ export default function Home() {
               gsap.fromTo(
                 content,
                 {
-                  x: desktop ? direction * 70 : direction * 28,
-                  y: desktop ? 42 : 25,
+                  x: direction * motion.capabilityContentX,
+                  y: motion.capabilityContentY,
                   opacity: 0,
                 },
                 {
@@ -736,11 +783,11 @@ export default function Home() {
                 start: "top top",
                 end: () => {
                   const distance =
-                    window.innerHeight * projectPanels.length * (desktop ? 1.28 : 1.02);
-                  return `+=${Math.max(distance, desktop ? 3600 : 2700)}`;
+                    window.innerHeight * projectPanels.length * motion.projectDistanceFactor;
+                  return `+=${Math.max(distance, motion.projectMinDistance)}`;
                 },
                 pin: true,
-                scrub: desktop ? 1 : 0.68,
+                scrub: motion.projectScrub,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
                 onEnter: () => playProjectVideo(0),
@@ -791,7 +838,7 @@ export default function Home() {
             if (projectVideos[0]) {
               projectTimeline.to(
                 projectVideos[0],
-                { scale: desktop ? 1.045 : 1.025, duration: 0.82 },
+                { scale: motion.projectFirstScale, duration: 0.82 },
                 0
               );
             }
@@ -819,7 +866,7 @@ export default function Home() {
               const direction = index % 2 === 0 ? -1 : 1;
               const label = `project-${index}`;
 
-              projectTimeline.addLabel(label, `+=${desktop ? 0.22 : 0.14}`);
+              projectTimeline.addLabel(label, `+=${motion.projectGap}`);
               projectTimeline.set(panel, { autoAlpha: 1 }, label);
 
               projectTimeline.fromTo(
@@ -871,7 +918,7 @@ export default function Home() {
                 projectTimeline.fromTo(
                   currentVideo,
                   {
-                    scale: desktop ? 1.2 : 1.13,
+                    scale: motion.projectVideoEnterScale,
                     filter: `brightness(1.45) saturate(2.4) contrast(1.22) hue-rotate(${direction * 70}deg)`,
                   },
                   {
@@ -887,7 +934,7 @@ export default function Home() {
                 projectTimeline.to(
                   previousVideo,
                   {
-                    scale: desktop ? 1.1 : 1.06,
+                    scale: motion.projectVideoExitScale,
                     filter: `brightness(.28) saturate(.45) hue-rotate(${direction * -48}deg)`,
                     duration: 1,
                   },
@@ -914,8 +961,8 @@ export default function Home() {
                   currentContent,
                   {
                     autoAlpha: 0,
-                    x: direction * (desktop ? 120 : 42),
-                    y: desktop ? 46 : 28,
+                    x: direction * motion.projectContentX,
+                    y: motion.projectContentY,
                   },
                   {
                     autoAlpha: 1,
@@ -964,7 +1011,7 @@ export default function Home() {
               }
 
               projectTimeline.set(previous, { autoAlpha: 0 }, `${label}+=1.01`);
-              projectTimeline.to({}, { duration: desktop ? 0.36 : 0.23 });
+              projectTimeline.to({}, { duration: motion.projectHold });
             });
           }
 
@@ -1024,6 +1071,302 @@ export default function Home() {
         }
       );
 
+      const finalNodes = gsap.utils.toArray(
+        finalSection.querySelectorAll("[data-final-node]")
+      );
+      const finalField = finalSection.querySelector("[data-final-field]");
+      const finalCursor = finalSection.querySelector("[data-final-cursor]");
+      const finalVector = finalSection.querySelector("[data-final-vector]");
+      const finalCross = finalSection.querySelector("[data-final-cross]");
+      const finalSweep = finalSection.querySelector("[data-final-sweep]");
+
+      if (
+        finalNodes.length &&
+        finalField &&
+        !window.matchMedia("(pointer: coarse)").matches
+      ) {
+        const cursorX = finalCursor
+          ? gsap.quickTo(finalCursor, "x", {
+              duration: 0.42,
+              ease: "power3.out",
+            })
+          : null;
+        const cursorY = finalCursor
+          ? gsap.quickTo(finalCursor, "y", {
+              duration: 0.42,
+              ease: "power3.out",
+            })
+          : null;
+
+        const crossX = finalCross
+          ? gsap.quickTo(finalCross, "x", {
+              duration: 0.62,
+              ease: "power3.out",
+            })
+          : null;
+        const crossY = finalCross
+          ? gsap.quickTo(finalCross, "y", {
+              duration: 0.62,
+              ease: "power3.out",
+            })
+          : null;
+
+        finalPointerMoveHandler = (event) => {
+          const fieldRect = finalField.getBoundingClientRect();
+          const localX = event.clientX - fieldRect.left;
+          const localY = event.clientY - fieldRect.top;
+          const nx = localX / fieldRect.width - 0.5;
+          const ny = localY / fieldRect.height - 0.5;
+
+          cursorX?.(localX);
+          cursorY?.(localY);
+          crossX?.(nx * 38);
+          crossY?.(ny * 30);
+
+          if (finalVector) {
+            const angle =
+              Math.atan2(
+                event.clientY - (fieldRect.top + fieldRect.height / 2),
+                event.clientX - (fieldRect.left + fieldRect.width / 2)
+              ) *
+              (180 / Math.PI);
+
+            gsap.to(finalVector, {
+              rotation: angle,
+              scaleX: 0.9 + Math.min(1.8, Math.hypot(nx, ny) * 2.4),
+              opacity: 0.28 + Math.min(0.4, Math.hypot(nx, ny)),
+              duration: 0.34,
+              ease: "power3.out",
+              overwrite: true,
+            });
+          }
+
+          if (finalSweep) {
+            gsap.to(finalSweep, {
+              xPercent: nx * 18,
+              yPercent: ny * 10,
+              rotate: nx * 4,
+              duration: 0.55,
+              ease: "power3.out",
+              overwrite: true,
+            });
+          }
+
+          finalNodes.forEach((node, index) => {
+            const rect = node.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            const dx = event.clientX - centerX;
+            const dy = event.clientY - centerY;
+            const distance = Math.hypot(dx, dy);
+            const influence = Math.max(0, 1 - distance / 245);
+
+            const accent = node.dataset.finalAccent || "#ffffff";
+            const direction = index % 2 === 0 ? 1 : -1;
+
+            gsap.to(node, {
+              x: influence * dx * 0.055,
+              y: influence * dy * 0.055,
+              scale: 1 + influence * (index % 4 === 0 ? 3.2 : 2.15),
+              rotate: influence * direction * (20 + (index % 5) * 8),
+              opacity: 0.16 + influence * 0.84,
+              borderColor:
+                influence > 0.04
+                  ? accent
+                  : "rgba(255,255,255,.18)",
+              backgroundColor:
+                influence > 0.22
+                  ? `${accent}2a`
+                  : "rgba(255,255,255,.012)",
+              boxShadow:
+                influence > 0.12
+                  ? `0 0 0 1px ${accent}22, 0 0 ${
+                      8 + influence * 26
+                    }px ${accent}33`
+                  : "0 0 0 rgba(0,0,0,0)",
+              duration: 0.18,
+              ease: "power2.out",
+              overwrite: true,
+            });
+          });
+        };
+
+        finalPointerLeaveHandler = () => {
+          gsap.to(finalNodes, {
+            x: 0,
+            y: 0,
+            scale: 1,
+            rotate: 0,
+            opacity: 0.24,
+            borderColor: "rgba(255,255,255,.18)",
+            backgroundColor: "rgba(255,255,255,.012)",
+            boxShadow: "0 0 0 rgba(0,0,0,0)",
+            duration: 0.65,
+            ease: "power3.out",
+            overwrite: true,
+          });
+
+          if (finalCursor) {
+            gsap.to(finalCursor, {
+              opacity: 0,
+              scale: 0.5,
+              duration: 0.35,
+              ease: "power3.out",
+            });
+          }
+
+          if (finalCross) {
+            gsap.to(finalCross, {
+              x: 0,
+              y: 0,
+              rotate: 0,
+              duration: 0.7,
+              ease: "power3.out",
+            });
+          }
+
+          if (finalVector) {
+            gsap.to(finalVector, {
+              rotation: 0,
+              scaleX: 1,
+              opacity: 0.16,
+              duration: 0.55,
+              ease: "power3.out",
+            });
+          }
+
+          if (finalSweep) {
+            gsap.to(finalSweep, {
+              xPercent: 0,
+              yPercent: 0,
+              rotate: 0,
+              duration: 0.7,
+              ease: "power3.out",
+            });
+          }
+        };
+
+        finalSection.addEventListener(
+          "pointermove",
+          finalPointerMoveHandler,
+          { passive: true }
+        );
+
+        finalSection.addEventListener(
+          "pointerenter",
+          () => {
+            if (finalCursor) {
+              gsap.to(finalCursor, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.32,
+                ease: "power3.out",
+              });
+            }
+          },
+          { passive: true }
+        );
+
+        finalSection.addEventListener(
+          "pointerleave",
+          finalPointerLeaveHandler
+        );
+      }
+
+      /*
+       * MOBILE / TOUCH FALLBACK PER IL CAMPO FINALE
+       * Su desktop reagisce al mouse; su touch mantiene vita tramite scroll.
+       */
+      if (
+        finalField &&
+        window.matchMedia("(pointer: coarse)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        if (finalCross) {
+          gsap.fromTo(
+            finalCross,
+            { rotate: -8, scale: 0.92, opacity: 0.18 },
+            {
+              rotate: 12,
+              scale: 1.08,
+              opacity: 0.34,
+              ease: "none",
+              scrollTrigger: {
+                trigger: finalSection,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.7,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        }
+
+        if (finalVector) {
+          gsap.fromTo(
+            finalVector,
+            { rotate: -18, scaleX: 0.72, opacity: 0.12 },
+            {
+              rotate: 18,
+              scaleX: 1.18,
+              opacity: 0.3,
+              ease: "none",
+              scrollTrigger: {
+                trigger: finalSection,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.75,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        }
+
+        if (finalSweep) {
+          gsap.fromTo(
+            finalSweep,
+            { xPercent: -6, yPercent: 2 },
+            {
+              xPercent: 6,
+              yPercent: -2,
+              ease: "none",
+              scrollTrigger: {
+                trigger: finalSection,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.8,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        }
+
+        finalNodes.forEach((node, index) => {
+          gsap.fromTo(
+            node,
+            {
+              y: index % 2 === 0 ? 8 : -8,
+              rotate: index % 2 === 0 ? -4 : 4,
+              opacity: 0.18,
+            },
+            {
+              y: index % 2 === 0 ? -10 : 10,
+              rotate: index % 2 === 0 ? 7 : -7,
+              opacity: 0.5,
+              ease: "none",
+              scrollTrigger: {
+                trigger: finalSection,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.85,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        });
+      }
+
       const finalLetters = gsap.utils.toArray(
         finalSection.querySelectorAll("[data-home-final-letter]")
       );
@@ -1063,9 +1406,68 @@ export default function Home() {
         window.removeEventListener("pointermove", pointerMoveHandler);
       }
 
+      if (finalPointerMoveHandler) {
+        finalSection.removeEventListener(
+          "pointermove",
+          finalPointerMoveHandler
+        );
+      }
+
+      if (finalPointerLeaveHandler) {
+        finalSection.removeEventListener(
+          "pointerleave",
+          finalPointerLeaveHandler
+        );
+      }
+
       projectVideos.forEach((video) => video.pause());
       mm.revert();
       ctx.revert();
+    };
+  }, []);
+
+  /*
+   * RESPONSIVE REFRESH
+   * Non cambia il design: riallinea pin e distanze quando viewport,
+   * barra browser mobile o orientamento cambiano.
+   */
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    let resizeTimer = 0;
+
+    const refreshResponsiveAnimations = () => {
+      window.clearTimeout(resizeTimer);
+
+      resizeTimer = window.setTimeout(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh(true);
+        ScrollTrigger.update();
+      }, 140);
+    };
+
+    window.addEventListener("resize", refreshResponsiveAnimations, {
+      passive: true,
+    });
+
+    window.addEventListener("orientationchange", refreshResponsiveAnimations, {
+      passive: true,
+    });
+
+    window.visualViewport?.addEventListener(
+      "resize",
+      refreshResponsiveAnimations,
+      { passive: true }
+    );
+
+    return () => {
+      window.clearTimeout(resizeTimer);
+      window.removeEventListener("resize", refreshResponsiveAnimations);
+      window.removeEventListener("orientationchange", refreshResponsiveAnimations);
+      window.visualViewport?.removeEventListener(
+        "resize",
+        refreshResponsiveAnimations
+      );
     };
   }, []);
 
@@ -1219,11 +1621,147 @@ export default function Home() {
             animation: oxoV2BrainOrbit 18s linear infinite reverse;
           }
 
+
+          [data-final-node] {
+            transform-style: preserve-3d;
+          }
+
+          [data-final-field] {
+            isolation: isolate;
+          }
+          [data-final-node] {
+            transition:
+              border-color .18s ease,
+              background-color .18s ease;
+          }
+
+
+          /* ==========================================
+             RESPONSIVE ANIMATION SAFETY
+             Stesso design, stessi effetti.
+             Cambiano soltanto scala/intensità per device.
+             ========================================== */
+
+          @media (max-width: 1023px) {
+            .oxo-home-avant {
+              overflow-x: clip;
+            }
+
+            .oxo-project-color-wash {
+              filter: blur(5px) saturate(1.3);
+            }
+
+            .oxo-project-chroma {
+              filter: blur(20px) saturate(1.45);
+            }
+
+            .oxo-v2-brain-halo {
+              filter: blur(52px);
+            }
+
+            [data-project-stage] {
+              min-height: max(620px, 100svh);
+            }
+
+            [data-final-field] {
+              perspective: 900px;
+            }
+          }
+
+          @media (max-width: 767px) {
+            .oxo-v2-grid {
+              background-size: 46px 46px;
+            }
+
+            .oxo-v2-electric-path {
+              filter: drop-shadow(0 0 5px rgba(53,216,255,.55));
+            }
+
+            .oxo-project-color-wash {
+              filter: blur(3px) saturate(1.15);
+            }
+
+            .oxo-project-chroma {
+              filter: blur(14px) saturate(1.25);
+            }
+
+            [data-signal-row] {
+              will-change: transform;
+            }
+
+            [data-signal-window],
+            [data-signal-cross],
+            [data-project-panel],
+            [data-project-content],
+            [data-capability-panel],
+            [data-capability-inner],
+            [data-manifesto-track],
+            [data-final-node],
+            [data-final-cross],
+            [data-final-vector],
+            [data-final-sweep] {
+              backface-visibility: hidden;
+              transform-style: preserve-3d;
+            }
+
+            [data-project-stage] {
+              min-height: max(600px, 100svh);
+            }
+
+            [data-project-content] {
+              max-width: 100%;
+            }
+
+            [data-final-field] {
+              height: 52%;
+            }
+
+            .oxo-capability-v2:hover {
+              border-radius: 34px;
+            }
+          }
+
+          @media (max-width: 479px) {
+            .oxo-v2-grid {
+              background-size: 38px 38px;
+            }
+
+            [data-project-stage] {
+              min-height: max(580px, 100svh);
+            }
+
+            [data-final-field] {
+              height: 47%;
+            }
+
+            .oxo-v2-brain-halo {
+              filter: blur(38px);
+            }
+          }
+
+          @media (hover: none) and (pointer: coarse) {
+            .oxo-capability-v2:hover {
+              border-color: rgba(255,255,255,.18);
+              box-shadow: none;
+            }
+
+            .oxo-capability-v2:hover .oxo-capability-v2-title,
+            .oxo-capability-v2:hover .oxo-capability-v2-arrow,
+            .oxo-project-v2:hover .oxo-project-v2-title {
+              transform: none;
+              letter-spacing: inherit;
+            }
+          }
+
           @media (prefers-reduced-motion: reduce) {
             .oxo-v2-brain-halo,
             .oxo-v2-brain-orbit,
             .oxo-v2-brain-orbit-reverse {
               animation: none;
+            }
+
+            [data-final-node] {
+              transition: none;
             }
           }
         `}</style>
@@ -1837,6 +2375,103 @@ export default function Home() {
         >
           <div className="oxo-v2-grid pointer-events-none absolute inset-0 opacity-70" />
 
+          {/* Awwwards reactive field: nessuna nuova altezza */}
+          <div
+            data-final-field
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 h-[58%] overflow-hidden [perspective:1200px]"
+          >
+            <div className="absolute inset-0 opacity-55">
+              <div className="absolute left-[4vw] top-[17%] h-px w-[92vw] bg-white/[0.055]" />
+              <div className="absolute left-1/2 top-[4%] h-[90%] w-px -translate-x-1/2 bg-white/[0.045]" />
+              <div className="absolute left-[20%] top-[54%] h-px w-[60%] -rotate-[7deg] bg-white/[0.035]" />
+              <div className="absolute left-[16%] top-[12%] h-[70%] w-[70%] rounded-full border border-white/[0.035]" />
+              <div className="absolute left-[33%] top-[22%] h-[42%] w-[34%] rotate-45 border border-white/[0.04]" />
+            </div>
+
+            <div
+              data-final-cross
+              className="absolute left-1/2 top-[37%] h-[18vw] w-[18vw] min-h-[160px] min-w-[160px] -translate-x-1/2 -translate-y-1/2 opacity-35"
+            >
+              <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/25 to-transparent" />
+              <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+              <div className="absolute inset-[22%] rotate-45 border border-white/10" />
+            </div>
+
+            <div
+              data-final-vector
+              className="absolute left-1/2 top-[37%] h-px w-[22vw] min-w-[190px] origin-left bg-gradient-to-r from-cyan-300/65 via-violet-400/45 to-transparent opacity-20"
+            />
+
+            <div
+              data-final-sweep
+              className="absolute left-[12%] top-[10%] h-[70%] w-[76%] opacity-30"
+            >
+              <div className="absolute left-[8%] top-[18%] h-px w-[23%] bg-gradient-to-r from-cyan-300/35 to-transparent" />
+              <div className="absolute right-[7%] top-[44%] h-px w-[27%] bg-gradient-to-l from-fuchsia-400/28 to-transparent" />
+              <div className="absolute left-[34%] top-[75%] h-px w-[30%] bg-gradient-to-r from-violet-400/20 via-white/10 to-transparent" />
+            </div>
+
+            {[
+              { left: "7%", top: "17%", size: 9, accent: "#35d8ff" },
+              { left: "14%", top: "37%", size: 5, accent: "#8b5cf6" },
+              { left: "21%", top: "61%", size: 8, accent: "#20f0c7" },
+              { left: "28%", top: "25%", size: 11, accent: "#ff4fd8" },
+              { left: "36%", top: "50%", size: 6, accent: "#35d8ff" },
+              { left: "43%", top: "17%", size: 7, accent: "#8b5cf6" },
+              { left: "50%", top: "35%", size: 12, accent: "#20f0c7" },
+              { left: "57%", top: "68%", size: 6, accent: "#ff4fd8" },
+              { left: "64%", top: "28%", size: 9, accent: "#35d8ff" },
+              { left: "72%", top: "54%", size: 7, accent: "#8b5cf6" },
+              { left: "79%", top: "19%", size: 11, accent: "#20f0c7" },
+              { left: "86%", top: "42%", size: 6, accent: "#ff4fd8" },
+              { left: "93%", top: "66%", size: 9, accent: "#35d8ff" },
+              { left: "10%", top: "76%", size: 6, accent: "#8b5cf6" },
+              { left: "31%", top: "78%", size: 7, accent: "#20f0c7" },
+              { left: "69%", top: "80%", size: 8, accent: "#ff4fd8" },
+              { left: "88%", top: "77%", size: 5, accent: "#35d8ff" },
+            ].map((node, index) => (
+              <span
+                key={`final-node-${index}`}
+                data-final-node
+                data-final-accent={node.accent}
+                className="absolute border border-white/20 bg-white/[0.012]"
+                style={{
+                  left: node.left,
+                  top: node.top,
+                  width: `${node.size}px`,
+                  height: `${node.size}px`,
+                  opacity: 0.24,
+                  transform: "translate(-50%, -50%)",
+                  willChange:
+                    "transform, opacity, border-color, background-color, box-shadow",
+                }}
+              />
+            ))}
+
+            <span
+              data-final-cursor
+              className="absolute left-0 top-0 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20 opacity-0"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(255,255,255,.08), transparent 62%)",
+                boxShadow:
+                  "inset 0 0 0 1px rgba(53,216,255,.08)",
+              }}
+            >
+              <span className="absolute left-1/2 top-[-10px] h-[calc(100%+20px)] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/18 to-transparent" />
+              <span className="absolute left-[-10px] top-1/2 h-px w-[calc(100%+20px)] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/18 to-transparent" />
+            </span>
+
+            <p className="avant-legato-font absolute bottom-[6%] left-[5vw] text-[8px] uppercase tracking-[0.38em] text-white/22 md:text-[10px]">
+              MOVE / DISTORT / CONNECT
+            </p>
+
+            <p className="avant-legato-font absolute bottom-[6%] right-[5vw] text-right text-[8px] uppercase tracking-[0.38em] text-white/22 md:text-[10px]">
+              FIELD 05 / POINTER ACTIVE
+            </p>
+          </div>
+
           <div
             aria-hidden="true"
             className="pointer-events-none absolute -right-[10vw] bottom-[-14vh] h-[58vw] w-[58vw] rounded-full blur-[100px]"
@@ -1867,11 +2502,15 @@ export default function Home() {
 
               <Link
                 to="/Contatti"
-                className="avant-legato-font group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.29em] md:text-base"
+                data-magnetic
+                className="oxo-final-cta avant-legato-font relative z-20 inline-flex w-fit items-center gap-5 border border-white/35 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[0.28em] text-white opacity-100 md:px-6 md:py-4 md:text-base"
               >
-                <span>Costruiamolo</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-2">
-                  →
+                <span>
+                  Parliamo del progetto
+                </span>
+
+                <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
+                  ↗
                 </span>
               </Link>
             </div>

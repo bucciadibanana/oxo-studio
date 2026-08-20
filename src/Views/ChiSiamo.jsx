@@ -63,7 +63,7 @@ const TEAM = [
   },
   {
     id: "03",
-    name: "NOME COGNOME",
+    name: "ELIA SPAGNOLI",
     role: "ROLE / SPECIALIZATION",
     initials: "03",
     image: "/images/team/team-03.webp",
@@ -75,7 +75,7 @@ const TEAM = [
   },
   {
     id: "04",
-    name: "NOME COGNOME",
+    name: "LUCA ALBANI",
     role: "ROLE / SPECIALIZATION",
     initials: "04",
     image: "/images/team/team-04.webp",
@@ -120,6 +120,18 @@ const TEAM = [
       "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
     fallback:
       "radial-gradient(circle at 68% 24%, rgba(32,240,199,.26), transparent 34%), linear-gradient(145deg, #041713, #050708 56%, #010101)",
+  },
+  {
+    id: "08",
+    name: "NOME COGNOME",
+    role: "ROLE / SPECIALIZATION",
+    initials: "08",
+    image: "/images/team/team-08.webp",
+    accent: "#ff4fd8",
+    description:
+      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 30% 26%, rgba(255,79,216,.28), transparent 34%), linear-gradient(145deg, #190515, #08060b 56%, #010101)",
   },
 ];
 
@@ -300,13 +312,91 @@ export default function ChiSiamo() {
         story.addEventListener("pointerleave", fieldPointerLeaveHandler);
       }
 
+      /*
+       * TOUCH FALLBACK PER I NODI DEL FIELD
+       * Su desktop reagiscono al mouse.
+       * Su mobile/tablet touch reagiscono allo scroll senza cambiare grafica.
+       */
+      if (
+        fieldNodes.length &&
+        window.matchMedia("(pointer: coarse)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        fieldNodes.forEach((node, index) => {
+          gsap.fromTo(
+            node,
+            {
+              scale: 0.9,
+              opacity: 0.38,
+            },
+            {
+              scale: index % 2 === 0 ? 1.85 : 1.55,
+              opacity: 0.9,
+              ease: "none",
+              scrollTrigger: {
+                trigger: story,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.75,
+                invalidateOnRefresh: true,
+              },
+            }
+          );
+        });
+      }
+
       mm.add(
         {
           desktop: "(min-width: 1024px)",
+          tablet: "(min-width: 768px) and (max-width: 1023px)",
+          mobile: "(max-width: 767px)",
+          coarse: "(pointer: coarse)",
           reduceMotion: "(prefers-reduced-motion: reduce)",
         },
         (mediaContext) => {
-          const { desktop, reduceMotion } = mediaContext.conditions;
+          const {
+            desktop,
+            tablet,
+            mobile,
+            coarse,
+            reduceMotion,
+          } = mediaContext.conditions;
+
+          /*
+           * RESPONSIVE MOTION PROFILE
+           * Desktop resta IDENTICO.
+           * Tablet/mobile mantengono le stesse animazioni,
+           * ma con ampiezza e durata proporzionate alla viewport.
+           */
+          const motion = {
+            fieldDistance: desktop ? 3.2 : tablet ? 2.75 : 2.35,
+            fieldScrub: desktop ? 1 : tablet ? 0.82 : 0.66,
+            phaseGap: desktop ? 0.22 : tablet ? 0.18 : 0.12,
+            phaseHold: desktop ? 0.38 : tablet ? 0.31 : 0.24,
+
+            bladeShiftBase: desktop ? 22 : tablet ? 17 : 12,
+            bladeShiftAlt: desktop ? -18 : tablet ? -14 : -10,
+            bladeShiftStep: desktop ? 5 : tablet ? 4 : 3,
+
+            coreStartScale: desktop ? 0.58 : tablet ? 0.66 : 0.74,
+            coreRotate: desktop ? 7 : tablet ? 5 : 3.5,
+            coreFinalScale: desktop ? 1.16 : tablet ? 1.1 : 1.06,
+
+            titleEnterY: desktop ? 120 : tablet ? 105 : 92,
+            titleExitY: desktop ? -110 : tablet ? -96 : -82,
+            titleSkew: desktop ? 8 : tablet ? 6 : 4,
+
+            copyEnterY: desktop ? 46 : tablet ? 36 : 28,
+            copyExitY: desktop ? -35 : tablet ? -28 : -22,
+
+            statementShift: desktop ? 12 : tablet ? 9 : 7,
+            ghostShift: desktop ? 30 : tablet ? 22 : 16,
+
+            teamMediaScale: desktop ? 1.16 : tablet ? 1.11 : 1.07,
+            teamContentY: desktop ? 48 : tablet ? 38 : 28,
+
+            processY: desktop ? 50 : tablet ? 38 : 28,
+          };
           const phases = gsap.utils.toArray(
             story.querySelectorAll("[data-field-phase]")
           );
@@ -375,9 +465,9 @@ export default function ChiSiamo() {
               trigger: story,
               start: "top top",
               end: () =>
-                `+=${window.innerHeight * (desktop ? 3.2 : 2.45)}`,
+                `+=${window.innerHeight * motion.fieldDistance}`,
               pin: true,
-              scrub: desktop ? 1 : 0.72,
+              scrub: motion.fieldScrub,
               anticipatePin: 1,
               invalidateOnRefresh: true,
               onUpdate: (self) => {
@@ -411,7 +501,7 @@ export default function ChiSiamo() {
             fieldTimeline.fromTo(
               core,
               {
-                scale: 0.58,
+                scale: motion.coreStartScale,
                 rotate: -10,
                 borderRadius: "38%",
               },
@@ -443,7 +533,7 @@ export default function ChiSiamo() {
               scan,
               { yPercent: -120, autoAlpha: 0 },
               {
-                yPercent: 120,
+                yPercent: motion.titleEnterY,
                 autoAlpha: 0.9,
                 duration: 0.72,
                 ease: "none",
@@ -482,13 +572,13 @@ export default function ChiSiamo() {
             const direction = index % 2 === 0 ? -1 : 1;
             const label = `field-${index}`;
 
-            fieldTimeline.addLabel(label, `+=${desktop ? 0.22 : 0.14}`);
+            fieldTimeline.addLabel(label, `+=${motion.phaseGap}`);
 
             if (previousTitle) {
               fieldTimeline.to(
                 previousTitle,
                 {
-                  yPercent: -110,
+                  yPercent: motion.titleExitY,
                   rotateX: 62,
                   autoAlpha: 0,
                   duration: 0.36,
@@ -502,7 +592,7 @@ export default function ChiSiamo() {
               fieldTimeline.to(
                 previousCopy,
                 {
-                  y: -35,
+                  y: motion.copyExitY,
                   autoAlpha: 0,
                   duration: 0.3,
                 },
@@ -514,7 +604,7 @@ export default function ChiSiamo() {
               fieldTimeline.to(
                 previousStatement,
                 {
-                  xPercent: direction * -12,
+                  xPercent: direction * -motion.statementShift,
                   autoAlpha: 0,
                   duration: 0.28,
                 },
@@ -531,7 +621,7 @@ export default function ChiSiamo() {
                 {
                   yPercent: 120,
                   rotateX: -76,
-                  skewX: direction * 8,
+                  skewX: direction * motion.titleSkew,
                   autoAlpha: 0,
                 },
                 {
@@ -550,7 +640,7 @@ export default function ChiSiamo() {
               fieldTimeline.fromTo(
                 currentCopy,
                 {
-                  y: 46,
+                  y: motion.copyEnterY,
                   autoAlpha: 0,
                 },
                 {
@@ -567,7 +657,7 @@ export default function ChiSiamo() {
               fieldTimeline.fromTo(
                 currentStatement,
                 {
-                  xPercent: direction * 12,
+                  xPercent: direction * motion.statementShift,
                   autoAlpha: 0,
                 },
                 {
@@ -586,7 +676,7 @@ export default function ChiSiamo() {
                 {
                   xPercent:
                     direction *
-                    (bladeIndex % 2 === 0 ? 22 + bladeIndex * 5 : -18),
+                    (bladeIndex % 2 === 0 ? motion.bladeShiftBase + bladeIndex * motion.bladeShiftStep : motion.bladeShiftAlt),
                   scaleY: bladeIndex % 2 === index % 2 ? 0.38 : 1,
                   backgroundColor:
                     bladeIndex === index
@@ -603,8 +693,8 @@ export default function ChiSiamo() {
               fieldTimeline.to(
                 core,
                 {
-                  rotate: direction * 7,
-                  scale: index === 2 ? 1.16 : 0.88,
+                  rotate: direction * motion.coreRotate,
+                  scale: index === 2 ? motion.coreFinalScale : (desktop ? 0.88 : tablet ? 0.92 : 0.95),
                   borderColor: accent,
                   duration: 0.68,
                   ease: "power3.inOut",
@@ -647,7 +737,7 @@ export default function ChiSiamo() {
               fieldTimeline.to(
                 ghost,
                 {
-                  xPercent: direction * (index === 2 ? -30 : 24),
+                  xPercent: direction * (index === 2 ? -motion.ghostShift : motion.ghostShift * 0.8),
                   skewX: direction * -6,
                   duration: 0.68,
                 },
@@ -655,7 +745,7 @@ export default function ChiSiamo() {
               );
             }
 
-            fieldTimeline.to({}, { duration: desktop ? 0.38 : 0.25 });
+            fieldTimeline.to({}, { duration: motion.phaseHold });
           });
 
           return () => {
@@ -696,7 +786,14 @@ export default function ChiSiamo() {
         if (media) {
           gsap.fromTo(
             media,
-            { scale: 1.16 },
+            {
+              scale:
+                window.innerWidth >= 1024
+                  ? 1.16
+                  : window.innerWidth >= 768
+                    ? 1.11
+                    : 1.07,
+            },
             {
               scale: 1,
               duration: 1.5,
@@ -713,7 +810,15 @@ export default function ChiSiamo() {
         if (content) {
           gsap.fromTo(
             content,
-            { y: 48, opacity: 0 },
+            {
+              y:
+                window.innerWidth >= 1024
+                  ? 48
+                  : window.innerWidth >= 768
+                    ? 38
+                    : 28,
+              opacity: 0,
+            },
             {
               y: 0,
               opacity: 1,
@@ -736,7 +841,15 @@ export default function ChiSiamo() {
 
       gsap.fromTo(
         processRows,
-        { y: 50, opacity: 0 },
+        {
+          y:
+            window.innerWidth >= 1024
+              ? 50
+              : window.innerWidth >= 768
+                ? 38
+                : 28,
+          opacity: 0,
+        },
         {
           y: 0,
           opacity: 1,
@@ -820,6 +933,62 @@ export default function ChiSiamo() {
       // Eliminano soltanto animazioni, timeline e pin creati da questa pagina.
       mm.revert();
       ctx.revert();
+    };
+  }, []);
+
+  /*
+   * RESPONSIVE REFRESH
+   * Riallinea pin e trigger quando cambiano:
+   * - larghezza/altezza viewport
+   * - orientamento
+   * - barra browser mobile
+   */
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    let resizeTimer = 0;
+
+    const refreshResponsiveAnimations = () => {
+      window.clearTimeout(resizeTimer);
+
+      resizeTimer = window.setTimeout(() => {
+        ScrollTrigger.sort();
+        ScrollTrigger.refresh(true);
+        ScrollTrigger.update();
+      }, 140);
+    };
+
+    window.addEventListener("resize", refreshResponsiveAnimations, {
+      passive: true,
+    });
+
+    window.addEventListener("orientationchange", refreshResponsiveAnimations, {
+      passive: true,
+    });
+
+    window.visualViewport?.addEventListener(
+      "resize",
+      refreshResponsiveAnimations,
+      { passive: true }
+    );
+
+    return () => {
+      window.clearTimeout(resizeTimer);
+
+      window.removeEventListener(
+        "resize",
+        refreshResponsiveAnimations
+      );
+
+      window.removeEventListener(
+        "orientationchange",
+        refreshResponsiveAnimations
+      );
+
+      window.visualViewport?.removeEventListener(
+        "resize",
+        refreshResponsiveAnimations
+      );
     };
   }, []);
 
@@ -1023,6 +1192,112 @@ export default function ChiSiamo() {
           .oxo-flow-drift {
             animation: oxoFlowDrift 10s ease-in-out infinite;
           }
+
+
+          /* ==========================================
+             RESPONSIVE ANIMATION SAFETY
+             Nessun redesign: solo stabilità GPU/viewport.
+             ========================================== */
+
+          @media (max-width: 1023px) {
+            .oxo-about-avant {
+              overflow-x: clip;
+            }
+
+            .oxo-about-grid {
+              background-size: 54px 54px;
+            }
+
+            .oxo-flow-glow {
+              filter: blur(68px);
+            }
+
+            [data-field-core],
+            [data-field-core-inner],
+            [data-field-phase],
+            [data-team-card],
+            [data-team-media],
+            [data-team-content],
+            [data-process-row],
+            [data-final-letter] {
+              backface-visibility: hidden;
+              transform-style: preserve-3d;
+            }
+          }
+
+          @media (max-width: 767px) {
+            .oxo-about-grid {
+              background-size: 44px 44px;
+            }
+
+            .oxo-flow-glow {
+              filter: blur(52px);
+            }
+
+            .oxo-field-grid {
+              background-size: 52px 52px;
+            }
+
+            .oxo-field-node {
+              will-change: transform, opacity;
+            }
+
+            .oxo-field-blade {
+              will-change: transform, background-color;
+            }
+
+            [data-field-core] {
+              min-width: 220px;
+              min-height: 220px;
+            }
+
+            .oxo-team-card {
+              min-height: max(620px, 72svh);
+            }
+          }
+
+          @media (max-width: 479px) {
+            .oxo-about-grid {
+              background-size: 38px 38px;
+            }
+
+            .oxo-field-grid {
+              background-size: 44px 44px;
+            }
+
+            .oxo-flow-glow {
+              filter: blur(42px);
+            }
+
+            [data-field-core] {
+              min-width: 200px;
+              min-height: 200px;
+            }
+          }
+
+          @media (hover: none) and (pointer: coarse) {
+            .oxo-team-card:hover {
+              border-radius: 34px;
+              border-color: rgba(255,255,255,.20);
+              box-shadow: none;
+            }
+
+            .oxo-team-card:hover .oxo-team-image {
+              transform: none;
+              filter: none;
+            }
+
+            .oxo-process-row:hover .oxo-process-title,
+            .oxo-process-row:hover .oxo-process-arrow {
+              transform: none;
+            }
+
+            .oxo-field-node:hover {
+              transform: none;
+              filter: none;
+            }
+          }
+
 
         `}</style>
 
@@ -1418,12 +1693,16 @@ export default function ChiSiamo() {
               </p>
 
               <Link
-                to="/contatti"
-                className="avant-legato-font group inline-flex w-fit items-center gap-5 border-b border-white pb-2 text-sm uppercase tracking-[0.28em] md:text-base"
+                to="/Contatti"
+                data-magnetic
+                className="oxo-final-cta avant-legato-font relative z-20 inline-flex w-fit items-center gap-5 border border-white/35 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[0.28em] text-white opacity-100 md:px-6 md:py-4 md:text-base"
               >
-                <span>Contattaci</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-2">
-                  →
+                <span>
+                  Parliamo del progetto
+                </span>
+
+                <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
+                  ↗
                 </span>
               </Link>
             </div>
