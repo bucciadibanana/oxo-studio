@@ -6,6 +6,7 @@ import "../styles/avant-legato.css";
 export default function SplashScreen({ onFinish }) {
   const rootRef = useRef(null);
   const stageRef = useRef(null);
+  const visualRef = useRef(null);
   const numberRef = useRef(null);
   const numberGhostRef = useRef(null);
   const oxoGhostRef = useRef(null);
@@ -29,6 +30,7 @@ export default function SplashScreen({ onFinish }) {
   useLayoutEffect(() => {
     const root = rootRef.current;
     const stage = stageRef.current;
+    const visual = visualRef.current;
     const number = numberRef.current;
     const numberGhost = numberGhostRef.current;
     const oxoGhost = oxoGhostRef.current;
@@ -42,6 +44,7 @@ export default function SplashScreen({ onFinish }) {
     if (
       !root ||
       !stage ||
+      !visual ||
       !number ||
       !numberGhost ||
       !oxoGhost ||
@@ -77,22 +80,46 @@ export default function SplashScreen({ onFinish }) {
         clipPath: "inset(0% 0% 0% 0%)",
       });
 
+      // Lo stage resta immobile: contiene il counter centrato.
       gsap.set(stage, {
+        x: 0,
+        y: 0,
+        rotationX: 0,
+        rotationY: 0,
         perspective: 1400,
         transformStyle: "preserve-3d",
       });
 
+      // Solo questo layer grafico può muoversi col mouse.
+      gsap.set(visual, {
+        x: 0,
+        y: 0,
+        rotationX: 0,
+        rotationY: 0,
+        transformPerspective: 1400,
+        transformStyle: "preserve-3d",
+      });
+
       gsap.set(number, {
-        yPercent: 120,
+        left: "50%",
+        top: "50%",
+        x: 0,
+        y: 0,
+        xPercent: -50,
+        yPercent: 70,
         rotateX: -86,
         opacity: 0,
         filter: "blur(18px)",
-        transformOrigin: "50% 100%",
+        transformOrigin: "50% 50%",
       });
 
       gsap.set(numberGhost, {
-        yPercent: -24,
-        xPercent: 7,
+        left: "50%",
+        top: "50%",
+        x: 0,
+        y: 0,
+        xPercent: -50,
+        yPercent: -50,
         opacity: 0,
       });
 
@@ -184,7 +211,10 @@ export default function SplashScreen({ onFinish }) {
       tl.to(
         number,
         {
-          yPercent: 0,
+          x: 0,
+          y: 0,
+          xPercent: -50,
+          yPercent: -50,
           rotateX: 0,
           opacity: 1,
           filter: "blur(0px)",
@@ -197,8 +227,10 @@ export default function SplashScreen({ onFinish }) {
       tl.to(
         numberGhost,
         {
-          yPercent: 0,
-          xPercent: 0,
+          x: 0,
+          y: 0,
+          xPercent: -50,
+          yPercent: -50,
           opacity: 0.065,
           duration: 1.0,
           ease: "power4.out",
@@ -230,13 +262,15 @@ export default function SplashScreen({ onFinish }) {
               gsap.fromTo(
                 number,
                 {
-                  x: current % 2 === 0 ? -7 : 7,
+                  x: 0,
                   skewX: current % 2 === 0 ? -5 : 5,
+                  scaleX: current % 2 === 0 ? 1.025 : 0.975,
                   filter: "blur(1.5px)",
                 },
                 {
                   x: 0,
                   skewX: 0,
+                  scaleX: 1,
                   filter: "blur(0px)",
                   duration: 0.16,
                   ease: "expo.out",
@@ -247,11 +281,13 @@ export default function SplashScreen({ onFinish }) {
               gsap.fromTo(
                 numberGhost,
                 {
-                  xPercent: current % 2 === 0 ? 4 : -4,
+                  xPercent: -50,
+                  scaleX: current % 2 === 0 ? 1.03 : 0.97,
                   opacity: 0.14,
                 },
                 {
-                  xPercent: 0,
+                  xPercent: -50,
+                  scaleX: 1,
                   opacity: 0.065,
                   duration: 0.3,
                   ease: "power3.out",
@@ -401,22 +437,22 @@ export default function SplashScreen({ onFinish }) {
       /* POINTER PARALLAX */
 
       if (!window.matchMedia("(pointer: coarse)").matches) {
-        const moveStageX = gsap.quickTo(stage, "x", {
+        const moveStageX = gsap.quickTo(visual, "x", {
           duration: 0.9,
           ease: "power3.out",
         });
 
-        const moveStageY = gsap.quickTo(stage, "y", {
+        const moveStageY = gsap.quickTo(visual, "y", {
           duration: 0.9,
           ease: "power3.out",
         });
 
-        const rotateX = gsap.quickTo(stage, "rotationY", {
+        const rotateX = gsap.quickTo(visual, "rotationY", {
           duration: 1.0,
           ease: "power3.out",
         });
 
-        const rotateY = gsap.quickTo(stage, "rotationX", {
+        const rotateY = gsap.quickTo(visual, "rotationX", {
           duration: 1.0,
           ease: "power3.out",
         });
@@ -441,6 +477,10 @@ export default function SplashScreen({ onFinish }) {
       tl.to(
         number,
         {
+          x: 0,
+          y: 0,
+          xPercent: -50,
+          yPercent: -50,
           scaleX: 1.08,
           scaleY: 0.96,
           letterSpacing: "-0.095em",
@@ -600,6 +640,19 @@ export default function SplashScreen({ onFinish }) {
           color: transparent;
         }
 
+        /*
+         * HARD CENTER LOCK
+         * Il punto geometrico del counter è sempre il centro viewport.
+         * GSAP può cambiare scale/skew/blur, mai la posizione.
+         */
+        .oxo-aww-counter-lock {
+          position: absolute !important;
+          left: 50% !important;
+          top: 50% !important;
+          margin: 0 !important;
+          transform-origin: 50% 50% !important;
+        }
+
         .oxo-aww-ring {
           background:
             conic-gradient(
@@ -718,6 +771,12 @@ export default function SplashScreen({ onFinish }) {
         ref={stageRef}
         className="absolute inset-0 [transform-style:preserve-3d]"
       >
+        {/* VISUAL FIELD: questo può muoversi, il counter NO */}
+        <div
+          ref={visualRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 [transform-style:preserve-3d]"
+        >
         {/* GIANT GHOST OXO */}
         <div
           ref={oxoGhostRef}
@@ -766,12 +825,13 @@ export default function SplashScreen({ onFinish }) {
           aria-hidden="true"
           className="oxo-aww-blade pointer-events-none absolute right-[18%] top-[34%] z-[24] w-[31%] origin-right bg-gradient-to-l from-transparent via-fuchsia-400 to-transparent text-fuchsia-400"
         />
+        </div>
 
-        {/* COUNTER GHOST */}
+        {/* COUNTER GHOST — SEMPRE CENTRATO */}
         <div
           ref={numberGhostRef}
           aria-hidden="true"
-          className="oxo-aww-number-ghost avant-legato-font pointer-events-none absolute left-1/2 top-1/2 z-[28] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[34vw] leading-none tracking-[-0.085em] md:text-[26vw] lg:text-[20vw]"
+          className="oxo-aww-counter-lock oxo-aww-number-ghost avant-legato-font pointer-events-none absolute z-[28] whitespace-nowrap text-[34vw] leading-none tracking-[-0.085em] md:text-[26vw] lg:text-[20vw]"
         >
           {value}
         </div>
@@ -779,7 +839,7 @@ export default function SplashScreen({ onFinish }) {
         {/* COUNTER */}
         <div
           ref={numberRef}
-          className="oxo-aww-number avant-legato-font absolute left-1/2 top-1/2 z-[30] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[34vw] leading-none text-white md:text-[26vw] lg:text-[20vw]"
+          className="oxo-aww-counter-lock oxo-aww-number avant-legato-font absolute z-[30] whitespace-nowrap text-[34vw] leading-none text-white md:text-[26vw] lg:text-[20vw]"
         >
           {value}
         </div>
