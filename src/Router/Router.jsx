@@ -3,10 +3,12 @@ import {
   Route,
 } from "react-router-dom";
 
-import Home from     "../Views/Home";
+import Home from "../Views/Home";
 import ChiSiamo from "../Views/ChiSiamo";
 import Prodotti from "../Views/Prodotti";
 import Contatti from "../Views/Contatti";
+
+import KairosArchive from "../Views/portfolio/kairosarchive";
 
 export default function Router() {
   return (
@@ -29,6 +31,11 @@ export default function Router() {
       <Route
         path="/contatti"
         element={<Contatti />}
+      />
+
+      <Route
+        path="/portfolio/kairosarchive"
+        element={<KairosArchive />}
       />
     </Routes>
   );

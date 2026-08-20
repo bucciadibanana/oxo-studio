@@ -359,6 +359,22 @@ export default function Home() {
             capabilities.querySelectorAll("[data-capability-panel]")
           );
 
+          const capabilityTitleLetters = gsap.utils.toArray(
+            capabilities.querySelectorAll("[data-capability-title-letter]")
+          );
+
+          const capabilityHeaderTexts = gsap.utils.toArray(
+            capabilities.querySelectorAll("[data-capability-header-text]")
+          );
+
+          const projectHeaderLetters = gsap.utils.toArray(
+            projects.querySelectorAll("[data-project-header-letter]")
+          );
+
+          const projectHeaderTexts = gsap.utils.toArray(
+            projects.querySelectorAll("[data-project-header-text]")
+          );
+
           const projectStage = projects.querySelector("[data-project-stage]");
           const projectPanels = projectStage
             ? gsap.utils.toArray(
@@ -441,7 +457,7 @@ export default function Home() {
           if (reduceMotion) {
             gsap.set(
               page.querySelectorAll(
-                "[data-home-v2-letter], [data-home-v2-meta], [data-manifesto-word]"
+                "[data-home-v2-letter], [data-home-v2-meta], [data-manifesto-word], [data-capability-title-letter], [data-capability-header-text], [data-project-header-letter], [data-project-header-text]"
               ),
               { clearProps: "all", opacity: 1 }
             );
@@ -608,6 +624,64 @@ export default function Home() {
               0.45
             );
 
+          /*
+           * CAPABILITIES TITLE — SPLIT TEXT
+           * Stessa animazione letter-by-letter di OXO / STUDIO / BREAK FORM.
+           */
+          if (capabilityTitleLetters.length) {
+            gsap.fromTo(
+              capabilityTitleLetters,
+              {
+                yPercent: 135,
+                rotateX: -82,
+                opacity: 0,
+                transformOrigin: "50% 100%",
+              },
+              {
+                yPercent: 0,
+                rotateX: 0,
+                opacity: 1,
+                duration: desktop ? 1.05 : tablet ? 0.92 : 0.82,
+                stagger: desktop ? 0.024 : tablet ? 0.02 : 0.016,
+                ease: "power4.out",
+                scrollTrigger: {
+                  trigger: capabilities,
+                  start: desktop ? "top 76%" : "top 82%",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          }
+
+          /*
+           * CAPABILITIES HEADER TEXTS
+           * Micro-label e paragrafo entrano dopo il titolo,
+           * senza restare statici.
+           */
+          if (capabilityHeaderTexts.length) {
+            gsap.fromTo(
+              capabilityHeaderTexts,
+              {
+                y: desktop ? 42 : 28,
+                opacity: 0,
+                filter: "blur(8px)",
+              },
+              {
+                y: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                duration: desktop ? 0.9 : 0.76,
+                stagger: 0.09,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: capabilities,
+                  start: desktop ? "top 72%" : "top 79%",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          }
+
           /* TERZA SEZIONE: le quattro card restano volutamente inclinate. */
           capabilityCards.forEach((card, index) => {
             const content = card.querySelector("[data-capability-content]");
@@ -731,6 +805,63 @@ export default function Home() {
               );
             }
           });
+
+          /*
+           * PROJECTS HEADER — SPLIT TEXT
+           * WORK THAT / CHANGES. entra lettera per lettera.
+           */
+          if (projectHeaderLetters.length) {
+            gsap.fromTo(
+              projectHeaderLetters,
+              {
+                yPercent: 135,
+                rotateX: -82,
+                opacity: 0,
+                transformOrigin: "50% 100%",
+              },
+              {
+                yPercent: 0,
+                rotateX: 0,
+                opacity: 1,
+                duration: desktop ? 1.05 : tablet ? 0.92 : 0.82,
+                stagger: desktop ? 0.022 : tablet ? 0.018 : 0.015,
+                ease: "power4.out",
+                scrollTrigger: {
+                  trigger: projects,
+                  start: desktop ? "top 76%" : "top 82%",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          }
+
+          /*
+           * PROJECTS HEADER COPY
+           * Selected systems + paragrafo entrano dopo il titolo.
+           */
+          if (projectHeaderTexts.length) {
+            gsap.fromTo(
+              projectHeaderTexts,
+              {
+                y: desktop ? 40 : 28,
+                opacity: 0,
+                filter: "blur(8px)",
+              },
+              {
+                y: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                duration: desktop ? 0.9 : 0.76,
+                stagger: 0.1,
+                ease: "power3.out",
+                scrollTrigger: {
+                  trigger: projects,
+                  start: desktop ? "top 72%" : "top 79%",
+                  toggleActions: "play none none reverse",
+                },
+              }
+            );
+          }
 
           /* QUARTA SEZIONE: stage fermo; le card cambiano con wipe cromatici. */
           if (projectStage && projectPanels.length) {
@@ -1967,20 +2098,35 @@ export default function Home() {
 
           <div className="relative z-10 mb-16 grid gap-10 border-b border-white/18 pb-10 md:mb-24 md:grid-cols-[1.1fr_.9fr] md:items-end lg:mb-[10vh]">
             <div>
-              <div className="mb-5 flex items-center gap-4 text-[9px] uppercase tracking-[0.34em] text-white/42 md:text-xs">
+              <div
+                data-capability-header-text
+                className="mb-5 flex items-center gap-4 text-[9px] uppercase tracking-[0.34em] text-white/42 md:text-xs"
+              >
                 <span>CAPABILITIES INDEX</span>
                 <span className="h-px w-14 bg-cyan-300/65" />
                 <span>04 SYSTEMS</span>
               </div>
-
-              <h2 className="avant-legato-font ombra2 text-[16.5vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[10.5vw] lg:text-[7.8vw]">
-                BUILT
-                <br />
-                AS ONE.
+              <h2 className="avant-legato-font ombra2 text-[16.5vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[10.5vw] lg:text-[7.8vw] [perspective:1000px]">
+                <span className="block overflow-hidden pb-[0.08em]">
+                  <SplitLetters
+                    text="BUILT"
+                    attribute="data-capability-title-letter"
+                  />
+                </span>
+                <span className="block overflow-hidden pb-[0.08em]">
+                  <SplitLetters
+                    text="AS ONE."
+                    attribute="data-capability-title-letter"
+                  />
+                </span>
               </h2>
             </div>
+            
 
-            <p className="avant-legato-font max-w-[720px] text-xl leading-snug text-gray-300 md:justify-self-end md:text-3xl">
+            <p
+              data-capability-header-text
+              className="avant-legato-font max-w-[720px] text-xl leading-snug text-gray-300 md:justify-self-end md:text-3xl"
+            >
               Strategia, interfaccia e ingegneria non passano da un reparto
               all'altro. Nascono insieme, nello stesso sistema.
             </p>
@@ -2141,7 +2287,10 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="relative z-10 mt-20 flex items-center justify-between border-t border-white/18 pt-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:mt-32 md:text-xs lg:mt-[18vh]">
+          <div
+            data-capability-header-text
+            className="relative z-10 mt-20 flex items-center justify-between border-t border-white/18 pt-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:mt-32 md:text-xs lg:mt-[18vh]"
+          >
             <span>NO DEPARTMENTS / ONE SYSTEM</span>
             <span>SCROLL TO SELECTED WORK ↓</span>
           </div>
@@ -2152,16 +2301,31 @@ export default function Home() {
           className="relative bg-[#020203]"
         >
           <div className="relative z-20 border-b border-white/15 px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[14vh]">
-            <p className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-fuchsia-400 md:text-xs">
+            <p
+              data-project-header-text
+              className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-fuchsia-400 md:text-xs"
+            >
               Selected systems
             </p>
             <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
-              <h2 className="avant-legato-font ombra2 text-[17vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw]">
-                WORK THAT
-                <br />
-                CHANGES.
+              <h2 className="avant-legato-font ombra2 text-[17vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
+                <span className="block overflow-hidden pb-[0.08em]">
+                  <SplitLetters
+                    text="WORK THAT"
+                    attribute="data-project-header-letter"
+                  />
+                </span>
+                <span className="block overflow-hidden pb-[0.08em]">
+                  <SplitLetters
+                    text="CHANGES."
+                    attribute="data-project-header-letter"
+                  />
+                </span>
               </h2>
-              <p className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p
+                data-project-header-text
+                className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl"
+              >
                 Lo schermo resta fermo. Il progetto cambia pelle, colore e ritmo
                 mentre continui a scorrere.
               </p>
