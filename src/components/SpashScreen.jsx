@@ -1,57 +1,46 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
 import "../styles/avant-legato.css";
 
+const ACCENTS = ["#35d8ff", "#8b5cf6", "#20f0c7", "#ff4fd8"];
+
 export default function SplashScreen({ onFinish }) {
   const rootRef = useRef(null);
-  const stageRef = useRef(null);
-  const numberRef = useRef(null);
-  const numberGhostRef = useRef(null);
-  const oxoGhostRef = useRef(null);
-  const ringRef = useRef(null);
+  const counterRef = useRef(null);
+  const counterGhostRef = useRef(null);
+  const orbRef = useRef(null);
+  const ghostRef = useRef(null);
   const progressRef = useRef(null);
-  const progressGlowRef = useRef(null);
-  const shutterTopRef = useRef(null);
-  const shutterBottomRef = useRef(null);
-  const flashRef = useRef(null);
-
-  const aquaRef = useRef(null);
-  const violetRef = useRef(null);
-  const greenRef = useRef(null);
-  const fuchsiaRef = useRef(null);
-
+  const statusRef = useRef(null);
+  const percentRef = useRef(null);
+  const curtainsRef = useRef([]);
+  const linesRef = useRef([]);
   const metaRefs = useRef([]);
-  const fragmentRefs = useRef([]);
 
-  const [value, setValue] = useState("000");
+  const addCurtainRef = (el) => {
+    if (el && !curtainsRef.current.includes(el)) curtainsRef.current.push(el);
+  };
+
+  const addLineRef = (el) => {
+    if (el && !linesRef.current.includes(el)) linesRef.current.push(el);
+  };
+
+  const addMetaRef = (el) => {
+    if (el && !metaRefs.current.includes(el)) metaRefs.current.push(el);
+  };
 
   useLayoutEffect(() => {
     const root = rootRef.current;
-    const stage = stageRef.current;
-    const number = numberRef.current;
-    const numberGhost = numberGhostRef.current;
-    const oxoGhost = oxoGhostRef.current;
-    const ring = ringRef.current;
+    const counterNode = counterRef.current;
+    const counterGhost = counterGhostRef.current;
+    const orb = orbRef.current;
+    const ghost = ghostRef.current;
     const progress = progressRef.current;
-    const progressGlow = progressGlowRef.current;
-    const shutterTop = shutterTopRef.current;
-    const shutterBottom = shutterBottomRef.current;
-    const flash = flashRef.current;
+    const status = statusRef.current;
+    const percent = percentRef.current;
 
-    if (
-      !root ||
-      !stage ||
-      !number ||
-      !numberGhost ||
-      !oxoGhost ||
-      !ring ||
-      !progress ||
-      !progressGlow ||
-      !shutterTop ||
-      !shutterBottom ||
-      !flash
-    ) {
+    if (!root || !counterNode || !orb || !ghost || !progress) {
       onFinish?.();
       return undefined;
     }
@@ -60,62 +49,52 @@ export default function SplashScreen({ onFinish }) {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+    const setValue = (raw) => {
+      const value = Math.max(0, Math.min(100, Math.round(raw)));
+      const formatted = String(value).padStart(3, "0");
+
+      counterNode.textContent = formatted;
+      if (counterGhost) counterGhost.textContent = formatted;
+      if (percent) percent.textContent = `${formatted}%`;
+
+      gsap.set(progress, {
+        scaleX: value / 100,
+      });
+    };
+
     if (reduceMotion) {
-      setValue("100");
-      gsap.set(progress, { scaleX: 1 });
-      const timer = window.setTimeout(() => onFinish?.(), 450);
+      setValue(100);
+      if (status) status.textContent = "SYSTEM ONLINE";
+
+      const timer = window.setTimeout(() => {
+        onFinish?.();
+      }, 420);
+
       return () => window.clearTimeout(timer);
     }
-
-    let pointerMove = null;
 
     const ctx = gsap.context(() => {
       const counter = { value: 0 };
 
+      setValue(0);
+
       gsap.set(root, {
         autoAlpha: 1,
-        clipPath: "inset(0% 0% 0% 0%)",
       });
 
-      gsap.set(stage, {
-        perspective: 1400,
-        transformStyle: "preserve-3d",
+      /*
+       * HEADER-LIKE CURTAINS
+       * Stessa logica visiva del menu, ma usata come intro.
+       */
+      gsap.set(curtainsRef.current, {
+        scaleY: 1,
+        transformOrigin: "top center",
       });
 
-      gsap.set(number, {
-        yPercent: 120,
-        rotateX: -86,
+      gsap.set(linesRef.current, {
+        scaleY: 0,
+        transformOrigin: "top center",
         opacity: 0,
-        filter: "blur(18px)",
-        transformOrigin: "50% 100%",
-      });
-
-      gsap.set(numberGhost, {
-        yPercent: -24,
-        xPercent: 7,
-        opacity: 0,
-      });
-
-      gsap.set(oxoGhost, {
-        scale: 0.7,
-        rotate: -12,
-        opacity: 0,
-      });
-
-      gsap.set(ring, {
-        scale: 0.48,
-        rotate: -28,
-        opacity: 0,
-      });
-
-      gsap.set(progress, {
-        scaleX: 0,
-        transformOrigin: "left center",
-      });
-
-      gsap.set(progressGlow, {
-        scaleX: 0,
-        transformOrigin: "left center",
       });
 
       gsap.set(metaRefs.current, {
@@ -123,71 +102,84 @@ export default function SplashScreen({ onFinish }) {
         opacity: 0,
       });
 
-      gsap.set(fragmentRefs.current, {
+      /*
+       * Counter sempre inchiodato al centro.
+       * Nessun x/xPercent/parallax.
+       */
+      gsap.set(counterNode, {
+        x: 0,
+        y: 0,
+        xPercent: -50,
+        yPercent: -50,
+        left: "50%",
+        top: "50%",
         opacity: 0,
-        y: 8,
+        scale: 0.82,
+        rotateX: -72,
+        filter: "blur(18px)",
+        transformOrigin: "50% 50%",
       });
 
-      gsap.set(
-        [aquaRef.current, violetRef.current, greenRef.current, fuchsiaRef.current],
-        {
-          scaleX: 0,
+      if (counterGhost) {
+        gsap.set(counterGhost, {
+          x: 0,
+          y: 0,
+          xPercent: -50,
+          yPercent: -50,
+          left: "50%",
+          top: "50%",
           opacity: 0,
-        }
-      );
+          scale: 1,
+        });
+      }
 
-      gsap.set(shutterTop, { yPercent: -100 });
-      gsap.set(shutterBottom, { yPercent: 100 });
-      gsap.set(flash, { opacity: 0 });
+      gsap.set(orb, {
+        scale: 0.24,
+        rotate: -52,
+        opacity: 0,
+      });
+
+      gsap.set(ghost, {
+        xPercent: -50,
+        yPercent: -50,
+        opacity: 0,
+        scale: 0.72,
+        rotate: -7,
+      });
+
+      gsap.set(progress, {
+        scaleX: 0,
+        transformOrigin: "left center",
+      });
 
       const tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
+        defaults: {
+          ease: "power4.inOut",
+        },
       });
 
-      /* ENTRY */
+      /* -------------------------------------------------------
+         OPENING / HEADER LANGUAGE
+      ------------------------------------------------------- */
 
       tl.to(
-        metaRefs.current,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          stagger: 0.055,
-        },
-        0.03
-      );
-
-      tl.to(
-        oxoGhost,
-        {
-          scale: 1,
-          rotate: 0,
-          opacity: 0.055,
-          duration: 1.3,
-          ease: "power4.out",
-        },
-        0.04
-      );
-
-      tl.to(
-        ring,
+        orb,
         {
           scale: 1,
           rotate: 0,
           opacity: 1,
-          duration: 1.25,
+          duration: 1.05,
           ease: "power4.out",
         },
-        0.06
+        0.08
       );
 
       tl.to(
-        number,
+        ghost,
         {
-          yPercent: 0,
-          rotateX: 0,
-          opacity: 1,
-          filter: "blur(0px)",
+          opacity: 0.035,
+          scale: 1,
+          rotate: 0,
           duration: 1.1,
           ease: "power4.out",
         },
@@ -195,352 +187,307 @@ export default function SplashScreen({ onFinish }) {
       );
 
       tl.to(
-        numberGhost,
+        metaRefs.current,
         {
-          yPercent: 0,
-          xPercent: 0,
-          opacity: 0.065,
+          y: 0,
+          opacity: 1,
+          duration: 0.72,
+          stagger: 0.06,
+          ease: "power3.out",
+        },
+        0.14
+      );
+
+      tl.to(
+        linesRef.current,
+        {
+          scaleY: 1,
+          opacity: 0.38,
+          duration: 0.85,
+          stagger: 0.08,
+          ease: "power3.out",
+        },
+        0.18
+      );
+
+      tl.to(
+        counterNode,
+        {
+          opacity: 1,
+          scale: 1,
+          rotateX: 0,
+          filter: "blur(0px)",
           duration: 1.0,
           ease: "power4.out",
         },
         0.18
       );
 
-      /* COUNTER */
+      if (counterGhost) {
+        tl.to(
+          counterGhost,
+          {
+            opacity: 0.06,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          0.42
+        );
+      }
+
+      /* -------------------------------------------------------
+         COUNTER
+      ------------------------------------------------------- */
+
+      tl.to(
+        counter,
+        {
+          value: 92,
+          duration: 2.25,
+          ease: "power2.inOut",
+          onUpdate: () => setValue(counter.value),
+        },
+        0.28
+      );
+
+      /*
+       * Color pulses through the header columns.
+       */
+      curtainsRef.current.forEach((curtain, index) => {
+        const accent = ACCENTS[index];
+
+        tl.fromTo(
+          curtain,
+          {
+            boxShadow: `inset 0 0 0 rgba(0,0,0,0)`,
+          },
+          {
+            boxShadow: `inset 0 0 90px ${accent}14`,
+            duration: 0.4,
+            ease: "power2.out",
+          },
+          0.62 + index * 0.42
+        );
+
+        tl.to(
+          curtain,
+          {
+            boxShadow: `inset 0 0 0 rgba(0,0,0,0)`,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          0.92 + index * 0.42
+        );
+      });
+
+      /*
+       * Tiny chromatic compression of the number.
+       * Still dead center.
+       */
+      tl.fromTo(
+        counterNode,
+        {
+          scaleX: 1,
+        },
+        {
+          scaleX: 0.965,
+          duration: 0.12,
+          repeat: 1,
+          yoyo: true,
+          ease: "expo.out",
+        },
+        1.18
+      );
+
+      tl.fromTo(
+        counterNode,
+        {
+          scaleY: 1,
+        },
+        {
+          scaleY: 0.94,
+          duration: 0.1,
+          repeat: 1,
+          yoyo: true,
+          ease: "expo.out",
+        },
+        2.02
+      );
+
+      /* -------------------------------------------------------
+         092 → 099 / HOLD
+      ------------------------------------------------------- */
+
+      tl.to(
+        counter,
+        {
+          value: 99,
+          duration: 0.72,
+          ease: "power4.out",
+          onUpdate: () => setValue(counter.value),
+        },
+        2.66
+      );
+
+      tl.call(
+        () => {
+          if (status) status.textContent = "SIGNAL LOCK / HOLD";
+        },
+        null,
+        3.18
+      );
+
+      tl.to(
+        counterNode,
+        {
+          scale: 1.025,
+          duration: 0.38,
+          ease: "power3.inOut",
+        },
+        3.18
+      );
+
+      tl.to({}, { duration: 0.35 });
+
+      /* -------------------------------------------------------
+         100 / SYSTEM ONLINE
+      ------------------------------------------------------- */
 
       tl.to(
         counter,
         {
           value: 100,
-          duration: 3.55,
-          ease: "power2.inOut",
-          onUpdate: () => {
-            const current = Math.min(100, Math.round(counter.value));
-            const formatted = String(current).padStart(3, "0");
-            setValue(formatted);
-
-            const ratio = current / 100;
-            gsap.set(progress, { scaleX: ratio });
-            gsap.set(progressGlow, { scaleX: ratio });
-
-            /*
-             * Micro-glitch only at selected milestones.
-             */
-            if ([24, 51, 77, 100].includes(current)) {
-              gsap.fromTo(
-                number,
-                {
-                  x: current % 2 === 0 ? -7 : 7,
-                  skewX: current % 2 === 0 ? -5 : 5,
-                  filter: "blur(1.5px)",
-                },
-                {
-                  x: 0,
-                  skewX: 0,
-                  filter: "blur(0px)",
-                  duration: 0.16,
-                  ease: "expo.out",
-                  overwrite: true,
-                }
-              );
-
-              gsap.fromTo(
-                numberGhost,
-                {
-                  xPercent: current % 2 === 0 ? 4 : -4,
-                  opacity: 0.14,
-                },
-                {
-                  xPercent: 0,
-                  opacity: 0.065,
-                  duration: 0.3,
-                  ease: "power3.out",
-                  overwrite: true,
-                }
-              );
-            }
+          duration: 0.12,
+          ease: "none",
+          onUpdate: () => setValue(counter.value),
+          onComplete: () => {
+            setValue(100);
+            if (status) status.textContent = "SYSTEM ONLINE";
           },
         },
-        0.22
-      );
-
-      /* AWWWARDS LIGHT BLADES */
-
-      tl.fromTo(
-        aquaRef.current,
-        { scaleX: 0, xPercent: -16, opacity: 0 },
-        {
-          scaleX: 1,
-          xPercent: 0,
-          opacity: 1,
-          duration: 0.17,
-          ease: "expo.out",
-        },
-        0.62
-      ).to(
-        aquaRef.current,
-        {
-          xPercent: 38,
-          opacity: 0,
-          duration: 0.55,
-          ease: "power3.out",
-        },
-        0.79
-      );
-
-      tl.fromTo(
-        violetRef.current,
-        { scaleX: 0, xPercent: 20, opacity: 0 },
-        {
-          scaleX: 1,
-          xPercent: 0,
-          opacity: 0.95,
-          duration: 0.17,
-          ease: "expo.out",
-        },
-        1.34
-      ).to(
-        violetRef.current,
-        {
-          xPercent: -34,
-          opacity: 0,
-          duration: 0.52,
-          ease: "power3.out",
-        },
-        1.5
-      );
-
-      tl.fromTo(
-        greenRef.current,
-        { scaleX: 0, xPercent: -18, opacity: 0 },
-        {
-          scaleX: 1,
-          xPercent: 0,
-          opacity: 0.95,
-          duration: 0.16,
-          ease: "expo.out",
-        },
-        2.1
-      ).to(
-        greenRef.current,
-        {
-          xPercent: 30,
-          opacity: 0,
-          duration: 0.52,
-          ease: "power3.out",
-        },
-        2.26
-      );
-
-      tl.fromTo(
-        fuchsiaRef.current,
-        { scaleX: 0, xPercent: 20, opacity: 0 },
-        {
-          scaleX: 1,
-          xPercent: 0,
-          opacity: 0.85,
-          duration: 0.15,
-          ease: "expo.out",
-        },
-        2.82
-      ).to(
-        fuchsiaRef.current,
-        {
-          xPercent: -30,
-          opacity: 0,
-          duration: 0.48,
-          ease: "power3.out",
-        },
-        2.97
-      );
-
-      /* DATA FRAGMENTS */
-
-      tl.to(
-        fragmentRefs.current,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          stagger: 0.05,
-          ease: "power3.out",
-        },
-        0.48
+        3.72
       );
 
       tl.to(
-        fragmentRefs.current,
+        counterNode,
         {
-          opacity: 0.18,
-          xPercent: (index) => (index % 2 === 0 ? -12 : 12),
-          duration: 1.8,
-          stagger: 0.04,
-          ease: "none",
+          scaleX: 1.065,
+          scaleY: 0.97,
+          duration: 0.35,
+          ease: "power4.out",
         },
-        1.3
-      );
-
-      /* CONTINUOUS HUD */
-
-      gsap.to(ring, {
-        rotate: 360,
-        duration: 24,
-        repeat: -1,
-        ease: "none",
-      });
-
-      gsap.to(oxoGhost, {
-        scale: 1.06,
-        rotate: 2.4,
-        duration: 3.2,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut",
-      });
-
-      /* POINTER PARALLAX */
-
-      if (!window.matchMedia("(pointer: coarse)").matches) {
-        const moveStageX = gsap.quickTo(stage, "x", {
-          duration: 0.9,
-          ease: "power3.out",
-        });
-
-        const moveStageY = gsap.quickTo(stage, "y", {
-          duration: 0.9,
-          ease: "power3.out",
-        });
-
-        const rotateX = gsap.quickTo(stage, "rotationY", {
-          duration: 1.0,
-          ease: "power3.out",
-        });
-
-        const rotateY = gsap.quickTo(stage, "rotationX", {
-          duration: 1.0,
-          ease: "power3.out",
-        });
-
-        pointerMove = (event) => {
-          const nx = event.clientX / window.innerWidth - 0.5;
-          const ny = event.clientY / window.innerHeight - 0.5;
-
-          moveStageX(nx * 18);
-          moveStageY(ny * 12);
-          rotateX(nx * 2.2);
-          rotateY(ny * -1.8);
-        };
-
-        window.addEventListener("pointermove", pointerMove, {
-          passive: true,
-        });
-      }
-
-      /* FINAL LOCK */
-
-      tl.to(
-        number,
-        {
-          scaleX: 1.08,
-          scaleY: 0.96,
-          letterSpacing: "-0.095em",
-          duration: 0.36,
-          ease: "power3.inOut",
-        },
-        3.56
+        3.76
       );
 
       tl.to(
-        ring,
+        orb,
         {
-          scale: 1.18,
-          opacity: 0.22,
+          scale: 1.12,
+          opacity: 0.82,
           duration: 0.42,
-          ease: "power3.inOut",
+          ease: "power3.out",
         },
-        3.58
+        3.78
       );
 
+      /* -------------------------------------------------------
+         EXIT — curtains move like the header
+      ------------------------------------------------------- */
+
       tl.to(
-        flash,
-        {
-          opacity: 1,
-          duration: 0.055,
-          ease: "none",
-        },
-        3.86
-      ).to(
-        flash,
+        metaRefs.current,
         {
           opacity: 0,
-          duration: 0.18,
-          ease: "power2.out",
+          y: -10,
+          duration: 0.32,
+          stagger: 0.025,
+          ease: "power3.in",
         },
-        3.915
-      );
-
-      /* CINEMATIC EXIT */
-
-      tl.to(
-        shutterTop,
-        {
-          yPercent: 0,
-          duration: 0.52,
-          ease: "power4.inOut",
-        },
-        3.9
+        4.1
       );
 
       tl.to(
-        shutterBottom,
+        [counterNode, counterGhost, orb, ghost],
         {
-          yPercent: 0,
-          duration: 0.52,
+          opacity: 0,
+          duration: 0.34,
+          ease: "power3.in",
+        },
+        4.13
+      );
+
+      tl.to(
+        linesRef.current,
+        {
+          opacity: 0,
+          duration: 0.22,
+        },
+        4.16
+      );
+
+      /*
+       * Four panels leave upward with the same rhythm
+       * as the menu curtains.
+       */
+      tl.to(
+        curtainsRef.current,
+        {
+          scaleY: 0,
+          transformOrigin: "bottom center",
+          duration: 0.78,
+          stagger: 0.055,
           ease: "power4.inOut",
         },
-        3.9
+        4.2
       );
 
       tl.to(
         root,
         {
           autoAlpha: 0,
-          duration: 0.08,
+          duration: 0.06,
           onComplete: () => onFinish?.(),
         },
-        4.42
+        5.02
       );
+
+      /* ambient motion */
+      gsap.to(orb, {
+        rotate: 360,
+        duration: 26,
+        repeat: -1,
+        ease: "none",
+      });
+
+      gsap.to(ghost, {
+        scale: 1.035,
+        duration: 3.4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
     }, root);
 
     return () => {
-      if (pointerMove) {
-        window.removeEventListener("pointermove", pointerMove);
-      }
-
       ctx.revert();
     };
   }, [onFinish]);
 
-  const addMetaRef = (el) => {
-    if (el && !metaRefs.current.includes(el)) {
-      metaRefs.current.push(el);
-    }
-  };
-
-  const addFragmentRef = (el) => {
-    if (el && !fragmentRefs.current.includes(el)) {
-      fragmentRefs.current.push(el);
-    }
-  };
-
   return (
     <div
       ref={rootRef}
-      className="oxo-aww-splash fixed inset-0 z-[99999] overflow-hidden bg-[#020203] text-white"
+      className="oxo-header-splash fixed inset-0 z-[99999] overflow-hidden bg-[#020203] text-white"
     >
       <style>{`
-        .oxo-aww-splash,
-        .oxo-aww-splash * {
+        :root {
+          --oxo-cyan:#35d8ff;
+          --oxo-violet:#8b5cf6;
+          --oxo-green:#20f0c7;
+          --oxo-pink:#ff4fd8;
+        }
+
+        .oxo-header-splash,
+        .oxo-header-splash * {
           font-family:
             "Eurostile",
             "Microgramma",
@@ -551,363 +498,404 @@ export default function SplashScreen({ onFinish }) {
             sans-serif;
         }
 
-        .oxo-aww-grid {
+        .oxo-hs-curtains {
+          position:absolute;
+          inset:0;
+          display:grid;
+          grid-template-columns:repeat(4,1fr);
+          z-index:1;
+        }
+
+        .oxo-hs-curtain {
+          position:relative;
+          background:
+            linear-gradient(
+              180deg,
+              rgba(255,255,255,.028),
+              rgba(255,255,255,0)
+            ),
+            #050506;
+          border-right:1px solid rgba(255,255,255,.05);
+          will-change:transform;
+        }
+
+        .oxo-hs-curtain::after {
+          content:"";
+          position:absolute;
+          left:50%;
+          top:0;
+          width:1px;
+          height:100%;
+          background:
+            linear-gradient(
+              to bottom,
+              transparent,
+              var(--accent),
+              transparent
+            );
+          opacity:.28;
+        }
+
+        .oxo-hs-grid {
+          position:absolute;
+          inset:0;
+          z-index:2;
+          pointer-events:none;
+          opacity:.46;
           background-image:
             linear-gradient(
-              rgba(255,255,255,.012) 1px,
+              rgba(255,255,255,.018) 1px,
               transparent 1px
             ),
             linear-gradient(
               90deg,
-              rgba(255,255,255,.012) 1px,
+              rgba(255,255,255,.018) 1px,
               transparent 1px
             );
-          background-size: 68px 68px;
+          background-size:64px 64px;
           mask-image:
             linear-gradient(
               to bottom,
               transparent,
-              black 8%,
-              black 92%,
+              black 10%,
+              black 90%,
               transparent
             );
         }
 
-        .oxo-aww-noise::after {
-          content: "";
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          opacity: .045;
-          background-image:
-            url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.85'/%3E%3C/svg%3E");
-          mix-blend-mode: soft-light;
-        }
-
-        .oxo-aww-number {
-          font-weight: 400;
-          font-stretch: expanded;
-          letter-spacing: -.085em;
-          text-shadow:
-            -4px 0 0 rgba(53,216,255,.28),
-            4px 0 0 rgba(139,92,246,.22),
-            0 3px 0 rgba(32,240,199,.12),
-            0 -2px 0 rgba(255,79,216,.08);
-        }
-
-        .oxo-aww-number-ghost {
-          -webkit-text-stroke: 1px rgba(255,255,255,.18);
-          color: transparent;
-        }
-
-        .oxo-aww-ring {
+        .oxo-hs-orb {
+          position:absolute;
+          left:50%;
+          top:50%;
+          z-index:8;
+          width:min(62vw,760px);
+          aspect-ratio:1;
+          border-radius:50%;
+          transform:translate(-50%,-50%);
           background:
-            conic-gradient(
-              from 12deg,
-              transparent 0deg,
-              transparent 22deg,
-              rgba(53,216,255,.62) 23deg,
-              rgba(53,216,255,.08) 32deg,
-              transparent 42deg,
-              transparent 117deg,
-              rgba(139,92,246,.52) 118deg,
-              rgba(139,92,246,.07) 130deg,
-              transparent 143deg,
-              transparent 224deg,
-              rgba(32,240,199,.44) 225deg,
-              rgba(32,240,199,.06) 236deg,
-              transparent 248deg,
-              transparent 304deg,
-              rgba(255,79,216,.38) 305deg,
-              rgba(255,79,216,.05) 316deg,
-              transparent 330deg
-            );
-          -webkit-mask:
             radial-gradient(
-              farthest-side,
-              transparent calc(100% - 1px),
-              #000 calc(100% - 1px)
-            );
-          mask:
+              circle at 38% 40%,
+              rgba(53,216,255,.26),
+              transparent 30%
+            ),
             radial-gradient(
-              farthest-side,
-              transparent calc(100% - 1px),
-              #000 calc(100% - 1px)
+              circle at 58% 48%,
+              rgba(139,92,246,.22),
+              transparent 42%
+            ),
+            radial-gradient(
+              circle at 48% 64%,
+              rgba(32,240,199,.12),
+              transparent 48%
+            ),
+            radial-gradient(
+              circle at 60% 68%,
+              rgba(255,79,216,.11),
+              transparent 52%
             );
+          filter:blur(18px);
+          pointer-events:none;
         }
 
-        .oxo-aww-blade {
-          height: 1px;
-          filter: drop-shadow(0 0 9px currentColor);
-          mix-blend-mode: screen;
+        .oxo-hs-ghost {
+          position:absolute;
+          left:50%;
+          top:50%;
+          z-index:7;
+          transform:translate(-50%,-50%);
+          font-size:clamp(180px,42vw,720px);
+          line-height:.7;
+          letter-spacing:-.12em;
+          color:white;
+          pointer-events:none;
+          user-select:none;
         }
 
-        .oxo-aww-fragment {
-          writing-mode: vertical-rl;
-          text-orientation: mixed;
+        .oxo-hs-counter,
+        .oxo-hs-counter-ghost {
+          position:absolute;
+          left:50%;
+          top:50%;
+          transform:translate(-50%,-50%);
+          white-space:nowrap;
+          line-height:.72;
+          letter-spacing:-.085em;
+          pointer-events:none;
+          user-select:none;
         }
 
-        .oxo-aww-shutter {
+        .oxo-hs-counter {
+          z-index:30;
+          font-size:clamp(120px,22vw,420px);
+          color:#fff;
+          text-shadow:
+            -3px 0 0 rgba(53,216,255,.24),
+            3px 0 0 rgba(139,92,246,.18),
+            0 2px 0 rgba(32,240,199,.09);
+        }
+
+        .oxo-hs-counter-ghost {
+          z-index:29;
+          font-size:clamp(120px,22vw,420px);
+          color:transparent;
+          -webkit-text-stroke:1px rgba(255,255,255,.16);
+        }
+
+        .oxo-hs-top,
+        .oxo-hs-bottom {
+          position:absolute;
+          left:clamp(18px,4vw,70px);
+          right:clamp(18px,4vw,70px);
+          z-index:50;
+          display:flex;
+          align-items:flex-start;
+          justify-content:space-between;
+          gap:20px;
+          font-size:9px;
+          letter-spacing:.28em;
+          text-transform:uppercase;
+          color:rgba(255,255,255,.42);
+        }
+
+        .oxo-hs-top {
+          top:clamp(24px,5vh,52px);
+          padding-bottom:18px;
+          border-bottom:1px solid rgba(255,255,255,.14);
+        }
+
+        .oxo-hs-bottom {
+          bottom:clamp(24px,5vh,52px);
+          padding-top:18px;
+          align-items:flex-end;
+          border-top:1px solid rgba(255,255,255,.14);
+        }
+
+        .oxo-hs-status {
+          display:inline-flex;
+          align-items:center;
+          gap:9px;
+        }
+
+        .oxo-hs-status::before {
+          content:"";
+          width:6px;
+          height:6px;
+          border-radius:50%;
+          background:var(--oxo-green);
+          animation:oxoHsPulse 1.8s ease-in-out infinite;
+        }
+
+        .oxo-hs-progress {
+          position:absolute;
+          left:50%;
+          bottom:17%;
+          z-index:50;
+          width:min(72vw,920px);
+          transform:translateX(-50%);
+        }
+
+        .oxo-hs-progress-track {
+          position:relative;
+          height:1px;
+          width:100%;
+          background:rgba(255,255,255,.12);
+        }
+
+        .oxo-hs-progress-bar {
+          height:100%;
+          width:100%;
+          transform-origin:left center;
           background:
             linear-gradient(
               90deg,
-              #020203,
-              #050506 48%,
-              #020203
+              var(--oxo-cyan),
+              var(--oxo-violet),
+              var(--oxo-green),
+              var(--oxo-pink)
             );
         }
 
-        @media (max-width: 767px) {
-          .oxo-aww-grid {
-            background-size: 44px 44px;
-          }
+        .oxo-hs-progress-meta {
+          display:flex;
+          justify-content:space-between;
+          margin-bottom:10px;
+          font-size:8px;
+          letter-spacing:.3em;
+          text-transform:uppercase;
+          color:rgba(255,255,255,.32);
+        }
 
-          .oxo-aww-number {
-            letter-spacing: -.07em;
-          }
+        .oxo-hs-rail {
+          position:absolute;
+          right:clamp(18px,3vw,54px);
+          top:50%;
+          z-index:55;
+          width:1px;
+          height:30vh;
+          transform:translateY(-50%);
+          background:rgba(255,255,255,.08);
+        }
 
-          .oxo-aww-fragment {
-            display: none;
+        .oxo-hs-rail-dot {
+          position:absolute;
+          left:50%;
+          width:8px;
+          height:8px;
+          top:50%;
+          border-radius:50%;
+          transform:translate(-50%,-50%);
+          background:var(--oxo-cyan);
+          box-shadow:0 0 22px rgba(53,216,255,.45);
+        }
+
+        @keyframes oxoHsPulse {
+          0%,100% {
+            opacity:.35;
+            transform:scale(.8);
+          }
+          50% {
+            opacity:1;
+            transform:scale(1.25);
           }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-          .oxo-aww-ring,
-          .oxo-aww-blade {
-            animation: none !important;
+        @media (min-width:900px) {
+          .oxo-hs-top,
+          .oxo-hs-bottom {
+            font-size:10px;
+          }
+        }
+
+        @media (max-width:640px) {
+          .oxo-hs-curtains {
+            grid-template-columns:repeat(2,1fr);
+          }
+
+          .oxo-hs-curtain:nth-child(3),
+          .oxo-hs-curtain:nth-child(4) {
+            display:none;
+          }
+
+          .oxo-hs-grid {
+            background-size:44px 44px;
+          }
+
+          .oxo-hs-top span:last-child,
+          .oxo-hs-bottom span:last-child {
+            display:none;
+          }
+
+          .oxo-hs-progress {
+            width:82vw;
+            bottom:15%;
+          }
+
+          .oxo-hs-rail {
+            display:none;
+          }
+
+          .oxo-hs-orb {
+            width:100vw;
+          }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+          .oxo-header-splash * {
+            animation:none!important;
           }
         }
       `}</style>
 
-      <div className="oxo-aww-noise absolute inset-0" />
-
-      <div
-        aria-hidden="true"
-        className="oxo-aww-grid pointer-events-none absolute inset-0 opacity-70"
-      />
-
-      {/* COLOR FIELDS */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-[14vw] top-[4%] h-[48vw] w-[48vw] rounded-full bg-cyan-300/[0.065] blur-[125px]"
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-[14vw] top-[18%] h-[46vw] w-[46vw] rounded-full bg-violet-500/[0.06] blur-[130px]"
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-24vw] left-[24%] h-[44vw] w-[44vw] rounded-full bg-emerald-300/[0.045] blur-[135px]"
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-[-18vw] right-[5%] h-[36vw] w-[36vw] rounded-full bg-fuchsia-400/[0.045] blur-[120px]"
-      />
-
-      {/* STRUCTURAL LINES */}
-      <div className="pointer-events-none absolute left-1/2 top-[7%] h-[86%] w-px -translate-x-1/2 bg-white/[0.035]" />
-      <div className="pointer-events-none absolute left-[5%] top-1/2 h-px w-[90%] -translate-y-1/2 bg-white/[0.03]" />
-      <div className="pointer-events-none absolute left-[12%] top-[20%] h-px w-[25%] -rotate-[7deg] bg-white/[0.025]" />
-      <div className="pointer-events-none absolute right-[10%] top-[70%] h-px w-[23%] rotate-[9deg] bg-white/[0.025]" />
-
-      {/* STAGE */}
-      <div
-        ref={stageRef}
-        className="absolute inset-0 [transform-style:preserve-3d]"
-      >
-        {/* GIANT GHOST OXO */}
-        <div
-          ref={oxoGhostRef}
-          aria-hidden="true"
-          className="avant-legato-font pointer-events-none absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[42vw] uppercase leading-none tracking-[-0.12em] text-white"
-        >
-          OXO
-        </div>
-
-        {/* RING SYSTEM */}
-        <div
-          ref={ringRef}
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-1/2 z-[6] h-[60vw] w-[60vw] min-h-[330px] min-w-[330px] max-h-[820px] max-w-[820px] -translate-x-1/2 -translate-y-1/2"
-        >
-          <div className="oxo-aww-ring absolute inset-0 rounded-full" />
-          <div className="oxo-aww-ring absolute inset-[14%] rotate-[41deg] rounded-full opacity-70" />
-          <div className="oxo-aww-ring absolute inset-[31%] -rotate-[28deg] rounded-full opacity-55" />
-
-          <div className="absolute left-1/2 top-[-3px] h-[7px] w-[7px] -translate-x-1/2 rounded-full bg-cyan-300 shadow-[0_0_24px_rgba(53,216,255,.65)]" />
-          <div className="absolute bottom-[12%] right-[10%] h-[5px] w-[5px] bg-emerald-300 shadow-[0_0_18px_rgba(32,240,199,.5)]" />
-          <div className="absolute left-[13%] top-[22%] h-[4px] w-[4px] bg-violet-400 shadow-[0_0_16px_rgba(139,92,246,.45)]" />
-        </div>
-
-        {/* LIGHT BLADES */}
-        <div
-          ref={aquaRef}
-          aria-hidden="true"
-          className="oxo-aww-blade pointer-events-none absolute left-[11%] top-[40%] z-[24] w-[44%] origin-left bg-gradient-to-r from-transparent via-cyan-300 to-transparent text-cyan-300"
-        />
-
-        <div
-          ref={violetRef}
-          aria-hidden="true"
-          className="oxo-aww-blade pointer-events-none absolute right-[10%] top-[51%] z-[24] w-[40%] origin-right bg-gradient-to-l from-transparent via-violet-400 to-transparent text-violet-400"
-        />
-
-        <div
-          ref={greenRef}
-          aria-hidden="true"
-          className="oxo-aww-blade pointer-events-none absolute left-[28%] top-[62%] z-[24] w-[42%] origin-left bg-gradient-to-r from-transparent via-emerald-300 to-transparent text-emerald-300"
-        />
-
-        <div
-          ref={fuchsiaRef}
-          aria-hidden="true"
-          className="oxo-aww-blade pointer-events-none absolute right-[18%] top-[34%] z-[24] w-[31%] origin-right bg-gradient-to-l from-transparent via-fuchsia-400 to-transparent text-fuchsia-400"
-        />
-
-        {/* COUNTER GHOST */}
-        <div
-          ref={numberGhostRef}
-          aria-hidden="true"
-          className="oxo-aww-number-ghost avant-legato-font pointer-events-none absolute left-1/2 top-1/2 z-[28] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[34vw] leading-none tracking-[-0.085em] md:text-[26vw] lg:text-[20vw]"
-        >
-          {value}
-        </div>
-
-        {/* COUNTER */}
-        <div
-          ref={numberRef}
-          className="oxo-aww-number avant-legato-font absolute left-1/2 top-1/2 z-[30] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[34vw] leading-none text-white md:text-[26vw] lg:text-[20vw]"
-        >
-          {value}
-        </div>
-      </div>
-
-      {/* TOP META */}
-      <div
-        ref={addMetaRef}
-        className="absolute left-6 top-7 z-50 md:left-10 md:top-9 lg:left-[4vw]"
-      >
-        <p className="avant-legato-font text-[9px] uppercase tracking-[0.34em] text-white/72 md:text-[11px]">
-          OXO STUDIO® /{" "}
-          <span className="text-cyan-300">SYSTEM BOOT</span>
-        </p>
-
-        <p className="avant-legato-font mt-2 text-[8px] uppercase tracking-[0.3em] text-white/32 md:text-[10px]">
-          CREATIVE TECHNOLOGY / 2026
-        </p>
-      </div>
-
-      <div
-        ref={addMetaRef}
-        className="absolute right-6 top-7 z-50 text-right md:right-10 md:top-9 lg:right-[4vw]"
-      >
-        <p className="avant-legato-font text-[9px] uppercase tracking-[0.34em] text-white/72 md:text-[11px]">
-          INDEX /{" "}
-          <span className="text-violet-400">{value}%</span>
-        </p>
-
-        <p className="avant-legato-font mt-2 text-[8px] uppercase tracking-[0.3em] text-white/32 md:text-[10px]">
-          SIGNAL / LIVE / READY
-        </p>
-      </div>
-
-      {/* VERTICAL DATA FRAGMENTS */}
-      <p
-        ref={addFragmentRef}
-        className="oxo-aww-fragment avant-legato-font pointer-events-none absolute left-[2.1vw] top-[33%] z-20 text-[8px] uppercase tracking-[0.42em] text-cyan-300/38"
-      >
-        SIGNAL / 01 / INPUT / ACTIVE
-      </p>
-
-      <p
-        ref={addFragmentRef}
-        className="oxo-aww-fragment avant-legato-font pointer-events-none absolute right-[2.1vw] top-[29%] z-20 text-[8px] uppercase tracking-[0.42em] text-violet-400/36"
-      >
-        VECTOR / 04 / MOTION / FIELD
-      </p>
-
-      <p
-        ref={addFragmentRef}
-        className="oxo-aww-fragment avant-legato-font pointer-events-none absolute left-[7vw] bottom-[23%] z-20 text-[8px] uppercase tracking-[0.42em] text-emerald-300/32"
-      >
-        SYSTEM / STABLE / BUILD
-      </p>
-
-      <p
-        ref={addFragmentRef}
-        className="oxo-aww-fragment avant-legato-font pointer-events-none absolute right-[8vw] bottom-[22%] z-20 text-[8px] uppercase tracking-[0.42em] text-fuchsia-400/30"
-      >
-        NOISE / OUT / MEANING / IN
-      </p>
-
-      {/* PROGRESS SYSTEM */}
-      <div className="absolute bottom-[14%] left-1/2 z-50 w-[78vw] max-w-[1080px] -translate-x-1/2">
-        <div className="mb-3 flex items-center justify-between text-[8px] uppercase tracking-[0.34em] text-white/30 md:text-[10px]">
-          <span>BOOT SEQUENCE</span>
-          <span>{value} / 100</span>
-        </div>
-
-        <div className="relative h-px w-full bg-white/14">
+      {/* 4 HEADER CURTAINS */}
+      <div className="oxo-hs-curtains" aria-hidden="true">
+        {ACCENTS.map((accent, index) => (
           <div
-            ref={progressGlowRef}
-            className="absolute inset-y-[-4px] left-0 w-full origin-left bg-gradient-to-r from-cyan-300/0 via-violet-400/28 to-emerald-300/0 blur-[7px]"
-          />
+            key={accent}
+            ref={addCurtainRef}
+            className="oxo-hs-curtain"
+            style={{ "--accent": accent }}
+          >
+            <span
+              ref={addLineRef}
+              className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2"
+              style={{
+                background: `linear-gradient(to bottom, transparent, ${accent}, transparent)`,
+              }}
+            />
+          </div>
+        ))}
+      </div>
 
+      <div className="oxo-hs-grid" aria-hidden="true" />
+
+      {/* SAME ORB LANGUAGE AS HEADER */}
+      <div ref={orbRef} className="oxo-hs-orb" aria-hidden="true" />
+
+      {/* GHOST OXO */}
+      <div
+        ref={ghostRef}
+        className="oxo-hs-ghost avant-legato-font"
+        aria-hidden="true"
+      >
+        OXO
+      </div>
+
+      {/* COUNTER FIXED CENTER */}
+      <div
+        ref={counterGhostRef}
+        className="oxo-hs-counter-ghost avant-legato-font"
+        aria-hidden="true"
+      >
+        000
+      </div>
+
+      <div
+        ref={counterRef}
+        className="oxo-hs-counter avant-legato-font"
+      >
+        000
+      </div>
+
+      {/* TOP */}
+      <div ref={addMetaRef} className="oxo-hs-top avant-legato-font">
+        <span>
+          OXO STUDIO® /{" "}
+          <span className="text-cyan-300">CREATIVE TECHNOLOGY</span>
+        </span>
+
+        <span>LA SPEZIA / ITALY</span>
+      </div>
+
+      {/* PROGRESS */}
+      <div className="oxo-hs-progress">
+        <div className="oxo-hs-progress-meta avant-legato-font">
+          <span>BOOT SEQUENCE</span>
+          <span ref={percentRef}>000%</span>
+        </div>
+
+        <div className="oxo-hs-progress-track">
           <div
             ref={progressRef}
-            className="relative h-full w-full origin-left bg-gradient-to-r from-cyan-300 via-violet-500 via-65% to-emerald-300"
+            className="oxo-hs-progress-bar"
           />
         </div>
-
-        <div className="mt-2 grid grid-cols-4 gap-2">
-          <span className="h-px bg-cyan-300/30" />
-          <span className="h-px bg-violet-400/28" />
-          <span className="h-px bg-emerald-300/25" />
-          <span className="h-px bg-fuchsia-400/22" />
-        </div>
       </div>
 
-      {/* BOTTOM META */}
-      <div
-        ref={addMetaRef}
-        className="absolute bottom-7 left-6 z-50 md:bottom-9 md:left-10 lg:left-[4vw]"
-      >
-        <p className="avant-legato-font text-[8px] uppercase tracking-[0.34em] text-white/36 md:text-[10px]">
-          NOISE OUT. / <span className="text-emerald-300/70">MEANING IN.</span>
-        </p>
+      {/* BOTTOM */}
+      <div ref={addMetaRef} className="oxo-hs-bottom avant-legato-font">
+        <span ref={statusRef} className="oxo-hs-status">
+          SYSTEM INITIALIZING
+        </span>
+
+        <span>
+          SOFTWARE / AI / WEB / GAME
+        </span>
       </div>
 
-      <div
-        ref={addMetaRef}
-        className="absolute bottom-7 right-6 z-50 text-right md:bottom-9 md:right-10 lg:right-[4vw]"
-      >
-        <p className="avant-legato-font text-[8px] uppercase tracking-[0.34em] text-white/36 md:text-[10px]">
-          ONE STUDIO / <span className="text-cyan-300/70">ONE SIGNAL</span>
-        </p>
+      {/* HEADER-LIKE RAIL */}
+      <div className="oxo-hs-rail" aria-hidden="true">
+        <span className="oxo-hs-rail-dot" />
       </div>
-
-      {/* FINAL FLASH */}
-      <div
-        ref={flashRef}
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-[90] bg-white"
-      />
-
-      {/* CINEMATIC SHUTTERS */}
-      <div
-        ref={shutterTopRef}
-        aria-hidden="true"
-        className="oxo-aww-shutter pointer-events-none absolute left-0 top-0 z-[100] h-1/2 w-full border-b border-cyan-300/20"
-      />
-
-      <div
-        ref={shutterBottomRef}
-        aria-hidden="true"
-        className="oxo-aww-shutter pointer-events-none absolute bottom-0 left-0 z-[100] h-1/2 w-full border-t border-violet-400/20"
-      />
     </div>
   );
 }
