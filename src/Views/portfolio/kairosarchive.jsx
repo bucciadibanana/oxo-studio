@@ -84,34 +84,31 @@ function SplitLetters({ text, attribute = "data-kairos-letter" }) {
 
 export default function KairosArchive() {
   const pageRef = useRef(null);
-  const heroRef = useRef(null);
-  const introRef = useRef(null);
   const usersRef = useRef(null);
   const interfaceRef = useRef(null);
   const techRef = useRef(null);
   const finalRef = useRef(null);
+  const signalRef = useRef(null);
   const auraRef = useRef(null);
   const cursorHaloRef = useRef(null);
 
   useLayoutEffect(() => {
     const page = pageRef.current;
-    const hero = heroRef.current;
-    const intro = introRef.current;
     const users = usersRef.current;
     const interfaceSection = interfaceRef.current;
     const tech = techRef.current;
     const finalSection = finalRef.current;
+    const signal = signalRef.current;
     const aura = auraRef.current;
     const cursorHalo = cursorHaloRef.current;
 
     if (
       !page ||
-      !hero ||
-      !intro ||
       !users ||
       !interfaceSection ||
       !tech ||
-      !finalSection
+      !finalSection ||
+      !signal
     ) {
       return undefined;
     }
@@ -127,7 +124,7 @@ export default function KairosArchive() {
       if (reduce) {
         gsap.set(
           page.querySelectorAll(
-            "[data-kairos-letter], [data-kairos-copy], [data-user-row], [data-stack-row]"
+            "[data-kairos-copy], [data-user-row], [data-stack-row]"
           ),
           { clearProps: "all", opacity: 1 }
         );
@@ -230,112 +227,341 @@ export default function KairosArchive() {
         };
       }
 
-      /* HERO */
-      const heroLetters = gsap.utils.toArray(
-        hero.querySelectorAll("[data-kairos-letter]")
+      /*
+       * ============================================================
+       * KAIROS / PRODUCT OPENING SIGNAL
+       * Una frase -> compressione -> cerchio -> tre bande in movimento.
+       * È l'inverso concettuale del signal della Home.
+       * ============================================================
+       */
+      const signalLead = signal.querySelector("[data-kairos-signal-lead]");
+      const signalLeadInner = signal.querySelector(
+        "[data-kairos-signal-lead-inner]"
       );
-      const heroMeta = gsap.utils.toArray(
-        hero.querySelectorAll("[data-kairos-meta]")
+      const signalCircle = signal.querySelector("[data-kairos-signal-circle]");
+      const signalCore = signal.querySelector("[data-kairos-signal-core]");
+      const signalRows = gsap.utils.toArray(
+        signal.querySelectorAll("[data-kairos-signal-row]")
       );
-      const heroMark = hero.querySelector("[data-kairos-mark]");
-      const heroOrbit = hero.querySelector("[data-kairos-orbit]");
-      const heroGhost = hero.querySelector("[data-kairos-ghost]");
-      const heroLight = hero.querySelector("[data-kairos-light]");
-
-      gsap.fromTo(
-        heroLetters,
-        {
-          yPercent: 135,
-          rotateX: -84,
-          opacity: 0,
-          transformOrigin: "50% 100%",
-        },
-        {
-          yPercent: 0,
-          rotateX: 0,
-          opacity: 1,
-          duration: 1.18,
-          stagger: 0.018,
-          ease: "power4.out",
-          delay: 0.08,
-        }
+      const signalRowsWrap = signal.querySelector(
+        "[data-kairos-signal-rows-wrap]"
+      );
+      const signalCross = signal.querySelector("[data-kairos-signal-cross]");
+      const signalCard = signal.querySelector("[data-kairos-card]");
+      const signalCardOrbit = signal.querySelector("[data-kairos-card-orbit]");
+      const signalCardCopy = signal.querySelector("[data-kairos-card-copy]");
+      const signalMeta = gsap.utils.toArray(
+        signal.querySelectorAll("[data-kairos-signal-meta]")
       );
 
-      gsap.fromTo(
-        heroMeta,
-        { y: 24, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.82,
-          stagger: 0.08,
-          ease: "power3.out",
-          delay: 0.46,
-        }
-      );
+      if (
+        signalLead &&
+        signalLeadInner &&
+        signalCircle &&
+        signalRowsWrap
+      ) {
+        gsap.set(signalCircle, {
+          scale: 0.12,
+          borderRadius: "50%",
+          autoAlpha: 0,
+        });
 
-      if (heroMark) {
-        gsap.fromTo(
-          heroMark,
-          {
-            scale: 0.55,
-            rotate: -18,
-            opacity: 0,
-            filter: "blur(14px)",
-          },
-          {
+        gsap.set(signalRowsWrap, {
+          autoAlpha: 0,
+          scale: 0.96,
+          filter: "blur(8px)",
+        });
+
+        gsap.set(signalRows, {
+          opacity: 0.08,
+        });
+
+        gsap.set(signalCore, {
+          autoAlpha: 0,
+          scale: 0.72,
+          filter: "blur(8px)",
+        });
+
+        gsap.set(signalCross, {
+          autoAlpha: 0,
+          scale: 0.45,
+          rotate: -24,
+        });
+
+        gsap.set(signalMeta, {
+          autoAlpha: 0,
+          y: 12,
+        });
+
+        if (signalCard) {
+          gsap.set(signalCard, {
+            autoAlpha: 1,
             scale: 1,
-            rotate: 0,
-            opacity: 1,
+          });
+        }
+
+        if (signalCardOrbit) {
+          gsap.set(signalCardOrbit, {
+            rotate: -8,
+            scale: 0.92,
+            opacity: 0.52,
+          });
+        }
+
+        if (signalCardCopy) {
+          gsap.set(signalCardCopy, {
+            autoAlpha: 1,
+            scale: 1,
             filter: "blur(0px)",
-            duration: 1.35,
-            ease: "power4.out",
-            delay: 0.18,
-          }
-        );
-      }
+          });
+        }
 
-      if (heroOrbit) {
-        gsap.to(heroOrbit, {
-          rotate: 360,
-          duration: 22,
-          repeat: -1,
-          ease: "none",
+        const signalTl = gsap.timeline({
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: signal,
+            start: "top top",
+            end: () => `+=${window.innerHeight * 1.9}`,
+            pin: true,
+            scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
         });
-      }
 
-      if (heroGhost) {
-        gsap.to(heroGhost, {
-          scale: 1.08,
-          rotate: 2,
-          duration: 4,
-          yoyo: true,
-          repeat: -1,
-          ease: "sine.inOut",
-        });
-      }
-
-      if (heroLight) {
-        gsap.fromTo(
-          heroLight,
-          { scaleX: 0, opacity: 0, xPercent: -15 },
-          {
-            scaleX: 1,
-            opacity: 1,
-            xPercent: 0,
-            duration: 0.18,
-            ease: "expo.out",
-            delay: 0.7,
-            onComplete: () => {
-              gsap.to(heroLight, {
-                xPercent: 34,
-                opacity: 0,
-                duration: 0.65,
-                ease: "power3.out",
-              });
+        signalTl
+          /* 01 — business-card / HUD opening */
+          .fromTo(
+            signalCard,
+            {
+              autoAlpha: 1,
+              scale: 1,
             },
-          }
-        );
+            {
+              autoAlpha: 1,
+              scale: 0.985,
+              duration: 0.22,
+            },
+            0
+          )
+          .to(
+            signalCardOrbit,
+            {
+              rotate: 0,
+              scale: 1,
+              opacity: 0.76,
+              duration: 0.28,
+              ease: "power2.out",
+            },
+            0
+          )
+          .to(
+            signalCardCopy,
+            {
+              scale: 1.015,
+              duration: 0.22,
+              ease: "power2.out",
+            },
+            0
+          )
+          .fromTo(
+            signalLead,
+            {
+              scale: 1,
+              yPercent: 0,
+              opacity: 0,
+            },
+            {
+              scale: 0.985,
+              yPercent: -1,
+              opacity: 0,
+              duration: 0.24,
+            },
+            0
+          )
+
+          /* 02 — la composizione si comprime nel nucleo */
+          .to(
+            signalCardOrbit,
+            {
+              scale: 0.46,
+              opacity: 0.18,
+              duration: 0.34,
+              ease: "power3.inOut",
+            },
+            0.14
+          )
+          .to(
+            signalCardCopy,
+            {
+              scaleX: 0.34,
+              scaleY: 0.92,
+              opacity: 0.18,
+              filter: "blur(2px)",
+              duration: 0.36,
+              transformOrigin: "50% 50%",
+              ease: "power3.inOut",
+            },
+            0.16
+          )
+          .to(
+            signalCard,
+            {
+              autoAlpha: 0,
+              duration: 0.24,
+              ease: "power2.out",
+            },
+            0.38
+          )
+
+          /* 03 — il nucleo tipografico converge */
+          .to(
+            signalLeadInner,
+            {
+              scaleX: 0.32,
+              scaleY: 0.92,
+              letterSpacing: "-0.01em",
+              filter: "blur(1px)",
+              opacity: 0.4,
+              duration: 0.42,
+              transformOrigin: "50% 50%",
+            },
+            0.16
+          )
+
+          /* 03 — compare il cerchio che la assorbe */
+          .to(
+            signalCircle,
+            {
+              autoAlpha: 1,
+              scale: 0.34,
+              borderRadius: "50%",
+              duration: 0.3,
+              ease: "power2.out",
+            },
+            0.24
+          )
+          .to(
+            signalCircle,
+            {
+              scale: 1,
+              borderRadius: "50%",
+              duration: 0.46,
+              ease: "power3.inOut",
+            },
+            0.38
+          )
+          .to(
+            signalLead,
+            {
+              autoAlpha: 0,
+              scale: 0.9,
+              filter: "blur(7px)",
+              duration: 0.26,
+            },
+            0.46
+          )
+
+          /* 04 — il nucleo si accende */
+          .to(
+            signalCore,
+            {
+              autoAlpha: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 0.24,
+              ease: "power3.out",
+            },
+            0.52
+          )
+          .to(
+            signalCross,
+            {
+              autoAlpha: 0.72,
+              scale: 1,
+              rotate: 0,
+              duration: 0.28,
+              ease: "power3.out",
+            },
+            0.54
+          )
+          .to(
+            signalMeta,
+            {
+              autoAlpha: 1,
+              y: 0,
+              stagger: 0.04,
+              duration: 0.18,
+              ease: "power2.out",
+            },
+            0.56
+          )
+
+          /* 05 — il cerchio si apre e libera le tre bande */
+          .to(
+            signalCircle,
+            {
+              scale: 5.4,
+              borderRadius: "18%",
+              opacity: 0.12,
+              duration: 0.62,
+              ease: "power3.inOut",
+            },
+            0.68
+          )
+          .to(
+            signalRowsWrap,
+            {
+              autoAlpha: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 0.38,
+              ease: "power3.out",
+            },
+            0.76
+          );
+
+        signalRows.forEach((row, index) => {
+          signalTl.fromTo(
+            row,
+            {
+              xPercent: 0,
+              opacity: 1,
+              scale: 1,
+              filter: "blur(0px)",
+            },
+            {
+              xPercent: -24,
+              skewX: -4,
+              opacity: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 1,
+            },
+            0.72
+          );
+        });
+
+        signalTl
+          .to(
+            signalCore,
+            {
+              scale: 0.86,
+              opacity: 0.72,
+              duration: 0.4,
+            },
+            0.84
+          )
+          .to(
+            signalCross,
+            {
+              rotate: 36,
+              scale: 0.84,
+              opacity: 0.28,
+              duration: 0.44,
+            },
+            0.84
+          );
       }
 
       mm.add(
@@ -361,118 +587,6 @@ export default function KairosArchive() {
             scrollDistance: desktop ? 1.15 : tablet ? 0.92 : 0.62,
             scrub: desktop ? 0.55 : tablet ? 0.45 : 0.3,
           };
-
-          /* HERO PIN */
-          const heroTl = gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: () =>
-                `+=${window.innerHeight * (desktop ? 1.9 : tablet ? 1.5 : 1.2)}`,
-              pin: true,
-              scrub: 1,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          heroTl
-            .to(
-              "[data-kairos-title-a]",
-              {
-                xPercent: desktop ? -14 : -8,
-                skewX: -4,
-                opacity: 0.14,
-                filter: "blur(3px)",
-                duration: 1,
-              },
-              0
-            )
-            .to(
-              "[data-kairos-title-b]",
-              {
-                xPercent: desktop ? 13 : 8,
-                skewX: 4,
-                opacity: 0.14,
-                filter: "blur(3px)",
-                duration: 1,
-              },
-              0
-            )
-            .to(
-              heroMark,
-              {
-                scale: desktop ? 2.2 : 1.7,
-                rotate: 14,
-                opacity: 0,
-                filter: "blur(12px)",
-                duration: 1,
-              },
-              0
-            )
-            .to(
-              heroGhost,
-              {
-                scale: 1.55,
-                opacity: 0.08,
-                duration: 1,
-              },
-              0
-            );
-
-          /* INTRO COPY */
-          const introLetters = gsap.utils.toArray(
-            intro.querySelectorAll("[data-intro-letter]")
-          );
-          const introCopy = gsap.utils.toArray(
-            intro.querySelectorAll("[data-kairos-copy]")
-          );
-
-          gsap.fromTo(
-            introLetters,
-            {
-              yPercent: 120,
-              rotateX: -78,
-              opacity: 0,
-              transformOrigin: "50% 100%",
-            },
-            {
-              yPercent: 0,
-              rotateX: 0,
-              opacity: 1,
-              duration: 0.98,
-              stagger: 0.022,
-              ease: "power4.out",
-              scrollTrigger: {
-                trigger: intro,
-                start: "top 74%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-
-          gsap.fromTo(
-            introCopy,
-            {
-              y: desktop ? 46 : 28,
-              opacity: 0,
-              filter: "blur(8px)",
-            },
-            {
-              y: 0,
-              opacity: 1,
-              filter: "blur(0px)",
-              duration: 0.86,
-              stagger: 0.12,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: intro,
-                start: "top 68%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
 
           /* USERS */
           const userRows = gsap.utils.toArray(
@@ -709,51 +823,10 @@ export default function KairosArchive() {
             }
           );
 
-          return () => {
-            heroTl?.scrollTrigger?.kill();
-            heroTl?.kill();
-          };
+          return () => {};
         }
       );
 
-      /* POINTER FIELD IN HERO */
-      const pointerField = hero.querySelector("[data-kairos-pointer]");
-
-      if (
-        pointerField &&
-        !window.matchMedia("(pointer: coarse)").matches
-      ) {
-        const moveX = gsap.quickTo(pointerField, "x", {
-          duration: 0.8,
-          ease: "power3.out",
-        });
-        const moveY = gsap.quickTo(pointerField, "y", {
-          duration: 0.8,
-          ease: "power3.out",
-        });
-        const rotY = gsap.quickTo(pointerField, "rotationY", {
-          duration: 0.9,
-          ease: "power3.out",
-        });
-        const rotX = gsap.quickTo(pointerField, "rotationX", {
-          duration: 0.9,
-          ease: "power3.out",
-        });
-
-        pointerMove = (event) => {
-          const nx = event.clientX / window.innerWidth - 0.5;
-          const ny = event.clientY / window.innerHeight - 0.5;
-
-          moveX(nx * 18);
-          moveY(ny * 12);
-          rotY(nx * 2.8);
-          rotX(ny * -2.2);
-        };
-
-        window.addEventListener("pointermove", pointerMove, {
-          passive: true,
-        });
-      }
     }, page);
 
     const refreshTimer = window.setTimeout(() => {
@@ -902,37 +975,11 @@ export default function KairosArchive() {
               );
           }
 
-          .kairos-display-line {
-            position: relative;
-            overflow: hidden;
-          }
 
-          .kairos-display-line::after {
-            content:"";
-            position:absolute;
-            left:0;
-            bottom:.07em;
-            width:100%;
-            height:1px;
-            transform:scaleX(.12);
-            transform-origin:left;
-            background:
-              linear-gradient(
-                90deg,
-                var(--kairos-cyan),
-                rgba(139,92,246,.8),
-                transparent
-              );
-            opacity:.32;
-            transition:
-              transform .7s cubic-bezier(.16,1,.3,1),
-              opacity .7s cubic-bezier(.16,1,.3,1);
-          }
 
-          .kairos-display-line:hover::after {
-            transform:scaleX(.86);
-            opacity:.7;
-          }
+
+
+
 
           .kairos-ghost-word {
             position:absolute;
@@ -945,20 +992,7 @@ export default function KairosArchive() {
             color:rgba(255,255,255,.018);
           }
 
-          .kairos-micro-ruler {
-            position:absolute;
-            top:0;
-            bottom:0;
-            width:1px;
-            pointer-events:none;
-            background:
-              repeating-linear-gradient(
-                to bottom,
-                rgba(255,255,255,.18) 0 1px,
-                transparent 1px 14px
-              );
-            opacity:.15;
-          }
+
 
           .kairos-record-glass {
             background:
@@ -1018,6 +1052,633 @@ export default function KairosArchive() {
               0 0 0 24vw rgba(255,255,255,.005);
           }
 
+          .kairos-signal-stage {
+            isolation: isolate;
+          }
+
+          .kairos-card-shell {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(92vw, 1540px);
+            aspect-ratio: 1.72 / 1;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,.17);
+            box-shadow:
+              inset 0 0 0 1px rgba(53,216,255,.018),
+              0 0 28px rgba(0,0,0,.35);
+          }
+
+          .kairos-card-shell::before {
+            content: "";
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            width: 42%;
+            height: 1px;
+            background:
+              linear-gradient(
+                90deg,
+                rgba(53,216,255,.92),
+                rgba(53,216,255,.22),
+                transparent
+              );
+          }
+
+          .kairos-card-shell::after {
+            content: "";
+            position: absolute;
+            right: -1px;
+            top: -1px;
+            width: 42%;
+            height: 1px;
+            background:
+              linear-gradient(
+                270deg,
+                rgba(255,79,216,.76),
+                rgba(139,92,246,.22),
+                transparent
+              );
+          }
+
+          .kairos-card-corner {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid rgba(255,255,255,.22);
+            pointer-events: none;
+          }
+
+          .kairos-card-corner--tl { left: -1px; top: -1px; border-right:0; border-bottom:0; }
+          .kairos-card-corner--tr { right: -1px; top: -1px; border-left:0; border-bottom:0; }
+          .kairos-card-corner--bl { left: -1px; bottom: -1px; border-right:0; border-top:0; }
+          .kairos-card-corner--br { right: -1px; bottom: -1px; border-left:0; border-top:0; }
+
+          .kairos-card-orbit {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(47vw, 690px);
+            height: min(47vw, 690px);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 8;
+          }
+
+          .kairos-card-orbit-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.07);
+          }
+
+          .kairos-card-orbit-ring:nth-child(2) {
+            inset: 6%;
+            border-color: rgba(53,216,255,.15);
+            border-style: dashed;
+          }
+
+          .kairos-card-orbit-ring:nth-child(3) {
+            inset: 13%;
+            border-color: rgba(255,255,255,.075);
+          }
+
+          .kairos-card-orbit-ring:nth-child(4) {
+            inset: 21%;
+            border-color: rgba(139,92,246,.13);
+          }
+
+          .kairos-card-orbit-ring:nth-child(5) {
+            inset: 31%;
+            border-color: rgba(255,255,255,.09);
+          }
+
+          .kairos-card-inner-orbit {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 69%;
+            height: 56%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+          }
+
+          .kairos-card-loop {
+            position: absolute;
+            top: 50%;
+            width: 58%;
+            height: 76%;
+            border: 1px solid rgba(255,255,255,.095);
+            border-radius: 50%;
+            transform: translateY(-50%);
+          }
+
+          .kairos-card-loop--left {
+            left: -1%;
+            transform: translateY(-50%) rotate(14deg);
+            border-right-color: rgba(53,216,255,.19);
+            box-shadow: inset -10px 0 26px rgba(53,216,255,.018);
+          }
+
+          .kairos-card-loop--right {
+            right: -1%;
+            transform: translateY(-50%) rotate(-14deg);
+            border-left-color: rgba(255,79,216,.18);
+            box-shadow: inset 10px 0 26px rgba(255,79,216,.018);
+          }
+
+          .kairos-card-inner-ring {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 58%;
+            height: 58%;
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.065);
+          }
+
+          .kairos-card-arc {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 84%;
+            height: 84%;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+          }
+
+          .kairos-card-arc--cyan {
+            border-top-color: rgba(53,216,255,.26);
+            border-left-color: rgba(53,216,255,.11);
+            transform: translate(-50%, -50%) rotate(-24deg);
+          }
+
+          .kairos-card-arc--violet {
+            border-bottom-color: rgba(255,79,216,.22);
+            border-right-color: rgba(139,92,246,.12);
+            transform: translate(-50%, -50%) rotate(22deg);
+          }
+
+          .kairos-card-tick {
+            position: absolute;
+            width: 1px;
+            height: 10px;
+            background: rgba(255,255,255,.42);
+            transform-origin: 50% 50%;
+          }
+
+          .kairos-card-mini-line {
+            position: absolute;
+            height: 1px;
+            background: rgba(255,255,255,.16);
+            pointer-events: none;
+          }
+
+          .kairos-card-mini-line--cyan {
+            background: linear-gradient(90deg, #35d8ff, rgba(53,216,255,.14));
+          }
+
+          .kairos-card-mini-line--violet {
+            background: linear-gradient(90deg, rgba(255,79,216,.72), rgba(139,92,246,.14));
+          }
+
+          .kairos-card-bottom-bars {
+            position: absolute;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            pointer-events: none;
+          }
+
+          .kairos-card-bottom-bars span {
+            display: block;
+            width: 2px;
+            height: 11px;
+            background: rgba(255,255,255,.25);
+          }
+
+          .kairos-card-bottom-bars span:nth-child(4n+1) {
+            background: rgba(255,79,216,.68);
+          }
+
+          .kairos-card-axis-x,
+          .kairos-card-axis-y {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            pointer-events: none;
+          }
+
+          .kairos-card-axis-x {
+            width: 118%;
+            height: 1px;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.12),
+                rgba(53,216,255,.4),
+                rgba(255,79,216,.28),
+                rgba(255,255,255,.12),
+                transparent
+              );
+          }
+
+          .kairos-card-axis-y {
+            width: 1px;
+            height: 118%;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                180deg,
+                transparent,
+                rgba(255,255,255,.12),
+                rgba(53,216,255,.34),
+                rgba(255,79,216,.22),
+                rgba(255,255,255,.12),
+                transparent
+              );
+          }
+
+          .kairos-card-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border: 1px solid rgba(255,255,255,.62);
+            background: rgba(0,0,0,.72);
+            pointer-events: none;
+          }
+
+          .kairos-card-node--cyan {
+            border-color: rgba(53,216,255,.96);
+            box-shadow: 0 0 14px rgba(53,216,255,.14);
+          }
+
+          .kairos-card-node--violet {
+            border-color: rgba(255,79,216,.82);
+            box-shadow: 0 0 14px rgba(255,79,216,.12);
+          }
+
+          .kairos-card-crosshair {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+          }
+
+          .kairos-card-crosshair::before,
+          .kairos-card-crosshair::after {
+            content: "";
+            position: absolute;
+            background: rgba(255,255,255,.4);
+          }
+
+          .kairos-card-crosshair::before {
+            width: 1px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+          }
+
+          .kairos-card-crosshair::after {
+            height: 1px;
+            width: 100%;
+            top: 50%;
+            left: 0;
+          }
+
+          .kairos-card-ruler {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+            pointer-events: none;
+            opacity: .66;
+          }
+
+          .kairos-card-ruler span {
+            display: block;
+            width: 9px;
+            height: 1px;
+            background: rgba(255,255,255,.35);
+          }
+
+          .kairos-card-dots {
+            position: absolute;
+            display: grid;
+            grid-template-columns: repeat(6, 2px);
+            gap: 10px 14px;
+            pointer-events: none;
+            opacity: .72;
+          }
+
+          .kairos-card-dots span {
+            width: 2px;
+            height: 2px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.65);
+          }
+
+          .kairos-card-center-copy {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 18;
+            transform: translate(-50%, -50%);
+            width: min(78vw, 980px);
+            text-align: center;
+            pointer-events: none;
+          }
+
+          .kairos-card-center-title {
+            font-size: clamp(3.8rem, 8.4vw, 8.4rem);
+            line-height: .72;
+            letter-spacing: -.06em;
+            text-transform: uppercase;
+            color: white;
+            text-shadow:
+              0 0 10px rgba(255,255,255,.06),
+              0 0 30px rgba(53,216,255,.03);
+          }
+
+          .kairos-card-center-sub {
+            margin-top: .26em;
+            font-size: clamp(.8rem, 1.7vw, 1.55rem);
+            letter-spacing: .62em;
+            padding-left: .62em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.78);
+          }
+
+          .kairos-card-meta {
+            position: absolute;
+            z-index: 18;
+            font-size: 7px;
+            line-height: 1.55;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.38);
+            pointer-events: none;
+          }
+
+          .kairos-card-accent-line {
+            position: absolute;
+            width: 92px;
+            height: 2px;
+            background:
+              linear-gradient(
+                90deg,
+                #35d8ff,
+                rgba(139,92,246,.8),
+                rgba(255,79,216,.75)
+              );
+            pointer-events: none;
+            box-shadow: 0 0 14px rgba(53,216,255,.14);
+          }
+
+          .kairos-card-bottom-rule {
+            position: absolute;
+            left: 4.5%;
+            right: 4.5%;
+            bottom: 14%;
+            height: 1px;
+            background:
+              linear-gradient(
+                90deg,
+                rgba(255,255,255,.16),
+                transparent 32%,
+                transparent 68%,
+                rgba(255,255,255,.13)
+              );
+            pointer-events: none;
+          }
+
+          .kairos-signal-stage::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+              radial-gradient(circle at 50% 50%, rgba(53,216,255,.035), transparent 26%),
+              radial-gradient(circle at 50% 50%, rgba(139,92,246,.025), transparent 46%);
+          }
+
+          .kairos-signal-frame {
+            position: absolute;
+            inset: 8% 4vw;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,.035);
+          }
+
+          .kairos-signal-frame::before,
+          .kairos-signal-frame::after {
+            content: "";
+            position: absolute;
+            background: rgba(255,255,255,.12);
+          }
+
+          .kairos-signal-frame::before {
+            left: 50%;
+            top: -12px;
+            width: 1px;
+            height: 24px;
+          }
+
+          .kairos-signal-frame::after {
+            left: -12px;
+            top: 50%;
+            width: 24px;
+            height: 1px;
+          }
+
+          .kairos-signal-orbit {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(44vw, 720px);
+            height: min(44vw, 720px);
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.04);
+            pointer-events: none;
+          }
+
+          .kairos-signal-orbit::before,
+          .kairos-signal-orbit::after {
+            content: "";
+            position: absolute;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,.025);
+          }
+
+          .kairos-signal-orbit::before {
+            inset: 12%;
+          }
+
+          .kairos-signal-orbit::after {
+            inset: 28%;
+          }
+
+          .kairos-signal-coordinate {
+            position: absolute;
+            font-size: 7px;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.2);
+            pointer-events: none;
+          }
+
+          .kairos-signal-coreline {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 82%;
+            height: 1px;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(53,216,255,.16),
+                rgba(255,255,255,.24),
+                rgba(139,92,246,.16),
+                transparent
+              );
+            pointer-events: none;
+          }
+
+          .kairos-signal-row {
+            will-change: transform;
+            transform-origin: 50% 50%;
+          }
+
+          [data-kairos-signal-rows-wrap] {
+            overflow: hidden;
+          }
+
+          [data-kairos-signal-rows-wrap] {
+            -webkit-mask-image:
+              radial-gradient(
+                circle at center,
+                transparent 0 9%,
+                rgba(0,0,0,.78) 18%,
+                black 38%,
+                black 100%
+              );
+            mask-image:
+              radial-gradient(
+                circle at center,
+                transparent 0 9%,
+                rgba(0,0,0,.78) 18%,
+                black 38%,
+                black 100%
+              );
+          }
+
+          [data-kairos-signal-lead-inner] {
+            will-change: transform, opacity, filter, letter-spacing;
+          }
+
+          [data-kairos-signal-circle] {
+            will-change: transform, opacity, border-radius;
+          }
+
+
+          .kairos-signal-window {
+            box-shadow:
+              0 0 80px rgba(53,216,255,.08),
+              inset 0 0 0 1px rgba(255,255,255,.035);
+            backdrop-filter: blur(2px);
+          }
+
+          @media (max-width: 767px) {
+            .kairos-card-shell {
+              width: calc(100vw - 24px);
+              aspect-ratio: .72 / 1;
+            }
+
+            .kairos-card-orbit {
+              width: 84vw;
+              height: 84vw;
+            }
+
+            .kairos-card-center-copy {
+              width: 86vw;
+            }
+
+            .kairos-card-center-title {
+              font-size: 20vw;
+            }
+
+            .kairos-card-center-sub {
+              font-size: 3.4vw;
+              letter-spacing: .45em;
+            }
+
+            .kairos-card-meta {
+              font-size: 5px;
+              letter-spacing: .22em;
+            }
+
+            .kairos-card-dots {
+              transform: scale(.72);
+              transform-origin: top right;
+            }
+
+            .kairos-card-ruler {
+              opacity: .42;
+            }
+
+            .kairos-signal-row {
+              will-change: transform;
+            }
+
+
+            [data-kairos-signal-circle] {
+              width: 56vw;
+              height: 56vw;
+            }
+
+            .kairos-signal-frame {
+              inset: 10% 12px;
+            }
+
+            .kairos-signal-orbit {
+              width: 72vw;
+              height: 72vw;
+            }
+
+            .kairos-signal-coordinate {
+              font-size: 6px;
+              letter-spacing: .22em;
+            }
+
+            [data-kairos-signal-rows-wrap] {
+              -webkit-mask-image:
+                radial-gradient(
+                  circle at center,
+                  transparent 0 12%,
+                  rgba(0,0,0,.82) 24%,
+                  black 46%,
+                  black 100%
+                );
+              mask-image:
+                radial-gradient(
+                  circle at center,
+                  transparent 0 12%,
+                  rgba(0,0,0,.82) 24%,
+                  black 46%,
+                  black 100%
+                );
+            }
+          }
+
           .kairos-grid {
             background-image:
               linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
@@ -1038,37 +1699,7 @@ export default function KairosArchive() {
             mix-blend-mode: soft-light;
           }
 
-          .kairos-orbit {
-            background:
-              conic-gradient(
-                from 15deg,
-                transparent 0deg 24deg,
-                rgba(53,216,255,.7) 25deg,
-                rgba(53,216,255,.06) 36deg,
-                transparent 48deg 120deg,
-                rgba(139,92,246,.58) 121deg,
-                rgba(139,92,246,.05) 135deg,
-                transparent 148deg 228deg,
-                rgba(32,240,199,.48) 229deg,
-                rgba(32,240,199,.04) 240deg,
-                transparent 252deg 305deg,
-                rgba(255,79,216,.42) 306deg,
-                rgba(255,79,216,.04) 320deg,
-                transparent 333deg
-              );
-            -webkit-mask:
-              radial-gradient(
-                farthest-side,
-                transparent calc(100% - 1px),
-                #000 calc(100% - 1px)
-              );
-            mask:
-              radial-gradient(
-                farthest-side,
-                transparent calc(100% - 1px),
-                #000 calc(100% - 1px)
-              );
-          }
+
 
           .kairos-ui-shell {
             box-shadow:
@@ -1255,190 +1886,271 @@ export default function KairosArchive() {
         `}</style>
 
         {/* =====================================================
-            HERO
+            KAIROS / CARD-STYLE OPENING + SIGNAL TRANSITION
         ====================================================== */}
         <section
-          ref={heroRef}
-          className="kairos-noise relative flex min-h-[100svh] flex-col justify-between overflow-hidden px-5 pb-7 pt-[92px] md:px-9 md:pb-10 lg:px-[4vw] lg:pb-[5vh]"
+          ref={signalRef}
+          className="kairos-signal-stage kairos-noise relative flex h-[100svh] min-h-[680px] items-center overflow-hidden bg-[#020203]"
         >
-          <div className="kairos-grid pointer-events-none absolute inset-0" />
+          <div className="kairos-grid pointer-events-none absolute inset-0 opacity-34" />
 
-          <span
-            data-kairos-parallax-line
-            className="pointer-events-none absolute left-[-12%] top-[31%] h-px w-[58%] bg-gradient-to-r from-transparent via-cyan-300/25 to-transparent"
-          />
-          <span
-            data-kairos-parallax-line
-            className="pointer-events-none absolute right-[-14%] top-[66%] h-px w-[62%] bg-gradient-to-r from-transparent via-violet-400/22 to-transparent"
-          />
-
+          {/* ===================================================
+              FIRST FRAME — MOLTO VICINO ALLA FACCIA SINISTRA
+              DEL BIGLIETTO, TUTTO IN JSX/CSS
+          =================================================== */}
           <div
-            aria-hidden="true"
-            className="pointer-events-none absolute left-[7%] top-[16%] h-[68%] w-[86%] border border-white/[0.035]"
-          />
-
-          <div className="kairos-micro-ruler left-[3.2vw]" aria-hidden="true" />
-          <div className="kairos-micro-ruler right-[3.2vw]" aria-hidden="true" />
-
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -left-[16vw] top-[5%] h-[50vw] w-[50vw] rounded-full bg-cyan-300/[0.07] blur-[130px]"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-[12vw] top-[18%] h-[46vw] w-[46vw] rounded-full bg-violet-500/[0.065] blur-[135px]"
-          />
-
-          <p
-            data-kairos-ghost
-            aria-hidden="true"
-            className="avant-legato-font pointer-events-none absolute left-1/2 top-1/2 whitespace-nowrap text-[45vw] uppercase leading-none tracking-[-0.12em] text-white/[0.025]"
-            style={{ transform: "translate(-50%, -50%)" }}
+            data-kairos-card
+            className="absolute inset-0 z-20"
           >
-            K
-          </p>
-
-          <div
-            data-kairos-pointer
-            className="pointer-events-none absolute inset-0 z-[2] [transform-style:preserve-3d]"
-          >
-            <div
-              data-kairos-orbit
-              className="absolute left-1/2 top-1/2 h-[68vw] w-[68vw] max-h-[860px] max-w-[860px] -translate-x-1/2 -translate-y-1/2 md:h-[54vw] md:w-[54vw] lg:h-[44vw] lg:w-[44vw]"
-            >
-              <div className="kairos-orbit absolute inset-0 rounded-full" />
-              <div className="kairos-orbit absolute inset-[17%] rotate-[52deg] rounded-full opacity-65" />
-              <div className="kairos-orbit absolute inset-[34%] -rotate-[31deg] rounded-full opacity-50" />
+            <div className="kairos-card-shell" aria-hidden="true">
+              <span className="kairos-card-corner kairos-card-corner--tl" />
+              <span className="kairos-card-corner kairos-card-corner--tr" />
+              <span className="kairos-card-corner kairos-card-corner--bl" />
+              <span className="kairos-card-corner kairos-card-corner--br" />
             </div>
 
-            <div
-              data-kairos-mark
-              className="absolute left-1/2 top-1/2 h-[28vw] w-[28vw] max-h-[420px] max-w-[420px] -translate-x-1/2 -translate-y-1/2 md:h-[22vw] md:w-[22vw]"
-            >
-              <div className="absolute left-[14%] top-[8%] h-[84%] w-[8%] skew-y-[-10deg] bg-white" />
-              <div className="absolute left-[26%] top-[45%] h-[9%] w-[60%] origin-left -rotate-[44deg] bg-white" />
-              <div className="absolute left-[26%] top-[48%] h-[9%] w-[60%] origin-left rotate-[44deg] bg-gradient-to-r from-white via-cyan-300 to-violet-400" />
+            {/* TOP LEFT / CREATIVE TECHNOLOGY */}
+            <div className="absolute left-[6.2%] top-[12%] z-20 flex items-start gap-4">
+              <span className="h-[18px] w-[18px] border border-cyan-300 shadow-[0_0_16px_rgba(53,216,255,.08)]" />
+              <p className="avant-legato-font text-[7px] uppercase leading-[1.75] tracking-[0.38em] text-white/60 md:text-[9px]">
+                CULTURAL
+                <br />
+                TECHNOLOGY
+              </p>
             </div>
 
+            {/* CENTRAL HUD */}
             <div
-              data-kairos-light
+              data-kairos-card-orbit
+              className="kairos-card-orbit"
               aria-hidden="true"
-              className="absolute left-[8%] top-1/2 z-[10] h-px w-[84%] origin-left bg-gradient-to-r from-transparent via-cyan-300 to-transparent shadow-[0_0_14px_rgba(53,216,255,.38)]"
-            />
-          </div>
-
-          <div className="relative z-20 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.31em] text-white/42 md:text-[11px]">
-            <p data-kairos-meta>
-              OXO STUDIO® / PRODUCT
-              <br />
-              CULTURAL TECHNOLOGY
-            </p>
-
-            <p data-kairos-meta className="text-right">
-              KAIROS ARCHIVE
-              <br />
-              SYSTEM / 01
-            </p>
-          </div>
-
-          <div className="relative z-20 my-auto py-12">
-            <p
-              data-kairos-meta
-              className="avant-legato-font mb-5 text-[9px] uppercase tracking-[0.42em] text-cyan-300 md:text-xs"
             >
-              Catalogazione / gestione / conoscenza
-            </p>
+              <span className="kairos-card-orbit-ring" />
+              <span className="kairos-card-orbit-ring" />
+              <span className="kairos-card-orbit-ring" />
+              <span className="kairos-card-orbit-ring" />
+              <span className="kairos-card-orbit-ring" />
 
-            <div className="[perspective:1200px]">
-              <h1
-                data-kairos-title-a
-                className="kairos-display-line avant-legato-font ombra2 overflow-hidden text-[19vw] uppercase leading-[.7] tracking-[-0.09em] md:text-[14vw] lg:text-[10.8vw]"
-              >
-                <SplitLetters text="KAIROS" />
-              </h1>
+              <span className="kairos-card-arc kairos-card-arc--cyan" />
+              <span className="kairos-card-arc kairos-card-arc--violet" />
 
-              <h1
-                data-kairos-title-b
-                className="kairos-display-line avant-legato-font ombra2 ml-auto w-fit overflow-hidden text-[18vw] uppercase leading-[.7] tracking-[-0.09em] md:text-[13vw] lg:text-[10.2vw]"
-              >
-                <SplitLetters text="ARCHIVE" />
-              </h1>
+              <div className="kairos-card-inner-orbit">
+                <span className="kairos-card-loop kairos-card-loop--left" />
+                <span className="kairos-card-loop kairos-card-loop--right" />
+                <span className="kairos-card-inner-ring" />
+              </div>
+
+              <span className="kairos-card-axis-x" />
+              <span className="kairos-card-axis-y" />
+
+              <span className="kairos-card-node kairos-card-node--cyan left-1/2 top-[5%] -translate-x-1/2" />
+              <span className="kairos-card-node kairos-card-node--violet left-1/2 bottom-[5%] -translate-x-1/2" />
+              <span className="kairos-card-node left-[5%] top-1/2 -translate-y-1/2" />
+              <span className="kairos-card-node right-[5%] top-1/2 -translate-y-1/2" />
+
+              <span className="kairos-card-node left-[18%] top-[18%]" />
+              <span className="kairos-card-node right-[18%] top-[18%]" />
+              <span className="kairos-card-node left-[18%] bottom-[18%]" />
+              <span className="kairos-card-node right-[18%] bottom-[18%]" />
+
+              <span className="kairos-card-crosshair left-1/2 top-[-1%] -translate-x-1/2" />
+              <span className="kairos-card-crosshair left-[-1%] top-1/2 -translate-y-1/2" />
+              <span className="kairos-card-crosshair right-[-1%] top-1/2 -translate-y-1/2" />
+              <span className="kairos-card-crosshair left-1/2 bottom-[-1%] -translate-x-1/2" />
+
+              {Array.from({ length: 16 }).map((_, index) => {
+                const angle = index * 22.5;
+                const radius = 46;
+                const x = 50 + Math.cos((angle * Math.PI) / 180) * radius;
+                const y = 50 + Math.sin((angle * Math.PI) / 180) * radius;
+                return (
+                  <span
+                    key={`orbit-tick-${index}`}
+                    className="kairos-card-tick"
+                    style={{
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      transform: `translate(-50%, -50%) rotate(${angle + 90}deg)`,
+                    }}
+                  />
+                );
+              })}
             </div>
-          </div>
 
-          <div className="relative z-20 flex flex-col gap-5 border-t border-white/16 pt-5 md:flex-row md:items-end md:justify-between">
-            <p
-              data-kairos-meta
-              className="avant-legato-font max-w-[900px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.4rem]"
+            {/* CENTER TYPE */}
+            <div
+              data-kairos-card-copy
+              className="kairos-card-center-copy"
             >
-              Il software di catalogazione intelligente per organizzare,
-              valorizzare e preservare patrimoni culturali complessi.
+              <h1 className="kairos-card-center-title avant-legato-font ombra2">
+                KAIROS
+              </h1>
+              <p className="kairos-card-center-sub avant-legato-font">
+                ARCHIVE
+              </p>
+            </div>
+
+            {/* LEFT RULER */}
+            <div className="kairos-card-ruler left-[4.9%] top-[38%]" aria-hidden="true">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <span key={`left-rule-${index}`} />
+              ))}
+            </div>
+
+            {/* RIGHT DOT MATRIX */}
+            <div className="kairos-card-dots right-[8.6%] top-[17%]" aria-hidden="true">
+              {Array.from({ length: 30 }).map((_, index) => (
+                <span key={`kairos-dot-${index}`} />
+              ))}
+            </div>
+
+            {/* RIGHT ACCENT */}
+            <div className="kairos-card-accent-line right-[8.5%] top-[31%]" aria-hidden="true" />
+            <div className="kairos-card-mini-line kairos-card-mini-line--cyan right-[14.5%] top-[31%] w-[44px]" aria-hidden="true" />
+            <div className="kairos-card-mini-line kairos-card-mini-line--violet right-[8.5%] top-[31%] w-[42px]" aria-hidden="true" />
+
+            {/* RIGHT VERTICAL TECH LINE */}
+            <div className="pointer-events-none absolute right-[8.9%] top-[36%] h-[34%] w-px bg-gradient-to-b from-white/15 via-white/08 to-transparent" />
+            <span className="kairos-card-crosshair right-[7.85%] top-[47%]" aria-hidden="true" />
+
+            {/* LEFT LOWER HUD */}
+            <span className="kairos-card-node kairos-card-node--violet left-[4.7%] bottom-[18%]" />
+            <div className="kairos-card-dots left-[4.8%] bottom-[7.7%] scale-[.7] origin-bottom-left" aria-hidden="true">
+              {Array.from({ length: 18 }).map((_, index) => (
+                <span key={`lower-dot-${index}`} />
+              ))}
+            </div>
+
+            {/* BOTTOM CENTER META */}
+            <p className="kairos-card-meta bottom-[6.3%] left-1/2 -translate-x-1/2 text-center">
+              CATALOGAZIONE / AI / OCR / SEARCH
             </p>
 
-            <p
-              data-kairos-meta
-              className="shrink-0 text-[9px] uppercase tracking-[0.31em] text-white/34 md:text-xs"
-            >
-              Scroll / enter archive ↓
+            {/* BOTTOM RIGHT BARS */}
+            <div className="kairos-card-bottom-bars bottom-[6.1%] right-[7%]" aria-hidden="true">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <span key={`bottom-bar-${index}`} />
+              ))}
+              <span className="ml-2 h-[12px] w-[12px] border border-fuchsia-400 bg-transparent" />
+            </div>
+
+            {/* SUPPORTING TECH LINES */}
+            <div className="kairos-card-bottom-rule" aria-hidden="true" />
+            <div className="pointer-events-none absolute left-[4.5%] top-1/2 h-px w-[17%] bg-gradient-to-r from-white/18 to-transparent" />
+            <div className="pointer-events-none absolute right-[4.5%] top-1/2 h-px w-[17%] bg-gradient-to-l from-white/18 to-transparent" />
+
+            {/* MICRO NODES */}
+            <span className="kairos-card-node kairos-card-node--cyan left-[4.7%] top-[25%]" />
+            <span className="kairos-card-node kairos-card-node--violet right-[4.7%] bottom-[18%]" />
+
+            <p className="kairos-card-meta right-[6%] bottom-[6.3%] translate-y-[-22px] text-right text-cyan-300/45">
+              SYSTEM STATUS / READY
             </p>
           </div>
-        </section>
 
-        {/* =====================================================
-            INTRO / COSA È
-        ====================================================== */}
-        <section
-          ref={introRef}
-          className="kairos-section-shell kairos-noise relative overflow-hidden border-y border-white/12 bg-[#050506] px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[16vh]"
-        >
-          <div className="kairos-grid pointer-events-none absolute inset-0 opacity-60" />
-
-          <span
-            aria-hidden="true"
-            className="kairos-ghost-word avant-legato-font -left-[4vw] top-[8%]"
+          {/* ===================================================
+              TRANSITION CORE — parte solo durante lo scroll
+          =================================================== */}
+          <div
+            data-kairos-signal-lead
+            className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0"
           >
-            SYSTEM
-          </span>
+            <h2
+              data-kairos-signal-lead-inner
+              className="avant-legato-font ombra2 text-center text-[14vw] uppercase leading-[.7] tracking-[-0.085em] md:text-[9vw]"
+            >
+              KAIROS ARCHIVE.
+            </h2>
+          </div>
 
           <div
-            data-cinematic-block
-            className="relative z-10 grid gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-[8vw]"
+            data-kairos-signal-circle
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-30 h-[30vw] w-[30vw] min-h-[210px] min-w-[210px] max-h-[520px] max-w-[520px] -translate-x-1/2 -translate-y-1/2 border border-white/12 bg-black/82 shadow-[0_0_90px_rgba(53,216,255,.055),0_0_130px_rgba(139,92,246,.035)] backdrop-blur-[3px]"
+          />
+
+          <div
+            data-kairos-signal-core
+            className="pointer-events-none absolute left-1/2 top-1/2 z-40 w-[80vw] max-w-[760px] -translate-x-1/2 -translate-y-1/2 text-center"
           >
-            <div>
-              <p
-                data-kairos-copy
-                className="mb-6 text-[10px] uppercase tracking-[0.4em] text-violet-400 md:text-xs"
-              >
-                01 / COSA È
-              </p>
+            <p
+              data-kairos-signal-meta
+              className="avant-legato-font mb-4 text-[8px] uppercase tracking-[0.4em] text-violet-400 md:text-[10px]"
+            >
+              CATALOG / CONNECT / PRESERVE
+            </p>
 
-              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
-                <span className="block overflow-hidden pb-[0.08em]">
-                  <SplitLetters text="UN SISTEMA" attribute="data-intro-letter" />
-                </span>
-                <span className="block overflow-hidden pb-[0.08em]">
-                  <SplitLetters text="CHE PENSA." attribute="data-intro-letter" />
-                </span>
-              </h2>
+            <p className="avant-legato-font text-[8.2vw] uppercase leading-[.72] tracking-[-0.065em] text-white md:text-[4.7vw]">
+              KNOWLEDGE
+              <br />
+              ORGANIZED.
+            </p>
+          </div>
+
+          <div
+            data-kairos-signal-cross
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-40 h-[22vw] w-[22vw] min-h-[150px] min-w-[150px] max-h-[360px] max-w-[360px] -translate-x-1/2 -translate-y-1/2"
+          >
+            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-cyan-300/60 to-transparent" />
+            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" />
+            <span className="absolute inset-[24%] rotate-45 border border-white/10" />
+          </div>
+
+          <div
+            data-kairos-signal-rows-wrap
+            className="absolute inset-0 z-10 flex items-center overflow-hidden"
+          >
+            <div className="w-full py-8">
+              {[
+                {
+                  text: "CATALOGARE — CERCARE — CONNETTERE — PRESERVARE —",
+                  className: "text-[16.5vw] text-white/[0.055] md:text-[9vw]",
+                },
+                {
+                  text: "DATI CHIARI — CONOSCENZA ACCESSIBILE —",
+                  className: "text-[15vw] md:text-[10.5vw]",
+                },
+                {
+                  text: "ARCHIVI — BIBLIOTECHE — COLLEZIONI — KAIROS —",
+                  className: "text-[13.5vw] text-white/[0.12] md:text-[9vw]",
+                },
+              ].map((row, index) => (
+                <div
+                  key={row.text}
+                  data-kairos-signal-row
+                  className={`kairos-signal-row avant-legato-font flex w-max whitespace-nowrap uppercase leading-[.72] tracking-[-0.065em] ${row.className}`}
+                  style={{
+                    transform: `translateX(${index % 2 === 0 ? -9 : -22}vw)`,
+                    ...(index === 1
+                      ? {
+                          color: "transparent",
+                          WebkitTextStroke: "1px rgba(139,92,246,.7)",
+                        }
+                      : {}),
+                  }}
+                >
+                  <span>{row.text}&nbsp;</span>
+                  <span>{row.text}&nbsp;</span>
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div className="flex flex-col justify-end gap-9">
-              <p
-                data-kairos-copy
-                className="avant-legato-font text-xl leading-snug text-gray-200 md:text-3xl"
-              >
-                Kairos Archive è un software all-in-one per catalogazione,
-                gestione e consultazione di archivi, biblioteche e collezioni.
-              </p>
+          <div className="pointer-events-none absolute inset-x-[5vw] bottom-[5vh] z-50 flex items-end justify-between">
+            <p
+              data-kairos-signal-meta
+              className="avant-legato-font text-[8px] uppercase tracking-[0.38em] text-white/25 md:text-[10px]"
+            >
+              ONE SYSTEM / MANY COLLECTIONS
+            </p>
 
-              <p
-                data-kairos-copy
-                className="avant-legato-font border-l border-cyan-300/40 pl-5 text-lg leading-relaxed text-gray-400 md:text-2xl"
-              >
-                Nato per trasformare dati, documenti e metadati in conoscenza
-                accessibile, ordinata e pronta a durare.
-              </p>
-            </div>
+            <p
+              data-kairos-signal-meta
+              className="avant-legato-font text-right text-[8px] uppercase tracking-[0.38em] text-white/25 md:text-[10px]"
+            >
+              SCROLL / ENTER KAIROS ↓
+            </p>
           </div>
         </section>
 
@@ -1463,7 +2175,7 @@ export default function KairosArchive() {
             className="relative z-10 mb-16 flex flex-col gap-6 border-b border-white/14 pb-8 md:flex-row md:items-end md:justify-between lg:mb-24">
             <div>
               <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-fuchsia-400 md:text-xs">
-                02 / DESTINATARI
+                01 / DESTINATARI
               </p>
 
               <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
@@ -1528,7 +2240,7 @@ export default function KairosArchive() {
             className="relative z-10 px-6 py-24 md:px-10 md:py-32 lg:px-[5vw] lg:py-[14vh]"
           >
             <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-violet-400 md:text-xs">
-              03 / INTERFACCIA
+              02 / INTERFACCIA
             </p>
 
             <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
@@ -2075,7 +2787,7 @@ export default function KairosArchive() {
           >
             <div>
               <p className="mb-5 text-[10px] uppercase tracking-[0.4em] text-emerald-300 md:text-xs">
-                04 / TECNOLOGIA E SICUREZZA
+                03 / TECNOLOGIA E SICUREZZA
               </p>
 
               <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
