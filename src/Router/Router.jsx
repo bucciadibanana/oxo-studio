@@ -9,7 +9,7 @@ import Prodotti from "../Views/Prodotti";
 import Contatti from "../Views/Contatti";
 
 import KairosArchive from "../Views/portfolio/kairosarchive";
-import Software from "../Views/portfolio/software";
+import Software from "../Views/portfolio/Software";
 import Ai from "../Views/portfolio/ai"
 import Game from "../Views/portfolio/game"
 
