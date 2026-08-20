@@ -207,6 +207,8 @@ export default function ChiSiamo() {
     let storyVideos = [];
     let fieldPointerMoveHandler = null;
     let fieldPointerLeaveHandler = null;
+    let heroPointerMoveHandler = null;
+    let heroPointerLeaveHandler = null;
 
     const ctx = gsap.context(() => {
       const heroLetters = gsap.utils.toArray(
@@ -268,6 +270,362 @@ export default function ChiSiamo() {
           scrub: 1.2,
         },
       });
+
+
+      /*
+       * ============================================================
+       * HEADER / IDENTITY LENS
+       * Effetto Awwwards: lente tipografica interattiva + morph scroll.
+       * ============================================================
+       */
+      const heroLens = hero.querySelector("[data-about-lens]");
+      const heroLensInner = hero.querySelector("[data-about-lens-inner]");
+      const heroLensGhost = hero.querySelector("[data-about-lens-ghost]");
+      const heroLensRing = hero.querySelector("[data-about-lens-ring]");
+      const heroLensSlices = gsap.utils.toArray(
+        hero.querySelectorAll("[data-about-lens-slice]")
+      );
+      const heroLensNodes = gsap.utils.toArray(
+        hero.querySelectorAll("[data-about-lens-node]")
+      );
+      const heroLensAperture = hero.querySelector("[data-about-lens-aperture]");
+      const heroSweep = hero.querySelector("[data-about-hero-sweep]");
+      const heroSignal = hero.querySelector("[data-about-hero-signal]");
+
+      const resetHeroInteractiveState = (immediate = false) => {
+        const duration = immediate ? 0 : 0.45;
+
+        if (heroLens) {
+          gsap.to(heroLens, {
+            x: 0,
+            y: 0,
+            duration,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        }
+
+        if (heroLensInner) {
+          gsap.to(heroLensInner, {
+            rotationX: 0,
+            rotationY: 0,
+            duration,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        }
+
+        if (heroLensGhost) {
+          gsap.to(heroLensGhost, {
+            x: 0,
+            y: 0,
+            rotationZ: 0,
+            duration,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        }
+
+        if (heroLensSlices.length) {
+          gsap.to(heroLensSlices, {
+            x: 0,
+            y: 0,
+            filter: "drop-shadow(0 0 0 rgba(0,0,0,0))",
+            duration,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        }
+      };
+
+      if (heroLens) {
+        gsap.fromTo(
+          heroLens,
+          {
+            scale: 0.62,
+            rotate: -16,
+            opacity: 0,
+            filter: "blur(14px)",
+          },
+          {
+            scale: 1,
+            rotate: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 1.45,
+            delay: 0.18,
+            ease: "power4.out",
+          }
+        );
+
+        gsap.to(heroLens, {
+          scale: 1.62,
+          rotate: 24,
+          xPercent: 18,
+          yPercent: -10,
+          opacity: 0.2,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (heroLensRing) {
+        gsap.to(heroLensRing, {
+          rotate: 180,
+          scale: 1.12,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.15,
+          },
+        });
+      }
+
+
+      if (heroLensSlices.length) {
+        gsap.fromTo(
+          heroLensSlices,
+          {
+            xPercent: (index) => (index % 2 === 0 ? -42 : 42),
+            opacity: 0,
+            filter: "blur(8px)",
+          },
+          {
+            xPercent: 0,
+            opacity: 1,
+            filter: "blur(0px)",
+            duration: 1.05,
+            stagger: 0.08,
+            delay: 0.42,
+            ease: "power4.out",
+          }
+        );
+
+        heroLensSlices.forEach((slice, index) => {
+          gsap.to(slice, {
+            xPercent: index === 0 ? -20 : index === 1 ? 16 : -11,
+            skewX: index === 1 ? 3 : -2,
+            ease: "none",
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1 + index * 0.08,
+            },
+          });
+        });
+      }
+
+      if (heroLensNodes.length) {
+        gsap.fromTo(
+          heroLensNodes,
+          { scale: 0, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.65,
+            stagger: 0.055,
+            delay: 0.52,
+            ease: "back.out(1.8)",
+          }
+        );
+
+        heroLensNodes.forEach((node, index) => {
+          gsap.to(node, {
+            rotate: index % 2 === 0 ? 90 : -90,
+            scale: index % 3 === 0 ? 1.7 : 1.15,
+            ease: "none",
+            scrollTrigger: {
+              trigger: hero,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1.1,
+            },
+          });
+        });
+      }
+
+      if (heroLensAperture) {
+        gsap.fromTo(
+          heroLensAperture,
+          {
+            scale: 0.72,
+            rotate: -20,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            rotate: 0,
+            opacity: 0.74,
+            duration: 1.3,
+            delay: 0.28,
+            ease: "power4.out",
+          }
+        );
+
+        gsap.to(heroLensAperture, {
+          scale: 1.85,
+          rotate: 54,
+          opacity: 0.08,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (heroSweep) {
+        gsap.fromTo(
+          heroSweep,
+          { xPercent: -120, opacity: 0 },
+          {
+            xPercent: 120,
+            opacity: 0.8,
+            duration: 1.55,
+            delay: 0.34,
+            ease: "power3.inOut",
+          }
+        );
+
+        gsap.to(heroSweep, {
+          yPercent: 42,
+          rotate: -3,
+          opacity: 0.15,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (heroSignal) {
+        gsap.fromTo(
+          heroSignal,
+          { scaleX: 0, opacity: 0 },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 1.2,
+            delay: 0.58,
+            ease: "power4.out",
+            transformOrigin: "left center",
+          }
+        );
+      }
+
+
+      /*
+       * RESET CERTO QUANDO SI TORNA IN CIMA.
+       * Le proprietà x/y/rotationX/rotationY arrivano dal puntatore e
+       * non fanno parte dello scrub principale: qui le riportiamo a zero.
+       */
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        onUpdate: (self) => {
+          if (self.progress <= 0.002) {
+            resetHeroInteractiveState(true);
+          }
+        },
+        onRefresh: (self) => {
+          if (self.progress <= 0.002) {
+            resetHeroInteractiveState(true);
+          }
+        },
+      });
+
+      if (
+        heroLens &&
+        heroLensInner &&
+        !window.matchMedia("(pointer: coarse)").matches
+      ) {
+        const lensX = gsap.quickTo(heroLens, "x", {
+          duration: 0.7,
+          ease: "power3.out",
+        });
+        const lensY = gsap.quickTo(heroLens, "y", {
+          duration: 0.7,
+          ease: "power3.out",
+        });
+        const lensRotateX = gsap.quickTo(heroLensInner, "rotationX", {
+          duration: 0.75,
+          ease: "power3.out",
+        });
+        const lensRotateY = gsap.quickTo(heroLensInner, "rotationY", {
+          duration: 0.75,
+          ease: "power3.out",
+        });
+        const ghostX = heroLensGhost
+          ? gsap.quickTo(heroLensGhost, "x", {
+              duration: 0.55,
+              ease: "power3.out",
+            })
+          : null;
+        const ghostY = heroLensGhost
+          ? gsap.quickTo(heroLensGhost, "y", {
+              duration: 0.55,
+              ease: "power3.out",
+            })
+          : null;
+
+        const ghostRotate = heroLensGhost
+          ? gsap.quickTo(heroLensGhost, "rotationZ", {
+              duration: 0.6,
+              ease: "power3.out",
+            })
+          : null;
+
+        heroPointerMoveHandler = (event) => {
+          const rect = hero.getBoundingClientRect();
+          const nx = (event.clientX - rect.left) / rect.width - 0.5;
+          const ny = (event.clientY - rect.top) / rect.height - 0.5;
+
+          lensX(nx * 38);
+          lensY(ny * 28);
+          lensRotateY(nx * 7);
+          lensRotateX(ny * -6);
+          ghostX?.(nx * -34);
+          ghostY?.(ny * -22);
+          ghostRotate?.(nx * -2.2);
+
+          heroLensSlices.forEach((slice, index) => {
+            gsap.to(slice, {
+              x: nx * (index === 1 ? -34 : 26),
+              y: ny * (index === 1 ? -18 : 14),
+              filter:
+                index === 1
+                  ? `drop-shadow(${nx * 7}px 0 0 rgba(139,92,246,.22))`
+                  : `drop-shadow(${nx * -6}px 0 0 rgba(53,216,255,.16))`,
+              duration: 0.42,
+              ease: "power3.out",
+              overwrite: true,
+            });
+          });
+        };
+
+        heroPointerLeaveHandler = () => {
+          resetHeroInteractiveState(false);
+        };
+
+        hero.addEventListener("pointermove", heroPointerMoveHandler, {
+          passive: true,
+        });
+        hero.addEventListener("pointerleave", heroPointerLeaveHandler);
+      }
 
       const fieldNodes = gsap.utils.toArray(
         story.querySelectorAll("[data-field-node]")
@@ -891,6 +1249,24 @@ export default function ChiSiamo() {
       ScrollTrigger.sort();
       ScrollTrigger.refresh(true);
       ScrollTrigger.update();
+
+      if (window.scrollY <= 2 && hero) {
+        const lens = hero.querySelector("[data-about-lens]");
+        const lensInner = hero.querySelector("[data-about-lens-inner]");
+        const lensGhost = hero.querySelector("[data-about-lens-ghost]");
+        const lensSlices = hero.querySelectorAll("[data-about-lens-slice]");
+
+        if (lens) gsap.set(lens, { x: 0, y: 0 });
+        if (lensInner) gsap.set(lensInner, { rotationX: 0, rotationY: 0 });
+        if (lensGhost) gsap.set(lensGhost, { x: 0, y: 0, rotationZ: 0 });
+        if (lensSlices.length) {
+          gsap.set(lensSlices, {
+            x: 0,
+            y: 0,
+            filter: "drop-shadow(0 0 0 rgba(0,0,0,0))",
+          });
+        }
+      }
     };
 
     let secondFrame = 0;
@@ -928,6 +1304,14 @@ export default function ChiSiamo() {
       }
       if (fieldPointerLeaveHandler) {
         story.removeEventListener("pointerleave", fieldPointerLeaveHandler);
+      }
+
+      if (heroPointerMoveHandler) {
+        hero.removeEventListener("pointermove", heroPointerMoveHandler);
+      }
+
+      if (heroPointerLeaveHandler) {
+        hero.removeEventListener("pointerleave", heroPointerLeaveHandler);
       }
 
       // Eliminano soltanto animazioni, timeline e pin creati da questa pagina.
@@ -1051,6 +1435,336 @@ export default function ChiSiamo() {
           @keyframes oxoAboutBlink {
             0%, 88%, 100% { opacity: .25; }
             89%, 93% { opacity: 1; }
+          }
+
+
+          @keyframes oxoAboutLensIdle {
+            0%, 100% { transform: rotate(-3deg) scale(.985); }
+            50% { transform: rotate(3deg) scale(1.025); }
+          }
+
+          @keyframes oxoAboutLensDash {
+            to { stroke-dashoffset: -120; }
+          }
+
+          .oxo-about-hero-lens {
+            position: absolute;
+            left: 63%;
+            top: 50%;
+            width: min(46vw, 720px);
+            height: min(46vw, 720px);
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            pointer-events: none;
+            z-index: 4;
+            will-change: transform, opacity, filter;
+            perspective: 1200px;
+          }
+
+          .oxo-about-hero-lens::before {
+            content: "";
+            position: absolute;
+            inset: -12%;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,.055);
+            box-shadow:
+              0 0 0 3.5vw rgba(255,255,255,.008),
+              0 0 0 7vw rgba(255,255,255,.004);
+          }
+
+          .oxo-about-hero-lens-inner {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            border: 1px solid rgba(53,216,255,.28);
+            background:
+              radial-gradient(circle at 42% 40%, rgba(53,216,255,.08), transparent 28%),
+              radial-gradient(circle at 64% 62%, rgba(139,92,246,.07), transparent 30%),
+              rgba(0,0,0,.18);
+            box-shadow:
+              inset 0 0 0 1px rgba(255,255,255,.035),
+              inset 0 0 90px rgba(53,216,255,.025),
+              0 0 80px rgba(53,216,255,.045);
+            backdrop-filter: blur(2px);
+            transform-style: preserve-3d;
+            overflow: hidden;
+          }
+
+          .oxo-about-hero-lens-ring {
+            position: absolute;
+            inset: 11%;
+            border-radius: inherit;
+            border: 1px dashed rgba(255,255,255,.12);
+            will-change: transform;
+          }
+
+          .oxo-about-hero-lens-ring::before,
+          .oxo-about-hero-lens-ring::after {
+            content: "";
+            position: absolute;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,.06);
+          }
+
+          .oxo-about-hero-lens-ring::before { inset: 14%; }
+          .oxo-about-hero-lens-ring::after { inset: 31%; }
+
+          .oxo-about-hero-lens-axis-x,
+          .oxo-about-hero-lens-axis-y {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            pointer-events: none;
+          }
+
+          .oxo-about-hero-lens-axis-x {
+            width: 118%;
+            height: 1px;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(53,216,255,.28),
+                rgba(255,255,255,.16),
+                rgba(255,79,216,.24),
+                transparent
+              );
+          }
+
+          .oxo-about-hero-lens-axis-y {
+            width: 1px;
+            height: 118%;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                180deg,
+                transparent,
+                rgba(139,92,246,.2),
+                rgba(255,255,255,.14),
+                rgba(53,216,255,.24),
+                transparent
+              );
+          }
+
+          .oxo-about-hero-lens-ghost {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            font-size: clamp(3.8rem, 8vw, 8rem);
+            line-height: .72;
+            letter-spacing: -.07em;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.22);
+            opacity: .58;
+            will-change: transform;
+          }
+
+          .oxo-about-hero-lens-node {
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            border: 1px solid rgba(255,255,255,.62);
+            background: #020203;
+          }
+
+          .oxo-about-hero-lens-node--cyan {
+            border-color: #35d8ff;
+            box-shadow: 0 0 15px rgba(53,216,255,.18);
+          }
+
+          .oxo-about-hero-lens-node--pink {
+            border-color: #ff4fd8;
+            box-shadow: 0 0 15px rgba(255,79,216,.16);
+          }
+
+
+          .oxo-about-lens-aperture {
+            position: absolute;
+            inset: 4%;
+            border-radius: 999px;
+            pointer-events: none;
+            opacity: .68;
+            background:
+              conic-gradient(
+                from 0deg,
+                transparent 0 7deg,
+                rgba(53,216,255,.18) 8deg 10deg,
+                transparent 11deg 42deg,
+                rgba(255,255,255,.10) 43deg 44deg,
+                transparent 45deg 88deg,
+                rgba(139,92,246,.16) 89deg 92deg,
+                transparent 93deg 134deg,
+                rgba(255,79,216,.14) 135deg 138deg,
+                transparent 139deg 178deg,
+                rgba(53,216,255,.15) 179deg 182deg,
+                transparent 183deg 226deg,
+                rgba(255,255,255,.08) 227deg 229deg,
+                transparent 230deg 270deg,
+                rgba(139,92,246,.14) 271deg 274deg,
+                transparent 275deg 318deg,
+                rgba(255,79,216,.13) 319deg 322deg,
+                transparent 323deg 360deg
+              );
+            -webkit-mask:
+              radial-gradient(
+                circle,
+                transparent 0 66%,
+                black 67% 69%,
+                transparent 70%
+              );
+            mask:
+              radial-gradient(
+                circle,
+                transparent 0 66%,
+                black 67% 69%,
+                transparent 70%
+              );
+            will-change: transform, opacity;
+          }
+
+          .oxo-about-lens-slices {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: inherit;
+            pointer-events: none;
+          }
+
+          .oxo-about-lens-slice {
+            position: absolute;
+            left: 4%;
+            right: 4%;
+            overflow: hidden;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.34);
+            font-size: clamp(3.8rem, 8vw, 8rem);
+            line-height: .72;
+            letter-spacing: -.07em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            will-change: transform, opacity, filter;
+          }
+
+          .oxo-about-lens-slice span {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+          }
+
+          .oxo-about-lens-slice--top {
+            top: 25%;
+            height: 16%;
+            border-top: 1px solid rgba(53,216,255,.08);
+          }
+
+          .oxo-about-lens-slice--top span {
+            top: -156%;
+          }
+
+          .oxo-about-lens-slice--middle {
+            top: 43%;
+            height: 18%;
+            -webkit-text-stroke-color: rgba(139,92,246,.58);
+            background: rgba(139,92,246,.015);
+            border-top: 1px solid rgba(139,92,246,.10);
+            border-bottom: 1px solid rgba(139,92,246,.08);
+          }
+
+          .oxo-about-lens-slice--middle span {
+            top: -96%;
+          }
+
+          .oxo-about-lens-slice--bottom {
+            top: 64%;
+            height: 15%;
+            -webkit-text-stroke-color: rgba(53,216,255,.38);
+          }
+
+          .oxo-about-lens-slice--bottom span {
+            top: -246%;
+          }
+
+          .oxo-about-hero-lens::after {
+            content: "";
+            position: absolute;
+            inset: 19%;
+            border-radius: inherit;
+            pointer-events: none;
+            border: 1px solid rgba(255,255,255,.045);
+            box-shadow:
+              inset 0 0 36px rgba(53,216,255,.018),
+              0 0 36px rgba(139,92,246,.015);
+          }
+
+          .oxo-about-lens-readout {
+            position: absolute;
+            z-index: 8;
+            font-size: 6px;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.28);
+            pointer-events: none;
+          }
+
+          .oxo-about-lens-ticks {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 108%;
+            height: 108%;
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            pointer-events: none;
+          }
+
+          .oxo-about-lens-tick {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 1px;
+            height: 8px;
+            background: rgba(255,255,255,.24);
+            transform-origin: 50% calc(50% + min(23vw, 360px));
+          }
+
+          .oxo-about-hero-sweep {
+            position: absolute;
+            left: -20%;
+            top: 38%;
+            width: 140%;
+            height: 1px;
+            z-index: 3;
+            pointer-events: none;
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(53,216,255,.12),
+                rgba(255,255,255,.55),
+                rgba(255,79,216,.28),
+                transparent
+              );
+            box-shadow: 0 0 18px rgba(53,216,255,.12);
+          }
+
+          .oxo-about-hero-signal {
+            position: absolute;
+            left: 4vw;
+            bottom: 24%;
+            width: min(28vw, 420px);
+            height: 1px;
+            pointer-events: none;
+            background:
+              linear-gradient(
+                90deg,
+                #35d8ff,
+                rgba(139,92,246,.62),
+                transparent
+              );
+            box-shadow: 0 0 20px rgba(53,216,255,.14);
           }
           .oxo-about-grid {
             background-image:
@@ -1226,6 +1940,32 @@ export default function ChiSiamo() {
           }
 
           @media (max-width: 767px) {
+            .oxo-about-hero-lens {
+              left: 68%;
+              top: 47%;
+              width: 76vw;
+              height: 76vw;
+            }
+
+            .oxo-about-hero-lens-ghost {
+              font-size: 15vw;
+            }
+
+            .oxo-about-lens-slice {
+              font-size: 15vw;
+            }
+
+            .oxo-about-lens-readout {
+              font-size: 5px;
+              letter-spacing: .22em;
+            }
+
+            .oxo-about-hero-signal {
+              left: 6vw;
+              bottom: 27%;
+              width: 42vw;
+            }
+
             .oxo-about-grid {
               background-size: 44px 44px;
             }
@@ -1307,26 +2047,139 @@ export default function ChiSiamo() {
         >
           <div className="oxo-about-grid pointer-events-none absolute inset-0" />
 
+          {/* AWWWARDS / IDENTITY SCANNER */}
+          <div
+            data-about-lens
+            aria-hidden="true"
+            className="oxo-about-hero-lens"
+          >
+            <div
+              data-about-lens-inner
+              className="oxo-about-hero-lens-inner"
+            >
+              <div
+                data-about-lens-aperture
+                className="oxo-about-lens-aperture"
+              />
+
+              <div
+                data-about-lens-ring
+                className="oxo-about-hero-lens-ring"
+              />
+
+              <span className="oxo-about-hero-lens-axis-x" />
+              <span className="oxo-about-hero-lens-axis-y" />
+
+              <div className="oxo-about-lens-slices">
+                <div
+                  data-about-lens-slice
+                  className="oxo-about-lens-slice oxo-about-lens-slice--top avant-legato-font ombra2"
+                >
+                  <span>CHI SIAMO</span>
+                </div>
+
+                <div
+                  data-about-lens-slice
+                  className="oxo-about-lens-slice oxo-about-lens-slice--middle avant-legato-font ombra2"
+                >
+                  <span>CHI SIAMO</span>
+                </div>
+
+                <div
+                  data-about-lens-slice
+                  className="oxo-about-lens-slice oxo-about-lens-slice--bottom avant-legato-font ombra2"
+                >
+                  <span>CHI SIAMO</span>
+                </div>
+              </div>
+
+              <p
+                data-about-lens-ghost
+                className="oxo-about-hero-lens-ghost avant-legato-font ombra2"
+              >
+                CHI SIAMO
+              </p>
+
+              <span
+                data-about-lens-node
+                className="oxo-about-hero-lens-node oxo-about-hero-lens-node--cyan left-1/2 top-[5%] -translate-x-1/2"
+              />
+              <span
+                data-about-lens-node
+                className="oxo-about-hero-lens-node oxo-about-hero-lens-node--pink left-1/2 bottom-[5%] -translate-x-1/2"
+              />
+              <span
+                data-about-lens-node
+                className="oxo-about-hero-lens-node left-[5%] top-1/2 -translate-y-1/2"
+              />
+              <span
+                data-about-lens-node
+                className="oxo-about-hero-lens-node right-[5%] top-1/2 -translate-y-1/2"
+              />
+              <span
+                data-about-lens-node
+                className="oxo-about-hero-lens-node left-[20%] top-[20%]"
+              />
+              <span
+                data-about-lens-node
+                className="oxo-about-hero-lens-node right-[20%] bottom-[20%]"
+              />
+
+              <span className="oxo-about-lens-readout left-[15%] top-[13%]">
+                ID / 001
+              </span>
+              <span className="oxo-about-lens-readout right-[13%] top-[24%] text-right">
+                HUMAN
+                <br />
+                SYSTEM
+              </span>
+              <span className="oxo-about-lens-readout bottom-[14%] left-[17%]">
+                OXO / FIELD
+              </span>
+            </div>
+          </div>
+
+          <div
+            data-about-hero-sweep
+            aria-hidden="true"
+            className="oxo-about-hero-sweep"
+          />
+
+          <div
+            data-about-hero-signal
+            aria-hidden="true"
+            className="oxo-about-hero-signal"
+          />
+
           <div
             data-hero-orb
             aria-hidden="true"
             className="pointer-events-none absolute -right-[15vw] top-[6vh] h-[55vw] w-[55vw] rounded-full blur-[80px]"
             style={{
               background:
-                "radial-gradient(circle, rgba(53,216,255,.22) 0%, rgba(139,92,246,.15) 36%, rgba(255,79,216,.08) 52%, transparent 72%)",
+                "radial-gradient(circle, rgba(53,216,255,.16) 0%, rgba(139,92,246,.10) 36%, rgba(255,79,216,.05) 52%, transparent 72%)",
               animation: "oxoAboutFloat 11s ease-in-out infinite",
             }}
           />
 
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute left-[-8%] top-[48%] h-px w-[116%] -rotate-[7deg] bg-gradient-to-r from-transparent via-cyan-300/55 to-violet-500/10"
+            className="pointer-events-none absolute left-[-8%] top-[48%] h-px w-[116%] -rotate-[7deg] bg-gradient-to-r from-transparent via-cyan-300/35 to-violet-500/10"
             style={{ animation: "oxoAboutPulse 4s ease-in-out infinite" }}
           />
 
           <div className="relative z-10 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
-            <p data-about-meta>OXO STUDIO®</p>
-          
+            <p data-about-meta>
+              OXO STUDIO®
+              <br />
+              INDEPENDENT DIGITAL STUDIO
+            </p>
+
+            <p data-about-meta className="text-right">
+              PEOPLE / PROCESS / SYSTEM
+              <br />
+              LA SPEZIA / ITALY
+            </p>
           </div>
 
           <div data-hero-title className="relative z-10 my-auto py-14">
@@ -1337,9 +2190,14 @@ export default function ChiSiamo() {
               Independent digital studio
             </p>
 
-            <h1 className="avant-legato-font ombra2 overflow-hidden text-[17.5vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[12.5vw] lg:text-[12.8vw]">
+            <h1 className="avant-legato-font ombra2 relative z-10 overflow-hidden text-[17.5vw] uppercase leading-[0.69] tracking-[-0.075em] md:text-[12.5vw] lg:text-[12.2vw]">
               <SplitLetters text="CHI SIAMO" />
             </h1>
+
+            <div className="mt-4 flex items-center gap-4 text-[8px] uppercase tracking-[0.32em] text-white/32 md:text-[10px]">
+              <span className="h-2 w-2 border border-cyan-300" />
+              <span>IDENTITY / MOTION / TECHNOLOGY</span>
+            </div>
           </div>
 
           <div className="relative z-10 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
@@ -1356,7 +2214,7 @@ export default function ChiSiamo() {
               data-about-meta
               className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
-              Scroll to discover ↓
+              Scroll / Enter the system ↓
             </p>
           </div>
         </section>

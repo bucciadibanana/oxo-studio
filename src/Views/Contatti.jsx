@@ -93,12 +93,26 @@ export default function Contatti() {
       return undefined;
     }
 
+    let heroPointerMoveHandler = null;
+    let heroPointerLeaveHandler = null;
+
     const ctx = gsap.context(() => {
       const heroLetters = gsap.utils.toArray(
         hero.querySelectorAll("[data-contact-letter]")
       );
       const heroMeta = gsap.utils.toArray(
         hero.querySelectorAll("[data-contact-meta]")
+      );
+
+      const heroTitle = hero.querySelector("[data-contact-title]");
+      const heroOutline = hero.querySelector("[data-contact-outline]");
+      const heroRibbon = hero.querySelector("[data-contact-ribbon]");
+      const heroSweep = hero.querySelector("[data-contact-sweep]");
+      const heroSlice = hero.querySelector("[data-contact-slice]");
+      const heroSliceInner = hero.querySelector("[data-contact-slice-inner]");
+      const heroVeil = hero.querySelector("[data-contact-veil]");
+      const heroSplitLetters = gsap.utils.toArray(
+        hero.querySelectorAll("[data-contact-split-letter]")
       );
 
       gsap.fromTo(
@@ -128,29 +142,180 @@ export default function Contatti() {
         }
       );
 
-      gsap.to(hero.querySelector("[data-contact-title]"), {
-        yPercent: 19,
-        scale: 0.93,
-        opacity: 0.38,
-        ease: "none",
-        scrollTrigger: {
-          trigger: hero,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        },
+
+      if (heroOutline) {
+        gsap.fromTo(heroOutline,
+          { xPercent: 10, opacity: 0, filter: "blur(10px)" },
+          { xPercent: 0, opacity: 0.32, filter: "blur(0px)", duration: 1.35, delay: 0.28, ease: "power4.out" }
+        );
+
+        gsap.to(heroOutline, {
+          xPercent: -13,
+          yPercent: 6,
+          skewX: -4,
+          opacity: 0.07,
+          ease: "none",
+          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
+        });
+      }
+
+      if (heroRibbon) {
+        gsap.fromTo(heroRibbon,
+          { scaleX: 0.58, scaleY: 0.76, rotate: -9, opacity: 0, filter: "blur(18px)" },
+          { scaleX: 1, scaleY: 1, rotate: 0, opacity: 0.82, filter: "blur(0px)", duration: 1.5, delay: 0.18, ease: "power4.out" }
+        );
+
+        gsap.to(heroRibbon, {
+          scaleX: 1.34,
+          scaleY: 0.5,
+          rotate: 6,
+          xPercent: 15,
+          yPercent: 10,
+          opacity: 0.16,
+          ease: "none",
+          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1.05 },
+        });
+      }
+
+      if (heroSweep) {
+        gsap.fromTo(heroSweep,
+          { xPercent: -135, opacity: 0 },
+          { xPercent: 135, opacity: 0.88, duration: 1.7, delay: 0.46, ease: "power3.inOut" }
+        );
+
+        gsap.to(heroSweep, {
+          yPercent: 44,
+          rotate: -4,
+          opacity: 0.08,
+          ease: "none",
+          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
+        });
+      }
+
+      if (heroSlice) {
+        gsap.fromTo(
+          heroSlice,
+          { xPercent: -18, opacity: 0, clipPath: "inset(0 100% 0 0)" },
+          {
+            xPercent: 0,
+            opacity: 1,
+            clipPath: "inset(0 0% 0 0)",
+            duration: 1.1,
+            delay: 0.5,
+            ease: "power4.inOut",
+          }
+        );
+
+        gsap.to(heroSlice, {
+          xPercent: 20,
+          yPercent: -10,
+          opacity: 0.08,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+
+      if (heroSliceInner) {
+        gsap.fromTo(
+          heroSliceInner,
+          { xPercent: 8 },
+          { xPercent: 0, duration: 1.1, delay: 0.5, ease: "power4.out" }
+        );
+      }
+
+      if (heroVeil) {
+        gsap.fromTo(
+          heroVeil,
+          { xPercent: -120, opacity: 0 },
+          {
+            xPercent: 120,
+            opacity: 0.7,
+            duration: 1.9,
+            delay: 0.34,
+            ease: "power3.inOut",
+          }
+        );
+
+        gsap.to(heroVeil, {
+          xPercent: 165,
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1,
+          },
+        });
+      }
+
+      heroSplitLetters.forEach((letter, index) => {
+        const direction = index % 2 === 0 ? -1 : 1;
+        const distance = 8 + (index % 4) * 4;
+
+        gsap.to(letter, {
+          xPercent: direction * distance,
+          yPercent: index % 3 === 0 ? -10 : 7,
+          rotateZ: direction * (1.2 + (index % 3) * 0.55),
+          rotateX: index % 2 === 0 ? -4 : 3,
+          scaleY: index % 2 === 0 ? 1.035 : 0.975,
+          opacity: index % 2 === 0 ? 0.78 : 0.64,
+          transformPerspective: 1200,
+          ease: "none",
+          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
+        });
       });
 
-      gsap.to(hero.querySelector("[data-contact-orb]"), {
-        rotate: -48,
-        xPercent: 18,
-        yPercent: -12,
-        ease: "none",
-        scrollTrigger: {
-          trigger: hero,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.15,
+      if (heroTitle) {
+        gsap.to(heroTitle, {
+          yPercent: 17,
+          scale: 0.94,
+          opacity: 0.34,
+          ease: "none",
+          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
+        });
+      }
+
+      if (heroRibbon && heroOutline && !window.matchMedia("(pointer: coarse)").matches) {
+        const ribbonX = gsap.quickTo(heroRibbon, "x", { duration: 0.8, ease: "power3.out" });
+        const ribbonY = gsap.quickTo(heroRibbon, "y", { duration: 0.8, ease: "power3.out" });
+        const outlineX = gsap.quickTo(heroOutline, "x", { duration: 0.58, ease: "power3.out" });
+        const outlineY = gsap.quickTo(heroOutline, "y", { duration: 0.58, ease: "power3.out" });
+
+        heroPointerMoveHandler = (event) => {
+          const rect = hero.getBoundingClientRect();
+          const nx = (event.clientX - rect.left) / rect.width - 0.5;
+          const ny = (event.clientY - rect.top) / rect.height - 0.5;
+
+          ribbonX(nx * 22);
+          ribbonY(ny * 14);
+          outlineX(nx * -26);
+          outlineY(ny * -14);
+        };
+
+        heroPointerLeaveHandler = () => {
+          gsap.to(heroRibbon, { x: 0, y: 0, duration: 0.8, ease: "power3.out", overwrite: true });
+          gsap.to(heroOutline, { x: 0, y: 0, duration: 0.7, ease: "power3.out", overwrite: true });
+        };
+
+        hero.addEventListener("pointermove", heroPointerMoveHandler, { passive: true });
+        hero.addEventListener("pointerleave", heroPointerLeaveHandler);
+      }
+
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        end: "bottom top",
+        onUpdate: (self) => {
+          if (self.progress <= 0.002) {
+            if (heroRibbon) gsap.set(heroRibbon, { x: 0, y: 0 });
+            if (heroOutline) gsap.set(heroOutline, { x: 0, y: 0 });
+          }
         },
       });
 
@@ -281,6 +446,14 @@ export default function Contatti() {
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener("load", refresh);
+
+      if (heroPointerMoveHandler) {
+        hero.removeEventListener("pointermove", heroPointerMoveHandler);
+      }
+      if (heroPointerLeaveHandler) {
+        hero.removeEventListener("pointerleave", heroPointerLeaveHandler);
+      }
+
       ctx.revert();
     };
   }, []);
@@ -389,6 +562,179 @@ export default function Contatti() {
             mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
           }
 
+          @keyframes oxoContactRibbonBreath {
+            0%, 100% { transform: translate(-50%, -50%) rotate(-4deg) scaleX(.985) scaleY(1); }
+            50% { transform: translate(-50%, -50%) rotate(-1deg) scaleX(1.03) scaleY(1.06); }
+          }
+
+          .oxo-contact-ribbon {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(72vw, 1120px);
+            height: min(20vw, 310px);
+            transform: translate(-50%, -50%) rotate(-4deg);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            background:
+              linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(53,216,255,.08) 18%,
+                rgba(255,255,255,.08) 42%,
+                rgba(139,92,246,.10) 64%,
+                rgba(255,79,216,.07) 82%,
+                transparent 100%
+              );
+            border: 1px solid rgba(255,255,255,.07);
+            box-shadow:
+              0 0 0 5vw rgba(255,255,255,.003),
+              0 0 70px rgba(139,92,246,.035);
+            will-change: transform, opacity, filter;
+            animation: oxoContactRibbonBreath 7.5s ease-in-out infinite;
+          }
+
+          .oxo-contact-ribbon::before,
+          .oxo-contact-ribbon::after {
+            content: "";
+            position: absolute;
+            inset: 12%;
+            border-radius: inherit;
+            border: 1px solid rgba(255,255,255,.045);
+          }
+
+          .oxo-contact-ribbon::after {
+            inset: 30%;
+            border-color: rgba(53,216,255,.06);
+          }
+
+          .oxo-contact-outline {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 4;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            font-size: clamp(5rem, 13vw, 13rem);
+            line-height: .68;
+            letter-spacing: -.08em;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(139,92,246,.35);
+            pointer-events: none;
+            will-change: transform, opacity, filter;
+          }
+
+          .oxo-contact-slice {
+            position: absolute;
+            left: 7vw;
+            right: 7vw;
+            top: 45%;
+            height: 15vw;
+            max-height: 210px;
+            z-index: 5;
+            overflow: hidden;
+            pointer-events: none;
+            border-top: 1px solid rgba(255,255,255,.055);
+            border-bottom: 1px solid rgba(255,255,255,.04);
+            background: rgba(255,255,255,.008);
+            backdrop-filter: blur(1px);
+            will-change: transform, opacity, clip-path;
+          }
+
+          .oxo-contact-slice-inner {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            font-size: clamp(5rem, 13vw, 13rem);
+            line-height: .68;
+            letter-spacing: -.08em;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.30);
+            opacity: .7;
+            will-change: transform;
+          }
+
+          .oxo-contact-veil {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 42%;
+            width: 16vw;
+            min-width: 120px;
+            z-index: 8;
+            pointer-events: none;
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.025),
+                rgba(255,255,255,.12),
+                rgba(139,92,246,.08),
+                transparent
+              );
+            filter: blur(8px);
+            mix-blend-mode: screen;
+            will-change: transform, opacity;
+          }
+
+          .oxo-contact-sweep {
+            position: absolute;
+            left: -18%;
+            top: 42%;
+            width: 136%;
+            height: 1px;
+            z-index: 6;
+            pointer-events: none;
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(53,216,255,.08),
+                rgba(255,255,255,.76),
+                rgba(139,92,246,.36),
+                rgba(255,79,216,.14),
+                transparent
+              );
+            box-shadow:
+              0 0 16px rgba(53,216,255,.14),
+              0 0 28px rgba(139,92,246,.07);
+            will-change: transform, opacity;
+          }
+
+          .oxo-contact-editorial-rule {
+            position: absolute;
+            pointer-events: none;
+            background: rgba(255,255,255,.08);
+          }
+
+          .oxo-contact-editorial-rule--v {
+            top: 12%;
+            bottom: 12%;
+            width: 1px;
+          }
+
+          .oxo-contact-editorial-rule--h {
+            left: 4vw;
+            right: 4vw;
+            height: 1px;
+          }
+
+          .oxo-contact-micro {
+            position: absolute;
+            z-index: 7;
+            font-size: 6px;
+            line-height: 1.55;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.27);
+            pointer-events: none;
+          }
+
           .oxo-contact-noise::after {
             content: "";
             position: absolute;
@@ -408,6 +754,37 @@ export default function Contatti() {
             transform: translate(.55rem, -.35rem) rotate(-45deg);
           }
 
+          @media (max-width: 767px) {
+            .oxo-contact-ribbon {
+              width: 92vw;
+              height: 34vw;
+            }
+
+            .oxo-contact-outline {
+              font-size: 18vw;
+            }
+
+            .oxo-contact-slice {
+              left: 4vw;
+              right: 4vw;
+              top: 46%;
+              height: 20vw;
+            }
+
+            .oxo-contact-slice-inner {
+              font-size: 18vw;
+            }
+
+            .oxo-contact-veil {
+              width: 26vw;
+            }
+
+            .oxo-contact-micro {
+              font-size: 5px;
+              letter-spacing: .22em;
+            }
+          }
+
           @media (min-width: 1024px) {
             .oxo-contact-card[href^="mailto:"] .avant-legato-font.break-words {
               white-space: nowrap;
@@ -421,31 +798,69 @@ export default function Contatti() {
           ref={heroRef}
           className="oxo-contact-noise relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden px-6 pb-8 pt-7 md:px-10 md:pb-10 md:pt-9 lg:px-[4vw] lg:pb-[4vh] lg:pt-[3.5vh]"
         >
-          <div className="oxo-contact-grid pointer-events-none absolute inset-0" />
+          <div className="oxo-contact-grid pointer-events-none absolute inset-0 opacity-55" />
+
+          <div data-contact-ribbon aria-hidden="true" className="oxo-contact-ribbon" />
+
+          <p
+            data-contact-outline
+            aria-hidden="true"
+            className="oxo-contact-outline avant-legato-font ombra2"
+          >
+            CONTATTI
+          </p>
 
           <div
-            data-contact-orb
+            data-contact-slice
             aria-hidden="true"
-            className="pointer-events-none absolute -left-[18vw] top-[4vh] h-[62vw] w-[62vw] rounded-full border border-violet-400/20"
-            style={{ animation: "oxoContactOrbit 11s ease-in-out infinite" }}
+            className="oxo-contact-slice"
           >
-            <div className="absolute inset-[15%] rounded-full border border-cyan-300/20" />
-            <div className="absolute inset-[31%] rounded-full border border-fuchsia-400/15" />
-            <div className="absolute inset-[44%] rounded-full bg-violet-500/10 blur-[60px]" />
+            <span
+              data-contact-slice-inner
+              className="oxo-contact-slice-inner avant-legato-font ombra2"
+            >
+              CONTATTI
+            </span>
           </div>
 
           <div
+            data-contact-veil
             aria-hidden="true"
-            className="pointer-events-none absolute left-[-8%] top-[49%] h-px w-[116%] rotate-[7deg] bg-gradient-to-r from-transparent via-violet-400/60 to-cyan-300/10"
-            style={{ animation: "oxoContactPulse 4.2s ease-in-out infinite" }}
+            className="oxo-contact-veil"
           />
 
-          <div className="relative z-10 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
-            <p data-contact-meta>OXO STUDIO®</p>
-          
+          <div data-contact-sweep aria-hidden="true" className="oxo-contact-sweep" />
+
+          <span className="oxo-contact-editorial-rule oxo-contact-editorial-rule--v left-[4vw]" />
+          <span className="oxo-contact-editorial-rule oxo-contact-editorial-rule--v right-[4vw]" />
+          <span className="oxo-contact-editorial-rule oxo-contact-editorial-rule--h top-[18vh]" />
+          <span className="oxo-contact-editorial-rule oxo-contact-editorial-rule--h bottom-[20vh]" />
+
+          <span className="oxo-contact-micro left-[4vw] top-[14vh]">
+            OXO / CONTACT
+          </span>
+
+          <span className="oxo-contact-micro right-[4vw] top-[14vh] text-right">
+            HUMAN RESPONSE
+            <br />
+            SELECTED PROJECTS
+          </span>
+
+          <div className="relative z-20 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
+            <p data-contact-meta>
+              OXO STUDIO®
+              <br />
+              START A CONVERSATION
+            </p>
+
+            <p data-contact-meta className="text-right">
+              LA SPEZIA / ITALY
+              <br />
+              AVAILABLE / 2026
+            </p>
           </div>
 
-          <div data-contact-title className="relative z-10 my-auto py-14">
+          <div data-contact-title className="relative z-20 my-auto py-14">
             <p
               data-contact-meta
               className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] text-violet-400 md:text-xs"
@@ -453,12 +868,27 @@ export default function Contatti() {
               Start a conversation
             </p>
 
-            <h1 className="avant-legato-font ombra2 overflow-hidden text-[17.5vw] uppercase leading-[0.71] tracking-[-0.075em] md:text-[12vw] lg:text-[12.5vw]">
-              <SplitLetters text="CONTATTI" />
+            <h1
+              aria-label="CONTATTI"
+              className="avant-legato-font ombra2 overflow-visible text-[17.5vw] uppercase leading-[0.67] tracking-[-0.082em] md:text-[12vw] lg:text-[12.1vw]"
+            >
+              <span data-contact-split-letter className="inline-block">C</span>
+              <span data-contact-split-letter className="inline-block">O</span>
+              <span data-contact-split-letter className="inline-block">N</span>
+              <span data-contact-split-letter className="inline-block">T</span>
+              <span data-contact-split-letter className="inline-block">A</span>
+              <span data-contact-split-letter className="inline-block">T</span>
+              <span data-contact-split-letter className="inline-block">T</span>
+              <span data-contact-split-letter className="inline-block">I</span>
             </h1>
+
+            <div className="mt-5 flex items-center gap-4 text-[8px] uppercase tracking-[0.32em] text-white/28 md:text-[10px]">
+              <span className="h-2 w-2 border border-violet-400" />
+              <span>WRITE / CONNECT / BUILD</span>
+            </div>
           </div>
 
-          <div className="relative z-10 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
+          <div className="relative z-20 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
             <p
               data-contact-meta
               className="avant-legato-font max-w-[900px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
@@ -471,7 +901,7 @@ export default function Contatti() {
               data-contact-meta
               className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
-              Scroll to write ↓
+              Scroll / Write the brief ↓
             </p>
           </div>
         </section>
