@@ -12,6 +12,8 @@ import KairosArchive from "../Views/portfolio/kairosarchive";
 import Software from "../Views/portfolio/Software";
 import Ai from "../Views/portfolio/ai"
 import Game from "../Views/portfolio/game"
+import Matte from "../Views/team/matteo"
+import Gab from "../Views/team/gab"
 
 export default function Router() {
   return (
@@ -52,6 +54,14 @@ export default function Router() {
           <Route
         path="/portfolio/game"
         element={<Game />}
+      />
+          <Route
+        path="/team/matteo"
+        element={<Matte />}
+      />
+          <Route
+        path="/team/gab"
+        element={<Gab />}
       />
     </Routes>
   );

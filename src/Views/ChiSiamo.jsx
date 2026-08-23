@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -16,7 +16,7 @@ const FIELD_PHASES = [
     title: "COMPLEXITY",
     statement: "READ THE SIGNAL",
     copy: "Entriamo nel problema senza semplificarlo troppo presto. Osserviamo flussi, attriti, dati e comportamento.",
-    accent: "#35d8ff",
+    
   },
   {
     id: "02",
@@ -39,27 +39,24 @@ const FIELD_PHASES = [
 const TEAM = [
   {
     id: "01",
-    name: "MATTEO POLI",
+    name: "POLI MATTEO",
     role: "SOFTWARE / AI / PRODUCT",
-    initials: "MP",
-    image: "/images/team/matteo-poli.webp",
+    image: "/img/team/matte2.png",
     accent: "#35d8ff",
-    description:
-      "Trasforma idee, dati e necessità operative in architetture digitali, automazioni e prodotti utilizzabili.",
+    link: "/team/matteo",
     fallback:
-      "radial-gradient(circle at 70% 25%, rgba(53,216,255,.32), transparent 32%), linear-gradient(145deg, #06141d, #05060b 55%, #010101)",
+      "radial-gradient(circle at 70% 25%, rgba(53,216,255,.32), transparent 12%), linear-gradient(145deg, #06141d, #05060b 55%, #010101)",
   },
   {
     id: "02",
-    name: "GABRIELE CHIERICI",
+    name: "CHIERICI GABRIELE",
     role: "CREATIVE / INTERACTIVE / DEVELOPMENT",
-    initials: "GC",
-    image: "/images/team/gabriele-chierici.webp",
+    link:"/team/gab",
+    image: "/img/team/gab.png",
     accent: "#8b5cf6",
-    description:
-      "Costruisce direzioni visive e sistemi interattivi in cui identità, movimento e tecnologia parlano la stessa lingua.",
+
     fallback:
-      "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 34%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
+      "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 12%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
   },
   {
     id: "03",
@@ -184,6 +181,7 @@ function SplitLetters({ text, attribute = "data-about-letter" }) {
 }
 
 export default function ChiSiamo() {
+  const navigate = useNavigate();
   const pageRef = useRef(null);
   const heroRef = useRef(null);
   const storyRef = useRef(null);
@@ -772,6 +770,8 @@ export default function ChiSiamo() {
             .filter(Boolean);
           const core = story.querySelector("[data-field-core]");
           const coreInner = story.querySelector("[data-field-core-inner]");
+          const coreMatteo = story.querySelector("[data-field-core-matteo]");
+          const coreGabriele = story.querySelector("[data-field-core-gabriele]");
           const scan = story.querySelector("[data-field-scan]");
           const progress = story.querySelector("[data-field-progress]");
           const counter = story.querySelector("[data-field-counter]");
@@ -815,6 +815,23 @@ export default function ChiSiamo() {
             scaleY: 0.12,
             transformOrigin: "center center",
           });
+
+          if (coreMatteo) {
+            gsap.set(coreMatteo, {
+              autoAlpha: 1,
+              scale: 1,
+              filter: "blur(0px)",
+            });
+          }
+
+          if (coreGabriele) {
+            gsap.set(coreGabriele, {
+              autoAlpha: 0,
+              scale: 1.08,
+              filter: "blur(8px)",
+            });
+          }
+
           setActivePhase(0);
 
           const fieldTimeline = gsap.timeline({
@@ -931,6 +948,46 @@ export default function ChiSiamo() {
             const label = `field-${index}`;
 
             fieldTimeline.addLabel(label, `+=${motion.phaseGap}`);
+
+            /*
+             * PHOTO SWITCH:
+             * slide 01 = Matteo
+             * from slide 02 onward = Gabriele
+             */
+            if (index === 1) {
+              if (coreMatteo) {
+                fieldTimeline.to(
+                  coreMatteo,
+                  {
+                    autoAlpha: 0,
+                    scale: 1.08,
+                    filter: "blur(7px)",
+                    duration: 0.34,
+                    ease: "power2.in",
+                  },
+                  label
+                );
+              }
+
+              if (coreGabriele) {
+                fieldTimeline.fromTo(
+                  coreGabriele,
+                  {
+                    autoAlpha: 0,
+                    scale: 0.92,
+                    filter: "blur(8px)",
+                  },
+                  {
+                    autoAlpha: 1,
+                    scale: 1,
+                    filter: "blur(0px)",
+                    duration: 0.48,
+                    ease: "power4.out",
+                  },
+                  `${label}+=0.18`
+                );
+              }
+            }
 
             if (previousTitle) {
               fieldTimeline.to(
@@ -1928,6 +1985,8 @@ export default function ChiSiamo() {
 
             [data-field-core],
             [data-field-core-inner],
+            [data-field-core-matteo],
+            [data-field-core-gabriele],
             [data-field-phase],
             [data-team-card],
             [data-team-media],
@@ -2269,18 +2328,39 @@ export default function ChiSiamo() {
           <div
             data-field-core
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[34vw] w-[34vw] min-h-[260px] min-w-[260px] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 border border-cyan-300/45"
+            className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[34vw] w-[34vw] min-h-[260px] min-w-[260px] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-white/15 bg-black"
           >
+            {/* SLIDE 01 — MATTEO */}
+            <img
+              data-field-core-matteo
+              src="/img/team/matteo.png"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+
+            {/* SLIDE 02+ — GABRIELE, stessa identica posizione */}
+            <img
+              data-field-core-gabriele
+              src="/img/team/gab2.png"
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+
+            {/* overlay tecnico comune alle due foto */}
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/[0.06] via-transparent to-fuchsia-500/[0.08]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/48 via-transparent to-black/12" />
+
+            {/* il vecchio inner resta come HUD, non contiene più una seconda foto */}
             <div
               data-field-core-inner
-              className="absolute inset-[18%] border border-violet-400/35"
+              className="absolute inset-[18%] border border-white/20"
             >
-              <div className="absolute left-1/2 top-[-18%] h-[136%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/35 to-transparent" />
-              <div className="absolute left-[-18%] top-1/2 h-px w-[136%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+              <div className="absolute left-1/2 top-[-18%] h-[136%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/25 to-transparent" />
+              <div className="absolute left-[-18%] top-1/2 h-px w-[136%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
             </div>
 
-            <div className="oxo-field-flicker absolute left-3 top-3 h-2 w-2 bg-cyan-300 shadow-[0_0_18px_rgba(53,216,255,.95)]" />
-            <div className="oxo-field-flicker absolute bottom-3 right-3 h-2 w-2 bg-fuchsia-400 shadow-[0_0_18px_rgba(255,79,216,.95)]" />
+            <div className="oxo-field-flicker absolute left-3 top-3 z-20 h-2 w-2 bg-cyan-300 shadow-[0_0_18px_rgba(53,216,255,.95)]" />
+            <div className="oxo-field-flicker absolute bottom-3 right-3 z-20 h-2 w-2 bg-fuchsia-400 shadow-[0_0_18px_rgba(255,79,216,.95)]" />
           </div>
 
           <div
@@ -2399,8 +2479,23 @@ export default function ChiSiamo() {
               <article
                 key={member.id}
                 data-team-card
-                className={`oxo-team-card group relative min-h-[72svh] overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
-                  index % 2 === 1 ? "lg:mt-[10vh]" : ""
+                role={member.link ? "link" : undefined}
+                tabIndex={member.link ? 0 : undefined}
+                aria-label={member.link ? `Apri la pagina di ${member.name}` : undefined}
+                onClick={() => {
+                  if (member.link) navigate(member.link);
+                }}
+                onKeyDown={(event) => {
+                  if (
+                    member.link &&
+                    (event.key === "Enter" || event.key === " ")
+                  ) {
+                    event.preventDefault();
+                    navigate(member.link);
+                  }
+                }}
+                className={`oxo-team-card group relative h-[72svh] min-h-[72svh] overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
+                  index % 2 === 1 ? "lg:translate-y-[18vh]" : ""
                 }`}
                 style={{ clipPath: FULL_CLIP }}
               >
