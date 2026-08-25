@@ -2187,7 +2187,7 @@ export default function ChiSiamo() {
               Independent digital studio
             </p>
 
-            <h1 className="avant-legato-font ombra2 relative z-10 overflow-hidden text-[17.5vw] uppercase leading-[0.69] tracking-[-0.075em] md:text-[12.5vw] lg:text-[12.2vw]">
+            <h1 className="avant-legato-font ombra2 relative z-10 overflow-hidden text-[13.2vw] uppercase leading-[0.69] tracking-[-0.075em] md:text-[9.6vw] lg:text-[8.6vw]">
               <SplitLetters text="CHI SIAMO" />
             </h1>
 
@@ -2348,7 +2348,7 @@ export default function ChiSiamo() {
                       <div className="overflow-hidden pb-[2vw]">
                         <h2
                           data-field-title
-                          className="avant-legato-font ombra2 text-[17.5vw] uppercase leading-[0.67] tracking-[-0.085em] md:text-[12.5vw] lg:text-[8.8vw]"
+                          className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.67] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw]"
                         >
                           {phase.title}
                         </h2>
@@ -2400,7 +2400,7 @@ export default function ChiSiamo() {
               <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
                 The people behind Oxo
               </p>
-              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[10vw] lg:text-[7.5vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9vw] lg:text-[8vw]">
                 IL TEAM
               </h2>
             </div>
@@ -2516,7 +2516,7 @@ export default function ChiSiamo() {
                 Il nostro metodo
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[9.2vw] lg:sticky lg:top-[12vh] lg:text-[6.2vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[9vw] lg:sticky lg:top-[12vh] lg:text-[8vw]">
                 COME
                 <br />
                 LAVORIAMO
@@ -2535,7 +2535,7 @@ export default function ChiSiamo() {
                   </span>
 
                   <div>
-                    <h3 className="oxo-process-title avant-legato-font text-[10vw] uppercase leading-[0.8] tracking-[-0.055em] transition-transform duration-500 ease-out md:text-[5.8vw] lg:text-[4.8vw]">
+                    <h3 className="oxo-process-title avant-legato-font text-[9vw] uppercase leading-[0.8] tracking-[-0.055em] transition-transform duration-500 ease-out md:text-[5.6vw] lg:text-[4.4vw]">
                       {step.title}
                     </h3>
                     <p className="avant-legato-font mt-4 max-w-[640px] text-base leading-snug text-gray-400 md:text-xl">
@@ -2574,7 +2574,7 @@ export default function ChiSiamo() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16.5vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[14vw] lg:text-[11.8vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[9vw] lg:text-[8vw]">
               <SplitLetters text="PARLIAMONE" attribute="data-final-letter" />
             </h2>
 

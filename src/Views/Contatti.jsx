@@ -866,7 +866,7 @@ export default function Contatti() {
 
             <h1
               aria-label="CONTATTI"
-              className="avant-legato-font ombra2 overflow-visible text-[17.5vw] uppercase leading-[0.67] tracking-[-0.082em] md:text-[12vw] lg:text-[12.1vw]"
+              className="avant-legato-font ombra2 overflow-visible whitespace-nowrap text-[13.2vw] uppercase leading-[0.67] tracking-[-0.082em] md:text-[12vw] lg:text-[12.1vw]"
             >
               <span data-contact-split-letter className="inline-block">C</span>
               <span data-contact-split-letter className="inline-block">O</span>
@@ -912,7 +912,7 @@ export default function Contatti() {
             <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
               Project brief
             </p>
-            <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9.3vw] lg:text-[6.8vw]">
+            <h2 className="avant-legato-font ombra2 whitespace-nowrap text-[10.8vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9.3vw] lg:text-[6.8vw]">
               PARLIAMONE
             </h2>
           </div>
@@ -1109,7 +1109,7 @@ export default function Contatti() {
                   <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
                     Direct contact
                   </p>
-                  <h3 className="avant-legato-font ombra2 text-[12vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[7.5vw] lg:text-[4.7vw]">
+                  <h3 className="avant-legato-font ombra2 text-[10.5vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[7.5vw] lg:text-[4.7vw]">
                     SCRIVI
                     <br />
                     DIRETTO
@@ -1157,7 +1157,7 @@ export default function Contatti() {
               <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
                 Coordinates
               </p>
-              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9.3vw] lg:text-[6.8vw]">
+              <h2 className="avant-legato-font ombra2 whitespace-nowrap text-[10.2vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9.3vw] lg:text-[6.8vw]">
                 DOVE TROVARCI
               </h2>
             </div>
@@ -1189,7 +1189,7 @@ export default function Contatti() {
                     >
                       {block.label}
                     </p>
-                    <p className="avant-legato-font break-words text-[5.8vw] uppercase leading-[0.88] tracking-[-0.035em] md:text-[3.3vw] lg:text-[2.05vw]">
+                    <p className="avant-legato-font break-words text-[4.6vw] uppercase leading-[0.9] tracking-[-0.035em] md:text-[3.3vw] lg:text-[2.05vw]">
                       {block.value}
                     </p>
                   </div>
@@ -1243,7 +1243,7 @@ export default function Contatti() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[14vw] lg:text-[11.5vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden whitespace-nowrap text-[12.2vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[14vw] lg:text-[11.5vw]">
               <SplitLetters
                 text="SCRIVICI"
                 attribute="data-contact-final-letter"

@@ -2717,7 +2717,7 @@ export default function Prodotti() {
               Digital systems with a point of view
             </p>
 
-            <h1 className="avant-legato-font ombra2 overflow-hidden text-[13vw] uppercase leading-[0.7] tracking-[-0.075em] md:text-[14vw] lg:text-[8.8vw]">
+            <h1 className="avant-legato-font ombra2 overflow-hidden text-[13.2vw] uppercase leading-[0.7] tracking-[-0.075em] md:text-[9.6vw] lg:text-[8.6vw]">
               <SplitLetters text="PRODOTTI" />
             </h1>
           </div>
@@ -2921,7 +2921,7 @@ export default function Prodotti() {
 
                   <h2
                     data-product-title
-                    className="avant-legato-font ombra2 max-w-[1200px] text-[clamp(2.6rem,6.4vw,6.6rem)] uppercase leading-[0.76] tracking-[-0.06em]"
+                    className="avant-legato-font ombra2 max-w-[1200px] text-[clamp(2.6rem,5.8vw,6rem)] uppercase leading-[0.76] tracking-[-0.06em]"
                   >
                     {product.title}
                   </h2>
@@ -3096,7 +3096,7 @@ export default function Prodotti() {
                   Dietro ogni prodotto
                 </p>
 
-                <h2 data-static-reveal className="avant-legato-font ombra2 text-[14vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[10.8vw] lg:text-[5.8vw]">
+                <h2 data-static-reveal className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[9vw] lg:text-[8vw]">
                   COME
                   <br />
                   PRENDE
@@ -3176,7 +3176,7 @@ export default function Prodotti() {
                           }
                         </p>
 
-                        <h3 data-static-reveal className="avant-legato-font ombra2 text-[8.8vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[6.4vw] lg:text-[4.6vw]">
+                        <h3 data-static-reveal className="avant-legato-font ombra2 text-[8.2vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[5.8vw] lg:text-[4.4vw]">
                           {
                             capability.title
                           }
@@ -3241,7 +3241,7 @@ export default function Prodotti() {
                 Product principles
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[13vw] uppercase leading-[0.74] tracking-[-0.07em] md:text-[8.8vw] lg:sticky lg:top-[11vh] lg:text-[5.8vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.74] tracking-[-0.07em] md:text-[9vw] lg:sticky lg:top-[11vh] lg:text-[8vw]">
                 <SplitWords text="NON SOLO BELLO. NECESSARIO." />
               </h2>
             </div>
@@ -3279,7 +3279,7 @@ export default function Prodotti() {
                       </span>
 
                       <div>
-                        <h3 className="oxo-principle-title avant-legato-font text-[7.2vw] uppercase leading-[0.86] tracking-[-0.045em] md:text-[4.3vw] lg:text-[3.45vw]">
+                        <h3 className="oxo-principle-title avant-legato-font text-[6.8vw] uppercase leading-[0.86] tracking-[-0.045em] md:text-[4.1vw] lg:text-[3.3vw]">
                           {
                             principle.title
                           }
@@ -3338,12 +3338,9 @@ export default function Prodotti() {
               </span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[13.5vw] uppercase leading-[0.71] tracking-[-0.075em] md:text-[11.5vw] lg:text-[8.8vw]">
-              <SplitLetters
-                text="COSTRUIAMOLO"
-                attribute="data-final-letter"
-              />
-            </h2>
+           <h2 className="avant-legato-font ombra2 overflow-hidden whitespace-nowrap text-[9.4vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[9vw] lg:text-[8vw]">
+              <SplitLetters text="COSTRUIAMOLO" attribute="data-final-letter" />
+           </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
               <p data-static-reveal className="avant-legato-font max-w-[820px] text-xl leading-snug text-gray-300 md:text-3xl">
