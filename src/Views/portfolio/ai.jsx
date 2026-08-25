@@ -1302,13 +1302,15 @@ export default function ArtificialIntelligence() {
             }
 
             .ai-hero-word {
-              left:6vw;
+              left:5vw;
+              right:5vw;
               bottom:14vh;
-              width:88vw;
+              width:auto;
+              text-align:center;
             }
 
             .ai-hero-word h1 {
-              font-size:15.5vw;
+              font-size:13.2vw;
             }
 
             .ai-core-node {
@@ -1458,7 +1460,7 @@ export default function ArtificialIntelligence() {
             }
 
             .ai-decision-result h2 {
-              font-size:16.5vw;
+              font-size:12.2vw;
             }
           }
 
@@ -1510,6 +1512,24 @@ export default function ArtificialIntelligence() {
           }
 
           @media (max-width:767px) {
+            /* MOBILE TYPO / ALIGNMENT — centered like the rest of OXO */
+            .ai-hero-word h1,
+            .ai-hero-word p,
+            .ai-decision-result,
+            .ai-decision-result h2 {
+              text-align:center;
+            }
+
+            .ai-decision-result {
+              left:50%;
+              width:92vw;
+            }
+
+            .ai-decision-result p {
+              margin-left:auto;
+              margin-right:auto;
+            }
+
             .ai-grid { background-size:42px 42px; }
 
             .ai-neural-mirror {
@@ -1531,7 +1551,7 @@ export default function ArtificialIntelligence() {
             }
 
             .ai-hero-word h1 {
-              font-size:16vw;
+              font-size:13.2vw;
             }
 
             .ai-process-core {
@@ -1897,19 +1917,19 @@ export default function ArtificialIntelligence() {
         >
           <div className="ai-grid pointer-events-none absolute inset-0 opacity-45" />
 
-          <div className="relative z-10 mb-14 flex flex-col gap-7 border-b border-white/14 pb-8 md:mb-20 md:flex-row md:items-end md:justify-between">
-            <div>
+          <div className="relative z-10 mb-14 flex flex-col gap-7 border-b border-white/14 pb-8 text-center md:mb-20 md:flex-row md:items-end md:justify-between md:text-left">
+            <div className="mx-auto md:mx-0">
               <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[.36em] text-violet-400 md:text-xs">
                 02 / AI INTERFACE
               </p>
-              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
                 INTELLIGENZA
                 <br />
                 OPERATIVA.
               </h2>
             </div>
 
-            <p className="avant-legato-font max-w-[650px] text-xl leading-snug text-gray-300 md:text-3xl">
+            <p className="avant-legato-font mx-auto max-w-[650px] text-xl leading-snug text-gray-300 md:mx-0 md:text-3xl">
               L’AI diventa utile quando entra in un flusso reale, con fonti,
               strumenti, controllo e risultati leggibili.
             </p>
@@ -2070,7 +2090,7 @@ export default function ArtificialIntelligence() {
         >
           <div className="ai-grid pointer-events-none absolute inset-0 opacity-48" />
 
-          <div className="relative z-10 mb-16 border-b border-white/14 pb-8 md:mb-24">
+          <div className="relative z-10 mb-16 border-b border-white/14 pb-8 text-center md:mb-24 md:text-left">
             <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[.36em] text-fuchsia-400 md:text-xs">
               03 / CAPABILITIES
             </p>
@@ -2095,7 +2115,7 @@ export default function ArtificialIntelligence() {
                   }}
                 />
 
-                <div className="relative z-10 flex h-full flex-col justify-between">
+                <div className="relative z-10 flex h-full flex-col justify-between text-center md:text-left">
                   <div className="flex items-center justify-between">
                     <span className="text-[9px] tracking-[.28em] text-white/28">
                       {item.id}
@@ -2110,7 +2130,7 @@ export default function ArtificialIntelligence() {
                   </div>
 
                   <div>
-                    <h3 className="ai-case-title avant-legato-font text-[8vw] uppercase leading-[.76] tracking-[-.06em] md:text-[5.2vw] lg:text-[3.6vw]">
+                    <h3 className="ai-case-title avant-legato-font text-[7.2vw] uppercase leading-[.76] tracking-[-.06em] md:text-[5.2vw] lg:text-[3.6vw]">
                       {item.title}
                     </h3>
 
@@ -2120,7 +2140,7 @@ export default function ArtificialIntelligence() {
                   </div>
 
                   <span
-                    className="avant-legato-font self-end text-3xl"
+                    className="avant-legato-font self-center text-3xl md:self-end"
                     style={{ color: item.accent }}
                   >
                     ↗
@@ -2140,42 +2160,41 @@ export default function ArtificialIntelligence() {
         >
           <div className="ai-grid pointer-events-none absolute inset-0 opacity-44" />
 
-          <div className="relative z-10 grid gap-14 lg:grid-cols-[1fr_.9fr] lg:gap-[8vw]">
-            <div>
-              <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[.36em] text-emerald-300 md:text-xs">
+          <div className="relative z-10 grid gap-12 md:gap-14 lg:grid-cols-[1fr_.9fr] lg:gap-[8vw]">
+            <div className="mx-auto w-full max-w-[920px] text-center md:mx-0 md:max-w-none md:text-left">
+              <p className="avant-legato-font mb-5 text-[9px] uppercase tracking-[.30em] text-emerald-300 sm:text-[10px] md:mb-4 md:text-xs md:tracking-[.36em]">
                 04 / ARCHITETTURA E CONTROLLO
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
-                INTELLIGENTE.
-                <br />
-                CONTROLLABILE.
+              <h2 className="avant-legato-font ombra2 mx-auto max-w-[94vw] text-[10.4vw] uppercase leading-[.74] tracking-[-.072em] md:mx-0 md:max-w-none md:text-[9vw] md:leading-[.7] lg:text-[6.8vw]">
+                <span className="block">INTELLIGENTE.</span>
+                <span className="block">CONTROLLABILE.</span>
               </h2>
 
-              <p className="avant-legato-font mt-9 max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl">
+              <p className="avant-legato-font mx-auto mt-7 max-w-[88vw] text-[17px] leading-[1.45] text-gray-300 sm:text-lg md:mx-0 md:mt-9 md:max-w-[760px] md:text-3xl md:leading-snug">
                 Modelli, fonti, permessi, logging e revisione umana fanno parte
                 della stessa architettura. L’AI non deve essere una scatola nera.
               </p>
             </div>
 
-            <div className="self-end border-t border-white/14">
+            <div className="mx-auto w-full max-w-[680px] self-end border-t border-white/14 md:mx-0 md:max-w-none">
               {STACK.map(([label, accent], index) => (
                 <div
                   key={label}
                   data-ai-stack-row
-                  className="ai-stack-row flex items-center justify-between border-b border-white/12 py-5 pl-5 md:py-6"
+                  className="ai-stack-row grid grid-cols-[34px_minmax(0,1fr)_18px] items-center gap-4 border-b border-white/12 py-5 md:flex md:items-center md:justify-between md:gap-0 md:pl-5 md:py-6"
                   style={{ "--stack-accent": accent }}
                 >
-                  <span className="text-[9px] tracking-[.28em] text-white/28">
+                  <span className="text-left text-[8px] tracking-[.24em] text-white/28 md:text-[9px] md:tracking-[.28em]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
-                  <span className="avant-legato-font text-xl uppercase tracking-[.08em] md:text-3xl">
+                  <span className="avant-legato-font text-center text-[17px] uppercase tracking-[.07em] md:text-left md:text-3xl md:tracking-[.08em]">
                     {label}
                   </span>
 
                   <span
-                    className="h-2.5 w-2.5 border"
+                    className="h-2.5 w-2.5 justify-self-end border"
                     style={{ borderColor: accent }}
                   />
                 </div>
@@ -2202,23 +2221,23 @@ export default function ArtificialIntelligence() {
             }}
           />
 
-          <div className="relative z-10 w-full">
+          <div className="relative z-10 w-full text-center md:text-left">
             <div
               data-ai-final-meta
-              className="mb-8 flex items-center justify-between border-b border-white/18 pb-5 text-[9px] uppercase tracking-[.31em] text-white/34 md:text-[11px]"
+              className="mb-8 flex flex-col items-center justify-center gap-2 border-b border-white/18 pb-5 text-[9px] uppercase tracking-[.31em] text-white/34 md:flex-row md:justify-between md:text-[11px]"
             >
               <span>OXO AI / CONTROLLED INTELLIGENCE</span>
               <span>HUMAN IN THE LOOP</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[15vw] uppercase leading-[.69] tracking-[-.085em] md:text-[11.8vw] lg:text-[9.2vw] [perspective:1000px]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-center text-[12.2vw] uppercase leading-[.69] tracking-[-.085em] md:text-left md:text-[11.8vw] lg:text-[9.2vw] [perspective:1000px]">
               <span className="block overflow-hidden pb-[.08em]">
                 <SplitLetters
                   text="CAPISCI."
                   attribute="data-ai-final-letter"
                 />
               </span>
-              <span className="block overflow-hidden pb-[.08em]">
+              <span className="block whitespace-nowrap overflow-hidden pb-[.08em] text-[10.6vw] md:text-[11.8vw] lg:text-[9.2vw]">
                 <SplitLetters
                   text="AUTOMATIZZA."
                   attribute="data-ai-final-letter"
@@ -2226,10 +2245,10 @@ export default function ArtificialIntelligence() {
               </span>
             </h2>
 
-            <div className="mt-8 flex flex-col gap-7 border-t border-white/18 pt-6 md:flex-row md:items-end md:justify-between">
+            <div className="mt-8 flex flex-col items-center gap-7 border-t border-white/18 pt-6 text-center md:flex-row md:items-end md:justify-between md:text-left">
               <p
                 data-ai-final-meta
-                className="avant-legato-font max-w-[860px] text-xl leading-snug text-gray-300 md:text-3xl"
+                className="avant-legato-font mx-auto max-w-[860px] text-xl leading-snug text-gray-300 md:mx-0 md:text-3xl"
               >
                 L’AI migliore non è quella che sembra più intelligente. È quella
                 che rende più chiaro un processo, riduce attrito e lascia il
@@ -2239,7 +2258,7 @@ export default function ArtificialIntelligence() {
               <Link
                 to="/Contatti"
                 data-ai-final-meta
-                className="avant-legato-font group inline-flex w-fit items-center gap-5 border border-white/30 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[.28em] text-white md:px-6 md:text-base"
+                className="avant-legato-font group mx-auto inline-flex w-fit items-center gap-5 border border-white/30 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[.28em] text-white md:mx-0 md:px-6 md:text-base"
               >
                 <span>Parliamo di AI</span>
                 <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">

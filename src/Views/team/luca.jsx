@@ -1391,7 +1391,8 @@ lanes.forEach((lane, index) => {
             }
 
             .luca-kernel-word {
-              font-size:20vw;
+              font-size:12.2vw;
+              line-height:.72;
             }
 
           }
@@ -1490,7 +1491,7 @@ lanes.forEach((lane, index) => {
               Filmmaker / Photographer
             </p>
 
-            <h1 className="avant-legato-font ombra2 overflow-hidden text-[17vw] uppercase leading-[.64] tracking-[-.09em] md:text-[12vw] lg:text-[9.5vw] [perspective:1200px]">
+            <h1 className="avant-legato-font ombra2 overflow-hidden text-[13.2vw] uppercase leading-[.66] tracking-[-.085em] md:text-[12vw] lg:text-[9.5vw] [perspective:1200px]">
               <span className="block overflow-hidden pb-[.06em]">
                 {"LUCA".split("").map((char, index) => (
                   <span
@@ -1601,7 +1602,7 @@ lanes.forEach((lane, index) => {
               <div className="overflow-hidden pb-[1vw]">
                 <h2
                   data-kernel-word
-                  className="luca-kernel-word luca-kernel-outline avant-legato-font ombra2 text-right"
+                  className="luca-kernel-word luca-kernel-outline avant-legato-font ombra2 whitespace-nowrap text-right"
                 >
                   ORDER
                 </h2>
@@ -1645,7 +1646,7 @@ lanes.forEach((lane, index) => {
                 02 / CREATIVE PRACTICE
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
                 VISUAL
                 <br />
                 PRACTICE.
@@ -1719,7 +1720,7 @@ lanes.forEach((lane, index) => {
               03 / VISUALD BY DESIGN
             </p>
 
-            <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
+            <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
               VISUALD
               <br />
               BY DESIGN.
@@ -2019,7 +2020,7 @@ lanes.forEach((lane, index) => {
               04 / VISUAL SYSTEMS
             </p>
 
-            <h2 className="avant-legato-font ombra2 text-[14vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
+            <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.7] tracking-[-.075em] md:text-[9vw] lg:text-[6.8vw]">
               IMAGES
               <br />
               IN MOTION.
@@ -2105,15 +2106,15 @@ lanes.forEach((lane, index) => {
               <span>REGIA / RIPRESE / MONTAGGIO</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[15vw] uppercase leading-[.69] tracking-[-.085em] md:text-[11.8vw] lg:text-[9.2vw] [perspective:1000px]">
-              <span className="block overflow-hidden pb-[.08em]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[.69] tracking-[-.085em] md:text-[11.8vw] lg:text-[9.2vw] [perspective:1000px]">
+              <span className="block whitespace-nowrap overflow-hidden pb-[.08em]">
                 <SplitLetters
                   text="FRAME."
                   attribute="data-luca-final-letter"
                 />
               </span>
 
-              <span className="block overflow-hidden pb-[.08em]">
+              <span className="block whitespace-nowrap overflow-hidden pb-[.08em]">
                 <SplitLetters
                   text="TELL."
                   attribute="data-luca-final-letter"
