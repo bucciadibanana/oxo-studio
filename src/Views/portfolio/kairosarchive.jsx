@@ -1613,7 +1613,7 @@ export default function KairosArchive() {
             }
 
             .kairos-card-center-title {
-              font-size: 20vw;
+              font-size: 14vw;
             }
 
             .kairos-card-center-sub {
@@ -2057,7 +2057,7 @@ export default function KairosArchive() {
           >
             <h2
               data-kairos-signal-lead-inner
-              className="avant-legato-font ombra2 text-center text-[14vw] uppercase leading-[.7] tracking-[-0.085em] md:text-[9vw]"
+              className="avant-legato-font ombra2 whitespace-nowrap text-center text-[11.2vw] uppercase leading-[.7] tracking-[-0.085em] md:text-[9vw]"
             >
               KAIROS ARCHIVE.
             </h2>
@@ -2178,7 +2178,7 @@ export default function KairosArchive() {
                 01 / DESTINATARI
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
                 PER CHI
                 <br />
                 È PENSATO.
@@ -2203,7 +2203,7 @@ export default function KairosArchive() {
                 </span>
 
                 <h3
-                  className="avant-legato-font text-[8vw] uppercase leading-none tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-3 md:text-[5vw] lg:text-[3.8vw]"
+                  className="avant-legato-font text-[7.2vw] uppercase leading-none tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-3 md:text-[5vw] lg:text-[3.8vw]"
                   style={{ color: "white" }}
                 >
                   {item.label}
@@ -2243,7 +2243,7 @@ export default function KairosArchive() {
               02 / INTERFACCIA
             </p>
 
-            <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
+            <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
               <span className="block overflow-hidden pb-[0.08em]">
                 <SplitLetters
                   text="PULITA."
@@ -2790,7 +2790,7 @@ export default function KairosArchive() {
                 03 / TECNOLOGIA E SICUREZZA
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
                 COSTRUITO
                 <br />
                 PER DURARE.
@@ -2867,7 +2867,7 @@ export default function KairosArchive() {
               <span>KNOWLEDGE / ORGANIZED</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16vw] uppercase leading-[.69] tracking-[-0.09em] md:text-[12vw] lg:text-[9.6vw] [perspective:1000px]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[.69] tracking-[-0.09em] md:text-[12vw] lg:text-[9.6vw] [perspective:1000px]">
               <span className="block overflow-hidden pb-[0.08em]">
                 <SplitLetters
                   text="VALORIZZA."

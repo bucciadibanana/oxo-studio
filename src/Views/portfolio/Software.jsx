@@ -1859,8 +1859,13 @@ export default function Software() {
           }
 
           @media (max-width: 767px) {
+            .software-build-word h1 {
+              font-size:13.2vw;
+              white-space:nowrap;
+            }
+
             .software-build-ghost {
-              font-size:22vw;
+              font-size:18vw;
             }
 
             .software-build-ghost-sub {
@@ -2329,7 +2334,7 @@ export default function Software() {
                 01 / PER CHI
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
                 PER CHI
                 <br />
                 LO PROGETTIAMO.
@@ -2354,7 +2359,7 @@ export default function Software() {
                 </span>
 
                 <h3
-                  className="avant-legato-font text-[8vw] uppercase leading-none tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-3 md:text-[5vw] lg:text-[3.8vw]"
+                  className="avant-legato-font text-[7.2vw] uppercase leading-none tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-3 md:text-[5vw] lg:text-[3.8vw]"
                   style={{ color: "white" }}
                 >
                   {item.label}
@@ -2394,7 +2399,7 @@ export default function Software() {
               02 / INTERFACCIA
             </p>
 
-            <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
+            <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw] [perspective:1000px]">
               <span className="block overflow-hidden pb-[0.08em]">
                 <SplitLetters
                   text="MODULARE."
@@ -2941,7 +2946,7 @@ export default function Software() {
                 03 / TECNOLOGIA E SICUREZZA
               </p>
 
-              <h2 className="avant-legato-font ombra2 text-[15vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.72] tracking-[-0.08em] md:text-[9vw] lg:text-[7vw]">
                 COMPILATO
                 <br />
                 PER SCALARE.
@@ -3018,7 +3023,7 @@ export default function Software() {
               <span>COMPLEXITY / ORGANIZED</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16vw] uppercase leading-[.69] tracking-[-0.09em] md:text-[12vw] lg:text-[9.6vw] [perspective:1000px]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[.69] tracking-[-0.09em] md:text-[12vw] lg:text-[9.6vw] [perspective:1000px]">
               <span className="block overflow-hidden pb-[0.08em]">
                 <SplitLetters
                   text="COSTRUISCI."
