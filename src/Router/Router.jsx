@@ -14,6 +14,7 @@ import Ai from "../Views/portfolio/ai"
 import Game from "../Views/portfolio/game"
 import Matte from "../Views/team/matteo"
 import Gab from "../Views/team/gab"
+import Luca from "../Views/team/luca"
 
 export default function Router() {
   return (
@@ -62,6 +63,10 @@ export default function Router() {
           <Route
         path="/team/gab"
         element={<Gab />}
+      />
+          <Route
+        path="/team/luca"
+        element={<Luca />}
       />
     </Routes>
   );

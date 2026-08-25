@@ -59,77 +59,19 @@ const TEAM = [
       "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 12%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
   },
   {
-    id: "03",
-    name: "ELIA SPAGNOLI",
-    role: "ROLE / SPECIALIZATION",
-    initials: "03",
-    image: "/images/team/team-03.webp",
-    accent: "#20f0c7",
-    description:
-      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
-    fallback:
-      "radial-gradient(circle at 72% 26%, rgba(32,240,199,.28), transparent 34%), linear-gradient(145deg, #041815, #05070a 56%, #010101)",
-  },
-  {
     id: "04",
     name: "LUCA ALBANI",
-    role: "ROLE / SPECIALIZATION",
-    initials: "04",
-    image: "/images/team/team-04.webp",
+    role: "PHOTOGRAPHER / VISUAL",
+    image: "/img/team/luca.jpg",
+   
+    link: "/team/luca",
     accent: "#ff4fd8",
     description:
-      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
+      "Fotografia, luce e composizione come parte dell’identità visiva OXO.",
     fallback:
       "radial-gradient(circle at 30% 28%, rgba(255,79,216,.28), transparent 34%), linear-gradient(145deg, #190515, #08060b 56%, #010101)",
   },
-  {
-    id: "05",
-    name: "NOME COGNOME",
-    role: "ROLE / SPECIALIZATION",
-    initials: "05",
-    image: "/images/team/team-05.webp",
-    accent: "#35d8ff",
-    description:
-      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
-    fallback:
-      "radial-gradient(circle at 64% 32%, rgba(53,216,255,.26), transparent 34%), linear-gradient(145deg, #06131b, #05060a 56%, #010101)",
-  },
-  {
-    id: "06",
-    name: "NOME COGNOME",
-    role: "ROLE / SPECIALIZATION",
-    initials: "06",
-    image: "/images/team/team-06.webp",
-    accent: "#8b5cf6",
-    description:
-      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
-    fallback:
-      "radial-gradient(circle at 28% 30%, rgba(139,92,246,.30), transparent 34%), linear-gradient(145deg, #12071d, #06070c 56%, #010101)",
-  },
-  {
-    id: "07",
-    name: "NOME COGNOME",
-    role: "ROLE / SPECIALIZATION",
-    initials: "07",
-    image: "/images/team/team-07.webp",
-    accent: "#20f0c7",
-    description:
-      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
-    fallback:
-      "radial-gradient(circle at 68% 24%, rgba(32,240,199,.26), transparent 34%), linear-gradient(145deg, #041713, #050708 56%, #010101)",
-  },
-  {
-    id: "08",
-    name: "NOME COGNOME",
-    role: "ROLE / SPECIALIZATION",
-    initials: "08",
-    image: "/images/team/team-08.webp",
-    accent: "#ff4fd8",
-    description:
-      "Inserisci qui una breve descrizione del ruolo, delle competenze e del contributo della persona ai progetti OXO.",
-    fallback:
-      "radial-gradient(circle at 30% 26%, rgba(255,79,216,.28), transparent 34%), linear-gradient(145deg, #190515, #08060b 56%, #010101)",
-  },
+ 
 ];
 
 const PROCESS = [
@@ -2234,11 +2176,7 @@ export default function ChiSiamo() {
               INDEPENDENT DIGITAL STUDIO
             </p>
 
-            <p data-about-meta className="text-right">
-              PEOPLE / PROCESS / SYSTEM
-              <br />
-              LA SPEZIA / ITALY
-            </p>
+           
           </div>
 
           <div data-hero-title className="relative z-10 my-auto py-14">
@@ -2512,6 +2450,7 @@ export default function ChiSiamo() {
                   src={member.image}
                   alt={member.name}
                   loading="lazy"
+                  style={{ objectPosition: member.imagePosition || "center center" }}
                   onLoad={() => ScrollTrigger.refresh()}
                   onError={(event) => {
                     event.currentTarget.style.display = "none";

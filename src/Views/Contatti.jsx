@@ -853,11 +853,7 @@ export default function Contatti() {
               START A CONVERSATION
             </p>
 
-            <p data-contact-meta className="text-right">
-              LA SPEZIA / ITALY
-              <br />
-              AVAILABLE / 2026
-            </p>
+           
           </div>
 
           <div data-contact-title className="relative z-20 my-auto py-14">

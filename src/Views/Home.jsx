@@ -2106,7 +2106,7 @@ export default function Home() {
                 <span className="h-px w-14 bg-cyan-300/65" />
                 <span>04 SYSTEMS</span>
               </div>
-              <h2 className="avant-legato-font ombra2 text-[16.5vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[10.5vw] lg:text-[7.8vw] [perspective:1000px]">
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
                 <span className="block overflow-hidden pb-[0.08em]">
                   <SplitLetters
                     text="BUILT"
@@ -2265,7 +2265,11 @@ export default function Home() {
                       }}
                     />
 
-                    <h3 className="oxo-capability-v2-title avant-legato-font ombra2 text-[15vw] uppercase leading-[.68] tracking-[-0.09em] transition-transform duration-700 ease-out md:text-[9vw] lg:text-[6.2vw]">
+                    <h3
+                      className={`oxo-capability-v2-title avant-legato-font ombra2 uppercase leading-[.68] tracking-[-0.09em] transition-transform duration-700 ease-out md:text-[9vw] lg:text-[6.2vw] ${
+                        item.title === "SOFTWARE" ? "text-[12vw]" : "text-[15vw]"
+                      }`}
+                    >
                       {item.title}
                     </h3>
 
@@ -2308,18 +2312,37 @@ export default function Home() {
               Selected systems
             </p>
             <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
-              <h2 className="avant-legato-font ombra2 text-[17vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
-                <span className="block overflow-hidden pb-[0.08em]">
-                  <SplitLetters
-                    text="WORK THAT"
-                    attribute="data-project-header-letter"
-                  />
+              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
+                {/* MOBILE */}
+                <span className="block md:hidden">
+                  <span className="block whitespace-nowrap overflow-hidden pb-[0.08em]">
+                    <SplitLetters
+                      text="WORK THAT"
+                      attribute="data-project-header-letter"
+                    />
+                  </span>
+                  <span className="block whitespace-nowrap overflow-hidden pb-[0.08em]">
+                    <SplitLetters
+                      text="CHANGES."
+                      attribute="data-project-header-letter"
+                    />
+                  </span>
                 </span>
-                <span className="block overflow-hidden pb-[0.08em]">
-                  <SplitLetters
-                    text="CHANGES."
-                    attribute="data-project-header-letter"
-                  />
+
+                {/* TABLET / DESKTOP */}
+                <span className="hidden md:block">
+                  <span className="block overflow-hidden pb-[0.08em]">
+                    <SplitLetters
+                      text="WORK THAT"
+                      attribute="data-project-header-letter"
+                    />
+                  </span>
+                  <span className="block overflow-hidden pb-[0.08em]">
+                    <SplitLetters
+                      text="CHANGES."
+                      attribute="data-project-header-letter"
+                    />
+                  </span>
                 </span>
               </h2>
               <p
@@ -2440,7 +2463,14 @@ export default function Home() {
                   </p>
 
                   <h3 className="oxo-project-v2-title avant-legato-font ombra2 text-[clamp(3rem,8.2vw,8.2rem)] uppercase leading-[.72] tracking-[-0.075em] transition-[letter-spacing] duration-700">
-                    {project.title}
+                    {project.title === "KAIROSARCHIVE" ? (
+                      <>
+                        <span className="md:hidden">KAIROS</span>
+                        <span className="hidden md:inline">KAIROSARCHIVE</span>
+                      </>
+                    ) : (
+                      project.title
+                    )}
                   </h3>
 
                   <p
@@ -2653,7 +2683,7 @@ export default function Home() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[16.5vw] uppercase leading-[.68] tracking-[-0.09em] md:text-[13.5vw] lg:text-[10.8vw]">
+            <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[.68] tracking-[-0.09em] md:text-[9vw] lg:text-[8vw]">
               <SplitLetters
                 text="BREAK FORM"
                 attribute="data-home-final-letter"
