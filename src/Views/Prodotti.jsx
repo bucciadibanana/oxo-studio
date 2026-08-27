@@ -149,23 +149,26 @@ const CAPABILITIES = [
 const PRINCIPLES = [
   {
     id: "01",
-    title: "UTILE PRIMA DI TUTTO",
+    code: "FUNCTION",
+    title: "FUNZIONE PRIMA DELL’EFFETTO",
     copy:
-      "Ogni effetto, interazione e funzione deve migliorare l’esperienza oppure non serve.",
+      "Ogni interazione deve avere uno scopo. Se non rende il prodotto più chiaro, rapido o utile, non entra nel sistema.",
     accent: "#35d8ff",
   },
   {
     id: "02",
-    title: "PENSATO COME SISTEMA",
+    code: "SYSTEM",
+    title: "UN SISTEMA, NON SCHERMATE",
     copy:
-      "Non costruiamo schermate isolate: progettiamo relazioni, regole e componenti capaci di durare.",
+      "Interfaccia, dati e logica vengono progettati come parti dello stesso organismo: coerente oggi, estendibile domani.",
     accent: "#8b5cf6",
   },
   {
     id: "03",
-    title: "PRONTO A EVOLVERE",
+    code: "EVOLUTION",
+    title: "PROGETTATO PER EVOLVERE",
     copy:
-      "Il prodotto non termina al lancio. Misura, apprende e cresce insieme alle persone che lo utilizzano.",
+      "Un prodotto digitale non è mai davvero finito. Deve poter misurare, adattarsi e crescere senza perdere identità.",
     accent: "#20f0c7",
   },
 ];
@@ -2351,58 +2354,99 @@ export default function Prodotti() {
           }
 
           /*
-           * PRINCIPLES
+           * PRINCIPLES / MANIFESTO SYSTEM
            */
+
+          .oxo-principle-card {
+            isolation: isolate;
+            transition:
+              transform .7s cubic-bezier(.16,1,.3,1),
+              border-color .45s ease,
+              background-color .45s ease;
+          }
 
           .oxo-principle-card::before {
             content: "";
-
             position: absolute;
-
             inset: 0;
-
+            z-index: 0;
             pointer-events: none;
-
-            opacity: 0;
-
+            opacity: .24;
             background:
-              radial-gradient(
-                circle at 15% 50%,
-                rgba(255,255,255,.07),
+              linear-gradient(
+                100deg,
+                var(--principle-accent-soft),
                 transparent 34%
               );
-
-            transform:
-              translateX(-8%);
-
+            transform: scaleX(.7);
+            transform-origin: left center;
             transition:
-              opacity .5s ease,
-              transform .75s
-              cubic-bezier(.16,1,.3,1);
+              transform .8s cubic-bezier(.16,1,.3,1),
+              opacity .5s ease;
+          }
+
+          .oxo-principle-card::after {
+            content: "";
+            position: absolute;
+            right: -8%;
+            top: 50%;
+            width: 34%;
+            aspect-ratio: 1;
+            border: 1px solid rgba(255,255,255,.05);
+            transform: translateY(-50%) rotate(18deg);
+            pointer-events: none;
+            opacity: .55;
+            transition:
+              transform .85s cubic-bezier(.16,1,.3,1),
+              border-color .45s ease;
+          }
+
+          .oxo-principle-card:hover {
+            transform: translateX(-1.3vw);
+            border-color: rgba(255,255,255,.34);
           }
 
           .oxo-principle-card:hover::before {
-            opacity: 1;
+            opacity: .5;
+            transform: scaleX(1);
+          }
 
-            transform:
-              translateX(0);
+          .oxo-principle-card:hover::after {
+            transform: translateY(-50%) rotate(45deg) scale(1.08);
+            border-color: var(--principle-accent);
           }
 
           .oxo-principle-title {
             transition:
-              transform .55s
-              cubic-bezier(.16,1,.3,1),
-              letter-spacing .55s
-              cubic-bezier(.16,1,.3,1);
+              transform .7s cubic-bezier(.16,1,.3,1),
+              letter-spacing .7s cubic-bezier(.16,1,.3,1);
           }
 
-          .oxo-principle-card:hover
-          .oxo-principle-title {
-            transform:
-              translateX(1.2vw);
+          .oxo-principle-card:hover .oxo-principle-title {
+            transform: translateX(.8vw);
+            letter-spacing: -.055em;
+          }
 
-            letter-spacing:
-              -.035em;
+          .oxo-principle-index {
+            transition:
+              transform .7s cubic-bezier(.16,1,.3,1),
+              opacity .45s ease;
+          }
+
+          .oxo-principle-card:hover .oxo-principle-index {
+            transform: translateY(-10px) scale(1.08);
+            opacity: .16;
+          }
+
+          .oxo-principle-code {
+            transition:
+              letter-spacing .55s cubic-bezier(.16,1,.3,1),
+              color .35s ease;
+          }
+
+          .oxo-principle-card:hover .oxo-principle-code {
+            letter-spacing: .48em;
+            color: #fff;
           }
 
           /*
@@ -3235,66 +3279,142 @@ export default function Prodotti() {
         >
           <div className="oxo-products-grid pointer-events-none absolute inset-0 opacity-55" />
 
-          <div className="relative z-10 grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-[8vw]">
-            <div>
-              <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.35em] text-violet-400 md:text-xs">
-                Product principles
-              </p>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -left-[16vw] top-[12%] h-[46vw] w-[46vw] rounded-full blur-[100px]"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(139,92,246,.14), rgba(53,216,255,.07) 40%, transparent 72%)",
+            }}
+          />
 
-              <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.74] tracking-[-0.07em] md:text-[9vw] lg:sticky lg:top-[11vh] lg:text-[8vw]">
-                <SplitWords text="NON SOLO BELLO. NECESSARIO." />
-              </h2>
+          <div className="relative z-10">
+            <div className="mb-16 grid gap-8 border-b border-white/20 pb-10 md:mb-24 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
+              <div>
+                <p
+                  data-static-reveal
+                  className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-violet-400 md:text-xs"
+                >
+                  Product principles / 03
+                </p>
+
+                <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[9vw] lg:text-[8vw]">
+                  <span className="block overflow-hidden">
+                    <SplitWords text="NON SOLO" />
+                  </span>
+                  <span className="block overflow-hidden">
+                    <SplitWords text="BELLO." />
+                  </span>
+                  <span className="block overflow-hidden text-white/35">
+                    <SplitWords text="NECESSARIO." />
+                  </span>
+                </h2>
+              </div>
+
+              <div className="lg:justify-self-end lg:pb-2">
+                <p
+                  data-static-reveal
+                  className="avant-legato-font max-w-[650px] text-xl leading-snug text-gray-300 md:text-3xl"
+                >
+                  Non partiamo dagli effetti. Partiamo da ciò che il prodotto
+                  deve fare, da come deve funzionare e da quanto deve riuscire
+                  a crescere.
+                </p>
+
+                <div
+                  data-static-reveal
+                  className="mt-8 flex items-center gap-4 text-[9px] uppercase tracking-[0.34em] text-white/35 md:text-[11px]"
+                >
+                  <span className="h-2 w-2 border border-cyan-300" />
+                  <span>FUNCTION → SYSTEM → EVOLUTION</span>
+                </div>
+              </div>
             </div>
 
-            <div className="border-t border-white/20">
-              {PRINCIPLES.map(
-                (principle) => (
-                  <article
-                    key={principle.id}
-                    data-principle-card
-                    className="oxo-principle-card relative min-h-[270px] overflow-hidden border-b border-white/20 py-9 md:min-h-[330px] md:py-12"
+            <div className="relative border-t border-white/20">
+              {PRINCIPLES.map((principle, index) => (
+                <article
+                  key={principle.id}
+                  data-principle-card
+                  className={`oxo-principle-card relative overflow-hidden border-b border-white/20 ${
+                    index === 1 ? "lg:ml-[4vw]" : index === 2 ? "lg:ml-[8vw]" : ""
+                  }`}
+                  style={{
+                    "--principle-accent": principle.accent,
+                    "--principle-accent-soft": `${principle.accent}18`,
+                    clipPath: FULL_CLIP,
+                  }}
+                >
+                  <span
+                    data-principle-line
+                    className="absolute left-0 top-0 z-10 h-px w-full origin-left"
                     style={{
-                      background:
-                        `linear-gradient(90deg, ${principle.accent}0d, transparent 48%)`,
-
-                      clipPath:
-                        FULL_CLIP,
+                      background: `linear-gradient(90deg, ${principle.accent}, ${principle.accent}55, transparent 78%)`,
+                      boxShadow: `0 0 20px ${principle.accent}33`,
                     }}
-                  >
-                    <span
-                      data-principle-line
-                      className="absolute left-0 top-0 h-px w-full origin-left"
-                      style={{
-                        backgroundColor:
-                          principle.accent,
-                      }}
-                    />
+                  />
 
-                    <div
-                      data-principle-content
-                      className="grid grid-cols-[50px_1fr] gap-4 md:grid-cols-[78px_1fr] md:gap-8"
-                    >
-                      <span className="avant-legato-font pt-2 text-[9px] tracking-[0.24em] text-gray-500 md:text-[10px]">
+                  <span
+                    aria-hidden="true"
+                    className="oxo-principle-index avant-legato-font pointer-events-none absolute -right-[1vw] top-1/2 z-[1] -translate-y-1/2 text-[30vw] leading-none tracking-[-0.11em] text-white/[0.035] md:text-[22vw] lg:text-[15vw]"
+                  >
+                    {principle.id}
+                  </span>
+
+                  <div
+                    data-principle-content
+                    className="relative z-10 grid min-h-[290px] items-center gap-8 py-10 md:min-h-[350px] md:grid-cols-[90px_1fr] md:gap-8 md:py-14 lg:min-h-[390px] lg:grid-cols-[110px_minmax(0,1fr)_260px] lg:gap-[3vw]"
+                  >
+                    <div className="flex items-start md:h-full md:flex-col md:justify-between">
+                      <span className="avant-legato-font text-[10px] tracking-[0.3em] text-white/35 md:text-xs">
                         {principle.id}
                       </span>
 
-                      <div>
-                        <h3 className="oxo-principle-title avant-legato-font text-[6.8vw] uppercase leading-[0.86] tracking-[-0.045em] md:text-[4.1vw] lg:text-[3.3vw]">
-                          {
-                            principle.title
-                          }
-                        </h3>
-
-                        <p className="avant-legato-font mt-5 max-w-[660px] text-[15px] leading-[1.45] text-gray-400 md:text-lg lg:text-xl">
-                          {
-                            principle.copy
-                          }
-                        </p>
-                      </div>
+                      <span
+                        className="hidden h-16 w-px md:block"
+                        style={{
+                          background: `linear-gradient(to bottom, ${principle.accent}, transparent)`,
+                        }}
+                      />
                     </div>
-                  </article>
-                )
-              )}
+
+                    <div>
+                      <p
+                        className="oxo-principle-code avant-legato-font mb-5 text-[9px] uppercase tracking-[0.36em] md:text-[10px]"
+                        style={{ color: principle.accent }}
+                      >
+                        {principle.code}
+                      </p>
+
+                      <h3 className="oxo-principle-title avant-legato-font ombra2 max-w-[980px] text-[9.2vw] uppercase leading-[0.78] tracking-[-0.065em] md:text-[5.4vw] lg:text-[4.2vw]">
+                        {principle.title}
+                      </h3>
+
+                      <p className="avant-legato-font mt-6 max-w-[780px] text-[16px] leading-[1.45] text-gray-300 md:text-xl lg:text-2xl">
+                        {principle.copy}
+                      </p>
+                    </div>
+
+                    <div className="hidden lg:flex lg:h-full lg:flex-col lg:items-end lg:justify-between">
+                      <span
+                        className="h-3 w-3 border"
+                        style={{ borderColor: principle.accent }}
+                      />
+
+                      <p className="avant-legato-font max-w-[220px] text-right text-[9px] uppercase leading-[1.7] tracking-[0.28em] text-white/28">
+                        OXO / PRODUCT SYSTEM
+                        <br />
+                        PRINCIPLE {principle.id}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-8 flex items-center justify-between border-t border-white/20 pt-5 text-[9px] uppercase tracking-[0.3em] text-white/30 md:text-[11px]">
+              <span>NO DECORATION WITHOUT PURPOSE</span>
+              <span>OXO / PRODUCT LOGIC</span>
             </div>
           </div>
         </section>
@@ -3310,7 +3430,7 @@ export default function Prodotti() {
           <div
             data-final-orb
             aria-hidden="true"
-            className="pointer-events-none absolute -right-[10vw] bottom-[-8vw] h-[50vw] w-[50vw] rounded-full blur-[90px]"
+            className="pointer-events-none absolute -right-[30vw] bottom-[-8vw] h-[50vw] w-[100vw] rounded-full blur-[90px]"
             style={{
               background:
                 "radial-gradient(circle, rgba(53,216,255,.20), rgba(139,92,246,.13) 38%, rgba(255,79,216,.08) 56%, transparent 74%)",
