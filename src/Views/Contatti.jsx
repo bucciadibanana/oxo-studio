@@ -149,14 +149,7 @@ export default function Contatti() {
           { xPercent: 0, opacity: 0.32, filter: "blur(0px)", duration: 1.35, delay: 0.28, ease: "power4.out" }
         );
 
-        gsap.to(heroOutline, {
-          xPercent: -13,
-          yPercent: 6,
-          skewX: -4,
-          opacity: 0.07,
-          ease: "none",
-          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
-        });
+        // CONTACT HERO OUTLINE: resta fisso durante lo scroll.
       }
 
       if (heroRibbon) {
@@ -165,16 +158,7 @@ export default function Contatti() {
           { scaleX: 1, scaleY: 1, rotate: 0, opacity: 0.82, filter: "blur(0px)", duration: 1.5, delay: 0.18, ease: "power4.out" }
         );
 
-        gsap.to(heroRibbon, {
-          scaleX: 1.34,
-          scaleY: 0.5,
-          rotate: 6,
-          xPercent: 15,
-          yPercent: 10,
-          opacity: 0.16,
-          ease: "none",
-          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1.05 },
-        });
+        // CONTACT HERO RIBBON: resta fisso durante lo scroll.
       }
 
       if (heroSweep) {
@@ -183,13 +167,7 @@ export default function Contatti() {
           { xPercent: 135, opacity: 0.88, duration: 1.7, delay: 0.46, ease: "power3.inOut" }
         );
 
-        gsap.to(heroSweep, {
-          yPercent: 44,
-          rotate: -4,
-          opacity: 0.08,
-          ease: "none",
-          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
-        });
+        // CONTACT HERO SWEEP: resta fisso durante lo scroll.
       }
 
       if (heroSlice) {
@@ -206,18 +184,7 @@ export default function Contatti() {
           }
         );
 
-        gsap.to(heroSlice, {
-          xPercent: 20,
-          yPercent: -10,
-          opacity: 0.08,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
+        // CONTACT HERO SLICE: resta fisso durante lo scroll.
       }
 
       if (heroSliceInner) {
@@ -241,44 +208,13 @@ export default function Contatti() {
           }
         );
 
-        gsap.to(heroVeil, {
-          xPercent: 165,
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-          },
-        });
+        // CONTACT HERO VEIL: resta fisso durante lo scroll.
       }
 
-      heroSplitLetters.forEach((letter, index) => {
-        const direction = index % 2 === 0 ? -1 : 1;
-        const distance = 8 + (index % 4) * 4;
-
-        gsap.to(letter, {
-          xPercent: direction * distance,
-          yPercent: index % 3 === 0 ? -10 : 7,
-          rotateZ: direction * (1.2 + (index % 3) * 0.55),
-          rotateX: index % 2 === 0 ? -4 : 3,
-          scaleY: index % 2 === 0 ? 1.035 : 0.975,
-          opacity: index % 2 === 0 ? 0.78 : 0.64,
-          transformPerspective: 1200,
-          ease: "none",
-          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
-        });
-      });
+        // CONTACT HERO SPLIT LETTERS: resta fisso durante lo scroll.
 
       if (heroTitle) {
-        gsap.to(heroTitle, {
-          yPercent: 17,
-          scale: 0.94,
-          opacity: 0.34,
-          ease: "none",
-          scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 1 },
-        });
+        // CONTACT HERO HERO TITLE: resta fisso durante lo scroll.
       }
 
       if (heroRibbon && heroOutline && !window.matchMedia("(pointer: coarse)").matches) {
