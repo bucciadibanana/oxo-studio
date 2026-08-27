@@ -59,7 +59,7 @@ const TEAM = [
       "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 12%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
   },
   {
-    id: "04",
+    id: "03",
     name: "LUCA ALBANI",
     role: "PHOTOGRAPHER / VISUAL",
     image: "/img/team/luca.jpg",
@@ -299,31 +299,34 @@ export default function ChiSiamo() {
         );
 
         gsap.to(heroLens, {
-          scale: 1.62,
-          rotate: 24,
-          xPercent: 18,
-          yPercent: -10,
-          opacity: 0.2,
+          scale: 1.14,
+          rotate: 8,
+          xPercent: 3,
+          yPercent: -2,
+          opacity: 0.88,
           ease: "none",
           scrollTrigger: {
             trigger: hero,
             start: "top top",
             end: "bottom top",
             scrub: 1,
+            invalidateOnRefresh: true,
           },
         });
       }
 
       if (heroLensRing) {
         gsap.to(heroLensRing, {
-          rotate: 180,
-          scale: 1.12,
+          rotate: 72,
+          scale: 1.06,
+          opacity: 0.9,
           ease: "none",
           scrollTrigger: {
             trigger: hero,
             start: "top top",
             end: "bottom top",
             scrub: 1.15,
+            invalidateOnRefresh: true,
           },
         });
       }
@@ -411,15 +414,16 @@ export default function ChiSiamo() {
         );
 
         gsap.to(heroLensAperture, {
-          scale: 1.85,
-          rotate: 54,
-          opacity: 0.08,
+          scale: 1.18,
+          rotate: 24,
+          opacity: 0.42,
           ease: "none",
           scrollTrigger: {
             trigger: hero,
             start: "top top",
             end: "bottom top",
             scrub: 1,
+            invalidateOnRefresh: true,
           },
         });
       }
@@ -714,6 +718,7 @@ export default function ChiSiamo() {
           const coreInner = story.querySelector("[data-field-core-inner]");
           const coreMatteo = story.querySelector("[data-field-core-matteo]");
           const coreGabriele = story.querySelector("[data-field-core-gabriele]");
+          const coreVideo = story.querySelector("[data-field-core-video]");
           const scan = story.querySelector("[data-field-scan]");
           const progress = story.querySelector("[data-field-progress]");
           const counter = story.querySelector("[data-field-counter]");
@@ -771,6 +776,22 @@ export default function ChiSiamo() {
               autoAlpha: 0,
               scale: 1.08,
               filter: "blur(8px)",
+            });
+          }
+
+          if (coreVideo) {
+            storyVideos = [
+              ...new Set([...storyVideos, coreVideo]),
+            ];
+
+            gsap.set(coreVideo, {
+              autoAlpha: 0,
+              scale: 1.08,
+              filter: "blur(8px)",
+            });
+
+            coreVideo.play().catch(() => {
+              // Il video e' muted: il browser lo avviera' appena consentito.
             });
           }
 
@@ -927,6 +948,45 @@ export default function ChiSiamo() {
                     ease: "power4.out",
                   },
                   `${label}+=0.18`
+                );
+              }
+            }
+
+            /*
+             * SLIDE 03 / BUILD THE SYSTEM:
+             * la foto di Gabriele lascia spazio al video del team.
+             */
+            if (index === 2) {
+              if (coreGabriele) {
+                fieldTimeline.to(
+                  coreGabriele,
+                  {
+                    autoAlpha: 0,
+                    scale: 1.08,
+                    filter: "blur(7px)",
+                    duration: 0.34,
+                    ease: "power2.in",
+                  },
+                  label
+                );
+              }
+
+              if (coreVideo) {
+                fieldTimeline.fromTo(
+                  coreVideo,
+                  {
+                    autoAlpha: 0,
+                    scale: 0.94,
+                    filter: "blur(8px)",
+                  },
+                  {
+                    autoAlpha: 1,
+                    scale: 1,
+                    filter: "blur(0px)",
+                    duration: 0.52,
+                    ease: "power4.out",
+                  },
+                  `${label}+=0.16`
                 );
               }
             }
@@ -2276,7 +2336,7 @@ export default function ChiSiamo() {
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
 
-            {/* SLIDE 02+ — GABRIELE, stessa identica posizione */}
+            {/* SLIDE 02 — GABRIELE, stessa identica posizione */}
             <img
               data-field-core-gabriele
               src="/img/team/gab2.png"
@@ -2284,7 +2344,20 @@ export default function ChiSiamo() {
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
 
-            {/* overlay tecnico comune alle due foto */}
+            {/* SLIDE 03 — BUILD THE SYSTEM / VIDEO TEAM */}
+            <video
+              data-field-core-video
+              src="/img/team/noi.mp4"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+            />
+
+            {/* overlay tecnico comune a foto e video */}
             <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/[0.06] via-transparent to-fuchsia-500/[0.08]" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/48 via-transparent to-black/12" />
 
@@ -2442,11 +2515,11 @@ export default function ChiSiamo() {
                   style={{ background: member.fallback }}
                 />
 
-                <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-70" />
+                <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-24" />
 
                 <img
                   data-team-media
-                  className="oxo-team-image absolute inset-0 h-full w-full object-cover opacity-80 transition-[transform,filter] duration-700 ease-out"
+                  className="oxo-team-image absolute inset-0 h-full w-full object-cover opacity-100 transition-[transform,filter] duration-700 ease-out"
                   src={member.image}
                   alt={member.name}
                   loading="lazy"
@@ -2458,7 +2531,7 @@ export default function ChiSiamo() {
                   }}
                 />
 
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black via-black/15 to-black/35" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/58 via-black/0 to-black/5" />
 
                 <p
                   aria-hidden="true"
