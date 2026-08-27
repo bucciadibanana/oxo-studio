@@ -656,7 +656,7 @@ export default function ChiSiamo() {
           const coreInner = story.querySelector("[data-field-core-inner]");
           const coreMatteo = story.querySelector("[data-field-core-matteo]");
           const coreGabriele = story.querySelector("[data-field-core-gabriele]");
-          const coreVideo = story.querySelector("[data-field-core-video]");
+          const coreThird = story.querySelector("[data-field-core-third]");
           const scan = story.querySelector("[data-field-scan]");
           const progress = story.querySelector("[data-field-progress]");
           const counter = story.querySelector("[data-field-counter]");
@@ -717,20 +717,22 @@ export default function ChiSiamo() {
             });
           }
 
-          if (coreVideo) {
-            storyVideos = [
-              ...new Set([...storyVideos, coreVideo]),
-            ];
-
-            gsap.set(coreVideo, {
+          if (coreThird) {
+            gsap.set(coreThird, {
               autoAlpha: 0,
               scale: 1.08,
               filter: "blur(8px)",
             });
 
-            coreVideo.play().catch(() => {
-              // Il video e' muted: il browser lo avviera' appena consentito.
-            });
+            if (coreThird instanceof HTMLVideoElement) {
+              storyVideos = [
+                ...new Set([...storyVideos, coreThird]),
+              ];
+
+              coreThird.play().catch(() => {
+                // Il video e' muted: il browser lo avviera' appena consentito.
+              });
+            }
           }
 
           setActivePhase(0);
@@ -909,9 +911,9 @@ export default function ChiSiamo() {
                 );
               }
 
-              if (coreVideo) {
+              if (coreThird) {
                 fieldTimeline.fromTo(
-                  coreVideo,
+                  coreThird,
                   {
                     autoAlpha: 0,
                     scale: 0.94,
@@ -2264,12 +2266,12 @@ export default function ChiSiamo() {
           <div
             data-field-core
             aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 z-[4] h-[34vw] w-[34vw] min-h-[260px] min-w-[260px] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-white/15 bg-black"
+            className="pointer-events-none absolute left-[62%] top-1/2 z-[4] h-[34vw] w-[34vw] min-h-[260px] min-w-[260px] max-h-[560px] max-w-[560px] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-white/15 bg-black md:left-[64%] lg:left-[66%]"
           >
-            {/* SLIDE 01 — MATTEO */}
+            {/* SLIDE 01 — LOGO */}
             <img
               data-field-core-matteo
-              src="/img/team/matteo.png"
+              src="/img/team/logo.jpg"
               alt=""
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
@@ -2282,17 +2284,12 @@ export default function ChiSiamo() {
               className="absolute inset-0 h-full w-full object-cover object-center"
             />
 
-            {/* SLIDE 03 — BUILD THE SYSTEM / VIDEO TEAM */}
-            <video
-              data-field-core-video
-              src="/img/team/noi.mp4"
+            {/* SLIDE 03 — MATTEO */}
+            <img
+              data-field-core-third
+              src="/img/team/matteo.png"
+              alt=""
               className="absolute inset-0 h-full w-full object-cover object-center"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              aria-hidden="true"
             />
 
             {/* overlay tecnico comune a foto e video */}
