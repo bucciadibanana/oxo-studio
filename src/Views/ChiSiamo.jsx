@@ -298,37 +298,11 @@ export default function ChiSiamo() {
           }
         );
 
-        gsap.to(heroLens, {
-          scale: 1.14,
-          rotate: 8,
-          xPercent: 3,
-          yPercent: -2,
-          opacity: 0.88,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+        // Hero lens component 1: nessuna trasformazione durante lo scroll.
       }
 
       if (heroLensRing) {
-        gsap.to(heroLensRing, {
-          rotate: 72,
-          scale: 1.06,
-          opacity: 0.9,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1.15,
-            invalidateOnRefresh: true,
-          },
-        });
+        // Hero lens component 2: nessuna trasformazione durante lo scroll.
       }
 
 
@@ -351,19 +325,7 @@ export default function ChiSiamo() {
           }
         );
 
-        heroLensSlices.forEach((slice, index) => {
-          gsap.to(slice, {
-            xPercent: index === 0 ? -20 : index === 1 ? 16 : -11,
-            skewX: index === 1 ? 3 : -2,
-            ease: "none",
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "bottom top",
-              scrub: 1 + index * 0.08,
-            },
-          });
-        });
+        // Hero lens component 3: nessuna trasformazione durante lo scroll.
       }
 
       if (heroLensNodes.length) {
@@ -380,19 +342,7 @@ export default function ChiSiamo() {
           }
         );
 
-        heroLensNodes.forEach((node, index) => {
-          gsap.to(node, {
-            rotate: index % 2 === 0 ? 90 : -90,
-            scale: index % 3 === 0 ? 1.7 : 1.15,
-            ease: "none",
-            scrollTrigger: {
-              trigger: hero,
-              start: "top top",
-              end: "bottom top",
-              scrub: 1.1,
-            },
-          });
-        });
+        // Hero lens component 4: nessuna trasformazione durante lo scroll.
       }
 
       if (heroLensAperture) {
@@ -413,19 +363,7 @@ export default function ChiSiamo() {
           }
         );
 
-        gsap.to(heroLensAperture, {
-          scale: 1.18,
-          rotate: 24,
-          opacity: 0.42,
-          ease: "none",
-          scrollTrigger: {
-            trigger: hero,
-            start: "top top",
-            end: "bottom top",
-            scrub: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+        // Hero lens component 5: nessuna trasformazione durante lo scroll.
       }
 
       if (heroSweep) {
