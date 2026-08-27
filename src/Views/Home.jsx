@@ -137,6 +137,7 @@ export default function Home() {
   const [brainActive, setBrainActive] = useState(true);
 
   const pageRef = useRef(null);
+  const introRef = useRef(null);
   const heroRef = useRef(null);
   const signalRef = useRef(null);
   const capabilitiesRef = useRef(null);
@@ -146,6 +147,7 @@ export default function Home() {
 
   useLayoutEffect(() => {
     const page = pageRef.current;
+    const intro = introRef.current;
     const hero = heroRef.current;
     const signal = signalRef.current;
     const capabilities = capabilitiesRef.current;
@@ -155,6 +157,7 @@ export default function Home() {
 
     if (
       !page ||
+      !intro ||
       !hero ||
       !signal ||
       !capabilities ||
@@ -321,6 +324,7 @@ export default function Home() {
            * blur, pin e scrub più adatti alla viewport.
            */
           const motion = {
+            introDistance: desktop ? 3.55 : tablet ? 2.85 : 2.35,
             heroDistance: desktop ? 2.15 : tablet ? 1.65 : 1.38,
             signalDistance: desktop ? 1.9 : tablet ? 1.52 : 1.3,
             heroOxoX: desktop ? -38 : tablet ? -29 : -21,
@@ -488,14 +492,41 @@ export default function Home() {
           const heroCopy = hero.querySelector("[data-hero-copy]");
           const heroGhost = hero.querySelector("[data-hero-ghost]");
 
+          /*
+           * ============================================================
+           * INTRO MASTER TIMELINE
+           * HERO + SIGNAL = UN SOLO SCROLL CONTINUO / UN SOLO PIN.
+           * ============================================================
+           */
+          gsap.set(signal, {
+            autoAlpha: 0,
+            scale: 0.94,
+            yPercent: 8,
+            transformOrigin: "50% 50%",
+          });
+
+          gsap.set(signalCopy, { autoAlpha: 0, y: 42, scale: 0.94 });
+          gsap.set(signalRows, { opacity: 0.16 });
+          gsap.set(signalWindow, {
+            scale: 0.62,
+            rotate: -28,
+            opacity: 0,
+            borderRadius: "50%",
+          });
+          gsap.set(signalCross, {
+            scale: 0.62,
+            rotate: -36,
+            opacity: 0,
+          });
+
           const heroTimeline = gsap.timeline({
             defaults: { ease: "none" },
             scrollTrigger: {
-              trigger: hero,
+              trigger: intro,
               start: "top top",
-              end: () => `+=${window.innerHeight * motion.heroDistance}`,
+              end: () => `+=${window.innerHeight * motion.introDistance}`,
               pin: true,
-              scrub: 1,
+              scrub: 0.82,
               anticipatePin: 1,
               invalidateOnRefresh: true,
             },
@@ -505,26 +536,105 @@ export default function Home() {
             .to(
               heroOxo,
               {
-                xPercent: motion.heroOxoX,
-                scaleX: motion.heroOxoScale,
-                skewX: -8,
-                opacity: 0.16,
-                filter: "blur(3px)",
-                duration: 1,
+                xPercent: motion.heroOxoX * 0.72,
+                scaleX: 1 + (motion.heroOxoScale - 1) * 0.72,
+                skewX: -5,
+                opacity: 0.42,
+                filter: "blur(1.5px)",
+                duration: 0.72,
               },
               0
             )
             .to(
               heroStudio,
               {
-                xPercent: motion.heroStudioX,
-                scaleX: motion.heroStudioScale,
-                skewX: 7,
-                opacity: 0.15,
-                filter: "blur(3px)",
-                duration: 1,
+                xPercent: motion.heroStudioX * 0.72,
+                scaleX: 1 + (motion.heroStudioScale - 1) * 0.72,
+                skewX: 5,
+                opacity: 0.4,
+                filter: "blur(1.5px)",
+                duration: 0.72,
               },
               0
+            )
+            .to(
+              heroBrain,
+              {
+                scale: 1.72,
+                rotateZ: motion.heroBrainRotate * 0.38,
+                opacity: 0.72,
+                filter: "blur(2px)",
+                duration: 0.72,
+              },
+              0
+            )
+            .to(
+              heroCopy,
+              {
+                y: motion.heroCopyY * 0.48,
+                opacity: 0.42,
+                duration: 0.64,
+              },
+              0
+            )
+            .to(
+              heroGhost,
+              {
+                scale: 1.24,
+                rotate: -3,
+                opacity: 0.08,
+                duration: 0.72,
+              },
+              0
+            );
+
+          // SIGNAL entra PRIMA che HERO abbia finito: nessuno stacco.
+          heroTimeline
+            .to(
+              signal,
+              {
+                autoAlpha: 1,
+                scale: 1,
+                yPercent: 0,
+                duration: 0.62,
+                ease: "power2.out",
+              },
+              0.46
+            )
+            .to(signalRows, { opacity: 1, duration: 0.58 }, 0.48)
+            .to(
+              signalWindow,
+              {
+                scale: 1,
+                rotate: 0,
+                opacity: 1,
+                borderRadius: "50%",
+                duration: 0.62,
+                ease: "power3.out",
+              },
+              0.48
+            )
+            .to(
+              signalCross,
+              {
+                scale: 1,
+                rotate: 0,
+                opacity: 1,
+                duration: 0.62,
+                ease: "power3.out",
+              },
+              0.5
+            )
+            .to(
+              hero,
+              {
+                autoAlpha: 0,
+                scale: 1.035,
+                filter: "blur(8px)",
+                duration: 0.48,
+                ease: "power2.in",
+              },
+              0.58
             )
             .to(
               heroBrain,
@@ -533,67 +643,33 @@ export default function Home() {
                 rotateZ: motion.heroBrainRotate,
                 opacity: 0,
                 filter: "blur(14px)",
-                duration: 1,
+                duration: 0.48,
               },
-              0
-            )
-            .to(
-              heroCopy,
-              {
-                y: motion.heroCopyY,
-                opacity: 0,
-                duration: 0.55,
-              },
-              0
-            )
-            .to(
-              heroGhost,
-              {
-                scale: 1.65,
-                rotate: -8,
-                opacity: 0.12,
-                duration: 1,
-              },
-              0
+              0.56
             );
 
-          gsap.set(signalCopy, { autoAlpha: 0, y: 45 });
-
-          signalTimeline = gsap.timeline({
-            defaults: { ease: "none" },
-            scrollTrigger: {
-              trigger: signal,
-              start: "top top",
-              end: () => `+=${window.innerHeight * motion.signalDistance}`,
-              pin: true,
-              scrub: 1,
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          });
-
           signalRows.forEach((row, index) => {
-            signalTimeline.to(
+            heroTimeline.to(
               row,
               {
                 xPercent: index % 2 === 0 ? -24 : 24,
                 skewX: index % 2 === 0 ? -4 : 4,
-                duration: 1,
+                duration: 1.15,
               },
-              0
+              0.86
             );
           });
 
-          signalTimeline
+          heroTimeline
             .to(
               signalWindow,
               {
                 scale: motion.signalWindowScale,
                 rotate: 210,
                 borderRadius: "12%",
-                duration: 1,
+                duration: 1.15,
               },
-              0
+              0.86
             )
             .to(
               signalCross,
@@ -601,28 +677,24 @@ export default function Home() {
                 rotate: 180,
                 scale: 0.3,
                 opacity: 0,
-                duration: 0.8,
+                duration: 0.92,
               },
-              0
+              0.88
             )
             .to(
               signalCopy,
               {
                 autoAlpha: 1,
                 y: 0,
-                duration: 0.35,
-                ease: "power2.out",
+                scale: 1,
+                duration: 0.44,
+                ease: "power3.out",
               },
-              0.34
+              1.18
             )
-            .to(
-              signalCopy,
-              {
-                scale: 1.08,
-                duration: 0.55,
-              },
-              0.45
-            );
+            .to(signalCopy, { scale: 1.08, duration: 0.62 }, 1.34);
+
+          signalTimeline = null;
 
           /*
            * CAPABILITIES TITLE — SPLIT TEXT
@@ -1897,9 +1969,13 @@ export default function Home() {
           }
         `}</style>
 
+        <div
+          ref={introRef}
+          className="relative h-[100svh] min-h-[650px] w-full overflow-hidden bg-[#020203]"
+        >
         <section
           ref={heroRef}
-          className="oxo-v2-noise relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden px-5 pb-7 pt-[90px] md:px-9 md:pb-10 lg:px-[3vw] lg:pb-[4vh]"
+          className="oxo-v2-noise absolute inset-0 z-20 flex min-h-[100svh] w-full flex-col justify-between overflow-hidden px-5 pb-7 pt-[90px] md:px-9 md:pb-10 lg:px-[3vw] lg:pb-[4vh]"
         >
           <div className="oxo-v2-grid pointer-events-none absolute inset-0" />
 
@@ -2028,7 +2104,7 @@ export default function Home() {
 
         <section
           ref={signalRef}
-          className="oxo-v2-noise relative flex h-[100svh] min-h-[650px] items-center overflow-hidden bg-[#050506]"
+          className="oxo-v2-noise absolute inset-0 z-10 flex h-[100svh] min-h-[650px] items-center overflow-hidden bg-[#050506]"
         >
           <div className="oxo-v2-grid pointer-events-none absolute inset-0 opacity-70" />
 
@@ -2089,6 +2165,7 @@ export default function Home() {
             </h2>
           </div>
         </section>
+        </div>
 
         <section
           ref={capabilitiesRef}
