@@ -2518,7 +2518,7 @@ export default function ChiSiamo() {
           <div className="oxo-flow-glow top-[-18vh] bg-[radial-gradient(circle,rgba(139,92,246,.30),rgba(53,216,255,.10)_48%,transparent_72%)]" />
           <div className="oxo-about-grid pointer-events-none absolute inset-0 opacity-55" />
 
-          <div className="relative z-10 grid gap-14 lg:grid-cols-[.75fr_1.25fr] lg:gap-[8vw]">
+          <div className="relative z-10 grid gap-10 lg:grid-cols-[.34fr_1.66fr] lg:gap-[1.5vw]">
             <div>
               <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
                 Il nostro metodo
@@ -2536,7 +2536,7 @@ export default function ChiSiamo() {
                 <article
                   key={step.id}
                   data-process-row
-                  className="oxo-process-row group grid min-h-[180px] grid-cols-[48px_1fr_auto] items-center gap-4 border-b border-white/20 py-8 md:min-h-[220px] md:grid-cols-[70px_1fr_auto] md:gap-7"
+                  className="oxo-process-row group grid min-h-[180px] grid-cols-[34px_1fr_auto] items-center gap-2 border-b border-white/20 py-8 md:min-h-[220px] md:grid-cols-[42px_1fr_auto] md:gap-3"
                 >
                   <span className="avant-legato-font self-start pt-2 text-[10px] tracking-[0.28em] text-gray-500 md:text-xs">
                     {step.id}
