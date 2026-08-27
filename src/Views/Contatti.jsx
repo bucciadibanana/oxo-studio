@@ -581,7 +581,7 @@ export default function Contatti() {
 
           .oxo-contact-slice-inner {
             position: absolute;
-            left: 50%;
+            left: 60%;
             top: 50%;
             transform: translate(-50%, -50%);
             white-space: nowrap;
