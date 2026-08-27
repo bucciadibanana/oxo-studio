@@ -2967,7 +2967,14 @@ export default function Prodotti() {
                     data-product-title
                     className="avant-legato-font ombra2 max-w-[1200px] text-[clamp(2.6rem,5.8vw,6rem)] uppercase leading-[0.76] tracking-[-0.06em]"
                   >
-                    {product.title}
+                    {product.title === "KAIROSARCHIVE" ? (
+                      <>
+                        <span className="md:hidden">KAIROS</span>
+                        <span className="hidden md:inline">KAIROSARCHIVE</span>
+                      </>
+                    ) : (
+                      product.title
+                    )}
                   </h2>
 
                   <p className="avant-legato-font mt-6 max-w-[710px] text-lg leading-snug text-gray-200 md:text-2xl lg:text-3xl">
