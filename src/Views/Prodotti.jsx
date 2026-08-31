@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -203,6 +203,7 @@ function SplitWords({ text }) {
 
 export default function Prodotti() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const pageRef = useRef(null);
   const heroRef = useRef(null);
@@ -210,6 +211,9 @@ export default function Prodotti() {
   const capabilitiesRef = useRef(null);
   const principlesRef = useRef(null);
   const finalRef = useRef(null);
+  const productHoverTimerRef = useRef(null);
+  const productHoverCardRef = useRef(null);
+  const productScrollTimerRef = useRef(null);
 
 
   /*
@@ -2007,6 +2011,159 @@ export default function Prodotti() {
   }, [location.key]);
 
   /*
+   * PRODUCT HOVER INTENT
+   *
+   * Il reveal NON parte solo perché durante lo scroll la card passa
+   * sotto al cursore. Parte soltanto dopo una breve permanenza reale
+   * del mouse sulla card. Durante lo scroll viene spento subito.
+   */
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const page = pageRef.current;
+    if (!page) return undefined;
+
+    const cards = Array.from(
+      page.querySelectorAll(".oxo-product-card")
+    );
+
+    if (!cards.length) return undefined;
+
+    const clearHoverTimer = () => {
+      if (productHoverTimerRef.current) {
+        window.clearTimeout(productHoverTimerRef.current);
+        productHoverTimerRef.current = null;
+      }
+    };
+
+    const deactivateCard = (card) => {
+      if (!card) return;
+      card.classList.remove("is-product-intent");
+    };
+
+    const deactivateAll = () => {
+      clearHoverTimer();
+
+      cards.forEach((card) => {
+        card.classList.remove("is-product-intent");
+      });
+
+      productHoverCardRef.current = null;
+    };
+
+    const activateWithIntent = (card) => {
+      clearHoverTimer();
+
+      productHoverCardRef.current = card;
+
+      productHoverTimerRef.current = window.setTimeout(() => {
+        if (productHoverCardRef.current !== card) return;
+
+        cards.forEach((item) => {
+          if (item !== card) {
+            item.classList.remove("is-product-intent");
+          }
+        });
+
+        card.classList.add("is-product-intent");
+        productHoverTimerRef.current = null;
+      }, 420);
+    };
+
+    const cleanup = [];
+
+    cards.forEach((card) => {
+      const onPointerEnter = (event) => {
+        if (event.pointerType === "touch") return;
+        activateWithIntent(card);
+      };
+
+      const onPointerMove = (event) => {
+        if (event.pointerType === "touch") return;
+
+        /*
+         * Se la card è entrata sotto al cursore durante lo scroll,
+         * il reveal rimane fermo finché l'utente non muove davvero
+         * il puntatore dentro la card.
+         */
+        if (
+          productHoverCardRef.current !== card &&
+          !card.classList.contains("is-product-intent")
+        ) {
+          activateWithIntent(card);
+        }
+      };
+
+      const onPointerLeave = () => {
+        clearHoverTimer();
+
+        if (productHoverCardRef.current === card) {
+          productHoverCardRef.current = null;
+        }
+
+        deactivateCard(card);
+      };
+
+      const onFocus = () => {
+        card.classList.add("is-product-intent");
+      };
+
+      const onBlur = () => {
+        card.classList.remove("is-product-intent");
+      };
+
+      card.addEventListener("pointerenter", onPointerEnter);
+      card.addEventListener("pointermove", onPointerMove, { passive: true });
+      card.addEventListener("pointerleave", onPointerLeave);
+      card.addEventListener("focus", onFocus);
+      card.addEventListener("blur", onBlur);
+
+      cleanup.push(() => {
+        card.removeEventListener("pointerenter", onPointerEnter);
+        card.removeEventListener("pointermove", onPointerMove);
+        card.removeEventListener("pointerleave", onPointerLeave);
+        card.removeEventListener("focus", onFocus);
+        card.removeEventListener("blur", onBlur);
+      });
+    });
+
+    const onScroll = () => {
+      deactivateAll();
+
+      if (productScrollTimerRef.current) {
+        window.clearTimeout(productScrollTimerRef.current);
+      }
+
+      /*
+       * Dopo che lo scroll si è fermato non attiviamo nulla da soli.
+       * Serve un nuovo movimento/permanenza del mouse sulla card.
+       */
+      productScrollTimerRef.current = window.setTimeout(() => {
+        productScrollTimerRef.current = null;
+      }, 180);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("wheel", onScroll, { passive: true });
+    window.addEventListener("touchmove", onScroll, { passive: true });
+
+    return () => {
+      deactivateAll();
+
+      if (productScrollTimerRef.current) {
+        window.clearTimeout(productScrollTimerRef.current);
+        productScrollTimerRef.current = null;
+      }
+
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onScroll);
+      window.removeEventListener("touchmove", onScroll);
+
+      cleanup.forEach((fn) => fn());
+    };
+  }, [location.key]);
+
+  /*
    * RESPONSIVE REFRESH SICURO
    *
    * Su mobile la barra del browser cambia continuamente l'altezza
@@ -2295,6 +2452,240 @@ export default function Prodotti() {
               rgba(255,255,255,.06);
 
             will-change: transform;
+          }
+
+          /* PRODUCT CARD / CINEMATIC AWWWARDS REVEAL */
+          .oxo-product-card {
+            isolation: isolate;
+          }
+
+          .oxo-product-card:focus-visible {
+            box-shadow: inset 0 0 0 1px var(--product-accent);
+          }
+
+          .oxo-product-card [data-product-frame] video {
+            transition:
+              transform .95s cubic-bezier(.16,1,.3,1),
+              filter .6s ease;
+          }
+
+          .oxo-product-card.is-product-intent [data-product-frame] video,
+          .oxo-product-card:focus-visible [data-product-frame] video {
+            transform: scale(1.11);
+            filter: brightness(.48) saturate(.74) contrast(1.16);
+          }
+
+          .oxo-product-reveal {
+            opacity: 0;
+            transition: opacity .28s ease;
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-reveal,
+          .oxo-product-card:focus-visible .oxo-product-reveal {
+            opacity: 1;
+          }
+
+          .oxo-product-reveal-black {
+            background:
+              radial-gradient(
+                circle at 72% 48%,
+                color-mix(in srgb, var(--product-accent) 9%, transparent),
+                transparent 31%
+              ),
+              linear-gradient(
+                to top,
+                rgba(0,0,0,.94) 0%,
+                rgba(0,0,0,.78) 34%,
+                rgba(0,0,0,.24) 67%,
+                rgba(0,0,0,.08) 100%
+              );
+            opacity: 0;
+            transform: translateY(16%);
+            transition:
+              opacity .45s ease,
+              transform .8s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-reveal-black,
+          .oxo-product-card:focus-visible .oxo-product-reveal-black {
+            opacity: 1;
+            transform: translateY(0);
+          }
+
+          .oxo-product-reveal-copy {
+            opacity: 0;
+            transform: translateY(54px);
+            filter: blur(12px);
+            transition:
+              opacity .35s ease .08s,
+              transform .8s cubic-bezier(.16,1,.3,1),
+              filter .55s ease;
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-reveal-copy,
+          .oxo-product-card:focus-visible .oxo-product-reveal-copy {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+          }
+
+          .oxo-product-reveal-ghost {
+            opacity: 0;
+            transform: translateX(10vw) skewX(-8deg);
+            filter: blur(14px);
+            transition:
+              opacity .45s ease,
+              transform 1s cubic-bezier(.16,1,.3,1),
+              filter .65s ease;
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-reveal-ghost,
+          .oxo-product-card:focus-visible .oxo-product-reveal-ghost {
+            opacity: .38;
+            transform: translateX(-2vw) skewX(0deg);
+            filter: blur(0);
+          }
+
+          .oxo-product-reveal-scan {
+            opacity: 0;
+            transform: translateX(-55%) rotate(-7deg);
+            transition:
+              opacity .3s ease,
+              transform 1.15s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-reveal-scan,
+          .oxo-product-card:focus-visible .oxo-product-reveal-scan {
+            opacity: .85;
+            transform: translateX(55%) rotate(-7deg);
+          }
+
+          @keyframes oxoProductRingCW {
+            to { transform: rotate(360deg); }
+          }
+
+          @keyframes oxoProductRingCCW {
+            to { transform: rotate(-360deg); }
+          }
+
+          @keyframes oxoProductPortalPulse {
+            0%, 100% {
+              transform: translate(-50%, -50%) scale(.72);
+              opacity: .42;
+            }
+            50% {
+              transform: translate(-50%, -50%) scale(1.5);
+              opacity: 1;
+            }
+          }
+
+          .oxo-product-portal {
+            opacity: 0;
+            transform: translateY(-50%) scale(.55) rotate(-24deg);
+            filter: blur(10px);
+            transition:
+              opacity .38s ease .1s,
+              transform .9s cubic-bezier(.16,1,.3,1),
+              filter .55s ease;
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-portal,
+          .oxo-product-card:focus-visible .oxo-product-portal {
+            opacity: 1;
+            transform: translateY(-50%) scale(1) rotate(0deg);
+            filter: blur(0);
+          }
+
+          .oxo-product-ring {
+            border-color:
+              color-mix(in srgb, var(--product-accent) 70%, white 12%);
+            box-shadow:
+              0 0 32px
+              color-mix(in srgb, var(--product-accent) 18%, transparent);
+          }
+
+          .oxo-product-ring--outer {
+            animation: oxoProductRingCW 8s linear infinite;
+            background:
+              conic-gradient(
+                from 0deg,
+                transparent 0 18deg,
+                color-mix(in srgb, var(--product-accent) 72%, transparent) 19deg 21deg,
+                transparent 22deg 72deg,
+                rgba(255,255,255,.45) 73deg 74deg,
+                transparent 75deg 132deg,
+                color-mix(in srgb, var(--product-accent) 55%, transparent) 133deg 136deg,
+                transparent 137deg 360deg
+              );
+            -webkit-mask:
+              radial-gradient(circle, transparent 0 43%, black 45% 49%, transparent 51%);
+            mask:
+              radial-gradient(circle, transparent 0 43%, black 45% 49%, transparent 51%);
+          }
+
+          .oxo-product-ring--middle {
+            opacity: .8;
+            animation: oxoProductRingCCW 5.3s linear infinite;
+          }
+
+          .oxo-product-ring--inner {
+            opacity: .58;
+            animation: oxoProductRingCW 3.6s linear infinite;
+          }
+
+          .oxo-product-portal-core {
+            animation: oxoProductPortalPulse 1.5s ease-in-out infinite;
+          }
+
+          .oxo-product-corner {
+            opacity: 0;
+            transform: scale(.55);
+            transition:
+              opacity .3s ease,
+              transform .65s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-corner,
+          .oxo-product-card:focus-visible .oxo-product-corner {
+            opacity: .85;
+            transform: scale(1);
+          }
+
+          .oxo-product-card.is-product-intent [data-product-content],
+          .oxo-product-card:focus-visible [data-product-content] {
+            opacity: 0 !important;
+            transform: translateY(-42px) scale(.97) !important;
+            filter: blur(10px) !important;
+          }
+
+          .oxo-product-card.is-product-intent [data-product-specs],
+          .oxo-product-card:focus-visible [data-product-specs] {
+            opacity: 0 !important;
+            transform: translateY(30px) !important;
+            filter: blur(8px) !important;
+          }
+
+          .oxo-product-tap-hint {
+            z-index: 5;
+          }
+
+          @media (max-width: 767px) {
+            .oxo-product-reveal-copy,
+            .oxo-product-portal,
+            .oxo-product-reveal-ghost,
+            .oxo-product-reveal-scan,
+            .oxo-product-corner {
+              display: none;
+            }
+
+            .oxo-product-reveal {
+              opacity: 1;
+            }
+
+            .oxo-product-reveal-black {
+              opacity: 0;
+              transform: none;
+            }
           }
 
           /*
@@ -2799,7 +3190,17 @@ export default function Prodotti() {
               <article
                 key={product.id}
                 data-product-panel
-                className="oxo-products-noise absolute inset-0 overflow-hidden"
+                role="link"
+                tabIndex={0}
+                aria-label={`Apri ${product.title}`}
+                onClick={() => navigate(product.link)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    navigate(product.link);
+                  }
+                }}
+                className="oxo-product-card oxo-products-noise group absolute inset-0 cursor-pointer overflow-hidden outline-none"
                 style={{
                   opacity:
                     productIndex === 0 ? 1 : 0,
@@ -2811,6 +3212,7 @@ export default function Prodotti() {
 
                   zIndex:
                     productIndex + 1,
+                  "--product-accent": product.accent,
                 }}
               >
                 {/* media */}
@@ -2914,6 +3316,115 @@ export default function Prodotti() {
                   {product.statement}
                 </p>
 
+                {/* PRODUCT REVEAL / CINEMATIC AWWWARDS */}
+                <div
+                  aria-hidden="true"
+                  className="oxo-product-reveal pointer-events-none absolute inset-0 z-[58] overflow-hidden"
+                >
+                  {/* blackout cinematico dal basso */}
+                  <div className="oxo-product-reveal-black absolute inset-0" />
+
+                  {/* scan diagonale */}
+                  <div
+                    className="oxo-product-reveal-scan absolute left-[-18%] top-[42%] h-px w-[136%] -rotate-[7deg]"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${product.accent}88, rgba(255,255,255,.85), ${product.accent}55, transparent)`,
+                      boxShadow: `0 0 28px ${product.accent}55`,
+                    }}
+                  />
+
+                  {/* ghost enorme che attraversa la card */}
+                  <p
+                    className="oxo-product-reveal-ghost avant-legato-font ombra2 absolute left-[-3vw] top-[16%] whitespace-nowrap text-[15vw] uppercase leading-none tracking-[-0.085em]"
+                    style={{
+                      color: "transparent",
+                      WebkitTextStroke: `1px ${product.accent}55`,
+                    }}
+                  >
+                    {product.title === "KAIROSARCHIVE" ? "KAIROS" : product.title}
+                  </p>
+
+                  {/* manifesto ENTER PRODUCT */}
+                  <div className="oxo-product-reveal-copy absolute bottom-[8vh] left-[5vw] z-[4]">
+                    <p
+                      className="avant-legato-font mb-4 text-[8px] uppercase tracking-[0.46em] md:text-[10px]"
+                      style={{ color: product.accent }}
+                    >
+                      OXO / ACCESS PRODUCT {product.id}
+                    </p>
+
+                    <p className="avant-legato-font ombra2 text-[12vw] uppercase leading-[0.66] tracking-[-0.085em] text-white md:text-[7.2vw] lg:text-[5.6vw]">
+                      ENTER
+                      <br />
+                      PRODUCT
+                    </p>
+
+                    <div className="mt-5 flex items-center gap-4">
+                      <span
+                        className="h-px w-16 md:w-24"
+                        style={{
+                          background: `linear-gradient(90deg, ${product.accent}, transparent)`,
+                        }}
+                      />
+                      <span className="avant-legato-font text-[7px] uppercase tracking-[0.34em] text-white/35 md:text-[9px]">
+                        CLICK / OPEN / EXPLORE
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* portale tecnico decentrato */}
+                  <div
+                    className="oxo-product-portal absolute right-[6vw] top-1/2 z-[4] h-[180px] w-[180px] -translate-y-1/2 md:h-[230px] md:w-[230px] lg:h-[290px] lg:w-[290px]"
+                    style={{ "--product-accent": product.accent }}
+                  >
+                    <span className="oxo-product-ring oxo-product-ring--outer absolute inset-0 rounded-full border" />
+                    <span className="oxo-product-ring oxo-product-ring--middle absolute inset-[11%] rounded-full border border-dashed" />
+                    <span className="oxo-product-ring oxo-product-ring--inner absolute inset-[27%] rounded-full border" />
+
+                    <span className="absolute left-1/2 top-[-10%] h-[120%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/28 to-transparent" />
+                    <span className="absolute left-[-10%] top-1/2 h-px w-[120%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/28 to-transparent" />
+
+                    <span
+                      className="oxo-product-portal-core absolute left-1/2 top-1/2 h-3 w-3 rounded-full"
+                      style={{
+                        backgroundColor: product.accent,
+                        boxShadow: `0 0 28px ${product.accent}, 0 0 70px ${product.accent}77`,
+                      }}
+                    />
+
+                    <span
+                      className="avant-legato-font absolute left-1/2 top-[9%] -translate-x-1/2 whitespace-nowrap text-[6px] uppercase tracking-[0.38em] md:text-[7px]"
+                      style={{ color: product.accent }}
+                    >
+                      ACCESS
+                    </span>
+
+                    <span className="avant-legato-font absolute bottom-[8%] left-1/2 -translate-x-1/2 whitespace-nowrap text-[6px] uppercase tracking-[0.34em] text-white/30 md:text-[7px]">
+                      OXO / {product.id}
+                    </span>
+                  </div>
+
+                  {/* corner brackets */}
+                  <span
+                    className="oxo-product-corner oxo-product-corner--tl absolute left-[3vw] top-[3vw] h-7 w-7 border-l border-t"
+                    style={{ borderColor: product.accent }}
+                  />
+                  <span
+                    className="oxo-product-corner oxo-product-corner--br absolute bottom-[3vw] right-[3vw] h-7 w-7 border-b border-r"
+                    style={{ borderColor: product.accent }}
+                  />
+
+                  {/* mobile hint */}
+                  <div className="oxo-product-tap-hint absolute bottom-5 right-5 z-[5] border border-white/20 bg-black/55 px-3 py-2 backdrop-blur-md md:hidden">
+                    <span
+                      className="avant-legato-font text-[8px] uppercase tracking-[0.3em]"
+                      style={{ color: product.accent }}
+                    >
+                      TAP / ENTER
+                    </span>
+                  </div>
+                </div>
+
                 {/* top left */}
 
                 <div data-static-slide className="avant-legato-font absolute left-7 top-7 z-50 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
@@ -2942,7 +3453,7 @@ export default function Prodotti() {
 
                 <div
                   data-product-content
-                  className="absolute bottom-12 left-7 z-50 max-w-[900px] pr-7 md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
+                  className="absolute bottom-12 left-7 z-50 max-w-[900px] pr-7 transition-all duration-300 ease-out group-hover:-translate-y-[8vh] group-hover:scale-[0.97] group-hover:opacity-0 group-focus-visible:-translate-y-[8vh] group-focus-visible:scale-[0.97] group-focus-visible:opacity-0 md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
                   style={{
                     opacity:
                       productIndex === 0 ? 1 : 0,
@@ -3003,6 +3514,7 @@ export default function Prodotti() {
 
                   <Link
                     to={product.link}
+                    onClick={(event) => event.stopPropagation()}
                     data-magnetic
                     className="oxo-products-link avant-legato-font relative mt-8 inline-flex items-center gap-5 pb-2 text-xs uppercase tracking-[0.28em] md:mt-10 md:text-sm"
                     style={{
@@ -3024,7 +3536,7 @@ export default function Prodotti() {
 
                 <div
                   data-product-specs
-                  className="absolute bottom-12 right-7 z-50 hidden w-[300px] border-t border-white/25 md:bottom-16 md:right-12 lg:block lg:bottom-[7vh] lg:right-[5vw] lg:w-[340px]"
+                  className="absolute bottom-12 right-7 z-50 hidden w-[300px] border-t border-white/25 transition-all duration-300 ease-out group-hover:translate-y-8 group-hover:opacity-0 group-focus-visible:translate-y-8 group-focus-visible:opacity-0 md:bottom-16 md:right-12 lg:block lg:bottom-[7vh] lg:right-[5vw] lg:w-[340px]"
                   style={{
                     opacity:
                       productIndex === 0 ? 1 : 0,
