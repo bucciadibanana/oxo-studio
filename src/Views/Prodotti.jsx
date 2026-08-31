@@ -2081,6 +2081,13 @@ export default function Prodotti() {
       const onPointerMove = (event) => {
         if (event.pointerType === "touch") return;
 
+        const rect = card.getBoundingClientRect();
+        const mx = ((event.clientX - rect.left) / rect.width) * 100;
+        const my = ((event.clientY - rect.top) / rect.height) * 100;
+
+        card.style.setProperty("--product-mx", `${mx}%`);
+        card.style.setProperty("--product-my", `${my}%`);
+
         /*
          * Se la card è entrata sotto al cursore durante lo scroll,
          * il reveal rimane fermo finché l'utente non muove davvero
@@ -2454,9 +2461,11 @@ export default function Prodotti() {
             will-change: transform;
           }
 
-          /* PRODUCT CARD / CINEMATIC AWWWARDS REVEAL */
+          /* PRODUCT CARD / EDITORIAL FLUID AWWWARDS REVEAL */
           .oxo-product-card {
             isolation: isolate;
+            --product-mx: 50%;
+            --product-my: 50%;
           }
 
           .oxo-product-card:focus-visible {
@@ -2465,19 +2474,20 @@ export default function Prodotti() {
 
           .oxo-product-card [data-product-frame] video {
             transition:
-              transform .95s cubic-bezier(.16,1,.3,1),
-              filter .6s ease;
+              transform 1.15s cubic-bezier(.16,1,.3,1),
+              filter .75s ease;
+            transform-origin: var(--product-mx) var(--product-my);
           }
 
           .oxo-product-card.is-product-intent [data-product-frame] video,
           .oxo-product-card:focus-visible [data-product-frame] video {
-            transform: scale(1.11);
-            filter: brightness(.48) saturate(.74) contrast(1.16);
+            transform: scale(1.095) !important;
+            filter: brightness(.50) saturate(.82) contrast(1.12) !important;
           }
 
           .oxo-product-reveal {
             opacity: 0;
-            transition: opacity .28s ease;
+            transition: opacity .25s ease;
           }
 
           .oxo-product-card.is-product-intent .oxo-product-reveal,
@@ -2485,184 +2495,175 @@ export default function Prodotti() {
             opacity: 1;
           }
 
-          .oxo-product-reveal-black {
+          .oxo-product-dim {
+            opacity: 0;
             background:
-              radial-gradient(
-                circle at 72% 48%,
-                color-mix(in srgb, var(--product-accent) 9%, transparent),
-                transparent 31%
-              ),
               linear-gradient(
                 to top,
-                rgba(0,0,0,.94) 0%,
-                rgba(0,0,0,.78) 34%,
-                rgba(0,0,0,.24) 67%,
-                rgba(0,0,0,.08) 100%
+                rgba(0,0,0,.88) 0%,
+                rgba(0,0,0,.58) 37%,
+                rgba(0,0,0,.10) 72%,
+                transparent 100%
               );
-            opacity: 0;
-            transform: translateY(16%);
-            transition:
-              opacity .45s ease,
-              transform .8s cubic-bezier(.16,1,.3,1);
+            transition: opacity .55s ease;
           }
 
-          .oxo-product-card.is-product-intent .oxo-product-reveal-black,
-          .oxo-product-card:focus-visible .oxo-product-reveal-black {
+          .oxo-product-card.is-product-intent .oxo-product-dim,
+          .oxo-product-card:focus-visible .oxo-product-dim {
             opacity: 1;
-            transform: translateY(0);
           }
 
-          .oxo-product-reveal-copy {
+          .oxo-product-lens {
+            left: var(--product-mx);
+            top: var(--product-my);
+            width: clamp(160px, 17vw, 280px);
+            aspect-ratio: 1;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.28);
+            background:
+              radial-gradient(
+                circle,
+                color-mix(in srgb, var(--product-accent) 14%, transparent) 0%,
+                rgba(0,0,0,.20) 36%,
+                rgba(0,0,0,.46) 72%,
+                rgba(0,0,0,.66) 100%
+              );
+            backdrop-filter: blur(8px);
+            box-shadow:
+              inset 0 0 0 1px rgba(255,255,255,.035),
+              0 18px 70px rgba(0,0,0,.32);
             opacity: 0;
-            transform: translateY(54px);
+            transform: translate(-50%, -50%) scale(.38) rotate(-14deg);
             filter: blur(12px);
             transition:
-              opacity .35s ease .08s,
+              left .18s ease-out,
+              top .18s ease-out,
+              opacity .32s ease,
               transform .8s cubic-bezier(.16,1,.3,1),
-              filter .55s ease;
+              filter .48s ease;
           }
 
-          .oxo-product-card.is-product-intent .oxo-product-reveal-copy,
-          .oxo-product-card:focus-visible .oxo-product-reveal-copy {
+          .oxo-product-card.is-product-intent .oxo-product-lens,
+          .oxo-product-card:focus-visible .oxo-product-lens {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
             filter: blur(0);
           }
 
-          .oxo-product-reveal-ghost {
+          .oxo-product-lens::before,
+          .oxo-product-lens::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            pointer-events: none;
+          }
+
+          .oxo-product-lens::before {
+            width: 124%;
+            height: 1px;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.22),
+                transparent
+              );
+          }
+
+          .oxo-product-lens::after {
+            width: 1px;
+            height: 124%;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                to bottom,
+                transparent,
+                rgba(255,255,255,.22),
+                transparent
+              );
+          }
+
+          .oxo-product-lens-inner {
+            box-shadow:
+              inset 0 0 36px
+              color-mix(in srgb, var(--product-accent) 12%, transparent);
+          }
+
+          .oxo-product-editorial {
             opacity: 0;
-            transform: translateX(10vw) skewX(-8deg);
             filter: blur(14px);
             transition:
-              opacity .45s ease,
-              transform 1s cubic-bezier(.16,1,.3,1),
-              filter .65s ease;
-          }
-
-          .oxo-product-card.is-product-intent .oxo-product-reveal-ghost,
-          .oxo-product-card:focus-visible .oxo-product-reveal-ghost {
-            opacity: .38;
-            transform: translateX(-2vw) skewX(0deg);
-            filter: blur(0);
-          }
-
-          .oxo-product-reveal-scan {
-            opacity: 0;
-            transform: translateX(-55%) rotate(-7deg);
-            transition:
-              opacity .3s ease,
-              transform 1.15s cubic-bezier(.16,1,.3,1);
-          }
-
-          .oxo-product-card.is-product-intent .oxo-product-reveal-scan,
-          .oxo-product-card:focus-visible .oxo-product-reveal-scan {
-            opacity: .85;
-            transform: translateX(55%) rotate(-7deg);
-          }
-
-          @keyframes oxoProductRingCW {
-            to { transform: rotate(360deg); }
-          }
-
-          @keyframes oxoProductRingCCW {
-            to { transform: rotate(-360deg); }
-          }
-
-          @keyframes oxoProductPortalPulse {
-            0%, 100% {
-              transform: translate(-50%, -50%) scale(.72);
-              opacity: .42;
-            }
-            50% {
-              transform: translate(-50%, -50%) scale(1.5);
-              opacity: 1;
-            }
-          }
-
-          .oxo-product-portal {
-            opacity: 0;
-            transform: translateY(-50%) scale(.55) rotate(-24deg);
-            filter: blur(10px);
-            transition:
-              opacity .38s ease .1s,
-              transform .9s cubic-bezier(.16,1,.3,1),
+              opacity .35s ease .08s,
               filter .55s ease;
           }
 
-          .oxo-product-card.is-product-intent .oxo-product-portal,
-          .oxo-product-card:focus-visible .oxo-product-portal {
+          .oxo-product-card.is-product-intent .oxo-product-editorial,
+          .oxo-product-card:focus-visible .oxo-product-editorial {
             opacity: 1;
-            transform: translateY(-50%) scale(1) rotate(0deg);
             filter: blur(0);
           }
 
-          .oxo-product-ring {
-            border-color:
-              color-mix(in srgb, var(--product-accent) 70%, white 12%);
-            box-shadow:
-              0 0 32px
-              color-mix(in srgb, var(--product-accent) 18%, transparent);
-          }
-
-          .oxo-product-ring--outer {
-            animation: oxoProductRingCW 8s linear infinite;
-            background:
-              conic-gradient(
-                from 0deg,
-                transparent 0 18deg,
-                color-mix(in srgb, var(--product-accent) 72%, transparent) 19deg 21deg,
-                transparent 22deg 72deg,
-                rgba(255,255,255,.45) 73deg 74deg,
-                transparent 75deg 132deg,
-                color-mix(in srgb, var(--product-accent) 55%, transparent) 133deg 136deg,
-                transparent 137deg 360deg
-              );
-            -webkit-mask:
-              radial-gradient(circle, transparent 0 43%, black 45% 49%, transparent 51%);
-            mask:
-              radial-gradient(circle, transparent 0 43%, black 45% 49%, transparent 51%);
-          }
-
-          .oxo-product-ring--middle {
-            opacity: .8;
-            animation: oxoProductRingCCW 5.3s linear infinite;
-          }
-
-          .oxo-product-ring--inner {
-            opacity: .58;
-            animation: oxoProductRingCW 3.6s linear infinite;
-          }
-
-          .oxo-product-portal-core {
-            animation: oxoProductPortalPulse 1.5s ease-in-out infinite;
-          }
-
-          .oxo-product-corner {
-            opacity: 0;
-            transform: scale(.55);
+          .oxo-product-view-word {
+            transform: translateY(115%);
             transition:
-              opacity .3s ease,
-              transform .65s cubic-bezier(.16,1,.3,1);
+              transform .85s cubic-bezier(.16,1,.3,1) .05s;
           }
 
-          .oxo-product-card.is-product-intent .oxo-product-corner,
-          .oxo-product-card:focus-visible .oxo-product-corner {
-            opacity: .85;
-            transform: scale(1);
+          .oxo-product-name-word {
+            transform: translateY(120%) skewX(-7deg);
+            transition:
+              transform 1s cubic-bezier(.16,1,.3,1) .11s;
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-view-word,
+          .oxo-product-card:focus-visible .oxo-product-view-word {
+            transform: translateY(0);
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-name-word,
+          .oxo-product-card:focus-visible .oxo-product-name-word {
+            transform: translateY(0) skewX(0deg);
+          }
+
+          .oxo-product-big-index {
+            opacity: 0;
+            transform: translate3d(4vw,-2vh,0) scale(.92);
+            transition:
+              opacity .45s ease .1s,
+              transform 1s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-big-index,
+          .oxo-product-card:focus-visible .oxo-product-big-index {
+            opacity: 1;
+            transform: translate3d(0,0,0) scale(1);
+          }
+
+          .oxo-product-edge {
+            transform: scaleX(0);
+            transition:
+              transform .95s cubic-bezier(.16,1,.3,1) .12s;
+          }
+
+          .oxo-product-card.is-product-intent .oxo-product-edge,
+          .oxo-product-card:focus-visible .oxo-product-edge {
+            transform: scaleX(1);
           }
 
           .oxo-product-card.is-product-intent [data-product-content],
           .oxo-product-card:focus-visible [data-product-content] {
             opacity: 0 !important;
-            transform: translateY(-42px) scale(.97) !important;
-            filter: blur(10px) !important;
+            transform: translateY(-32px) scale(.985) !important;
+            filter: blur(8px) !important;
           }
 
           .oxo-product-card.is-product-intent [data-product-specs],
           .oxo-product-card:focus-visible [data-product-specs] {
             opacity: 0 !important;
-            transform: translateY(30px) !important;
-            filter: blur(8px) !important;
+            transform: translateY(26px) !important;
+            filter: blur(7px) !important;
           }
 
           .oxo-product-tap-hint {
@@ -2670,11 +2671,10 @@ export default function Prodotti() {
           }
 
           @media (max-width: 767px) {
-            .oxo-product-reveal-copy,
-            .oxo-product-portal,
-            .oxo-product-reveal-ghost,
-            .oxo-product-reveal-scan,
-            .oxo-product-corner {
+            .oxo-product-lens,
+            .oxo-product-editorial,
+            .oxo-product-big-index,
+            .oxo-product-edge {
               display: none;
             }
 
@@ -2682,9 +2682,8 @@ export default function Prodotti() {
               opacity: 1;
             }
 
-            .oxo-product-reveal-black {
+            .oxo-product-dim {
               opacity: 0;
-              transform: none;
             }
           }
 
@@ -3316,111 +3315,82 @@ export default function Prodotti() {
                   {product.statement}
                 </p>
 
-                {/* PRODUCT REVEAL / CINEMATIC AWWWARDS */}
+                {/* PRODUCT REVEAL / EDITORIAL FLUID AWWWARDS */}
                 <div
                   aria-hidden="true"
                   className="oxo-product-reveal pointer-events-none absolute inset-0 z-[58] overflow-hidden"
                 >
-                  {/* blackout cinematico dal basso */}
-                  <div className="oxo-product-reveal-black absolute inset-0" />
+                  <div className="oxo-product-dim absolute inset-0" />
 
-                  {/* scan diagonale */}
+                  {/* lente fluida che segue il mouse */}
                   <div
-                    className="oxo-product-reveal-scan absolute left-[-18%] top-[42%] h-px w-[136%] -rotate-[7deg]"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${product.accent}88, rgba(255,255,255,.85), ${product.accent}55, transparent)`,
-                      boxShadow: `0 0 28px ${product.accent}55`,
-                    }}
-                  />
-
-                  {/* ghost enorme che attraversa la card */}
-                  <p
-                    className="oxo-product-reveal-ghost avant-legato-font ombra2 absolute left-[-3vw] top-[16%] whitespace-nowrap text-[15vw] uppercase leading-none tracking-[-0.085em]"
-                    style={{
-                      color: "transparent",
-                      WebkitTextStroke: `1px ${product.accent}55`,
-                    }}
+                    className="oxo-product-lens absolute"
+                    style={{ "--product-accent": product.accent }}
                   >
-                    {product.title === "KAIROSARCHIVE" ? "KAIROS" : product.title}
-                  </p>
+                    <div className="oxo-product-lens-inner absolute inset-[10%] rounded-full border border-white/25" />
 
-                  {/* manifesto ENTER PRODUCT */}
-                  <div className="oxo-product-reveal-copy absolute bottom-[8vh] left-[5vw] z-[4]">
+                    <span
+                      className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                      style={{
+                        backgroundColor: product.accent,
+                        boxShadow: `0 0 24px ${product.accent}`,
+                      }}
+                    />
+
+                    <span className="avant-legato-font absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[8px] uppercase tracking-[0.38em] text-white/75 md:text-[9px]">
+                      VIEW PRODUCT
+                    </span>
+                  </div>
+
+                  {/* composizione editoriale */}
+                  <div className="oxo-product-editorial absolute bottom-[7vh] left-0 z-[4] w-full overflow-hidden px-[5vw]">
                     <p
                       className="avant-legato-font mb-4 text-[8px] uppercase tracking-[0.46em] md:text-[10px]"
                       style={{ color: product.accent }}
                     >
-                      OXO / ACCESS PRODUCT {product.id}
+                      SELECTED PRODUCT / {product.id}
                     </p>
 
-                    <p className="avant-legato-font ombra2 text-[12vw] uppercase leading-[0.66] tracking-[-0.085em] text-white md:text-[7.2vw] lg:text-[5.6vw]">
-                      ENTER
-                      <br />
-                      PRODUCT
-                    </p>
+                    <div className="overflow-hidden">
+                      <p className="oxo-product-view-word avant-legato-font ombra2 whitespace-nowrap text-[13.5vw] uppercase leading-[0.63] tracking-[-0.095em] text-white md:text-[8.2vw] lg:text-[6.3vw]">
+                        VIEW
+                      </p>
+                    </div>
 
-                    <div className="mt-5 flex items-center gap-4">
-                      <span
-                        className="h-px w-16 md:w-24"
+                    <div className="overflow-hidden">
+                      <p
+                        className="oxo-product-name-word avant-legato-font ombra2 whitespace-nowrap text-[13.5vw] uppercase leading-[0.63] tracking-[-0.095em] md:text-[8.2vw] lg:text-[6.3vw]"
                         style={{
-                          background: `linear-gradient(90deg, ${product.accent}, transparent)`,
+                          color: "transparent",
+                          WebkitTextStroke: `1px ${product.accent}aa`,
                         }}
-                      />
-                      <span className="avant-legato-font text-[7px] uppercase tracking-[0.34em] text-white/35 md:text-[9px]">
-                        CLICK / OPEN / EXPLORE
-                      </span>
+                      >
+                        {product.title === "KAIROSARCHIVE" ? "KAIROS" : product.title}
+                      </p>
                     </div>
                   </div>
 
-                  {/* portale tecnico decentrato */}
-                  <div
-                    className="oxo-product-portal absolute right-[6vw] top-1/2 z-[4] h-[180px] w-[180px] -translate-y-1/2 md:h-[230px] md:w-[230px] lg:h-[290px] lg:w-[290px]"
-                    style={{ "--product-accent": product.accent }}
-                  >
-                    <span className="oxo-product-ring oxo-product-ring--outer absolute inset-0 rounded-full border" />
-                    <span className="oxo-product-ring oxo-product-ring--middle absolute inset-[11%] rounded-full border border-dashed" />
-                    <span className="oxo-product-ring oxo-product-ring--inner absolute inset-[27%] rounded-full border" />
+                  {/* indice grande */}
+                  <span className="oxo-product-big-index avant-legato-font absolute right-[2vw] top-[1vh] z-[2] text-[24vw] leading-none tracking-[-0.11em] text-white/[0.035]">
+                    {product.id}
+                  </span>
 
-                    <span className="absolute left-1/2 top-[-10%] h-[120%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/28 to-transparent" />
-                    <span className="absolute left-[-10%] top-1/2 h-px w-[120%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/28 to-transparent" />
-
-                    <span
-                      className="oxo-product-portal-core absolute left-1/2 top-1/2 h-3 w-3 rounded-full"
-                      style={{
-                        backgroundColor: product.accent,
-                        boxShadow: `0 0 28px ${product.accent}, 0 0 70px ${product.accent}77`,
-                      }}
-                    />
-
-                    <span
-                      className="avant-legato-font absolute left-1/2 top-[9%] -translate-x-1/2 whitespace-nowrap text-[6px] uppercase tracking-[0.38em] md:text-[7px]"
-                      style={{ color: product.accent }}
-                    >
-                      ACCESS
-                    </span>
-
-                    <span className="avant-legato-font absolute bottom-[8%] left-1/2 -translate-x-1/2 whitespace-nowrap text-[6px] uppercase tracking-[0.34em] text-white/30 md:text-[7px]">
-                      OXO / {product.id}
-                    </span>
-                  </div>
-
-                  {/* corner brackets */}
+                  {/* linea cinetica */}
                   <span
-                    className="oxo-product-corner oxo-product-corner--tl absolute left-[3vw] top-[3vw] h-7 w-7 border-l border-t"
-                    style={{ borderColor: product.accent }}
-                  />
-                  <span
-                    className="oxo-product-corner oxo-product-corner--br absolute bottom-[3vw] right-[3vw] h-7 w-7 border-b border-r"
-                    style={{ borderColor: product.accent }}
+                    className="oxo-product-edge absolute bottom-[3.2vh] left-[5vw] z-[5] h-px w-[90vw] origin-left"
+                    style={{
+                      background: `linear-gradient(90deg, ${product.accent}, ${product.accent}55, transparent)`,
+                      boxShadow: `0 0 18px ${product.accent}44`,
+                    }}
                   />
 
-                  {/* mobile hint */}
+                  {/* mobile */}
                   <div className="oxo-product-tap-hint absolute bottom-5 right-5 z-[5] border border-white/20 bg-black/55 px-3 py-2 backdrop-blur-md md:hidden">
                     <span
                       className="avant-legato-font text-[8px] uppercase tracking-[0.3em]"
                       style={{ color: product.accent }}
                     >
-                      TAP / ENTER
+                      TAP / VIEW
                     </span>
                   </div>
                 </div>
@@ -3453,7 +3423,7 @@ export default function Prodotti() {
 
                 <div
                   data-product-content
-                  className="absolute bottom-12 left-7 z-50 max-w-[900px] pr-7 transition-all duration-300 ease-out group-hover:-translate-y-[8vh] group-hover:scale-[0.97] group-hover:opacity-0 group-focus-visible:-translate-y-[8vh] group-focus-visible:scale-[0.97] group-focus-visible:opacity-0 md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
+                  className="absolute bottom-12 left-7 z-50 max-w-[900px] pr-7 transition-all duration-300 ease-out md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
                   style={{
                     opacity:
                       productIndex === 0 ? 1 : 0,
@@ -3536,7 +3506,7 @@ export default function Prodotti() {
 
                 <div
                   data-product-specs
-                  className="absolute bottom-12 right-7 z-50 hidden w-[300px] border-t border-white/25 transition-all duration-300 ease-out group-hover:translate-y-8 group-hover:opacity-0 group-focus-visible:translate-y-8 group-focus-visible:opacity-0 md:bottom-16 md:right-12 lg:block lg:bottom-[7vh] lg:right-[5vw] lg:w-[340px]"
+                  className="absolute bottom-12 right-7 z-50 hidden w-[300px] border-t border-white/25 transition-all duration-300 ease-out md:bottom-16 md:right-12 lg:block lg:bottom-[7vh] lg:right-[5vw] lg:w-[340px]"
                   style={{
                     opacity:
                       productIndex === 0 ? 1 : 0,

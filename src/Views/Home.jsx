@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -60,7 +60,7 @@ const PROJECTS = [
       "Un ecosistema intelligente per metadatazione, catalogazione, ricerca e organizzazione documentale.",
     meta: "MARC 21 / SBN / Z39.50 / AUTOMATION",
     video: "/videos/products/kairosarchive.mp4",
-    link: "/Prodotti",
+    link: "/portfolio/kairosarchive",
     accent: "#35d8ff",
     fallback:
       "radial-gradient(circle at 72% 30%, rgba(53,216,255,.34), transparent 34%), radial-gradient(circle at 18% 76%, rgba(80,70,255,.20), transparent 38%), linear-gradient(135deg, #031018 0%, #050711 50%, #010101 100%)",
@@ -74,7 +74,7 @@ const PROJECTS = [
       "Applicazioni progettate intorno ai processi reali del cliente, con interfacce precise e architetture pronte a crescere.",
     meta: "PRODUCT / CLOUD / UX / ENGINEERING",
     video: "/videos/products/custom-software.mp4",
-    link: "/Prodotti",
+    link: "/portfolio/software",
     accent: "#8b5cf6",
     fallback:
       "radial-gradient(circle at 24% 38%, rgba(139,92,246,.36), transparent 36%), radial-gradient(circle at 84% 72%, rgba(255,79,216,.16), transparent 36%), linear-gradient(135deg, #10041b 0%, #080810 52%, #010101 100%)",
@@ -88,7 +88,7 @@ const PROJECTS = [
       "Esperienze in tempo reale, prototipi e ambienti interattivi in cui tecnologia e direzione artistica costruiscono la stessa sensazione.",
     meta: "GAMEPLAY / MOTION / 3D / SOUND",
     video: "/videos/products/interactive-worlds.mp4",
-    link: "/Prodotti",
+    link: "/portfolio/game",
     accent: "#ff4fd8",
     fallback:
       "radial-gradient(circle at 30% 35%, rgba(255,79,216,.32), transparent 36%), radial-gradient(circle at 78% 75%, rgba(87,74,255,.24), transparent 38%), linear-gradient(135deg, #180417 0%, #08040f 54%, #010101 100%)",
@@ -136,6 +136,7 @@ function SplitWords({ text }) {
 
 export default function Home() {
   const [brainActive, setBrainActive] = useState(true);
+  const navigate = useNavigate();
 
   const pageRef = useRef(null);
   const introRef = useRef(null);
@@ -145,6 +146,8 @@ export default function Home() {
   const projectsRef = useRef(null);
   const manifestoRef = useRef(null);
   const finalRef = useRef(null);
+  const homeProjectHoverTimerRef = useRef(null);
+  const homeProjectHoverCardRef = useRef(null);
 
   useLayoutEffect(() => {
     const page = pageRef.current;
@@ -1640,6 +1643,109 @@ export default function Home() {
     };
   }, []);
 
+
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return undefined;
+
+    const page = pageRef.current;
+    if (!page) return undefined;
+
+    const cards = Array.from(page.querySelectorAll(".oxo-home-project-card"));
+    if (!cards.length) return undefined;
+
+    const clearTimer = () => {
+      if (homeProjectHoverTimerRef.current) {
+        window.clearTimeout(homeProjectHoverTimerRef.current);
+        homeProjectHoverTimerRef.current = null;
+      }
+    };
+
+    const deactivateAll = () => {
+      clearTimer();
+      cards.forEach((card) => card.classList.remove("is-project-intent"));
+      homeProjectHoverCardRef.current = null;
+    };
+
+    const activateWithIntent = (card) => {
+      clearTimer();
+      homeProjectHoverCardRef.current = card;
+
+      homeProjectHoverTimerRef.current = window.setTimeout(() => {
+        if (homeProjectHoverCardRef.current !== card) return;
+        cards.forEach((item) => {
+          if (item !== card) item.classList.remove("is-project-intent");
+        });
+        card.classList.add("is-project-intent");
+        homeProjectHoverTimerRef.current = null;
+      }, 420);
+    };
+
+    const cleanup = [];
+
+    cards.forEach((card) => {
+      const enter = (event) => {
+        if (event.pointerType === "touch") return;
+        activateWithIntent(card);
+      };
+
+      const move = (event) => {
+        if (event.pointerType === "touch") return;
+
+        const rect = card.getBoundingClientRect();
+        const mx = ((event.clientX - rect.left) / rect.width) * 100;
+        const my = ((event.clientY - rect.top) / rect.height) * 100;
+
+        card.style.setProperty("--project-mx", `${mx}%`);
+        card.style.setProperty("--project-my", `${my}%`);
+
+        if (
+          homeProjectHoverCardRef.current !== card &&
+          !card.classList.contains("is-project-intent")
+        ) {
+          activateWithIntent(card);
+        }
+      };
+
+      const leave = () => {
+        clearTimer();
+        if (homeProjectHoverCardRef.current === card) {
+          homeProjectHoverCardRef.current = null;
+        }
+        card.classList.remove("is-project-intent");
+      };
+
+      const focus = () => card.classList.add("is-project-intent");
+      const blur = () => card.classList.remove("is-project-intent");
+
+      card.addEventListener("pointerenter", enter);
+      card.addEventListener("pointermove", move, { passive: true });
+      card.addEventListener("pointerleave", leave);
+      card.addEventListener("focus", focus);
+      card.addEventListener("blur", blur);
+
+      cleanup.push(() => {
+        card.removeEventListener("pointerenter", enter);
+        card.removeEventListener("pointermove", move);
+        card.removeEventListener("pointerleave", leave);
+        card.removeEventListener("focus", focus);
+        card.removeEventListener("blur", blur);
+      });
+    });
+
+    const onScroll = () => deactivateAll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("wheel", onScroll, { passive: true });
+    window.addEventListener("touchmove", onScroll, { passive: true });
+
+    return () => {
+      deactivateAll();
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onScroll);
+      window.removeEventListener("touchmove", onScroll);
+      cleanup.forEach((fn) => fn());
+    };
+  }, []);
+
   /*
    * RESPONSIVE REFRESH
    * Non cambia il design: riallinea pin e distanze quando viewport,
@@ -1811,6 +1917,221 @@ export default function Home() {
 
           .oxo-project-v2:hover .oxo-project-v2-title {
             letter-spacing: -.035em;
+          }
+
+          /* HOME SELECTED WORK / EDITORIAL AWWWARDS INTERACTION */
+          .oxo-home-project-card {
+            isolation: isolate;
+            --project-mx: 50%;
+            --project-my: 50%;
+          }
+
+          .oxo-home-project-card:focus-visible {
+            box-shadow: inset 0 0 0 1px var(--home-project-accent);
+          }
+
+          .oxo-home-project-card [data-project-media] {
+            transition:
+              transform 1.15s cubic-bezier(.16,1,.3,1),
+              filter .75s ease;
+            transform-origin: var(--project-mx) var(--project-my);
+          }
+
+          .oxo-home-project-card.is-project-intent [data-project-media],
+          .oxo-home-project-card:focus-visible [data-project-media] {
+            transform: scale(1.095) !important;
+            filter: brightness(.50) saturate(.82) contrast(1.12) !important;
+          }
+
+          .oxo-home-project-reveal {
+            opacity: 0;
+            transition: opacity .25s ease;
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-reveal,
+          .oxo-home-project-card:focus-visible .oxo-home-project-reveal {
+            opacity: 1;
+          }
+
+          .oxo-home-project-dim {
+            opacity: 0;
+            background:
+              linear-gradient(
+                to top,
+                rgba(0,0,0,.88) 0%,
+                rgba(0,0,0,.58) 37%,
+                rgba(0,0,0,.10) 72%,
+                transparent 100%
+              );
+            transition: opacity .55s ease;
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-dim,
+          .oxo-home-project-card:focus-visible .oxo-home-project-dim {
+            opacity: 1;
+          }
+
+          .oxo-home-project-lens {
+            left: var(--project-mx);
+            top: var(--project-my);
+            width: clamp(160px, 17vw, 280px);
+            aspect-ratio: 1;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,.28);
+            background:
+              radial-gradient(
+                circle,
+                color-mix(in srgb, var(--home-project-accent) 14%, transparent) 0%,
+                rgba(0,0,0,.20) 36%,
+                rgba(0,0,0,.46) 72%,
+                rgba(0,0,0,.66) 100%
+              );
+            backdrop-filter: blur(8px);
+            box-shadow:
+              inset 0 0 0 1px rgba(255,255,255,.035),
+              0 18px 70px rgba(0,0,0,.32);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(.38) rotate(-14deg);
+            filter: blur(12px);
+            transition:
+              left .18s ease-out,
+              top .18s ease-out,
+              opacity .32s ease,
+              transform .8s cubic-bezier(.16,1,.3,1),
+              filter .48s ease;
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-lens,
+          .oxo-home-project-card:focus-visible .oxo-home-project-lens {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            filter: blur(0);
+          }
+
+          .oxo-home-project-lens::before,
+          .oxo-home-project-lens::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            pointer-events: none;
+          }
+
+          .oxo-home-project-lens::before {
+            width: 124%;
+            height: 1px;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.22),
+                transparent
+              );
+          }
+
+          .oxo-home-project-lens::after {
+            width: 1px;
+            height: 124%;
+            transform: translate(-50%, -50%);
+            background:
+              linear-gradient(
+                to bottom,
+                transparent,
+                rgba(255,255,255,.22),
+                transparent
+              );
+          }
+
+          .oxo-home-project-lens-inner {
+            box-shadow:
+              inset 0 0 36px
+              color-mix(in srgb, var(--home-project-accent) 12%, transparent);
+          }
+
+          .oxo-home-project-editorial {
+            opacity: 0;
+            filter: blur(14px);
+            transition:
+              opacity .35s ease .08s,
+              filter .55s ease;
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-editorial,
+          .oxo-home-project-card:focus-visible .oxo-home-project-editorial {
+            opacity: 1;
+            filter: blur(0);
+          }
+
+          .oxo-home-project-view-word {
+            transform: translateY(115%);
+            transition:
+              transform .85s cubic-bezier(.16,1,.3,1) .05s;
+          }
+
+          .oxo-home-project-name-word {
+            transform: translateY(120%) skewX(-7deg);
+            transition:
+              transform 1s cubic-bezier(.16,1,.3,1) .11s;
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-view-word,
+          .oxo-home-project-card:focus-visible .oxo-home-project-view-word {
+            transform: translateY(0);
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-name-word,
+          .oxo-home-project-card:focus-visible .oxo-home-project-name-word {
+            transform: translateY(0) skewX(0deg);
+          }
+
+          .oxo-home-project-big-index {
+            opacity: 0;
+            transform: translate3d(4vw,-2vh,0) scale(.92);
+            transition:
+              opacity .45s ease .1s,
+              transform 1s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-big-index,
+          .oxo-home-project-card:focus-visible .oxo-home-project-big-index {
+            opacity: 1;
+            transform: translate3d(0,0,0) scale(1);
+          }
+
+          .oxo-home-project-edge {
+            transform: scaleX(0);
+            transition:
+              transform .95s cubic-bezier(.16,1,.3,1) .12s;
+          }
+
+          .oxo-home-project-card.is-project-intent .oxo-home-project-edge,
+          .oxo-home-project-card:focus-visible .oxo-home-project-edge {
+            transform: scaleX(1);
+          }
+
+          .oxo-home-project-card.is-project-intent [data-project-content],
+          .oxo-home-project-card:focus-visible [data-project-content] {
+            opacity: 0 !important;
+            transform: translateY(-32px) scale(.985) !important;
+            filter: blur(8px) !important;
+          }
+
+          @media (max-width: 767px) {
+            .oxo-home-project-lens,
+            .oxo-home-project-editorial,
+            .oxo-home-project-big-index,
+            .oxo-home-project-edge {
+              display: none;
+            }
+
+            .oxo-home-project-reveal {
+              opacity: 1;
+            }
+
+            .oxo-home-project-dim {
+              opacity: 0;
+            }
           }
 
           @keyframes oxoV2BrainHalo {
@@ -2451,13 +2772,24 @@ export default function Home() {
               <article
                 key={project.id}
                 data-project-panel
-                className="oxo-project-v2 oxo-v2-noise absolute inset-0 overflow-hidden bg-black"
+                role="link"
+                tabIndex={0}
+                aria-label={`Apri ${project.title}`}
+                onClick={() => navigate(project.link)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    navigate(project.link);
+                  }
+                }}
+                className="oxo-home-project-card oxo-project-v2 oxo-v2-noise group absolute inset-0 cursor-pointer overflow-hidden bg-black outline-none"
                 style={{
                   opacity: index === 0 ? 1 : 0,
                   visibility: index === 0 ? "visible" : "hidden",
                   zIndex: index + 1,
                   clipPath: FULL_CLIP,
                   willChange: "clip-path, opacity, transform, filter",
+                  "--home-project-accent": project.accent,
                 }}
               >
                 <div
@@ -2522,6 +2854,79 @@ export default function Home() {
                   {project.statement}
                 </p>
 
+                {/* HOME PROJECT / EDITORIAL AWWWARDS REVEAL */}
+                <div
+                  aria-hidden="true"
+                  className="oxo-home-project-reveal pointer-events-none absolute inset-0 z-[18] overflow-hidden"
+                >
+                  <div className="oxo-home-project-dim absolute inset-0" />
+
+                  <div
+                    className="oxo-home-project-lens absolute"
+                    style={{ "--home-project-accent": project.accent }}
+                  >
+                    <div className="oxo-home-project-lens-inner absolute inset-[10%] rounded-full border border-white/25" />
+                    <span
+                      className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                      style={{
+                        backgroundColor: project.accent,
+                        boxShadow: `0 0 24px ${project.accent}`,
+                      }}
+                    />
+                    <span className="avant-legato-font absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[8px] uppercase tracking-[0.38em] text-white/75 md:text-[9px]">
+                      VIEW PROJECT
+                    </span>
+                  </div>
+
+                  <div className="oxo-home-project-editorial absolute bottom-[7vh] left-0 z-[4] w-full overflow-hidden px-[5vw]">
+                    <p
+                      className="avant-legato-font mb-4 text-[8px] uppercase tracking-[0.46em] md:text-[10px]"
+                      style={{ color: project.accent }}
+                    >
+                      SELECTED WORK / {project.id}
+                    </p>
+
+                    <div className="overflow-hidden">
+                      <p className="oxo-home-project-view-word avant-legato-font ombra2 whitespace-nowrap text-[13.5vw] uppercase leading-[0.63] tracking-[-0.095em] text-white md:text-[8.2vw] lg:text-[6.3vw]">
+                        VIEW
+                      </p>
+                    </div>
+
+                    <div className="overflow-hidden">
+                      <p
+                        className="oxo-home-project-name-word avant-legato-font ombra2 whitespace-nowrap text-[13.5vw] uppercase leading-[0.63] tracking-[-0.095em] md:text-[8.2vw] lg:text-[6.3vw]"
+                        style={{
+                          color: "transparent",
+                          WebkitTextStroke: `1px ${project.accent}aa`,
+                        }}
+                      >
+                        {project.title === "KAIROSARCHIVE" ? "KAIROS" : project.title}
+                      </p>
+                    </div>
+                  </div>
+
+                  <span className="oxo-home-project-big-index avant-legato-font absolute right-[2vw] top-[1vh] z-[2] text-[24vw] leading-none tracking-[-0.11em] text-white/[0.035]">
+                    {project.id}
+                  </span>
+
+                  <span
+                    className="oxo-home-project-edge absolute bottom-[3.2vh] left-[5vw] z-[5] h-px w-[90vw] origin-left"
+                    style={{
+                      background: `linear-gradient(90deg, ${project.accent}, ${project.accent}55, transparent)`,
+                      boxShadow: `0 0 18px ${project.accent}44`,
+                    }}
+                  />
+
+                  <div className="oxo-home-project-tap-hint absolute bottom-5 right-5 z-[5] border border-white/20 bg-black/55 px-3 py-2 backdrop-blur-md md:hidden">
+                    <span
+                      className="avant-legato-font text-[8px] uppercase tracking-[0.3em]"
+                      style={{ color: project.accent }}
+                    >
+                      TAP / VIEW
+                    </span>
+                  </div>
+                </div>
+
                 <div className="pointer-events-none absolute inset-[14px] z-10 border border-white/28 md:inset-[26px] lg:inset-[2.2vw]" />
 
                 <div className="avant-legato-font absolute left-7 top-7 z-20 flex items-center gap-3 text-[9px] uppercase tracking-[0.31em] md:left-12 md:top-12 md:text-xs lg:left-[4.4vw] lg:top-[4.4vw]">
@@ -2571,6 +2976,7 @@ export default function Home() {
 
                   <Link
                     to={project.link}
+                    onClick={(event) => event.stopPropagation()}
                     className="avant-legato-font group mt-8 inline-flex items-center gap-5 border-b border-white/70 pb-2 text-sm uppercase tracking-[0.28em] md:mt-10 md:text-base"
                   >
                     <span>Entra nel progetto</span>
