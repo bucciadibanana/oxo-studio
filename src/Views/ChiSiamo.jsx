@@ -41,7 +41,7 @@ const TEAM = [
     id: "01",
     name: "POLI MATTEO",
     role: "SOFTWARE / AI / PRODUCT",
-    image: "/img/team/matte2.png",
+    image: "/img/team/matteo.png",
     accent: "#35d8ff",
     link: "/team/matteo",
     fallback:
@@ -52,7 +52,7 @@ const TEAM = [
     name: "CHIERICI GABRIELE",
     role: "CREATIVE / INTERACTIVE / DEVELOPMENT",
     link:"/team/gab",
-    image: "/img/team/gab.png",
+    image: "/img/team/gab2.png",
     accent: "#8b5cf6",
 
     fallback:
@@ -1790,15 +1790,114 @@ export default function ChiSiamo() {
 
           .oxo-team-card:hover {
             border-radius: 82px;
-            border-color: rgba(255,255,255,.30);
+            border-color: rgba(255,255,255,.42);
             box-shadow:
-              0 30px 90px rgba(0,0,0,.34),
-              inset 0 0 70px rgba(255,255,255,.02);
+              0 38px 120px rgba(0,0,0,.48),
+              inset 0 0 90px rgba(255,255,255,.025);
           }
 
           .oxo-team-card:hover .oxo-team-image {
-            transform: scale(1.055);
-            filter: saturate(1.14) contrast(1.05);
+            transform: scale(1.085);
+            filter: saturate(.82) contrast(1.14) brightness(.72);
+          }
+
+          /* ENTER PROFILE: nasconde completamente ruolo, nome e descrizione */
+          .oxo-team-card [data-team-content] {
+            transition:
+              opacity .20s ease,
+              transform .38s cubic-bezier(.16,1,.3,1),
+              filter .26s ease,
+              visibility 0s linear .20s;
+          }
+
+          .oxo-team-card:hover [data-team-content],
+          .oxo-team-card:focus-visible [data-team-content] {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transform: translateY(-52px) scale(.95) !important;
+            filter: blur(12px) !important;
+            pointer-events: none !important;
+          }
+
+          .oxo-team-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 9;
+            pointer-events: none;
+            opacity: 0;
+            background:
+              linear-gradient(115deg, rgba(255,255,255,.06), transparent 24%, transparent 68%, rgba(255,255,255,.025)),
+              repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 5px);
+            mix-blend-mode: screen;
+            transition: opacity .55s ease;
+          }
+
+          .oxo-team-card:hover::after {
+            opacity: .42;
+          }
+
+
+          @keyframes oxoProfileRingCW {
+            to { transform: rotate(360deg); }
+          }
+
+          @keyframes oxoProfileRingCCW {
+            to { transform: rotate(-360deg); }
+          }
+
+          @keyframes oxoProfileCorePulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(.72); opacity: .45; }
+            50% { transform: translate(-50%, -50%) scale(1.35); opacity: 1; }
+          }
+
+          .oxo-profile-portal {
+            opacity: 0;
+            transform: scale(.58) rotate(-18deg);
+            transition:
+              opacity .45s ease,
+              transform .85s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-team-card:hover .oxo-profile-portal {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+          }
+
+          .oxo-profile-ring {
+            border-color: color-mix(in srgb, var(--profile-accent) 70%, white 12%);
+            box-shadow: 0 0 26px color-mix(in srgb, var(--profile-accent) 18%, transparent);
+          }
+
+          .oxo-profile-ring--outer {
+            animation: oxoProfileRingCW 8s linear infinite;
+            background:
+              conic-gradient(
+                from 0deg,
+                transparent 0 18deg,
+                color-mix(in srgb, var(--profile-accent) 72%, transparent) 19deg 21deg,
+                transparent 22deg 72deg,
+                rgba(255,255,255,.4) 73deg 74deg,
+                transparent 75deg 132deg,
+                color-mix(in srgb, var(--profile-accent) 52%, transparent) 133deg 136deg,
+                transparent 137deg 360deg
+              );
+            -webkit-mask: radial-gradient(circle, transparent 0 43%, black 45% 49%, transparent 51%);
+            mask: radial-gradient(circle, transparent 0 43%, black 45% 49%, transparent 51%);
+          }
+
+          .oxo-profile-ring--middle {
+            opacity: .72;
+            animation: oxoProfileRingCCW 5.5s linear infinite;
+          }
+
+          .oxo-profile-ring--inner {
+            opacity: .55;
+            animation: oxoProfileRingCW 3.8s linear infinite;
+          }
+
+          .oxo-profile-core {
+            animation: oxoProfileCorePulse 1.65s ease-in-out infinite;
           }
           .oxo-process-row:hover .oxo-process-title {
             transform: translateX(1.2vw);
@@ -2028,6 +2127,11 @@ export default function ChiSiamo() {
               filter: none;
             }
 
+            .oxo-team-card [data-team-content] {
+              transform: none !important;
+              opacity: 1 !important;
+            }
+
             .oxo-process-row:hover .oxo-process-title,
             .oxo-process-row:hover .oxo-process-arrow {
               transform: none;
@@ -2250,7 +2354,9 @@ export default function ChiSiamo() {
                 >
                   <span
                     data-field-node
-                    className="oxo-field-node pointer-events-auto absolute left-1/2 top-[8%] h-2.5 w-2.5 -translate-x-1/2 rounded-[2px]"
+                    className={`oxo-field-node pointer-events-auto absolute top-[8%] h-2.5 w-2.5 -translate-x-1/2 rounded-[2px] ${
+                      index === 1 ? "left-[92%]" : "left-1/2"
+                    }`}
                     style={{
                       "--node-color": accent,
                       backgroundColor: accent,
@@ -2440,7 +2546,7 @@ export default function ChiSiamo() {
                     navigate(member.link);
                   }
                 }}
-                className={`oxo-team-card group relative h-[72svh] min-h-[72svh] overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
+                className={`oxo-team-card group relative h-[72svh] min-h-[72svh] cursor-pointer overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
                   index % 2 === 1 ? "lg:translate-y-[18vh]" : ""
                 }`}
                 style={{ clipPath: FULL_CLIP }}
@@ -2487,6 +2593,61 @@ export default function ChiSiamo() {
                   />
                 </div>
 
+                {/* PROFILE REVEAL — integrated Awwwards CTA */}
+                <div className="pointer-events-none absolute inset-0 z-[12] overflow-hidden">
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-[42%] translate-y-full bg-gradient-to-t from-black via-black/88 to-transparent transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-y-0"
+                  />
+
+                  <div className="absolute bottom-7 left-7 right-7 flex translate-y-8 items-end justify-between opacity-0 transition-all duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:translate-y-0 group-hover:opacity-100 md:bottom-10 md:left-10 md:right-10">
+                    <div>
+                      <p
+                        className="avant-legato-font mb-2 text-[8px] uppercase tracking-[0.42em] md:text-[10px]"
+                        style={{ color: member.accent }}
+                      >
+                        OXO / TEAM PROFILE
+                      </p>
+
+                      <p className="avant-legato-font ombra2 text-[10.5vw] uppercase leading-[0.72] tracking-[-0.075em] text-white md:text-[6vw] lg:text-[4.1vw]">
+                        ENTER
+                        <br />
+                        PROFILE
+                      </p>
+                    </div>
+
+                    <div
+                      className="oxo-profile-portal relative mb-1 h-20 w-20 shrink-0 md:h-24 md:w-24"
+                      style={{ "--profile-accent": member.accent }}
+                    >
+                      <span className="oxo-profile-ring oxo-profile-ring--outer absolute inset-0 rounded-full border" />
+                      <span className="oxo-profile-ring oxo-profile-ring--middle absolute inset-[15%] rounded-full border border-dashed" />
+                      <span className="oxo-profile-ring oxo-profile-ring--inner absolute inset-[31%] rounded-full border" />
+
+                      <span className="absolute left-1/2 top-[-8%] h-[116%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-white/30 to-transparent" />
+                      <span className="absolute left-[-8%] top-1/2 h-px w-[116%] -translate-y-1/2 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
+                      <span
+                        className="oxo-profile-core absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                        style={{
+                          backgroundColor: member.accent,
+                          boxShadow: `0 0 22px ${member.accent}, 0 0 48px ${member.accent}66`,
+                        }}
+                      />
+
+                      <span className="avant-legato-font absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-[30px] whitespace-nowrap text-[6px] uppercase tracking-[0.28em] text-white/40 md:translate-y-[36px]">
+                        ACCESS
+                      </span>
+                    </div>
+                  </div>
+
+                  <div
+                    className="absolute left-0 top-0 h-px w-full origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-x-100"
+                    style={{
+                      background: `linear-gradient(90deg, ${member.accent}, ${member.accent}55, transparent)`,
+                    }}
+                  />
+                </div>
+
                 <div
                   data-team-content
                   className="absolute bottom-8 left-7 right-7 z-10 md:bottom-11 md:left-10 md:right-10"
@@ -2498,7 +2659,7 @@ export default function ChiSiamo() {
                     {member.role}
                   </p>
 
-                  <h3 className="avant-legato-font ombra2 text-[clamp(2.8rem,6.3vw,6.4rem)] uppercase leading-[0.78] tracking-[-0.055em]">
+                  <h3 className="oxo-team-member-name avant-legato-font ombra2 text-[clamp(2.8rem,6.3vw,6.4rem)] uppercase leading-[0.78] tracking-[-0.055em]">
                     {member.name}
                   </h3>
 

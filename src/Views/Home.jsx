@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import SeoMetaTags from "../components/SeoMetaTags";
+import StudiogustoText from "../components/StudiogustoText";
 import "../styles/avant-legato.css";
 
 
@@ -1570,31 +1571,41 @@ export default function Home() {
         });
       }
 
-      const finalLetters = gsap.utils.toArray(
-        finalSection.querySelectorAll("[data-home-final-letter]")
+      const finalWordmark = finalSection.querySelector(
+        "[data-home-final-liquid]"
       );
 
-      gsap.fromTo(
-        finalLetters,
-        {
-          yPercent: 135,
-          rotateX: -82,
-          opacity: 0,
-        },
-        {
-          yPercent: 0,
-          rotateX: 0,
-          opacity: 1,
-          duration: 1.08,
-          stagger: 0.022,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: finalSection,
-            start: "top 68%",
-            toggleActions: "play none none reverse",
-          },
+      if (finalWordmark) {
+        /*
+         * VISIBILITY SAFE:
+         * BREAK FORM non viene mai inizializzata con opacity: 0 o con un
+         * clip-path completamente chiuso. Il testo DOM di fallback resta
+         * quindi visibile anche se WebGL o ScrollTrigger partono in ritardo.
+         */
+        gsap.set(finalWordmark, {
+          autoAlpha: 1,
+          clipPath: "inset(0% 0% 0% 0%)",
+        });
+
+        if (
+          !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ) {
+          gsap.from(finalWordmark, {
+            yPercent: 58,
+            rotateX: -58,
+            transformOrigin: "50% 100%",
+            duration: 1.18,
+            ease: "power4.out",
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: finalSection,
+              start: "top 68%",
+              toggleActions: "play none none reverse",
+              invalidateOnRefresh: true,
+            },
+          });
         }
-      );
+      }
     }, page);
 
     const refresh = () => ScrollTrigger.refresh();
@@ -2760,11 +2771,19 @@ export default function Home() {
               <span>OXO STUDIO / 2026</span>
             </div>
 
-            <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[.68] tracking-[-0.09em] md:text-[9vw] lg:text-[8vw]">
-              <SplitLetters
-                text="BREAK FORM"
-                attribute="data-home-final-letter"
-              />
+            <h2 className="avant-legato-font ombra2 relative text-[12.2vw] uppercase leading-[.68] tracking-[-0.09em] md:text-[9vw] lg:text-[8vw]">
+              <span
+                data-home-final-liquid
+                className="block w-full overflow-visible [transform-style:preserve-3d]"
+                style={{ opacity: 1, visibility: "visible" }}
+              >
+                <StudiogustoText
+                  text="BREAK FORM"
+                  radius={0.92}
+                  strength={1}
+                  chromatic={1}
+                />
+              </span>
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
