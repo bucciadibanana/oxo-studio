@@ -13,25 +13,28 @@ const FIELD_PHASES = [
   {
     id: "01",
     eyebrow: "INPUT",
-    title: "COMPLEXITY",
-    statement: "READ THE SIGNAL",
-    copy: "Entriamo nel problema senza semplificarlo troppo presto. Osserviamo flussi, attriti, dati e comportamento.",
-    
+    title: "DOCUMENTI",
+    statement: "READ THE RECORD",
+    copy:
+      "Partiamo da libri, archivi, documenti e dati reali. Identifichiamo struttura, metadati, standard e informazioni utili alla catalogazione.",
+    accent: "#35d8ff",
   },
   {
     id: "02",
     eyebrow: "PROCESS",
-    title: "REDUCE",
-    statement: "REMOVE THE NOISE",
-    copy: "Riduciamo il rumore fino a lasciare soltanto ciò che serve: struttura, gerarchia, ritmo e funzione.",
+    title: "METADATI",
+    statement: "VERIFY THE DATA",
+    copy:
+      "Estraiamo, confrontiamo e normalizziamo i dati attraverso regole bibliografiche, SBN, MARC 21, UNIMARC, Z39.50, BID e ISBN.",
     accent: "#8b5cf6",
   },
   {
     id: "03",
     eyebrow: "OUTPUT",
-    title: "CLARITY",
-    statement: "BUILD THE SYSTEM",
-    copy: "Il risultato non è un effetto. È un sistema digitale leggibile, riconoscibile e capace di evolvere.",
+    title: "SISTEMA",
+    statement: "BUILD THE ARCHIVE",
+    copy:
+      "Il risultato è un sistema digitale interrogabile: Kairos Archive, software custom e piattaforme web costruite intorno ai processi reali.",
     accent: "#ff4fd8",
   },
 ];
@@ -44,17 +47,20 @@ const TEAM = [
     image: "/img/team/matteo.png",
     accent: "#35d8ff",
     link: "/team/matteo",
+    description:
+      "Software, AI e architetture digitali costruite intorno a dati e processi reali.",
     fallback:
       "radial-gradient(circle at 70% 25%, rgba(53,216,255,.32), transparent 12%), linear-gradient(145deg, #06141d, #05060b 55%, #010101)",
   },
   {
     id: "02",
     name: "CHIERICI GABRIELE",
-    role: "CREATIVE / INTERACTIVE / DEVELOPMENT",
-    link:"/team/gab",
+    role: "CATALOGAZIONE / SBN / Z39.50",
+    link: "/team/gab",
     image: "/img/team/gab2.png",
     accent: "#8b5cf6",
-
+    description:
+      "Catalogazione bibliografica, SBN, Z39.50, MARC 21 e normalizzazione dei record.",
     fallback:
       "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 12%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
   },
@@ -63,37 +69,39 @@ const TEAM = [
     name: "LUCA ALBANI",
     role: "PHOTOGRAPHER / VISUAL",
     image: "/img/team/luca.jpg",
-   
     link: "/team/luca",
     accent: "#ff4fd8",
     description:
-      "Fotografia, luce e composizione come parte dell’identità visiva OXO.",
+      "Fotografia, video e visual storytelling per l’identità visiva OXO.",
     fallback:
       "radial-gradient(circle at 30% 28%, rgba(255,79,216,.28), transparent 34%), linear-gradient(145deg, #190515, #08060b 56%, #010101)",
   },
- 
 ];
 
 const PROCESS = [
   {
     id: "01",
-    title: "ASCOLTARE",
-    copy: "Capire il problema prima di produrre una soluzione.",
+    title: "ANALIZZARE",
+    copy:
+      "Capire documenti, record, standard e flussi prima di progettare qualsiasi automazione.",
   },
   {
     id: "02",
-    title: "RIDURRE",
-    copy: "Togliere il superfluo fino a rendere leggibile la complessità.",
+    title: "NORMALIZZARE",
+    copy:
+      "Trasformare dati frammentati in metadati coerenti, confrontabili e verificabili.",
   },
   {
     id: "03",
     title: "COSTRUIRE",
-    copy: "Unire design e ingegneria senza separare forma e funzione.",
+    copy:
+      "Unire catalogazione, software, database e interfaccia in un unico sistema operativo.",
   },
   {
     id: "04",
     title: "EVOLVERE",
-    copy: "Misurare, imparare e migliorare il prodotto dopo il lancio.",
+    copy:
+      "Far crescere cataloghi, workflow e piattaforme senza perdere controllo, qualità e tracciabilità.",
   },
 ];
 
@@ -1377,7 +1385,10 @@ export default function ChiSiamo() {
 
   return (
     <>
-      <SeoMetaTags />
+      <SeoMetaTags
+        title="Chi siamo | Catalogazione, Kairos Archive, Software e Web | OXO Studio"
+        description="OXO Studio unisce catalogazione bibliografica, metadatazione, SBN, MARC 21, Z39.50, Kairos Archive, sviluppo software custom e piattaforme web."
+      />
 
       <main
         ref={pageRef}
@@ -2239,7 +2250,7 @@ export default function ChiSiamo() {
                 SYSTEM
               </span>
               <span className="oxo-about-lens-readout bottom-[14%] left-[17%]">
-                OXO / FIELD
+                OXO / ARCHIVE
               </span>
             </div>
           </div>
@@ -2277,7 +2288,7 @@ export default function ChiSiamo() {
             <p data-about-meta>
               OXO STUDIO®
               <br />
-              INDEPENDENT DIGITAL STUDIO
+              ARCHIVE / SOFTWARE STUDIO
             </p>
 
            
@@ -2288,7 +2299,7 @@ export default function ChiSiamo() {
               data-about-meta
               className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] text-cyan-300 md:text-xs"
             >
-              Independent digital studio
+              Catalogazione / software / web
             </p>
 
             <h1 className="avant-legato-font ombra2 relative z-10 overflow-hidden text-[13.2vw] uppercase leading-[0.69] tracking-[-0.075em] md:text-[9.6vw] lg:text-[8.6vw]">
@@ -2297,7 +2308,7 @@ export default function ChiSiamo() {
 
             <div className="mt-4 flex items-center gap-4 text-[8px] uppercase tracking-[0.32em] text-white/32 md:text-[10px]">
               <span className="h-2 w-2 border border-cyan-300" />
-              <span>IDENTITY / MOTION / TECHNOLOGY</span>
+              <span>CATALOG / DATA / SOFTWARE</span>
             </div>
           </div>
 
@@ -2306,9 +2317,9 @@ export default function ChiSiamo() {
               data-about-meta
               className="avant-legato-font max-w-[870px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
             >
-              Un piccolo studio con una convinzione enorme: tecnologia e
-              creatività funzionano davvero soltanto quando diventano la stessa
-              cosa.
+              Uniamo competenze bibliografiche e ingegneria software per
+              trasformare catalogazione, metadatazione e gestione documentale
+              in sistemi digitali realmente utilizzabili.
             </p>
 
             <p
@@ -2332,7 +2343,7 @@ export default function ChiSiamo() {
             aria-hidden="true"
             className="oxo-field-outline avant-legato-font pointer-events-none absolute left-[-4vw] top-1/2 -translate-y-1/2 whitespace-nowrap text-[16.5vw] uppercase leading-none tracking-[-0.09em] opacity-55"
           >
-            SIGNAL / SYSTEM / FORM
+            DOCUMENT / METADATA / SYSTEM
           </p>
 
           <div
@@ -2424,13 +2435,13 @@ export default function ChiSiamo() {
           <div className="relative z-10 flex h-full flex-col justify-between px-6 pb-8 pt-8 md:px-10 md:pb-10 lg:px-[4vw] lg:pb-[4vh]">
             <div className="flex items-start justify-between border-b border-white/15 pb-5 text-[9px] uppercase tracking-[0.3em] text-white/45 md:text-[11px]">
               <p>
-                CREATIVE OPERATING SYSTEM
+                ARCHIVE OPERATING SYSTEM
                 <br />
-                OXO / FIELD 001
+                OXO / ARCHIVE 001
               </p>
 
               <p className="text-right">
-                LIVE PROCESS
+                CATALOGING FLOW
                 <br />
                 <span data-field-counter className="text-cyan-300">
                   01
@@ -2489,7 +2500,7 @@ export default function ChiSiamo() {
             </div>
 
             <div className="flex items-end justify-between border-t border-white/15 pt-5 text-[9px] uppercase tracking-[0.29em] text-white/40 md:text-[11px]">
-              <span>INPUT → PROCESS → OUTPUT</span>
+              <span>DOCUMENT → METADATA → SYSTEM</span>
               <span>SCROLL / TRANSFORM ↓</span>
             </div>
           </div>
@@ -2512,7 +2523,7 @@ export default function ChiSiamo() {
           <div className="relative z-10 mb-16 flex flex-col gap-7 border-b border-white/20 pb-8 md:mb-24 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-violet-400 md:text-xs">
-                The people behind Oxo
+                The people behind the system
               </p>
               <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.75] tracking-[-0.065em] md:text-[9vw] lg:text-[8vw]">
                 IL TEAM
@@ -2520,13 +2531,13 @@ export default function ChiSiamo() {
             </div>
 
             <p className="avant-legato-font max-w-[620px] text-lg leading-snug text-gray-300 md:text-2xl">
-              Competenze diverse, una sola direzione: costruire esperienze in
-              cui ogni scelta visiva abbia una ragione tecnica e ogni scelta
-              tecnica migliori l'esperienza.
+              Competenze diverse, una sola direzione: trasformare dati,
+              documenti e processi complessi in sistemi digitali affidabili,
+              consultabili e riconoscibili.
             </p>
           </div>
 
-          <div className="relative z-10 grid gap-6 md:grid-cols-2 lg:grid-cols-2 lg:gap-[2vw]">
+          <div className="relative z-10 grid gap-10 sm:gap-12 md:grid-cols-2 md:gap-8 lg:grid-cols-2 lg:gap-x-[3vw] lg:gap-y-[12vh]">
             {TEAM.map((member, index) => (
               <article
                 key={member.id}
@@ -2546,7 +2557,7 @@ export default function ChiSiamo() {
                     navigate(member.link);
                   }
                 }}
-                className={`oxo-team-card group relative h-[72svh] min-h-[72svh] cursor-pointer overflow-hidden rounded-[34px] border border-white/20 md:rounded-[46px] lg:rounded-[62px] ${
+                className={`oxo-team-card group relative h-[72svh] min-h-[620px] cursor-pointer overflow-hidden rounded-[34px] border border-white/20 sm:min-h-[660px] md:min-h-[700px] md:rounded-[46px] lg:h-[72svh] lg:min-h-[72svh] lg:rounded-[62px] ${
                   index % 2 === 1 ? "lg:translate-y-[18vh]" : ""
                 }`}
                 style={{ clipPath: FULL_CLIP }}
@@ -2650,20 +2661,20 @@ export default function ChiSiamo() {
 
                 <div
                   data-team-content
-                  className="absolute bottom-8 left-7 right-7 z-10 md:bottom-11 md:left-10 md:right-10"
+                  className="absolute bottom-7 left-6 right-6 z-10 sm:bottom-8 sm:left-7 sm:right-7 md:bottom-10 md:left-9 md:right-9"
                 >
                   <p
-                    className="avant-legato-font mb-3 text-[10px] uppercase tracking-[0.32em] md:text-xs"
+                    className="avant-legato-font mb-2 text-[8px] uppercase tracking-[0.28em] sm:text-[9px] md:text-[10px]"
                     style={{ color: member.accent }}
                   >
                     {member.role}
                   </p>
 
-                  <h3 className="oxo-team-member-name avant-legato-font ombra2 text-[clamp(2.8rem,6.3vw,6.4rem)] uppercase leading-[0.78] tracking-[-0.055em]">
+                  <h3 className="oxo-team-member-name avant-legato-font ombra2 text-[clamp(2.15rem,4.7vw,4.9rem)] uppercase leading-[0.8] tracking-[-0.05em]">
                     {member.name}
                   </h3>
 
-                  <p className="avant-legato-font mt-5 max-w-[610px] text-base leading-snug text-gray-200 md:text-xl lg:text-2xl">
+                  <p className="avant-legato-font mt-3 max-w-[520px] text-[13px] leading-[1.35] text-gray-200/90 sm:text-sm md:text-base lg:text-lg">
                     {member.description}
                   </p>
                 </div>
@@ -2682,7 +2693,7 @@ export default function ChiSiamo() {
           <div className="relative z-10 grid gap-10 lg:grid-cols-[.34fr_1.66fr] lg:gap-[1.5vw]">
             <div>
               <p className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.34em] text-cyan-300 md:text-xs">
-                Il nostro metodo
+                Il nostro metodo operativo
               </p>
 
               <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[9vw] lg:sticky lg:top-[12vh] lg:text-[8vw]">
@@ -2739,27 +2750,27 @@ export default function ChiSiamo() {
 
           <div className="relative z-10 w-full">
             <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.3em] text-gray-500 md:text-[11px]">
-              <span>START A PROJECT</span>
+              <span>START AN ARCHIVE SYSTEM</span>
               <span>OXO STUDIO / 2026</span>
             </div>
 
             <h2 className="avant-legato-font ombra2 overflow-hidden text-[12.2vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[9vw] lg:text-[8vw]">
-              <SplitLetters text="PARLIAMONE" attribute="data-final-letter" />
+              <SplitLetters text="STRUTTURIAMOLO" attribute="data-final-letter" />
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
               <p className="avant-legato-font max-w-[760px] text-xl leading-snug text-gray-300 md:text-3xl">
-                Hai un prodotto da costruire, un processo da rendere più
-                intelligente o un mondo da mettere in movimento?
+                Hai un catalogo, un archivio o un flusso documentale da
+                rendere più veloce, verificabile e realmente digitale?
               </p>
 
               <Link
-                to="/Contatti"
+                to="/contatti"
                 data-magnetic
                 className="oxo-final-cta avant-legato-font relative z-20 inline-flex w-fit items-center gap-5 border border-white/35 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[0.28em] text-white opacity-100 md:px-6 md:py-4 md:text-base"
               >
                 <span>
-                  Parliamo del progetto
+                  Trasformiamolo in sistema
                 </span>
 
                 <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">

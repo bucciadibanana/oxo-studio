@@ -14,37 +14,41 @@ gsap.registerPlugin(ScrollTrigger);
 const CAPABILITIES = [
   {
     id: "01",
-    code: "SYSTEM_01",
-    title: "SOFTWARE",
-    eyebrow: "PRODUCT / ENGINEERING",
-    copy: "Trasformiamo processi complessi in strumenti digitali chiari, solidi e pronti a evolvere.",
+    code: "CATALOG_01",
+    title: "CATALOGAZIONE",
+    eyebrow: "SBN / MARC 21 / Z39.50",
+    copy:
+      "Catalogazione bibliografica, metadatazione e normalizzazione dei record attraverso flussi software progettati per integrare SBN, MARC 21, UNIMARC, Z39.50, BID e ISBN.",
     accent: "#35d8ff",
     soft: "rgba(53,216,255,.18)",
   },
   {
     id: "02",
-    code: "SYSTEM_02",
-    title: "WEB",
-    eyebrow: "DESIGN / DEVELOPMENT",
-    copy: "Costruiamo esperienze web veloci, riconoscibili e progettate per funzionare su ogni dispositivo.",
-    accent: "#8b5cf6",
-    soft: "rgba(139,92,246,.18)",
-  },
-  {
-    id: "03",
-    code: "SYSTEM_03",
-    title: "AI",
-    eyebrow: "DATA / AUTOMATION",
-    copy: "Integriamo intelligenza artificiale, ricerca e automazione dove producono valore reale.",
+    code: "KAIROS_02",
+    title: "KAIROS",
+    eyebrow: "ARCHIVE / AI / AUTOMATION",
+    copy:
+      "Kairos Archive automatizza acquisizione, riconoscimento, ricerca e compilazione dei dati bibliografici mantenendo controllo, verificabilità e qualità del record.",
     accent: "#20f0c7",
     soft: "rgba(32,240,199,.16)",
   },
   {
+    id: "03",
+    code: "SOFTWARE_03",
+    title: "SOFTWARE",
+    eyebrow: "PRODUCT / ENGINEERING",
+    copy:
+      "Sviluppiamo software custom, API, dashboard e sistemi gestionali costruiti intorno ai processi reali di biblioteche, archivi, istituzioni e imprese.",
+    accent: "#8b5cf6",
+    soft: "rgba(139,92,246,.18)",
+  },
+  {
     id: "04",
-    code: "SYSTEM_04",
-    title: "GAME",
-    eyebrow: "REAL TIME / INTERACTION",
-    copy: "Sviluppiamo videogame, prototipi e mondi interattivi in cui codice, ritmo e direzione visiva coincidono.",
+    code: "WEB_04",
+    title: "WEB",
+    eyebrow: "PLATFORM / INTERFACE",
+    copy:
+      "Costruiamo piattaforme web e interfacce professionali per rendere cataloghi, archivi, dati e servizi digitali consultabili, veloci e realmente utilizzabili.",
     accent: "#ff4fd8",
     soft: "rgba(255,79,216,.16)",
   },
@@ -53,53 +57,53 @@ const CAPABILITIES = [
 const PROJECTS = [
   {
     id: "01",
-    category: "SOFTWARE / AI",
+    category: "CATALOGAZIONE / AI",
     title: "KAIROSARCHIVE",
     statement: "KNOWLEDGE, ORGANIZED.",
     description:
-      "Un ecosistema intelligente per metadatazione, catalogazione, ricerca e organizzazione documentale.",
-    meta: "MARC 21 / SBN / Z39.50 / AUTOMATION",
+      "Un ecosistema intelligente per metadatazione, catalogazione bibliografica, ricerca, BID e organizzazione documentale.",
+    meta: "MARC 21 / SBN / Z39.50 / BID / AUTOMATION",
     video: "/videos/products/kairosarchive.mp4",
     link: "/portfolio/kairosarchive",
     accent: "#35d8ff",
     fallback:
-      "radial-gradient(circle at 72% 30%, rgba(53,216,255,.34), transparent 34%), radial-gradient(circle at 18% 76%, rgba(80,70,255,.20), transparent 38%), linear-gradient(135deg, #031018 0%, #050711 50%, #010101 100%)",
+      "radial-gradient(circle at 72% 30%, rgba(53,216,255,.34), transparent 34%), radial-gradient(circle at 18% 76%, rgba(32,240,199,.20), transparent 38%), linear-gradient(135deg, #031018 0%, #050711 50%, #010101 100%)",
   },
   {
     id: "02",
     category: "CUSTOM SOFTWARE",
-    title: "DIGITAL SYSTEMS",
+    title: "SOFTWARE SYSTEMS",
     statement: "COMPLEXITY, MADE USABLE.",
     description:
-      "Applicazioni progettate intorno ai processi reali del cliente, con interfacce precise e architetture pronte a crescere.",
-    meta: "PRODUCT / CLOUD / UX / ENGINEERING",
+      "Software custom, dashboard, API e sistemi gestionali progettati intorno ai processi reali del cliente.",
+    meta: "PRODUCT / API / DATABASE / CLOUD",
     video: "/videos/products/custom-software.mp4",
     link: "/portfolio/software",
     accent: "#8b5cf6",
     fallback:
-      "radial-gradient(circle at 24% 38%, rgba(139,92,246,.36), transparent 36%), radial-gradient(circle at 84% 72%, rgba(255,79,216,.16), transparent 36%), linear-gradient(135deg, #10041b 0%, #080810 52%, #010101 100%)",
+      "radial-gradient(circle at 24% 38%, rgba(139,92,246,.36), transparent 36%), radial-gradient(circle at 84% 72%, rgba(53,216,255,.16), transparent 36%), linear-gradient(135deg, #10041b 0%, #080810 52%, #010101 100%)",
   },
   {
     id: "03",
-    category: "INTERACTIVE / GAME",
-    title: "LIVING WORLDS",
-    statement: "TECHNOLOGY YOU CAN FEEL.",
+    category: "WEB / DIGITAL PLATFORM",
+    title: "WEB SYSTEMS",
+    statement: "DATA, MADE ACCESSIBLE.",
     description:
-      "Esperienze in tempo reale, prototipi e ambienti interattivi in cui tecnologia e direzione artistica costruiscono la stessa sensazione.",
-    meta: "GAMEPLAY / MOTION / 3D / SOUND",
-    video: "/videos/products/interactive-worlds.mp4",
-    link: "/portfolio/game",
+      "Piattaforme web e interfacce progettate per trasformare dati complessi in esperienze chiare, veloci e accessibili su ogni dispositivo.",
+    meta: "WEB APP / UX / INTERFACE / PERFORMANCE",
+    video: "/videos/products/artificial-intelligence.mp4",
+    link: "/prodotti",
     accent: "#ff4fd8",
     fallback:
-      "radial-gradient(circle at 30% 35%, rgba(255,79,216,.32), transparent 36%), radial-gradient(circle at 78% 75%, rgba(87,74,255,.24), transparent 38%), linear-gradient(135deg, #180417 0%, #08040f 54%, #010101 100%)",
+      "radial-gradient(circle at 30% 35%, rgba(255,79,216,.28), transparent 36%), radial-gradient(circle at 78% 75%, rgba(139,92,246,.24), transparent 38%), linear-gradient(135deg, #160315 0%, #08040f 54%, #010101 100%)",
   },
 ];
 
 const SIGNAL_ROWS = [
-  "SOFTWARE — AI — DESIGN — INTERACTION —",
-  "MAKE IT CLEAR — MAKE IT POWERFUL —",
-  "SYSTEMS — STORIES — REAL TIME — WORLDS —",
-  "CODE WITH A POINT OF VIEW —",
+  "CATALOGAZIONE — METADATAZIONE — SOFTWARE —",
+  "SBN — MARC 21 — UNIMARC — Z39.50 —",
+  "KAIROS ARCHIVE — BID — ISBN — SEARCH —",
+  "WEB — AUTOMATION — DATA — KNOWLEDGE —",
 ];
 
 const FULL_CLIP = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
@@ -913,7 +917,7 @@ export default function Home() {
 
           /*
            * PROJECTS HEADER COPY
-           * Selected systems + paragrafo entrano dopo il titolo.
+           * Selected archive systems + paragrafo entrano dopo il titolo.
            */
           if (projectHeaderTexts.length) {
             gsap.fromTo(
@@ -1793,7 +1797,10 @@ export default function Home() {
 
   return (
     <>
-      <SeoMetaTags />
+      <SeoMetaTags
+        title="Catalogazione, Metadatazione, Kairos Archive e Software | OXO Studio"
+        description="OXO Studio sviluppa Kairos Archive, software custom e piattaforme web per catalogazione bibliografica, metadatazione, SBN, MARC 21, UNIMARC, Z39.50, BID, ISBN e gestione documentale."
+      />
 
       <main
         ref={pageRef}
@@ -1919,7 +1926,7 @@ export default function Home() {
             letter-spacing: -.035em;
           }
 
-          /* HOME SELECTED WORK / EDITORIAL AWWWARDS INTERACTION */
+          /* HOME SELECTED SYSTEM / EDITORIAL AWWWARDS INTERACTION */
           .oxo-home-project-card {
             isolation: isolate;
             --project-mx: 50%;
@@ -2288,6 +2295,32 @@ export default function Home() {
             }
           }
 
+          .oxo-home-mega-cta {
+            box-shadow:
+              inset 0 0 0 1px rgba(255,255,255,.02),
+              0 18px 70px rgba(0,0,0,.28);
+            transition:
+              border-color .45s ease,
+              background-color .45s ease,
+              transform .65s cubic-bezier(.16,1,.3,1),
+              box-shadow .65s cubic-bezier(.16,1,.3,1);
+          }
+
+          .oxo-home-mega-cta:hover {
+            border-color: rgba(53,216,255,.92);
+            background-color: rgba(53,216,255,.09);
+            transform: translateY(-4px);
+            box-shadow:
+              inset 0 0 0 1px rgba(53,216,255,.08),
+              0 24px 90px rgba(53,216,255,.10);
+          }
+
+          @media (max-width: 767px) {
+            .oxo-home-mega-cta:hover {
+              transform: none;
+            }
+          }
+
           @media (prefers-reduced-motion: reduce) {
             .oxo-v2-brain-halo,
             .oxo-v2-brain-orbit,
@@ -2352,7 +2385,7 @@ export default function Home() {
               INDEPENDENT DIGITAL LAB
             </p>
             <p data-home-v2-meta className="text-right">
-              CREATIVE TECHNOLOGY
+              ARCHIVE / SOFTWARE TECHNOLOGY
               <br />
               LA SPEZIA / ITALY
             </p>
@@ -2367,7 +2400,7 @@ export default function Home() {
                 data-home-v2-meta
                 className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
               >
-                Software / AI / Interactive worlds
+                Catalogazione / Kairos / Software / Web
               </p>
 
               <div className="relative py-[0.6vw] md:py-[0.4vw]">
@@ -2420,16 +2453,16 @@ export default function Home() {
               data-home-v2-meta
               className="avant-legato-font max-w-[980px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.55rem]"
             >
-              Progettiamo sistemi digitali con una voce precisa: software,
-              intelligenza artificiale e mondi interattivi che non sembrano già
-              visti.
+              Trasformiamo catalogazione, metadatazione e gestione documentale
+              in sistemi software concreti: Kairos Archive, piattaforme web e
+              software custom costruiti intorno ai dati reali.
             </p>
 
             <p
               data-home-v2-meta
               className="avant-legato-font shrink-0 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-xs"
             >
-              Scroll / Break the surface ↓
+              Scroll / Enter the system ↓
             </p>
           </div>
         </section>
@@ -2488,12 +2521,12 @@ export default function Home() {
             className="absolute left-1/2 top-1/2 z-40 w-[86vw] max-w-[900px] -translate-x-1/2 -translate-y-1/2 text-center"
           >
             <p className="avant-legato-font mb-5 text-[9px] uppercase tracking-[0.4em] text-cyan-300 md:text-xs">
-              One studio / one signal
+              One archive / one system
             </p>
             <h2 className="avant-legato-font ombra2 text-[11.5vw] uppercase leading-[.76] tracking-[-0.07em] md:text-[6.8vw]">
-              NOISE OUT.
+              DATA IN.
               <br />
-              MEANING IN.
+              KNOWLEDGE OUT.
             </h2>
           </div>
         </section>
@@ -2524,7 +2557,7 @@ export default function Home() {
                 </span>
                 <span className="block overflow-hidden pb-[0.08em]">
                   <SplitLetters
-                    text="AS ONE."
+                    text="FOR DATA."
                     attribute="data-capability-title-letter"
                   />
                 </span>
@@ -2536,12 +2569,12 @@ export default function Home() {
               data-capability-header-text
               className="avant-legato-font max-w-[720px] text-xl leading-snug text-gray-300 md:justify-self-end md:text-3xl"
             >
-              Strategia, interfaccia e ingegneria non passano da un reparto
-              all'altro. Nascono insieme, nello stesso sistema.
+              Catalogazione, software e interfaccia non sono reparti separati.
+              Li progettiamo insieme per trasformare documenti e metadati in sistemi realmente operativi.
             </p>
           </div>
 
-          <div className="relative z-10 grid grid-cols-1 gap-5 md:gap-6 lg:grid-cols-2 lg:gap-[2vw]">
+          <div className="relative z-10 grid grid-cols-1 gap-9 sm:gap-10 md:gap-12 lg:grid-cols-2 lg:gap-x-[3vw] lg:gap-y-[10vh] xl:gap-x-[3.6vw] xl:gap-y-[12vh]">
             {CAPABILITIES.map((item, index) => (
               <article
                 key={item.id}
@@ -2606,8 +2639,8 @@ export default function Home() {
                     });
                   }
                 }}
-                className={`oxo-capability-v2 group relative min-h-[60svh] overflow-hidden rounded-[34px] border border-white/18 bg-[#030304] p-7 md:min-h-[66svh] md:rounded-[46px] md:p-10 lg:min-h-[72svh] lg:rounded-[64px] lg:p-[3vw] ${
-                  index % 2 === 1 ? "lg:mt-[6vh]" : ""
+                className={`oxo-capability-v2 group relative min-h-[560px] overflow-hidden rounded-[30px] border border-white/18 bg-[#030304] p-6 sm:min-h-[600px] sm:rounded-[36px] sm:p-8 md:min-h-[640px] md:rounded-[46px] md:p-10 lg:min-h-[72svh] lg:rounded-[64px] lg:p-[3vw] xl:min-h-[74svh] ${
+                  index % 2 === 1 ? "lg:mt-[5vh]" : ""
                 }`}
                 style={{
                   clipPath: FULL_CLIP,
@@ -2657,7 +2690,7 @@ export default function Home() {
 
                 <div
                   data-capability-inner
-                  className="relative z-10 flex min-h-[52svh] flex-col justify-between [transform-style:preserve-3d] md:min-h-[56svh] lg:min-h-[62svh]"
+                  className="relative z-10 flex min-h-[500px] flex-col justify-between gap-12 [transform-style:preserve-3d] sm:min-h-[530px] md:min-h-[560px] lg:min-h-[62svh]"
                 >
                   <div className="flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.31em] text-white/42 md:text-xs">
                     <span>{item.code}</span>
@@ -2675,14 +2708,24 @@ export default function Home() {
                     />
 
                     <h3
-                      className={`oxo-capability-v2-title avant-legato-font ombra2 uppercase leading-[.68] tracking-[-0.09em] transition-transform duration-700 ease-out md:text-[9vw] lg:text-[6.2vw] ${
-                        item.title === "SOFTWARE" ? "text-[12vw]" : "text-[15vw]"
-                      }`}
+                      className="oxo-capability-v2-title avant-legato-font ombra2 overflow-visible whitespace-nowrap text-[13vw] uppercase leading-[.72] tracking-[-0.085em] transition-transform duration-700 ease-out sm:text-[10.5vw] md:text-[8.2vw] lg:text-[5.85vw]"
                     >
-                      {item.title}
+                      <span
+                        className="inline-block whitespace-nowrap"
+                        style={
+                          item.title === "CATALOGAZIONE"
+                            ? {
+                                transform: "scaleX(.72)",
+                                transformOrigin: "left center",
+                              }
+                            : undefined
+                        }
+                      >
+                        {item.title}
+                      </span>
                     </h3>
 
-                    <div className="mt-8 flex items-end justify-between gap-7">
+                    <div className="mt-8 flex flex-col items-start gap-7 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
                       <p className="avant-legato-font max-w-[650px] text-lg leading-snug text-gray-300 md:text-2xl lg:text-[1.75rem]">
                         {item.copy}
                       </p>
@@ -2704,8 +2747,8 @@ export default function Home() {
             data-capability-header-text
             className="relative z-10 mt-20 flex items-center justify-between border-t border-white/18 pt-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:mt-32 md:text-xs lg:mt-[18vh]"
           >
-            <span>NO DEPARTMENTS / ONE SYSTEM</span>
-            <span>SCROLL TO SELECTED WORK ↓</span>
+            <span>CATALOG / SOFTWARE / WEB</span>
+            <span>SCROLL TO SYSTEMS ↓</span>
           </div>
         </section>
 
@@ -2718,7 +2761,7 @@ export default function Home() {
               data-project-header-text
               className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-fuchsia-400 md:text-xs"
             >
-              Selected systems
+              Selected archive systems
             </p>
             <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
               <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
@@ -2758,8 +2801,8 @@ export default function Home() {
                 data-project-header-text
                 className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl"
               >
-                Lo schermo resta fermo. Il progetto cambia pelle, colore e ritmo
-                mentre continui a scorrere.
+                Kairos Archive, software custom e piattaforme web:
+                tre livelli dello stesso sistema, dalla catalogazione all'uso reale del dato.
               </p>
             </div>
           </div>
@@ -2874,7 +2917,7 @@ export default function Home() {
                       }}
                     />
                     <span className="avant-legato-font absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[8px] uppercase tracking-[0.38em] text-white/75 md:text-[9px]">
-                      VIEW PROJECT
+                      VIEW SYSTEM
                     </span>
                   </div>
 
@@ -2883,7 +2926,7 @@ export default function Home() {
                       className="avant-legato-font mb-4 text-[8px] uppercase tracking-[0.46em] md:text-[10px]"
                       style={{ color: project.accent }}
                     >
-                      SELECTED WORK / {project.id}
+                      SELECTED SYSTEM / {project.id}
                     </p>
 
                     <div className="overflow-hidden">
@@ -2952,7 +2995,7 @@ export default function Home() {
                     className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.37em] md:text-xs"
                     style={{ color: project.accent }}
                   >
-                    Selected work / {project.statement}
+                    Selected system / {project.statement}
                   </p>
 
                   <h3 className="oxo-project-v2-title avant-legato-font ombra2 text-[clamp(3rem,8.2vw,8.2rem)] uppercase leading-[.72] tracking-[-0.075em] transition-[letter-spacing] duration-700">
@@ -2979,7 +3022,7 @@ export default function Home() {
                     onClick={(event) => event.stopPropagation()}
                     className="avant-legato-font group mt-8 inline-flex items-center gap-5 border-b border-white/70 pb-2 text-sm uppercase tracking-[0.28em] md:mt-10 md:text-base"
                   >
-                    <span>Entra nel progetto</span>
+                    <span>Apri il sistema</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-2">
                       →
                     </span>
@@ -3040,18 +3083,18 @@ export default function Home() {
             aria-hidden="true"
             className="avant-legato-font pointer-events-none relative z-[1] flex w-max whitespace-nowrap text-[20vw] uppercase leading-[.7] tracking-[-0.08em] text-white/[0.045] md:text-[15vw] lg:text-[11.5vw]"
           >
-            <span>NO TEMPLATES — NO NOISE — NO EMPTY MOTION —&nbsp;</span>
-            <span>NO TEMPLATES — NO NOISE — NO EMPTY MOTION —&nbsp;</span>
+            <span>NO DATA LOSS — NO EMPTY RECORDS — NO LOCK-IN —&nbsp;</span>
+            <span>NO DATA LOSS — NO EMPTY RECORDS — NO LOCK-IN —&nbsp;</span>
           </div>
 
           <div className="relative z-10 mx-auto mt-[-2vw] flex min-h-[68vh] max-w-[1500px] items-center px-6 md:px-10 lg:px-[5vw]">
             <div className="max-w-[1250px]">
               <p className="avant-legato-font mb-7 text-[10px] uppercase tracking-[0.38em] text-violet-400 md:text-xs">
-                Oxo point of view
+                OXO / Archive point of view
               </p>
 
               <p className="avant-legato-font text-[clamp(2rem,5.2vw,5.6rem)] leading-[.94] tracking-[-0.045em] text-gray-100 [perspective:900px]">
-                <SplitWords text="NON AGGIUNGIAMO EFFETTI A UN PRODOTTO. PROGETTIAMO IL MODO IN CUI IL PRODOTTO SI FA CAPIRE, SI FA USARE E SI FA RICORDARE." />
+                <SplitWords text="NON DIGITALIZZIAMO SOLTANTO DOCUMENTI. PROGETTIAMO IL MODO IN CUI I DATI VENGONO RICONOSCIUTI, VERIFICATI, CATALOGATI, RICERCATI E RIUTILIZZATI." />
               </p>
             </div>
           </div>
@@ -3063,7 +3106,7 @@ export default function Home() {
         >
           <div className="oxo-v2-grid pointer-events-none absolute inset-0 opacity-70" />
 
-          {/* Awwwards reactive field: nessuna nuova altezza */}
+          {/* Awwwards reactive field */}
           <div
             data-final-field
             aria-hidden="true"
@@ -3137,8 +3180,6 @@ export default function Home() {
               />
             ))}
 
-          
-
             <span
               data-final-cursor
               className="absolute left-0 top-0 h-14 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20 opacity-0"
@@ -3154,11 +3195,11 @@ export default function Home() {
             </span>
 
             <p className="avant-legato-font absolute bottom-[6%] left-[5vw] text-[8px] uppercase tracking-[0.38em] text-white/22 md:text-[10px]">
-              MOVE / DISTORT / CONNECT
+              CATALOG / VERIFY / CONNECT
             </p>
 
             <p className="avant-legato-font absolute bottom-[6%] right-[5vw] text-right text-[8px] uppercase tracking-[0.38em] text-white/22 md:text-[10px]">
-              FIELD 05 / POINTER ACTIVE
+              ARCHIVE FIELD / POINTER ACTIVE
             </p>
           </div>
 
@@ -3173,7 +3214,7 @@ export default function Home() {
 
           <div className="relative z-10 w-full">
             <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-[11px]">
-              <span>START A PROJECT</span>
+              <span>CATALOGAZIONE / SOFTWARE / WEB</span>
               <span>OXO STUDIO / 2026</span>
             </div>
 
@@ -3193,23 +3234,34 @@ export default function Home() {
             </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
-              <p className="avant-legato-font max-w-[840px] text-xl leading-snug text-gray-300 md:text-3xl">
-                Hai un prodotto che non deve assomigliare al prossimo sito che
-                scorrerai domani?
-              </p>
+              <div className="max-w-[860px]">
+                <p className="avant-legato-font text-xl leading-snug text-gray-300 md:text-3xl">
+                  Hai un catalogo, un archivio o un processo che oggi vive ancora
+                  tra fogli, record frammentati e lavoro manuale?
+                </p>
+
+                <p className="avant-legato-font mt-4 text-[10px] uppercase tracking-[0.32em] text-cyan-300/70 md:text-xs">
+                  SBN / MARC 21 / Z39.50 / BID / METADATA / SOFTWARE / WEB
+                </p>
+              </div>
 
               <Link
-                to="/Contatti"
+                to="/contatti"
                 data-magnetic
-                className="oxo-final-cta avant-legato-font relative z-20 inline-flex w-fit items-center gap-5 border border-white/35 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[0.28em] text-white opacity-100 md:px-6 md:py-4 md:text-base"
+                className="oxo-final-cta avant-legato-font group relative z-20 inline-flex w-full items-center justify-between gap-5 overflow-hidden border border-cyan-300/45 bg-cyan-300/[0.045] px-5 py-5 text-sm uppercase tracking-[0.22em] text-white opacity-100 sm:w-fit md:px-7 md:py-5 md:text-base"
               >
-                <span>
-                  Parliamo del progetto
+                <span className="relative z-10">
+                  TRASFORMIAMOLO IN SISTEMA
                 </span>
 
-                <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
+                <span className="relative z-10 text-2xl transition-transform duration-500 group-hover:translate-x-2 group-hover:-rotate-45">
                   ↗
                 </span>
+
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-[-35%] w-[28%] -skew-x-[18deg] bg-gradient-to-r from-transparent via-cyan-300/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[520%]"
+                />
               </Link>
             </div>
           </div>

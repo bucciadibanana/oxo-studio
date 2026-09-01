@@ -11,34 +11,56 @@ gsap.registerPlugin(ScrollTrigger);
 const PRODUCTS = [
   {
     id: "01",
-    category: "SOFTWARE / AI",
+    category: "CATALOGAZIONE / AI",
     title: "KAIROSARCHIVE",
     statement: "KNOWLEDGE, ORGANIZED.",
     description:
-      "Un sistema intelligente per metadatazione, catalogazione, ricerca e organizzazione documentale. Trasforma informazioni frammentate in un patrimonio interrogabile e operativo.",
-    meta: "ARCHIVE INTELLIGENCE / AUTOMATION",
+      "Il sistema OXO per metadatazione, catalogazione bibliografica, ricerca e organizzazione documentale. Integra SBN, MARC 21, Z39.50, BID, ISBN e automazione in un unico flusso operativo.",
+    meta: "ARCHIVE INTELLIGENCE / CATALOGING AUTOMATION",
     video: "/videos/products/kairosarchive.mp4",
     link: "/portfolio/kairosarchive",
     accent: "#35d8ff",
     accentSoft: "rgba(53,216,255,.18)",
     objectPosition: "center center",
     fallback:
-      "radial-gradient(circle at 72% 28%, rgba(53,216,255,.34), transparent 32%), radial-gradient(circle at 18% 78%, rgba(80,70,255,.22), transparent 38%), linear-gradient(135deg, #02121b 0%, #050711 54%, #010101 100%)",
+      "radial-gradient(circle at 72% 28%, rgba(53,216,255,.34), transparent 32%), radial-gradient(circle at 18% 78%, rgba(32,240,199,.20), transparent 38%), linear-gradient(135deg, #02121b 0%, #050711 54%, #010101 100%)",
     specs: [
-      ["FIELD", "CULTURAL DATA"],
-      ["CORE", "AI / SEARCH"],
-      ["OUTPUT", "STRUCTURED KNOWLEDGE"],
+      ["FIELD", "BIBLIOGRAPHIC DATA"],
+      ["CORE", "CATALOG / SEARCH / AI"],
+      ["OUTPUT", "VERIFIED RECORDS"],
     ],
-    tags: ["MARC 21", "SBN", "Z39.50", "AUTOMATION"],
+    tags: ["MARC 21", "SBN", "Z39.50", "BID", "ISBN"],
   },
   {
     id: "02",
-    category: "DIGITAL PRODUCT",
+    category: "CATALOGING SYSTEM",
+    title: "METADATA SYSTEMS",
+    statement: "RECORDS, MADE USEFUL.",
+    description:
+      "Flussi software per acquisizione, estrazione, normalizzazione e verifica dei metadati. Pensati per biblioteche, archivi, istituzioni e patrimoni documentali.",
+    meta: "METADATA / NORMALIZATION / SEARCH",
+    video: "/videos/products/artificial-intelligence.mp4",
+    link: "/portfolio/ai",
+    accent: "#20f0c7",
+    accentSoft: "rgba(32,240,199,.16)",
+    objectPosition: "center center",
+    fallback:
+      "radial-gradient(circle at 76% 54%, rgba(32,240,199,.31), transparent 35%), radial-gradient(circle at 12% 22%, rgba(41,121,255,.26), transparent 38%), linear-gradient(135deg, #001515 0%, #020711 54%, #010101 100%)",
+    specs: [
+      ["FIELD", "METADATA"],
+      ["CORE", "OCR / AI / RULES"],
+      ["OUTPUT", "NORMALIZED DATA"],
+    ],
+    tags: ["OCR", "METADATA", "NORMALIZATION", "SEARCH"],
+  },
+  {
+    id: "03",
+    category: "CUSTOM SOFTWARE",
     title: "CUSTOM SOFTWARE",
     statement: "COMPLEXITY, MADE USABLE.",
     description:
-      "Applicazioni web e sistemi gestionali costruiti intorno ai processi reali del cliente: architetture solide, interfacce chiare e strumenti pronti a evolvere.",
-    meta: "PRODUCT / UX / ENGINEERING",
+      "Applicazioni, dashboard, API e sistemi gestionali costruiti intorno ai processi reali del cliente, con architetture solide e strumenti pronti a evolvere.",
+    meta: "PRODUCT / API / DATABASE / CLOUD",
     video: "/videos/products/custom-software.mp4",
     link: "/portfolio/software",
     accent: "#8b5cf6",
@@ -48,99 +70,77 @@ const PRODUCTS = [
       "radial-gradient(circle at 24% 40%, rgba(139,92,246,.37), transparent 36%), radial-gradient(circle at 82% 75%, rgba(255,79,216,.16), transparent 36%), linear-gradient(135deg, #13051f 0%, #080810 55%, #010101 100%)",
     specs: [
       ["FIELD", "BUSINESS SYSTEMS"],
-      ["CORE", "CLOUD / API"],
+      ["CORE", "API / DATABASE / CLOUD"],
       ["OUTPUT", "SCALABLE SOFTWARE"],
     ],
-    tags: ["WEB APP", "DASHBOARD", "DATABASE", "CLOUD"],
-  },
-  {
-    id: "03",
-    category: "INTELLIGENZA ARTIFICIALE",
-    title: "AI SYSTEMS",
-    statement: "AUTOMATION WITH A PURPOSE.",
-    description:
-      "Motori di classificazione, ricerca semantica e automazioni progettati per ridurre il lavoro ripetitivo e rendere i dati realmente utilizzabili.",
-    meta: "DATA / AUTOMATION / KNOWLEDGE",
-    video: "/videos/products/artificial-intelligence.mp4",
-    link: "/portfolio/ai",
-    accent: "#20f0c7",
-    accentSoft: "rgba(32,240,199,.16)",
-    objectPosition: "center center",
-    fallback:
-      "radial-gradient(circle at 76% 54%, rgba(32,240,199,.31), transparent 35%), radial-gradient(circle at 12% 22%, rgba(41,121,255,.26), transparent 38%), linear-gradient(135deg, #001515 0%, #020711 54%, #010101 100%)",
-    specs: [
-      ["FIELD", "INTELLIGENT FLOWS"],
-      ["CORE", "ML / LLM / DATA"],
-      ["OUTPUT", "AUTOMATED DECISIONS"],
-    ],
-    tags: ["CLASSIFICATION", "OCR", "SEARCH", "AGENTS"],
+    tags: ["WEB APP", "DASHBOARD", "API", "DATABASE"],
   },
   {
     id: "04",
-    category: "VIDEOGAME / REAL TIME",
-    title: "INTERACTIVE WORLDS",
-    statement: "CODE YOU CAN FEEL.",
+    category: "WEB / DIGITAL PLATFORM",
+    title: "WEB SYSTEMS",
+    statement: "DATA, MADE ACCESSIBLE.",
     description:
-      "Videogame, prototipi e ambienti interattivi in cui gameplay, immagine, movimento e suono vengono progettati come un solo organismo.",
-    meta: "GAMEPLAY / MOTION / EXPERIENCE",
-    video: "/videos/products/interactive-worlds.mp4",
-    link: "/portfolio/game",
+      "Piattaforme web e interfacce professionali progettate per rendere cataloghi, archivi, dati e servizi digitali chiari, veloci e utilizzabili su ogni dispositivo.",
+    meta: "WEB / UX / PERFORMANCE / INTERFACE",
+    video: "/videos/products/custom-software.mp4",
+    link: "/portfolio/software",
     accent: "#ff4fd8",
     accentSoft: "rgba(255,79,216,.17)",
     objectPosition: "center center",
     fallback:
-      "radial-gradient(circle at 30% 34%, rgba(255,79,216,.33), transparent 36%), radial-gradient(circle at 80% 76%, rgba(87,74,255,.25), transparent 38%), linear-gradient(135deg, #1a0418 0%, #08040f 56%, #010101 100%)",
+      "radial-gradient(circle at 30% 34%, rgba(255,79,216,.28), transparent 36%), radial-gradient(circle at 80% 76%, rgba(139,92,246,.25), transparent 38%), linear-gradient(135deg, #1a0418 0%, #08040f 56%, #010101 100%)",
     specs: [
-      ["FIELD", "INTERACTIVE MEDIA"],
-      ["CORE", "REAL TIME / 3D"],
-      ["OUTPUT", "LIVING EXPERIENCES"],
+      ["FIELD", "DIGITAL ACCESS"],
+      ["CORE", "WEB / UX / DATA"],
+      ["OUTPUT", "USABLE PLATFORMS"],
     ],
-    tags: ["GAMEPLAY", "3D", "MOTION", "PROTOTYPING"],
+    tags: ["WEB", "UX", "PERFORMANCE", "ACCESSIBILITY"],
   },
 ];
 
 const CAPABILITIES = [
   {
     id: "01",
-    title: "PRODUCT DESIGN",
-    eyebrow: "FROM IDEA TO INTERFACE",
+    title: "CATALOGAZIONE",
+    eyebrow: "RECORDS / STANDARDS",
     copy:
-      "Strategia, struttura, UX e direzione visiva diventano un unico sistema leggibile, coerente e riconoscibile.",
+      "SBN, MARC 21, UNIMARC, Z39.50, BID e ISBN entrano in workflow progettati per ridurre errori, duplicazioni e lavoro manuale.",
     accent: "#35d8ff",
-    tags: ["RESEARCH", "UX", "UI", "DESIGN SYSTEM"],
+    tags: ["SBN", "MARC 21", "UNIMARC", "Z39.50"],
     background:
       "radial-gradient(circle at 78% 22%, rgba(53,216,255,.26), transparent 34%), linear-gradient(145deg, #07141c, #050507 58%, #010101)",
   },
   {
     id: "02",
-    title: "ENGINEERING",
-    eyebrow: "BUILT TO WORK",
+    title: "METADATA",
+    eyebrow: "EXTRACT / NORMALIZE / VERIFY",
     copy:
-      "Frontend, backend, API e database vengono progettati per essere veloci oggi e sostenibili quando il prodotto cresce.",
-    accent: "#8b5cf6",
-    tags: ["REACT", "PYTHON", "API", "CLOUD"],
-    background:
-      "radial-gradient(circle at 24% 30%, rgba(139,92,246,.29), transparent 34%), linear-gradient(145deg, #16071f, #07070b 58%, #010101)",
-  },
-  {
-    id: "03",
-    title: "AI INTEGRATION",
-    eyebrow: "INTELLIGENCE INSIDE",
-    copy:
-      "L’intelligenza artificiale entra nei flussi dove produce un vantaggio misurabile, non come decorazione da presentazione.",
+      "Acquisiamo, strutturiamo e normalizziamo dati bibliografici e documentali per trasformarli in record verificabili e interrogabili.",
     accent: "#20f0c7",
-    tags: ["ML", "LLM", "RAG", "AUTOMATION"],
+    tags: ["OCR", "METADATA", "NORMALIZATION", "SEARCH"],
     background:
       "radial-gradient(circle at 74% 68%, rgba(32,240,199,.25), transparent 35%), linear-gradient(145deg, #031714, #05070a 58%, #010101)",
   },
   {
-    id: "04",
-    title: "REAL-TIME",
-    eyebrow: "SYSTEMS IN MOTION",
+    id: "03",
+    title: "ENGINEERING",
+    eyebrow: "SOFTWARE / API / DATA",
     copy:
-      "Prototipi, videogame e mondi interattivi costruiti per rispondere, sorprendere e restare impressi.",
+      "Frontend, backend, API e database vengono progettati come un unico sistema, stabile oggi e pronto a crescere domani.",
+    accent: "#8b5cf6",
+    tags: ["REACT", "PYTHON", "API", "DATABASE"],
+    background:
+      "radial-gradient(circle at 24% 30%, rgba(139,92,246,.29), transparent 34%), linear-gradient(145deg, #16071f, #07070b 58%, #010101)",
+  },
+  {
+    id: "04",
+    title: "WEB SYSTEMS",
+    eyebrow: "ACCESS / UX / PERFORMANCE",
+    copy:
+      "Interfacce e piattaforme web progettate per rendere dati, cataloghi e servizi digitali chiari, accessibili e performanti.",
     accent: "#ff4fd8",
-    tags: ["UNITY", "3D", "MOTION", "SOUND"],
+    tags: ["WEB", "UX", "PERFORMANCE", "ACCESS"],
     background:
       "radial-gradient(circle at 28% 30%, rgba(255,79,216,.27), transparent 35%), linear-gradient(145deg, #190617, #08060c 58%, #010101)",
   },
@@ -149,26 +149,26 @@ const CAPABILITIES = [
 const PRINCIPLES = [
   {
     id: "01",
-    code: "FUNCTION",
-    title: "FUNZIONE PRIMA DELL’EFFETTO",
+    code: "VERIFY",
+    title: "IL DATO PRIMA DELL’EFFETTO",
     copy:
-      "Ogni interazione deve avere uno scopo. Se non rende il prodotto più chiaro, rapido o utile, non entra nel sistema.",
+      "Un sistema per catalogazione deve produrre record affidabili. Ogni automazione viene progettata per estrarre, confrontare e verificare prima di compilare.",
     accent: "#35d8ff",
   },
   {
     id: "02",
     code: "SYSTEM",
-    title: "UN SISTEMA, NON SCHERMATE",
+    title: "UN FLUSSO, NON STRUMENTI SPARSI",
     copy:
-      "Interfaccia, dati e logica vengono progettati come parti dello stesso organismo: coerente oggi, estendibile domani.",
+      "Acquisizione, catalogazione, ricerca, software e interfaccia vengono progettati come parti dello stesso processo operativo.",
     accent: "#8b5cf6",
   },
   {
     id: "03",
     code: "EVOLUTION",
-    title: "PROGETTATO PER EVOLVERE",
+    title: "PROGETTATO PER CRESCERE",
     copy:
-      "Un prodotto digitale non è mai davvero finito. Deve poter misurare, adattarsi e crescere senza perdere identità.",
+      "Cataloghi, archivi e software cambiano nel tempo. L’architettura deve poter evolvere senza perdere dati, coerenza e controllo.",
     accent: "#20f0c7",
   },
 ];
@@ -2234,7 +2234,10 @@ export default function Prodotti() {
 
   return (
     <>
-      <SeoMetaTags />
+      <SeoMetaTags
+        title="Kairos Archive, Catalogazione, Software e Web | OXO Studio"
+        description="Prodotti OXO Studio per catalogazione bibliografica, metadatazione, SBN, MARC 21, Z39.50, BID, software custom e piattaforme web. Kairos Archive è il sistema centrale per archivi e patrimoni documentali."
+      />
 
       <main
         key={location.key}
@@ -3125,14 +3128,14 @@ export default function Prodotti() {
             aria-hidden="true"
             className="avant-legato-font pointer-events-none absolute -left-[2vw] top-[18vh] whitespace-nowrap text-[14vw] uppercase leading-none tracking-[-0.075em] text-white/[0.025]"
           >
-            DIGITAL OBJECTS
+            ARCHIVE SYSTEMS
           </p>
 
           {/* top */}
 
           <div className="relative z-10 flex items-start justify-between gap-6 text-[9px] uppercase tracking-[0.3em] text-gray-400 md:text-[11px]">
             <p data-products-meta data-static-slide>
-              OXO STUDIO® / PRODUCT LAB
+              OXO STUDIO® / ARCHIVE + SOFTWARE LAB
             </p>
 
          
@@ -3148,7 +3151,7 @@ export default function Prodotti() {
               data-products-meta
               className="avant-legato-font mb-4 text-[10px] uppercase tracking-[0.36em] text-cyan-300 md:text-xs"
             >
-              Digital systems with a point of view
+              Cataloging systems / software / web
             </p>
 
             <h1 className="avant-legato-font ombra2 overflow-hidden text-[13.2vw] uppercase leading-[0.7] tracking-[-0.075em] md:text-[9.6vw] lg:text-[8.6vw]">
@@ -3163,17 +3166,17 @@ export default function Prodotti() {
               data-products-meta
               className="avant-legato-font max-w-[920px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
             >
-              Software, intelligenza artificiale e
-              mondi interattivi progettati per
-              trasformare problemi reali in esperienze
-              precise, potenti e riconoscibili.
+              Kairos Archive, catalogazione, metadatazione,
+              software custom e piattaforme web progettati
+              per trasformare documenti e dati complessi
+              in sistemi verificabili e utilizzabili.
             </p>
 
             <p
               data-products-meta
               className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
-              Enter the product lab ↓
+              Enter the archive systems ↓
             </p>
           </div>
         </section>
@@ -3423,7 +3426,7 @@ export default function Prodotti() {
 
                 <div
                   data-product-content
-                  className="absolute bottom-12 left-7 z-50 max-w-[900px] pr-7 transition-all duration-300 ease-out md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
+                  className="absolute bottom-10 left-5 z-50 max-w-[900px] pr-5 transition-all duration-300 ease-out sm:bottom-12 sm:left-7 sm:pr-7 md:bottom-16 md:left-12 md:pr-12 lg:bottom-[7vh] lg:left-[5vw]"
                   style={{
                     opacity:
                       productIndex === 0 ? 1 : 0,
@@ -3441,7 +3444,7 @@ export default function Prodotti() {
                         product.accent,
                     }}
                   >
-                    Selected digital product
+                    Selected OXO system
                   </p>
 
                   <h2
@@ -3493,7 +3496,7 @@ export default function Prodotti() {
                     }}
                   >
                     <span>
-                      Esplora il prodotto
+                      Apri il sistema
                     </span>
 
                     <span className="text-lg">
@@ -3616,7 +3619,7 @@ export default function Prodotti() {
             <header className="flex min-h-[100svh] w-full shrink-0 flex-col justify-between px-6 py-8 md:px-10 md:py-10 lg:w-[72vw] lg:px-[5vw] lg:py-[5vh]">
               <div className="flex items-start justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.3em] text-gray-500 md:text-[11px]">
                 <span data-static-slide>
-                  THE PRODUCT ENGINE
+                  THE ARCHIVE ENGINE
                 </span>
 
                 <span data-static-slide>
@@ -3626,23 +3629,22 @@ export default function Prodotti() {
 
               <div>
                 <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.35em] text-cyan-300 md:text-xs">
-                  Dietro ogni prodotto
+                  Dietro ogni sistema
                 </p>
 
                 <h2 data-static-reveal className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.72] tracking-[-0.07em] md:text-[9vw] lg:text-[8vw]">
                   COME
                   <br />
-                  PRENDE
+                  DIVENTA
                   <br />
-                  FORMA
+                  SISTEMA
                 </h2>
               </div>
 
               <p data-static-reveal className="avant-legato-font max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
-                Quattro competenze che non
-                lavorano in sequenza: si
-                contaminano dall’inizio alla
-                fine del progetto.
+                Quattro competenze che lavorano insieme:
+                catalogazione, metadatazione, engineering
+                e web diventano un unico sistema.
               </p>
             </header>
 
@@ -3654,11 +3656,11 @@ export default function Prodotti() {
                   key={capability.id}
                   data-capability-card
                   data-tilt
-                  className="oxo-capability-card relative flex min-h-[100svh] w-full shrink-0 items-center border-t border-white/15 px-5 py-8 md:px-10 lg:w-[56vw] lg:border-l lg:border-t-0 lg:px-[3vw]"
+                  className="oxo-capability-card relative flex min-h-[78svh] w-full shrink-0 items-center border-t border-white/15 px-5 py-10 sm:px-7 sm:py-12 md:min-h-[82svh] md:px-10 md:py-14 lg:min-h-[100svh] lg:w-[56vw] lg:border-l lg:border-t-0 lg:px-[3vw] lg:py-0"
                 >
                   <div
                     data-capability-inner
-                    className="relative h-[82svh] w-full overflow-hidden border border-white/20 p-6 md:p-9 lg:p-[2.5vw]"
+                    className="relative min-h-[620px] w-full overflow-hidden border border-white/20 p-6 sm:min-h-[650px] sm:p-8 md:min-h-[680px] md:p-9 lg:h-[82svh] lg:min-h-0 lg:p-[2.5vw]"
                     style={{
                       background:
                         capability.background,
@@ -3709,7 +3711,7 @@ export default function Prodotti() {
                           }
                         </p>
 
-                        <h3 data-static-reveal className="avant-legato-font ombra2 text-[8.2vw] uppercase leading-[0.76] tracking-[-0.065em] md:text-[5.8vw] lg:text-[4.4vw]">
+                        <h3 data-static-reveal className="avant-legato-font ombra2 break-words text-[10vw] uppercase leading-[0.78] tracking-[-0.065em] sm:text-[8.4vw] md:text-[6.1vw] lg:text-[4.4vw]">
                           {
                             capability.title
                           }
@@ -3745,15 +3747,14 @@ export default function Prodotti() {
             <div className="flex min-h-[72svh] w-full shrink-0 items-center justify-center border-t border-white/15 px-6 py-20 md:px-10 lg:min-h-[100svh] lg:w-[58vw] lg:border-l lg:border-t-0 lg:px-[6vw] lg:py-0">
               <div className="max-w-[620px]">
                 <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
-                  One studio / one system
+                  One archive / one system
                 </p>
 
                 <p data-static-reveal className="avant-legato-font text-[clamp(2.2rem,4.5vw,4.7rem)] leading-[0.96] tracking-[-0.04em]">
                   La qualità nasce quando
-                  strategia, design e codice
-                  smettono di passarsi il
-                  lavoro e iniziano a pensare
-                  insieme.
+                  standard bibliografici, dati,
+                  software e interfaccia
+                  vengono progettati insieme.
                 </p>
               </div>
             </div>
@@ -3784,7 +3785,7 @@ export default function Prodotti() {
                   data-static-reveal
                   className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-violet-400 md:text-xs"
                 >
-                  Product principles / 03
+                  Archive principles / 03
                 </p>
 
                 <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[9vw] lg:text-[8vw]">
@@ -3792,10 +3793,10 @@ export default function Prodotti() {
                     <SplitWords text="NON SOLO" />
                   </span>
                   <span className="block overflow-hidden">
-                    <SplitWords text="BELLO." />
+                    <SplitWords text="DIGITALE." />
                   </span>
                   <span className="block overflow-hidden text-white/35">
-                    <SplitWords text="NECESSARIO." />
+                    <SplitWords text="VERIFICABILE." />
                   </span>
                 </h2>
               </div>
@@ -3805,9 +3806,9 @@ export default function Prodotti() {
                   data-static-reveal
                   className="avant-legato-font max-w-[650px] text-xl leading-snug text-gray-300 md:text-3xl"
                 >
-                  Non partiamo dagli effetti. Partiamo da ciò che il prodotto
-                  deve fare, da come deve funzionare e da quanto deve riuscire
-                  a crescere.
+                  Non partiamo dall'interfaccia. Partiamo dal dato,
+                  dal record, dalle regole di catalogazione e dal processo
+                  che il sistema deve realmente sostenere.
                 </p>
 
                 <div
@@ -3815,7 +3816,7 @@ export default function Prodotti() {
                   className="mt-8 flex items-center gap-4 text-[9px] uppercase tracking-[0.34em] text-white/35 md:text-[11px]"
                 >
                   <span className="h-2 w-2 border border-cyan-300" />
-                  <span>FUNCTION → SYSTEM → EVOLUTION</span>
+                  <span>VERIFY → SYSTEM → EVOLUTION</span>
                 </div>
               </div>
             </div>
@@ -3902,8 +3903,8 @@ export default function Prodotti() {
             </div>
 
             <div className="mt-8 flex items-center justify-between border-t border-white/20 pt-5 text-[9px] uppercase tracking-[0.3em] text-white/30 md:text-[11px]">
-              <span>NO DECORATION WITHOUT PURPOSE</span>
-              <span>OXO / PRODUCT LOGIC</span>
+              <span>NO AUTOMATION WITHOUT CONTROL</span>
+              <span>OXO / ARCHIVE LOGIC</span>
             </div>
           </div>
         </section>
@@ -3939,33 +3940,32 @@ export default function Prodotti() {
           <div className="relative z-10 w-full">
             <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.3em] text-gray-500 md:text-[11px]">
               <span data-final-meta>
-                START A DIGITAL PRODUCT
+                START AN ARCHIVE SYSTEM
               </span>
 
               <span data-final-meta>
-                OXO STUDIO / PRODUCT LAB
+                OXO STUDIO / ARCHIVE + SOFTWARE LAB
               </span>
             </div>
 
            <h2 className="avant-legato-font ombra2 overflow-hidden whitespace-nowrap text-[9.4vw] uppercase leading-[0.72] tracking-[-0.075em] md:text-[9vw] lg:text-[8vw]">
-              <SplitLetters text="COSTRUIAMOLO" attribute="data-final-letter" />
+              <SplitLetters text="STRUTTURIAMOLO" attribute="data-final-letter" />
            </h2>
 
             <div className="mt-8 flex flex-col gap-7 border-t border-white/20 pt-6 md:flex-row md:items-end md:justify-between">
               <p data-static-reveal className="avant-legato-font max-w-[820px] text-xl leading-snug text-gray-300 md:text-3xl">
-                Hai un software da rendere
-                reale, un processo da
-                automatizzare o un’esperienza
-                interattiva ancora senza forma?
+                Hai un catalogo, un archivio, dati da
+                normalizzare o un processo ancora
+                manuale da trasformare in software?
               </p>
 
               <Link
-                to="/Contatti"
+                to="/contatti"
                 data-magnetic
                 className="oxo-final-cta avant-legato-font relative z-20 inline-flex w-fit items-center gap-5 border border-white/35 bg-white/[0.035] px-5 py-4 text-sm uppercase tracking-[0.28em] text-white opacity-100 md:px-6 md:py-4 md:text-base"
               >
                 <span>
-                  Parliamo del progetto
+                  Trasformiamolo in sistema
                 </span>
 
                 <span className="text-xl transition-transform duration-300 group-hover:translate-x-1">
