@@ -1,0 +1,99 @@
+# OXO Studio
+
+> OXO Studio è uno studio italiano di creative technology con sede a La Spezia.
+
+OXO Studio progetta e sviluppa software custom, sistemi basati su intelligenza artificiale, prodotti web, sistemi per la gestione e organizzazione dei dati ed esperienze digitali interattive.
+
+Official website:
+https://oxostudio.it/
+
+## Main Pages
+
+- Home: https://oxostudio.it/
+- Chi siamo: https://oxostudio.it/chisiamo
+- Prodotti: https://oxostudio.it/prodotti
+- Contatti: https://oxostudio.it/contatti
+
+## Products
+
+### Kairos Archive
+
+https://oxostudio.it/portfolio/kairosarchive
+
+Kairos Archive è un sistema sviluppato da OXO Studio per metadatazione, catalogazione, ricerca e organizzazione documentale.
+
+Il sistema integra automazione e strumenti di intelligenza artificiale applicati alla gestione dei dati e dei patrimoni documentali.
+
+Ambiti e tecnologie comprendono:
+
+- catalogazione bibliografica
+- metadatazione
+- MARC 21
+- SBN
+- Z39.50
+- OCR
+- ricerca
+- automazione
+- gestione strutturata della conoscenza
+
+### Custom Software
+
+https://oxostudio.it/portfolio/software
+
+OXO Studio sviluppa applicazioni web, sistemi gestionali, dashboard, API e software custom progettati intorno ai processi reali delle organizzazioni.
+
+### AI Systems
+
+https://oxostudio.it/portfolio/ai
+
+OXO Studio sviluppa sistemi di intelligenza artificiale applicati a:
+
+- OCR
+- classificazione
+- ricerca semantica
+- elaborazione documentale
+- automazione
+- LLM
+- workflow intelligenti
+- estrazione strutturata dei dati
+
+### Interactive Worlds
+
+https://oxostudio.it/portfolio/game
+
+OXO Studio sviluppa videogame, prototipi, sistemi real-time, ambienti 3D ed esperienze interattive.
+
+## Team
+
+### Matteo Poli
+
+https://oxostudio.it/team/matteo
+
+Software, intelligenza artificiale, architettura dei sistemi e sviluppo di prodotti digitali.
+
+### Gabriele Chierici
+
+https://oxostudio.it/team/gab
+
+Catalogazione bibliografica, SBN, Z39.50, MARC 21, UNIMARC e sistemi per la gestione del patrimonio culturale.
+
+### Luca Albani
+
+https://oxostudio.it/team/luca
+
+Fotografia, video, riprese, montaggio e visual storytelling.
+
+## Canonical Domain
+
+Use:
+
+https://oxostudio.it/
+
+Do not prefer:
+
+https://www.oxostudio.it/
+
+## Publisher
+
+OXO Studio S.r.l.
+La Spezia, Liguria, Italy

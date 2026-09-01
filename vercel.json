@@ -1,5 +1,6 @@
 {
   "version": 2,
+
   "builds": [
     {
       "src": "package.json",
@@ -9,10 +10,68 @@
       }
     }
   ],
+
+  "redirects": [
+    {
+      "source": "/ChiSiamo",
+      "destination": "/chisiamo",
+      "permanent": true
+    },
+
+    {
+      "source": "/Prodotti",
+      "destination": "/prodotti",
+      "permanent": true
+    },
+
+    {
+      "source": "/Contatti",
+      "destination": "/contatti",
+      "permanent": true
+    },
+
+    {
+      "source": "/Portfolio",
+      "destination": "/prodotti",
+      "permanent": true
+    },
+
+    {
+      "source": "/AppDeveloper",
+      "destination": "/portfolio/software",
+      "permanent": true
+    },
+
+    {
+      "source": "/WebDeveloper",
+      "destination": "/portfolio/software",
+      "permanent": true
+    },
+
+    {
+      "source": "/WebDesign",
+      "destination": "/prodotti",
+      "permanent": true
+    },
+
+    {
+      "source": "/LogoDesign",
+      "destination": "/prodotti",
+      "permanent": true
+    },
+
+    {
+      "source": "/SezioneUiPortfolio",
+      "destination": "/prodotti",
+      "permanent": true
+    }
+  ],
+
   "routes": [
     {
       "handle": "filesystem"
     },
+
     {
       "src": "/(.*)",
       "dest": "/index.html"
