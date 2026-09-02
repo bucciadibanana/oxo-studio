@@ -24,11 +24,11 @@ const CAPABILITIES = [
   },
   {
     id: "02",
-    code: "KAIROS_02",
-    title: "KAIROS",
-    eyebrow: "ARCHIVE / AI / AUTOMATION",
+    code: "AI_02",
+    title: "AI",
+    eyebrow: "DATA / AUTOMATION / INTELLIGENCE",
     copy:
-      "Kairos Archive automatizza acquisizione, riconoscimento, ricerca e compilazione dei dati bibliografici mantenendo controllo, verificabilità e qualità del record.",
+      "Integriamo intelligenza artificiale, OCR, classificazione, ricerca semantica e automazione nei processi dove producono un vantaggio reale e misurabile.",
     accent: "#20f0c7",
     soft: "rgba(32,240,199,.16)",
   },
@@ -2400,7 +2400,7 @@ export default function Home() {
                 data-home-v2-meta
                 className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
               >
-                Catalogazione / Kairos / Software / Web
+                Catalogazione / AI / Software / Web
               </p>
 
               <div className="relative py-[0.6vw] md:py-[0.4vw]">

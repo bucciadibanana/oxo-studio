@@ -33,12 +33,12 @@ const PRODUCTS = [
   },
   {
     id: "02",
-    category: "CATALOGING SYSTEM",
-    title: "METADATA SYSTEMS",
-    statement: "RECORDS, MADE USEFUL.",
+    category: "ARTIFICIAL INTELLIGENCE",
+    title: "AI SYSTEMS",
+    statement: "INTELLIGENCE, APPLIED.",
     description:
-      "Flussi software per acquisizione, estrazione, normalizzazione e verifica dei metadati. Pensati per biblioteche, archivi, istituzioni e patrimoni documentali.",
-    meta: "METADATA / NORMALIZATION / SEARCH",
+      "Sistemi di intelligenza artificiale per OCR, classificazione, ricerca semantica, estrazione dati e automazione dei processi, integrati dove producono un vantaggio reale.",
+    meta: "AI / OCR / SEARCH / AUTOMATION",
     video: "/videos/products/artificial-intelligence.mp4",
     link: "/portfolio/ai",
     accent: "#20f0c7",
@@ -47,11 +47,11 @@ const PRODUCTS = [
     fallback:
       "radial-gradient(circle at 76% 54%, rgba(32,240,199,.31), transparent 35%), radial-gradient(circle at 12% 22%, rgba(41,121,255,.26), transparent 38%), linear-gradient(135deg, #001515 0%, #020711 54%, #010101 100%)",
     specs: [
-      ["FIELD", "METADATA"],
-      ["CORE", "OCR / AI / RULES"],
-      ["OUTPUT", "NORMALIZED DATA"],
+      ["FIELD", "INTELLIGENT FLOWS"],
+      ["CORE", "OCR / LLM / SEARCH"],
+      ["OUTPUT", "AUTOMATED SYSTEMS"],
     ],
-    tags: ["OCR", "METADATA", "NORMALIZATION", "SEARCH"],
+    tags: ["AI", "OCR", "SEARCH", "AUTOMATION"],
   },
   {
     id: "03",
@@ -113,12 +113,12 @@ const CAPABILITIES = [
   },
   {
     id: "02",
-    title: "METADATA",
-    eyebrow: "EXTRACT / NORMALIZE / VERIFY",
+    title: "AI",
+    eyebrow: "INTELLIGENCE / AUTOMATION",
     copy:
-      "Acquisiamo, strutturiamo e normalizziamo dati bibliografici e documentali per trasformarli in record verificabili e interrogabili.",
+      "OCR, classificazione, ricerca semantica, LLM e automazione vengono integrati nei flussi quando migliorano velocità, precisione e qualità del dato.",
     accent: "#20f0c7",
-    tags: ["OCR", "METADATA", "NORMALIZATION", "SEARCH"],
+    tags: ["AI", "OCR", "LLM", "AUTOMATION"],
     background:
       "radial-gradient(circle at 74% 68%, rgba(32,240,199,.25), transparent 35%), linear-gradient(145deg, #031714, #05070a 58%, #010101)",
   },
@@ -2236,7 +2236,7 @@ export default function Prodotti() {
     <>
       <SeoMetaTags
         title="Kairos Archive, Catalogazione, Software e Web | OXO Studio"
-        description="Prodotti OXO Studio per catalogazione bibliografica, metadatazione, SBN, MARC 21, Z39.50, BID, software custom e piattaforme web. Kairos Archive è il sistema centrale per archivi e patrimoni documentali."
+        description="Prodotti OXO Studio per catalogazione bibliografica, Kairos Archive, intelligenza artificiale, SBN, MARC 21, Z39.50, software custom e piattaforme web."
       />
 
       <main
@@ -3166,7 +3166,7 @@ export default function Prodotti() {
               data-products-meta
               className="avant-legato-font max-w-[920px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.35rem]"
             >
-              Kairos Archive, catalogazione, metadatazione,
+              Kairos Archive, intelligenza artificiale,
               software custom e piattaforme web progettati
               per trasformare documenti e dati complessi
               in sistemi verificabili e utilizzabili.
@@ -3643,7 +3643,7 @@ export default function Prodotti() {
 
               <p data-static-reveal className="avant-legato-font max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
                 Quattro competenze che lavorano insieme:
-                catalogazione, metadatazione, engineering
+                catalogazione, AI, engineering
                 e web diventano un unico sistema.
               </p>
             </header>
