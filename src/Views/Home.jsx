@@ -1914,6 +1914,11 @@ export default function Home() {
               inset 0 0 70px rgba(255,255,255,.018);
           }
 
+          .oxo-capability-v2-title {
+            margin: 0;
+            padding: 0;
+          }
+
           .oxo-capability-v2:hover .oxo-capability-v2-title {
             transform: translateX(1.1vw) skewX(-2.5deg);
           }
@@ -2697,41 +2702,46 @@ export default function Home() {
                     <span className="max-w-[52%] text-right">{item.eyebrow}</span>
                   </div>
 
-                  <div data-capability-content>
+                  <div
+                    data-capability-content
+                    className="grid min-h-[330px] grid-rows-[auto_96px_1fr] sm:min-h-[350px] sm:grid-rows-[auto_112px_1fr] md:min-h-[380px] md:grid-rows-[auto_128px_1fr] lg:min-h-[405px] lg:grid-rows-[auto_142px_1fr]"
+                  >
                     <div
                       data-capability-line
-                      className="mb-7 h-px w-full"
+                      className="h-px w-full self-start"
                       style={{
                         background: `linear-gradient(90deg, ${item.accent}, transparent)`,
                         boxShadow: `0 0 22px ${item.soft}`,
                       }}
                     />
 
-                    <h3
-                      className="oxo-capability-v2-title avant-legato-font ombra2 overflow-visible whitespace-nowrap text-[13vw] uppercase leading-[.72] tracking-[-0.085em] transition-transform duration-700 ease-out sm:text-[10.5vw] md:text-[8.2vw] lg:text-[5.85vw]"
-                    >
-                      <span
-                        className="inline-block whitespace-nowrap"
-                        style={
-                          item.title === "CATALOGAZIONE"
-                            ? {
-                                transform: "scaleX(.72)",
-                                transformOrigin: "left center",
-                              }
-                            : undefined
-                        }
+                    <div className="flex items-end overflow-visible pt-7 sm:pt-8 md:pt-9">
+                      <h3
+                        className="oxo-capability-v2-title avant-legato-font ombra2 m-0 overflow-visible whitespace-nowrap text-[13vw] uppercase leading-[.72] tracking-[-0.085em] transition-transform duration-700 ease-out sm:text-[10.5vw] md:text-[8.2vw] lg:text-[5.85vw]"
                       >
-                        {item.title}
-                      </span>
-                    </h3>
+                        <span
+                          className="inline-block whitespace-nowrap"
+                          style={
+                            item.title === "CATALOGAZIONE"
+                              ? {
+                                  transform: "translateY(0.24em) scaleX(.72)",
+                                  transformOrigin: "left center",
+                                }
+                              : undefined
+                          }
+                        >
+                          {item.title}
+                        </span>
+                      </h3>
+                    </div>
 
-                    <div className="mt-8 flex flex-col items-start gap-7 sm:mt-10 sm:flex-row sm:items-end sm:justify-between">
-                      <p className="avant-legato-font max-w-[650px] text-lg leading-snug text-gray-300 md:text-2xl lg:text-[1.75rem]">
+                    <div className="flex min-h-0 flex-col items-start justify-between gap-6 pt-7 sm:flex-row sm:items-end sm:gap-7 sm:pt-8 md:pt-9">
+                      <p className="avant-legato-font m-0 max-w-[650px] text-lg leading-snug text-gray-300 md:text-2xl lg:text-[1.75rem]">
                         {item.copy}
                       </p>
 
                       <span
-                        className="oxo-capability-v2-arrow avant-legato-font shrink-0 text-4xl transition-transform duration-700 ease-out md:text-6xl"
+                        className="oxo-capability-v2-arrow avant-legato-font shrink-0 self-end text-4xl transition-transform duration-700 ease-out md:text-6xl"
                         style={{ color: item.accent }}
                       >
                         ↗
