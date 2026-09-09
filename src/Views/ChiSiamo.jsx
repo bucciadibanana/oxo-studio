@@ -44,7 +44,7 @@ const TEAM = [
     id: "01",
     name: "POLI MATTEO",
     role: "SOFTWARE / AI / PRODUCT",
-    image: "/img/team/matteo.png",
+    image: "/img/team/matte2.png",
     accent: "#35d8ff",
     link: "/team/matteo",
     description:
