@@ -1,0 +1,69 @@
+/* OXO_KAIROS_SCULTOREO_V8 */
+/* MUSEI_V6: effetti circoscritti all’apertura. */
+.oc8-hero{position:relative;isolation:isolate;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:2vw;min-height:100svh;padding:126px 5vw 110px;overflow:hidden;background:#020203;color:#f8f6ff}
+.oc8-hero:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(115deg,transparent 20%,#8b5cf60d,transparent 75%),repeating-linear-gradient(90deg,transparent 0 calc(20% - 1px),#ffffff08 calc(20% - 1px) 20%)}
+.oc8-light{position:absolute;left:0;top:0;width:650px;height:650px;margin:-325px;pointer-events:none;z-index:0;background:radial-gradient(ellipse,#8b5cf624,transparent 68%)}
+.oc8-curtains{display:flex;position:absolute;inset:0;pointer-events:none;z-index:10}
+.oc8-curtain{flex:1;transform:scaleY(0);background:#131019;border-right:1px solid #2c253d}
+.oc8-copy{position:relative;z-index:3;min-width:0}
+.oc8-eyebrow{font-size:10px;letter-spacing:.28em;color:#76d9ed}
+.oc8-copy h1{margin:22px 0 25px;font-weight:400}
+.oc8-word{position:relative;display:block;width:fit-content;font-size:clamp(80px,12.2vw,190px);line-height:1.05;letter-spacing:-.065em;white-space:nowrap;overflow:hidden;padding-right:.07em}
+.oc8-outline{color:transparent;-webkit-text-stroke:1px #a99cbd77}
+.oc8-slice{position:absolute;inset:0;color:#f5f1fc;will-change:transform}
+.oc8-subtitle{display:block;margin-top:10px;font-size:clamp(25px,3.45vw,54px);line-height:1.12;letter-spacing:-.025em;color:#c1acef}
+.oc8-description{max-width:590px;font-size:clamp(17px,1.35vw,22px);line-height:1.65;color:#b5b0bf}
+.oc8-link{display:inline-flex;align-items:center;gap:24px;padding:15px 0 12px;border-bottom:1px solid #9777c9;margin-top:23px;font-size:12px;color:#fff;text-decoration:none}
+.oc8-link span{display:grid;place-items:center;width:45px;height:45px;border:1px solid #665278;border-radius:50%;font-size:22px}
+.oc8-hero a:focus-visible{outline:2px solid #35d8ff;outline-offset:7px}
+.oc8-scene{position:relative;height:490px;min-width:0;perspective:1300px;z-index:2}
+.oc8-depth,.oc8-tilt{position:absolute;inset:0;transform-style:preserve-3d}
+.oc8-portals{position:absolute;inset:20px 0 20px -15px;transform-style:preserve-3d;transform:rotateY(-16deg) rotateX(7deg)}
+.oc8-portals i{position:absolute;border:1px solid #7e639b55;box-shadow:inset 0 0 35px #8b5cf608;clip-path:polygon(0 0,88% 0,100% 12%,100% 100%,12% 100%,0 88%)}
+.oc8-portals i:nth-child(2n){border-color:#35d8ff38}
+.oc8-plane{position:absolute;display:flex;flex-direction:column;justify-content:flex-end;gap:16px;width:70%;height:220px;padding:24px;border:1px solid #635074;background:linear-gradient(130deg,#292035fa,#0c0d16fc);box-shadow:8px 20px 50px #0009;transform-style:preserve-3d;backface-visibility:hidden}
+.oc8-plane:before{content:'';position:absolute;inset:9px;border:1px solid #ffffff09;pointer-events:none}
+.oc8-plane small{position:absolute;left:24px;top:24px;font-size:9px;letter-spacing:.24em;color:#c8b4e7}
+.oc8-plane strong{font-size:clamp(18px,1.85vw,29px);line-height:1;letter-spacing:-.04em;font-weight:400}
+.oc8-plane>span{font-size:10px;color:#b5aebe}
+.oc8-plane-back{left:4%;top:9%;transform:rotateY(-18deg) rotateZ(-9deg);border-color:#686095}
+.oc8-plane-middle{left:16%;top:29%;transform:translateZ(35px) rotateY(-10deg);background:linear-gradient(130deg,#173038fa,#0e1020fc);border-color:#3e6e81}
+.oc8-plane-front{left:26%;top:48%;transform:translateZ(70px) rotateY(-6deg) rotateZ(9deg);border-color:#825279;background:linear-gradient(130deg,#322134fa,#15101cfc)}
+.oc8-scene-note{position:absolute;bottom:-35px;left:10%;font-size:8px;letter-spacing:.27em;color:#b1a2c1}
+.oc8-footer{position:absolute;bottom:30px;left:5vw;right:5vw;display:flex;justify-content:space-between;gap:16px;padding-top:18px;border-top:1px solid #ffffff22;font-size:9px;letter-spacing:.19em;color:#a199ae}
+.oc8-progress{position:absolute;top:-1px;left:0;width:100%;height:1px;background:linear-gradient(90deg,#35d8ff,#a78bfa,#ff4fd8);transform:scaleX(0);transform-origin:left}
+@media(max-width:1023px){
+  .oc8-hero{grid-template-columns:1fr;padding-top:115px;gap:38px}
+  .oc8-word{font-size:clamp(85px,19vw,170px)}
+  .oc8-subtitle{font-size:clamp(28px,5vw,48px)}
+  .oc8-scene{width:min(540px,100%);height:440px;margin:0 auto 30px}
+  .oc8-plane strong{font-size:26px}
+  .oc8-plane{height:190px}
+  .oc8-plane-front{left:23%}
+  .oc8-scene-note{bottom:-16px}
+}
+@media(max-width:479px){
+  .oc8-hero{padding:110px 6vw 100px;gap:32px}
+  .oc8-word{font-size:23vw}
+  .oc8-eyebrow{font-size:8px;letter-spacing:.18em}
+  .oc8-description{font-size:16px}
+  .oc8-scene{height:340px}
+  .oc8-plane{height:154px;padding:17px;gap:12px}
+  .oc8-plane small{left:17px;top:18px;font-size:7px;letter-spacing:.1em}
+  .oc8-plane strong{font-size:clamp(16px,5vw,21px)}
+  .oc8-plane>span{font-size:8px}
+  .oc8-footer{font-size:7px;letter-spacing:.1em;line-height:1.7}
+  .oc8-footer span{max-width:95px;text-align:right}
+  .oc8-scene-note{font-size:7px}
+}
+@media(hover:none){.oc8-light{display:none}}
+@media(prefers-reduced-motion:reduce){
+  .oc8-curtains,.oc8-light{display:none}
+  .oc8-hero *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .oc8-slice{will-change:auto}
+}
+
+
+.oc8-word{font-size:clamp(76px,10.4vw,164px)}
+@media(max-width:1023px){.oc8-word{font-size:clamp(76px,17vw,146px)}}
+@media(max-width:479px){.oc8-word{font-size:21vw}.oc8-subtitle{font-size:clamp(23px,6.5vw,30px)}}

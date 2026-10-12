@@ -45,7 +45,7 @@ const CONTACT_BLOCKS = [
   },
   {
     id: "03",
-    label: "PROJECTS",
+    label: "PROGETTI",
     value: "SOFTWARE / AI / WEB / GAME",
     href: null,
     accent: "#20f0c7",

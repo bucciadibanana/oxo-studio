@@ -5,5 +5,5 @@ import AvantLegatoText from "../components/AvantLegatoText";
   className="avant-legato-title"
   glow
 >
-  CREATIVE TECHNOLOGY
+  RICERCA APPLICATA
 </AvantLegatoText>

@@ -1,0 +1,46 @@
+[
+  {
+    "nome": "strumento-3d.jpg",
+    "titolo": "DAVID SLS-2 Bild01.jpg",
+    "autore": "Creative Tools",
+    "licenza": "CC BY 2.0",
+    "licenzaUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "originale": "https://upload.wikimedia.org/wikipedia/commons/7/78/DAVID_SLS-2_Bild01.jpg",
+    "fonte": "https://commons.wikimedia.org/wiki/File:DAVID_SLS-2_Bild01.jpg",
+    "sha256": "27fb3691306e6f8c1662f44cf138c1e2f766061f6bdec30001a675e662f56283",
+    "nota": "Fotografia di riferimento, non strumentazione OXO. Immagine ridimensionata, non ritoccata."
+  },
+  {
+    "nome": "lampada-uv.jpg",
+    "titolo": "UV-handlamp hg.jpg",
+    "autore": "Hannes Grobe",
+    "licenza": "CC BY-SA 3.0",
+    "licenzaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "originale": "https://upload.wikimedia.org/wikipedia/commons/c/c6/UV-handlamp_hg.jpg",
+    "fonte": "https://commons.wikimedia.org/wiki/File:UV-handlamp_hg.jpg",
+    "sha256": "a72daa20c34056f7dec6aa2d7a72d4f488af32ad37b269beba6b2f4c0239ea76",
+    "nota": "Fotografia di riferimento, non strumentazione OXO. Immagine ridimensionata, non ritoccata."
+  },
+  {
+    "nome": "analisi-xrf.jpg",
+    "titolo": "IMA Conservation Science XRF 2.jpg",
+    "autore": "RichardMcCoy",
+    "licenza": "CC BY-SA 3.0",
+    "licenzaUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "originale": "https://upload.wikimedia.org/wikipedia/commons/f/f3/IMA_Conservation_Science_XRF_2.jpg",
+    "fonte": "https://commons.wikimedia.org/wiki/File:IMA_Conservation_Science_XRF_2.jpg",
+    "sha256": "5cc36f843e90d365abcf45ea7383dae78626c4e32a596d44154a1b198e749324",
+    "nota": "Fotografia di riferimento, non strumentazione OXO. Immagine ridimensionata, non ritoccata."
+  },
+  {
+    "nome": "termocamera.jpg",
+    "titolo": "Flir E8-Thermal imaging camera-Thermographic camera-03ASD.jpg",
+    "autore": "Asurnipal",
+    "licenza": "CC BY-SA 4.0",
+    "licenzaUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "originale": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Flir_E8-Thermal_imaging_camera-Thermographic_camera-03ASD.jpg",
+    "fonte": "https://commons.wikimedia.org/wiki/File:Flir_E8-Thermal_imaging_camera-Thermographic_camera-03ASD.jpg",
+    "sha256": "26f7783c0862f7d064d5ca6e29cb4da9c4560046e684cde19fb54857ed6329eb",
+    "nota": "Fotografia di riferimento, non strumentazione OXO. Immagine ridimensionata, non ritoccata."
+  }
+]

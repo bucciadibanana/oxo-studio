@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const AI_PHASES = [
   {
     id: "01",
-    title: "INPUT",
+    title: "DATI INIZIALI",
     kicker: "RAW SIGNAL",
     copy: "Testo, documenti, immagini e dati entrano nel sistema senza perdere contesto.",
     accent: "#35d8ff",
@@ -32,7 +32,7 @@ const AI_PHASES = [
   },
   {
     id: "04",
-    title: "OUTPUT",
+    title: "RISULTATO",
     kicker: "ACTION",
     copy: "Il risultato diventa ricerca, classificazione, automazione o decisione assistita.",
     accent: "#ff4fd8",
@@ -1216,37 +1216,182 @@ export default function ArtificialIntelligence() {
           .ai-hero-word {
             position:absolute;
             left:4.5vw;
-            bottom:12vh;
-            z-index:40;
-            width:min(76vw,1180px);
+            top:50%;
+            z-index:44;
+            width:min(64vw,1080px);
+            transform:translateY(-42%);
             pointer-events:none;
             text-align:left;
           }
 
-          .ai-hero-word h1 {
-            font-size:clamp(3.8rem,9.8vw,10.4rem);
-            line-height:.68;
-            letter-spacing:-.075em;
+          .ai-hero-kicker {
+            display:flex;
+            align-items:center;
+            gap:14px;
+            margin-bottom:1.15rem;
+            font-size:9px;
+            letter-spacing:.34em;
             text-transform:uppercase;
-            text-shadow:
-              0 0 20px rgba(53,216,255,.05),
-              0 0 60px rgba(0,0,0,.9);
+            color:rgba(255,255,255,.42);
           }
 
-          .ai-hero-word p {
-            margin-top:1.3rem;
-            font-size:8px;
-            letter-spacing:.42em;
+          .ai-hero-kicker::before {
+            content:"";
+            width:46px;
+            height:1px;
+            background:linear-gradient(90deg,#35d8ff,#8b5cf6);
+            box-shadow:0 0 16px rgba(53,216,255,.22);
+          }
+
+          .ai-hero-word h1 {
+            margin:0;
+            font-size:clamp(4.3rem,9.15vw,9.8rem);
+            line-height:.67;
+            letter-spacing:-.082em;
             text-transform:uppercase;
-            color:rgba(255,255,255,.38);
+            text-shadow:0 18px 70px rgba(0,0,0,.88);
+          }
+
+          .ai-hero-line {
+            display:block;
+            white-space:nowrap;
+          }
+
+          .ai-hero-line--outline {
+            color:transparent;
+            -webkit-text-stroke:1px rgba(255,255,255,.72);
+            text-shadow:
+              0 0 18px rgba(139,92,246,.08),
+              0 0 42px rgba(53,216,255,.04);
+          }
+
+          .ai-hero-copy {
+            margin-top:1.7rem;
+            max-width:760px;
+            font-size:clamp(1.05rem,1.65vw,1.7rem);
+            line-height:1.25;
+            letter-spacing:-.025em;
+            color:rgba(255,255,255,.72);
+          }
+
+          .ai-hero-copy strong {
+            color:white;
+            font-weight:400;
+          }
+
+          .ai-hero-actions {
+            display:flex;
+            flex-wrap:wrap;
+            align-items:center;
+            gap:12px;
+            margin-top:1.6rem;
+            pointer-events:auto;
+          }
+
+          .ai-hero-cta {
+            position:relative;
+            display:inline-flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:28px;
+            min-width:250px;
+            padding:15px 18px;
+            border:1px solid rgba(255,255,255,.22);
+            background:rgba(255,255,255,.025);
+            color:white;
+            font-size:10px;
+            letter-spacing:.28em;
+            text-transform:uppercase;
+            overflow:hidden;
+            transition:
+              transform .45s cubic-bezier(.16,1,.3,1),
+              border-color .35s ease,
+              background-color .35s ease;
+          }
+
+          .ai-hero-cta::before {
+            content:"";
+            position:absolute;
+            inset:0;
+            transform:translateX(-102%);
+            background:linear-gradient(90deg,rgba(53,216,255,.10),rgba(139,92,246,.10),rgba(255,159,45,.08));
+            transition:transform .7s cubic-bezier(.16,1,.3,1);
+          }
+
+          .ai-hero-cta:hover {
+            transform:translateY(-3px);
+            border-color:rgba(53,216,255,.62);
+            background:rgba(53,216,255,.035);
+          }
+
+          .ai-hero-cta:hover::before {
+            transform:translateX(0);
+          }
+
+          .ai-hero-cta > * {
+            position:relative;
+            z-index:1;
+          }
+
+          .ai-hero-cta--ghost {
+            min-width:auto;
+            border-color:transparent;
+            background:transparent;
+            color:rgba(255,255,255,.52);
+          }
+
+          .ai-hero-proof {
+            position:absolute;
+            left:4vw;
+            right:4vw;
+            bottom:6.7vh;
+            z-index:48;
+            display:grid;
+            grid-template-columns:repeat(4,minmax(0,1fr));
+            border-top:1px solid rgba(255,255,255,.11);
+            pointer-events:none;
+          }
+
+          .ai-hero-proof-item {
+            padding:13px 16px 0 0;
+            border-right:1px solid rgba(255,255,255,.08);
+          }
+
+          .ai-hero-proof-item:last-child {
+            border-right:0;
+          }
+
+          .ai-hero-proof-index {
+            display:block;
+            margin-bottom:5px;
+            font-size:7px;
+            letter-spacing:.26em;
+            color:rgba(255,255,255,.22);
+          }
+
+          .ai-hero-proof-label {
+            display:block;
+            font-size:9px;
+            letter-spacing:.22em;
+            text-transform:uppercase;
+            color:rgba(255,255,255,.52);
+          }
+
+          .ai-hero-proof-value {
+            display:block;
+            margin-top:3px;
+            font-size:7px;
+            letter-spacing:.18em;
+            text-transform:uppercase;
+            color:rgba(53,216,255,.64);
           }
 
           .ai-latent-frame {
             position:absolute;
-            inset:5vh 3vw;
+            inset:4.5vh 2.6vw;
             pointer-events:none;
             z-index:34;
-            border:1px solid rgba(255,255,255,.045);
+            border:1px solid rgba(255,255,255,.05);
           }
 
           .ai-latent-frame::before,
@@ -1254,65 +1399,101 @@ export default function ArtificialIntelligence() {
             content:"";
             position:absolute;
             height:1px;
-            width:28%;
+            width:31%;
           }
 
           .ai-latent-frame::before {
             left:-1px;
             top:-1px;
-            background:linear-gradient(90deg,#35d8ff,transparent);
+            background:linear-gradient(90deg,#35d8ff,#8b5cf6,transparent);
           }
 
           .ai-latent-frame::after {
             right:-1px;
             bottom:-1px;
-            background:linear-gradient(270deg,#ff9f2d,transparent);
+            background:linear-gradient(270deg,#ff9f2d,#ff4fd8,transparent);
+          }
+
+          .ai-progress-wrap {
+            position:absolute;
+            left:4vw;
+            right:4vw;
+            bottom:3.9vh;
+            z-index:49;
+            pointer-events:none;
           }
 
           .ai-progress {
             height:1px;
-            background:
-              linear-gradient(
-                90deg,
-                #35d8ff 0%,
-                #35d8ff 50%,
-                #ff9f2d 82%,
-                #ffbd63 100%
-              );
+            background:linear-gradient(90deg,#35d8ff 0%,#35d8ff 38%,#8b5cf6 58%,#ff9f2d 82%,#ffbd63 100%);
+            box-shadow:0 0 14px rgba(53,216,255,.09);
           }
 
           @media (max-width:767px) {
-            .ai-neural-field {
-              inset:8% 0 9%;
-            }
-
-            .ai-data-streams {
-              width:78%;
-              opacity:.62;
-            }
-
-            .ai-neural-network {
-              inset:10% -4% 10% 8%;
-            }
-
+            .ai-neural-field { inset:7% 0 11%; }
+            .ai-data-streams { width:84%; opacity:.52; }
+            .ai-neural-network { inset:9% -12% 13% 2%; opacity:.78; }
             .ai-neural-core {
-              width:94vw;
-              height:68vh;
-              transform:translate(-50%,-50%);
+              width:104vw;
+              height:64vh;
+              transform:translate(-48%,-48%);
+              opacity:.76;
             }
-
             .ai-hero-word {
               left:5vw;
               right:5vw;
-              bottom:14vh;
+              top:44%;
               width:auto;
-              text-align:center;
+              transform:translateY(-50%);
+              text-align:left;
             }
-
+            .ai-hero-kicker {
+              font-size:7px;
+              letter-spacing:.28em;
+              margin-bottom:.9rem;
+            }
+            .ai-hero-kicker::before { width:30px; }
             .ai-hero-word h1 {
-              font-size:13.2vw;
+              font-size:15vw;
+              line-height:.70;
+              letter-spacing:-.078em;
             }
-
+            .ai-hero-copy {
+              margin-top:1.25rem;
+              max-width:92vw;
+              font-size:15px;
+              line-height:1.38;
+            }
+            .ai-hero-actions {
+              margin-top:1.25rem;
+              gap:8px;
+            }
+            .ai-hero-cta {
+              min-width:0;
+              padding:13px 14px;
+              gap:18px;
+              font-size:8px;
+              letter-spacing:.21em;
+            }
+            .ai-hero-proof {
+              left:5vw;
+              right:5vw;
+              bottom:6.1vh;
+              grid-template-columns:repeat(2,minmax(0,1fr));
+              row-gap:10px;
+            }
+            .ai-hero-proof-item {
+              padding-top:8px;
+              padding-right:8px;
+            }
+            .ai-hero-proof-item:nth-child(2) { border-right:0; }
+            .ai-hero-proof-label { font-size:7px; letter-spacing:.16em; }
+            .ai-hero-proof-value { font-size:6px; letter-spacing:.12em; }
+            .ai-progress-wrap {
+              left:5vw;
+              right:5vw;
+              bottom:3.2vh;
+            }
             .ai-core-node {
               width:10px;
               height:10px;
@@ -1693,21 +1874,53 @@ export default function ArtificialIntelligence() {
           </div>
 
           <div data-ai-hero-word className="ai-hero-word">
+            <div data-ai-meta className="ai-hero-kicker avant-legato-font">
+              OXO / CONTROLLED INTELLIGENCE
+            </div>
+
             <h1 className="avant-legato-font ombra2">
-              ARTIFICIAL
-              <br />
-              INTELLIGENCE
+              <span className="ai-hero-line">AI CHE</span>
+              <span className="ai-hero-line ai-hero-line--outline">LAVORA.</span>
             </h1>
-            <p data-ai-hero-sub className="avant-legato-font">
-              DEEP LEARNING / DATA FLOW / CONTROLLED INTELLIGENCE
+
+            <p data-ai-hero-sub className="ai-hero-copy avant-legato-font">
+              Agenti, RAG, OCR e automazioni costruiti dentro i processi reali.
+              <strong> Collegati ai tuoi dati, verificabili e sotto controllo.</strong>
             </p>
+
+            <div data-ai-meta className="ai-hero-actions">
+              <Link to="/Contatti" className="ai-hero-cta avant-legato-font">
+                <span>COSTRUIAMO IL SISTEMA</span>
+                <span>↗</span>
+              </Link>
+
+              <a href="#ai-process" className="ai-hero-cta ai-hero-cta--ghost avant-legato-font">
+                <span>VEDI COME FUNZIONA</span>
+                <span>↓</span>
+              </a>
+            </div>
           </div>
 
-          <div className="pointer-events-none absolute inset-x-[4vw] bottom-[5.5vh] z-50">
-            <div className="mb-4 flex items-center justify-between text-[7px] uppercase tracking-[.32em] text-white/26 md:text-[9px]">
-              <span>INPUT SIGNAL / BLUE</span>
+          <div data-ai-meta className="ai-hero-proof">
+            {[
+              ["01", "PRIVATE DATA", "CONTEXT / RAG"],
+              ["02", "HUMAN REVIEW", "CONTROL / TRACE"],
+              ["03", "AGENTS + API", "TOOLS / ACTIONS"],
+              ["04", "OCR + VISION", "DOCUMENTS / IMAGES"],
+            ].map(([id, label, value]) => (
+              <div key={id} className="ai-hero-proof-item">
+                <span className="ai-hero-proof-index">{id}</span>
+                <span className="ai-hero-proof-label avant-legato-font">{label}</span>
+                <span className="ai-hero-proof-value avant-legato-font">{value}</span>
+              </div>
+            ))}
+          </div>
+
+          <div className="ai-progress-wrap">
+            <div className="mb-2 flex items-center justify-between text-[7px] uppercase tracking-[.30em] text-white/22 md:text-[8px]">
+              <span>INPUT / SIGNAL</span>
               <span>SCROLL / ACTIVATE NETWORK ↓</span>
-              <span>OUTPUT / AMBER</span>
+              <span>OUTPUT / ACTION</span>
             </div>
             <div className="h-px bg-white/10">
               <div data-ai-progress className="ai-progress h-full w-full origin-left" />
@@ -1719,6 +1932,7 @@ export default function ArtificialIntelligence() {
             02 / NEURAL DECISION CHAMBER
         ====================================================== */}
         <section
+          id="ai-process"
           ref={processRef}
           className="ai-noise relative isolate z-[2] h-[100svh] min-h-[680px] overflow-hidden bg-[#050506]"
         >
@@ -1954,9 +2168,9 @@ export default function ArtificialIntelligence() {
                 </p>
 
                 {[
-                  ["01", "Manuale operativo.pdf", "READY"],
+                  ["01", "Manuale operativo.pdf", "PRONTO"],
                   ["02", "Database clienti", "SYNC"],
-                  ["03", "Procedure interne", "READY"],
+                  ["03", "Procedure interne", "PRONTO"],
                   ["04", "Knowledge base", "INDEXED"],
                 ].map(([id, label, state]) => (
                   <div

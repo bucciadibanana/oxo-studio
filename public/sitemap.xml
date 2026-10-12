@@ -37,7 +37,7 @@
   </url>
 
   <url>
-    <loc>https://oxostudio.it/portfolio/software</loc>
+    <loc>https://oxostudio.it/portfolio/archeologia</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -74,4 +74,5 @@
     <priority>0.6</priority>
   </url>
 
+<url><loc>https://oxostudio.it/portfolio/musei</loc></url>
 </urlset>

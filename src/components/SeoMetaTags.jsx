@@ -15,10 +15,10 @@ const SITE = {
   defaultImage: "/og-default.jpg",
 
   defaultTitle:
-    "OXO Studio | Software, AI e Creative Technology",
+    "OXO Studio | Catalogazione, musei, archeologia e scultoreo",
 
   defaultDescription:
-    "OXO Studio è uno studio di creative technology a La Spezia. Progettiamo software custom, sistemi di intelligenza artificiale, prodotti web ed esperienze interattive.",
+    "Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D.",
 };
 
 
@@ -31,10 +31,10 @@ const SITE = {
 const ROUTE_SEO = {
   "/": {
     title:
-      "OXO Studio | Software, AI e Creative Technology",
+      "OXO Studio | Catalogazione, musei, archeologia e scultoreo",
 
     description:
-      "OXO Studio è uno studio di creative technology a La Spezia. Progettiamo software custom, sistemi di intelligenza artificiale, prodotti web ed esperienze interattive.",
+      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D.",
 
     type: "website",
   },
@@ -53,7 +53,7 @@ const ROUTE_SEO = {
 
   "/prodotti": {
     title:
-      "Prodotti digitali | OXO Studio",
+      "Patrimonio culturale | OXO Studio",
 
     description:
       "Scopri i prodotti OXO Studio: Kairos Archive, software custom, sistemi AI e interactive worlds sviluppati come sistemi digitali completi.",
@@ -103,9 +103,9 @@ const ROUTE_SEO = {
   },
 
 
-  "/portfolio/software": {
+  "/portfolio/archeologia": {
     title:
-      "Custom Software | OXO Studio",
+      "Archeologia e scultoreo | OXO Studio",
 
     description:
       "OXO Studio sviluppa software custom, web application, dashboard, API, database e sistemi gestionali progettati intorno ai processi reali del cliente.",
@@ -126,7 +126,7 @@ const ROUTE_SEO = {
 
   "/portfolio/ai": {
     title:
-      "AI Systems | OXO Studio",
+      "Intelligenza artificiale per il patrimonio | OXO Studio",
 
     description:
       "OXO Studio sviluppa sistemi AI per OCR, classificazione, ricerca semantica, automazione, LLM, elaborazione documentale e workflow intelligenti.",
@@ -147,7 +147,7 @@ const ROUTE_SEO = {
 
   "/portfolio/game": {
     title:
-      "Interactive Worlds | OXO Studio",
+      "Esperienze interattive | OXO Studio",
 
     description:
       "OXO Studio sviluppa videogame, prototipi, ambienti 3D e sistemi real-time unendo codice, gameplay, movimento e direzione visiva.",

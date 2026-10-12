@@ -4,10 +4,10 @@ import gsap from "gsap";
 import "../index.css";
 
 const NAV_ITEMS = [
-  { label: "HOME", to: "/", index: "01", meta: "START", accent: "#35d8ff" },
+  { label: "INIZIO", to: "/", index: "01", meta: "INIZIO", accent: "#35d8ff" },
   { label: "CHI SIAMO", to: "/ChiSiamo", index: "02", meta: "STUDIO", accent: "#8b5cf6" },
-  { label: "PRODOTTI", to: "/Prodotti", index: "03", meta: "WORK", accent: "#20f0c7" },
-  { label: "CONTATTI", to: "/Contatti", index: "04", meta: "HELLO", accent: "#ff4fd8" },
+  { label: "PATRIMONIO", to: "/Prodotti", index: "03", meta: "PATRIMONIO", accent: "#20f0c7" },
+  { label: "CONTATTI", to: "/Contatti", index: "04", meta: "CONTATTI", accent: "#ff4fd8" },
 ];
 
 export default function Header() {
@@ -216,7 +216,7 @@ export default function Header() {
       }
 
       if (
-        ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(
+        ["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Inizio", "End", " "].includes(
           event.key
         )
       ) {
@@ -821,7 +821,7 @@ export default function Header() {
         <div className="oxo-aw-content">
           <div data-menu-top className="oxo-aw-top antonio2">
             <span>OXO STUDIO® / CREATIVE TECHNOLOGY</span>
-            <span>LA SPEZIA / ITALY</span>
+            <span>LA SPEZIA / ITALIA</span>
           </div>
 
           <nav className="oxo-aw-links" aria-label="Menu principale">

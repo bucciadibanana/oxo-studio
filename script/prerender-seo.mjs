@@ -37,10 +37,10 @@ const PAGES = [
     route: "/",
 
     title:
-      "OXO Studio | Software, AI e Creative Technology",
+      "OXO Studio | Catalogazione, musei, archeologia e scultoreo",
 
     description:
-      "OXO Studio è uno studio di creative technology a La Spezia. Progettiamo software custom, sistemi di intelligenza artificiale, prodotti web ed esperienze interattive.",
+      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D.",
 
     h1:
       "OXO Studio",
@@ -56,7 +56,7 @@ const PAGES = [
 
       [
         "/prodotti",
-        "Prodotti",
+        "Patrimonio",
       ],
 
       [
@@ -112,7 +112,7 @@ const PAGES = [
       "/prodotti",
 
     title:
-      "Prodotti digitali | OXO Studio",
+      "Patrimonio culturale | OXO Studio",
 
     description:
       "Scopri i prodotti OXO Studio: Kairos Archive, software custom, sistemi AI e interactive worlds sviluppati come sistemi digitali completi.",
@@ -130,7 +130,7 @@ const PAGES = [
       ],
 
       [
-        "/portfolio/software",
+        "/portfolio/archeologia",
         "Custom Software",
       ],
 
@@ -166,12 +166,12 @@ const PAGES = [
     links: [
       [
         "/",
-        "Home",
+        "Inizio",
       ],
 
       [
         "/prodotti",
-        "Prodotti",
+        "Patrimonio",
       ],
     ],
   },
@@ -204,10 +204,10 @@ const PAGES = [
 
   {
     route:
-      "/portfolio/software",
+      "/portfolio/archeologia",
 
     title:
-      "Custom Software | OXO Studio",
+      "Archeologia e scultoreo | OXO Studio",
 
     description:
       "Software custom, web application, dashboard, API e sistemi gestionali progettati da OXO Studio intorno ai processi reali del cliente.",
@@ -232,7 +232,7 @@ const PAGES = [
       "/portfolio/ai",
 
     title:
-      "AI Systems | OXO Studio",
+      "Intelligenza artificiale per il patrimonio | OXO Studio",
 
     description:
       "Sistemi AI per OCR, classificazione, ricerca semantica, automazione, LLM e workflow intelligenti sviluppati da OXO Studio.",
@@ -257,7 +257,7 @@ const PAGES = [
       "/portfolio/game",
 
     title:
-      "Interactive Worlds | OXO Studio",
+      "Esperienze interattive | OXO Studio",
 
     description:
       "Videogame, prototipi, ambienti 3D e sistemi real-time sviluppati da OXO Studio unendo codice, gameplay, movimento e direzione visiva.",

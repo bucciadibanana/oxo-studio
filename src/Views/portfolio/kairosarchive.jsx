@@ -1,3 +1,5 @@
+// OXO_KAIROS_SCULTOREO_V8
+import OxoCatalogoHero from "../../components/OxoCatalogoHero.jsx";
 import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
@@ -88,7 +90,7 @@ export default function KairosArchive() {
   const interfaceRef = useRef(null);
   const techRef = useRef(null);
   const finalRef = useRef(null);
-  const signalRef = useRef(null);
+  
   const auraRef = useRef(null);
   const cursorHaloRef = useRef(null);
 
@@ -98,7 +100,7 @@ export default function KairosArchive() {
     const interfaceSection = interfaceRef.current;
     const tech = techRef.current;
     const finalSection = finalRef.current;
-    const signal = signalRef.current;
+    
     const aura = auraRef.current;
     const cursorHalo = cursorHaloRef.current;
 
@@ -107,8 +109,7 @@ export default function KairosArchive() {
       !users ||
       !interfaceSection ||
       !tech ||
-      !finalSection ||
-      !signal
+      !finalSection
     ) {
       return undefined;
     }
@@ -219,12 +220,7 @@ export default function KairosArchive() {
           passive: true,
         });
 
-        const oldPointerCleanup = pointerMove;
-
-        pointerMove = (event) => {
-          oldPointerCleanup?.(event);
-          moveHalo(event);
-        };
+        pointerMove = moveHalo;
       }
 
       /*
@@ -234,335 +230,8 @@ export default function KairosArchive() {
        * È l'inverso concettuale del signal della Home.
        * ============================================================
        */
-      const signalLead = signal.querySelector("[data-kairos-signal-lead]");
-      const signalLeadInner = signal.querySelector(
-        "[data-kairos-signal-lead-inner]"
-      );
-      const signalCircle = signal.querySelector("[data-kairos-signal-circle]");
-      const signalCore = signal.querySelector("[data-kairos-signal-core]");
-      const signalRows = gsap.utils.toArray(
-        signal.querySelectorAll("[data-kairos-signal-row]")
-      );
-      const signalRowsWrap = signal.querySelector(
-        "[data-kairos-signal-rows-wrap]"
-      );
-      const signalCross = signal.querySelector("[data-kairos-signal-cross]");
-      const signalCard = signal.querySelector("[data-kairos-card]");
-      const signalCardOrbit = signal.querySelector("[data-kairos-card-orbit]");
-      const signalCardCopy = signal.querySelector("[data-kairos-card-copy]");
-      const signalMeta = gsap.utils.toArray(
-        signal.querySelectorAll("[data-kairos-signal-meta]")
-      );
+      // Apertura gestita dal componente OxoCatalogoHero.
 
-      if (
-        signalLead &&
-        signalLeadInner &&
-        signalCircle &&
-        signalRowsWrap
-      ) {
-        gsap.set(signalCircle, {
-          scale: 0.12,
-          borderRadius: "50%",
-          autoAlpha: 0,
-        });
-
-        gsap.set(signalRowsWrap, {
-          autoAlpha: 0,
-          scale: 0.96,
-          filter: "blur(8px)",
-        });
-
-        gsap.set(signalRows, {
-          opacity: 0.08,
-        });
-
-        gsap.set(signalCore, {
-          autoAlpha: 0,
-          scale: 0.72,
-          filter: "blur(8px)",
-        });
-
-        gsap.set(signalCross, {
-          autoAlpha: 0,
-          scale: 0.45,
-          rotate: -24,
-        });
-
-        gsap.set(signalMeta, {
-          autoAlpha: 0,
-          y: 12,
-        });
-
-        if (signalCard) {
-          gsap.set(signalCard, {
-            autoAlpha: 1,
-            scale: 1,
-          });
-        }
-
-        if (signalCardOrbit) {
-          gsap.set(signalCardOrbit, {
-            rotate: -8,
-            scale: 0.92,
-            opacity: 0.52,
-          });
-        }
-
-        if (signalCardCopy) {
-          gsap.set(signalCardCopy, {
-            autoAlpha: 1,
-            scale: 1,
-            filter: "blur(0px)",
-          });
-        }
-
-        const signalTl = gsap.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: {
-            trigger: signal,
-            start: "top top",
-            end: () => `+=${window.innerHeight * 1.9}`,
-            pin: true,
-            scrub: 1,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-          },
-        });
-
-        signalTl
-          /* 01 — business-card / HUD opening */
-          .fromTo(
-            signalCard,
-            {
-              autoAlpha: 1,
-              scale: 1,
-            },
-            {
-              autoAlpha: 1,
-              scale: 0.985,
-              duration: 0.22,
-            },
-            0
-          )
-          .to(
-            signalCardOrbit,
-            {
-              rotate: 0,
-              scale: 1,
-              opacity: 0.76,
-              duration: 0.28,
-              ease: "power2.out",
-            },
-            0
-          )
-          .to(
-            signalCardCopy,
-            {
-              scale: 1.015,
-              duration: 0.22,
-              ease: "power2.out",
-            },
-            0
-          )
-          .fromTo(
-            signalLead,
-            {
-              scale: 1,
-              yPercent: 0,
-              opacity: 0,
-            },
-            {
-              scale: 0.985,
-              yPercent: -1,
-              opacity: 0,
-              duration: 0.24,
-            },
-            0
-          )
-
-          /* 02 — la composizione si comprime nel nucleo */
-          .to(
-            signalCardOrbit,
-            {
-              scale: 0.46,
-              opacity: 0.18,
-              duration: 0.34,
-              ease: "power3.inOut",
-            },
-            0.14
-          )
-          .to(
-            signalCardCopy,
-            {
-              scaleX: 0.34,
-              scaleY: 0.92,
-              opacity: 0.18,
-              filter: "blur(2px)",
-              duration: 0.36,
-              transformOrigin: "50% 50%",
-              ease: "power3.inOut",
-            },
-            0.16
-          )
-          .to(
-            signalCard,
-            {
-              autoAlpha: 0,
-              duration: 0.24,
-              ease: "power2.out",
-            },
-            0.38
-          )
-
-          /* 03 — il nucleo tipografico converge */
-          .to(
-            signalLeadInner,
-            {
-              scaleX: 0.32,
-              scaleY: 0.92,
-              letterSpacing: "-0.01em",
-              filter: "blur(1px)",
-              opacity: 0.4,
-              duration: 0.42,
-              transformOrigin: "50% 50%",
-            },
-            0.16
-          )
-
-          /* 03 — compare il cerchio che la assorbe */
-          .to(
-            signalCircle,
-            {
-              autoAlpha: 1,
-              scale: 0.34,
-              borderRadius: "50%",
-              duration: 0.3,
-              ease: "power2.out",
-            },
-            0.24
-          )
-          .to(
-            signalCircle,
-            {
-              scale: 1,
-              borderRadius: "50%",
-              duration: 0.46,
-              ease: "power3.inOut",
-            },
-            0.38
-          )
-          .to(
-            signalLead,
-            {
-              autoAlpha: 0,
-              scale: 0.9,
-              filter: "blur(7px)",
-              duration: 0.26,
-            },
-            0.46
-          )
-
-          /* 04 — il nucleo si accende */
-          .to(
-            signalCore,
-            {
-              autoAlpha: 1,
-              scale: 1,
-              filter: "blur(0px)",
-              duration: 0.24,
-              ease: "power3.out",
-            },
-            0.52
-          )
-          .to(
-            signalCross,
-            {
-              autoAlpha: 0.72,
-              scale: 1,
-              rotate: 0,
-              duration: 0.28,
-              ease: "power3.out",
-            },
-            0.54
-          )
-          .to(
-            signalMeta,
-            {
-              autoAlpha: 1,
-              y: 0,
-              stagger: 0.04,
-              duration: 0.18,
-              ease: "power2.out",
-            },
-            0.56
-          )
-
-          /* 05 — il cerchio si apre e libera le tre bande */
-          .to(
-            signalCircle,
-            {
-              scale: 5.4,
-              borderRadius: "18%",
-              opacity: 0.12,
-              duration: 0.62,
-              ease: "power3.inOut",
-            },
-            0.68
-          )
-          .to(
-            signalRowsWrap,
-            {
-              autoAlpha: 1,
-              scale: 1,
-              filter: "blur(0px)",
-              duration: 0.38,
-              ease: "power3.out",
-            },
-            0.76
-          );
-
-        signalRows.forEach((row, index) => {
-          signalTl.fromTo(
-            row,
-            {
-              xPercent: 0,
-              opacity: 1,
-              scale: 1,
-              filter: "blur(0px)",
-            },
-            {
-              xPercent: -24,
-              skewX: -4,
-              opacity: 1,
-              scale: 1,
-              filter: "blur(0px)",
-              duration: 1,
-            },
-            0.72
-          );
-        });
-
-        signalTl
-          .to(
-            signalCore,
-            {
-              scale: 0.86,
-              opacity: 0.72,
-              duration: 0.4,
-            },
-            0.84
-          )
-          .to(
-            signalCross,
-            {
-              rotate: 36,
-              scale: 0.84,
-              opacity: 0.28,
-              duration: 0.44,
-            },
-            0.84
-          );
-      }
 
       mm.add(
         {
@@ -1888,271 +1557,7 @@ export default function KairosArchive() {
         {/* =====================================================
             KAIROS / CARD-STYLE OPENING + SIGNAL TRANSITION
         ====================================================== */}
-        <section
-          ref={signalRef}
-          className="kairos-signal-stage kairos-noise relative flex h-[100svh] min-h-[680px] items-center overflow-hidden bg-[#020203]"
-        >
-          <div className="kairos-grid pointer-events-none absolute inset-0 opacity-34" />
-
-          {/* ===================================================
-              FIRST FRAME — MOLTO VICINO ALLA FACCIA SINISTRA
-              DEL BIGLIETTO, TUTTO IN JSX/CSS
-          =================================================== */}
-          <div
-            data-kairos-card
-            className="absolute inset-0 z-20"
-          >
-            <div className="kairos-card-shell" aria-hidden="true">
-              <span className="kairos-card-corner kairos-card-corner--tl" />
-              <span className="kairos-card-corner kairos-card-corner--tr" />
-              <span className="kairos-card-corner kairos-card-corner--bl" />
-              <span className="kairos-card-corner kairos-card-corner--br" />
-            </div>
-
-            {/* TOP LEFT / CREATIVE TECHNOLOGY */}
-            <div className="absolute left-[6.2%] top-[12%] z-20 flex items-start gap-4">
-              <span className="h-[18px] w-[18px] border border-cyan-300 shadow-[0_0_16px_rgba(53,216,255,.08)]" />
-              <p className="avant-legato-font text-[7px] uppercase leading-[1.75] tracking-[0.38em] text-white/60 md:text-[9px]">
-                CULTURAL
-                <br />
-                TECHNOLOGY
-              </p>
-            </div>
-
-            {/* CENTRAL HUD */}
-            <div
-              data-kairos-card-orbit
-              className="kairos-card-orbit"
-              aria-hidden="true"
-            >
-              <span className="kairos-card-orbit-ring" />
-              <span className="kairos-card-orbit-ring" />
-              <span className="kairos-card-orbit-ring" />
-              <span className="kairos-card-orbit-ring" />
-              <span className="kairos-card-orbit-ring" />
-
-              <span className="kairos-card-arc kairos-card-arc--cyan" />
-              <span className="kairos-card-arc kairos-card-arc--violet" />
-
-              <div className="kairos-card-inner-orbit">
-                <span className="kairos-card-loop kairos-card-loop--left" />
-                <span className="kairos-card-loop kairos-card-loop--right" />
-                <span className="kairos-card-inner-ring" />
-              </div>
-
-              <span className="kairos-card-axis-x" />
-              <span className="kairos-card-axis-y" />
-
-              <span className="kairos-card-node kairos-card-node--cyan left-1/2 top-[5%] -translate-x-1/2" />
-              <span className="kairos-card-node kairos-card-node--violet left-1/2 bottom-[5%] -translate-x-1/2" />
-              <span className="kairos-card-node left-[5%] top-1/2 -translate-y-1/2" />
-              <span className="kairos-card-node right-[5%] top-1/2 -translate-y-1/2" />
-
-              <span className="kairos-card-node left-[18%] top-[18%]" />
-              <span className="kairos-card-node right-[18%] top-[18%]" />
-              <span className="kairos-card-node left-[18%] bottom-[18%]" />
-              <span className="kairos-card-node right-[18%] bottom-[18%]" />
-
-              <span className="kairos-card-crosshair left-1/2 top-[-1%] -translate-x-1/2" />
-              <span className="kairos-card-crosshair left-[-1%] top-1/2 -translate-y-1/2" />
-              <span className="kairos-card-crosshair right-[-1%] top-1/2 -translate-y-1/2" />
-              <span className="kairos-card-crosshair left-1/2 bottom-[-1%] -translate-x-1/2" />
-
-              {Array.from({ length: 16 }).map((_, index) => {
-                const angle = index * 22.5;
-                const radius = 46;
-                const x = 50 + Math.cos((angle * Math.PI) / 180) * radius;
-                const y = 50 + Math.sin((angle * Math.PI) / 180) * radius;
-                return (
-                  <span
-                    key={`orbit-tick-${index}`}
-                    className="kairos-card-tick"
-                    style={{
-                      left: `${x}%`,
-                      top: `${y}%`,
-                      transform: `translate(-50%, -50%) rotate(${angle + 90}deg)`,
-                    }}
-                  />
-                );
-              })}
-            </div>
-
-            {/* CENTER TYPE */}
-            <div
-              data-kairos-card-copy
-              className="kairos-card-center-copy"
-            >
-              <h1 className="kairos-card-center-title avant-legato-font ombra2">
-                KAIROS
-              </h1>
-              <p className="kairos-card-center-sub avant-legato-font">
-                ARCHIVE
-              </p>
-            </div>
-
-            {/* LEFT RULER */}
-            <div className="kairos-card-ruler left-[4.9%] top-[38%]" aria-hidden="true">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <span key={`left-rule-${index}`} />
-              ))}
-            </div>
-
-            {/* RIGHT DOT MATRIX */}
-            <div className="kairos-card-dots right-[8.6%] top-[17%]" aria-hidden="true">
-              {Array.from({ length: 30 }).map((_, index) => (
-                <span key={`kairos-dot-${index}`} />
-              ))}
-            </div>
-
-            {/* RIGHT ACCENT */}
-            <div className="kairos-card-accent-line right-[8.5%] top-[31%]" aria-hidden="true" />
-            <div className="kairos-card-mini-line kairos-card-mini-line--cyan right-[14.5%] top-[31%] w-[44px]" aria-hidden="true" />
-            <div className="kairos-card-mini-line kairos-card-mini-line--violet right-[8.5%] top-[31%] w-[42px]" aria-hidden="true" />
-
-            {/* RIGHT VERTICAL TECH LINE */}
-            <div className="pointer-events-none absolute right-[8.9%] top-[36%] h-[34%] w-px bg-gradient-to-b from-white/15 via-white/08 to-transparent" />
-            <span className="kairos-card-crosshair right-[7.85%] top-[47%]" aria-hidden="true" />
-
-            {/* LEFT LOWER HUD */}
-            <span className="kairos-card-node kairos-card-node--violet left-[4.7%] bottom-[18%]" />
-            <div className="kairos-card-dots left-[4.8%] bottom-[7.7%] scale-[.7] origin-bottom-left" aria-hidden="true">
-              {Array.from({ length: 18 }).map((_, index) => (
-                <span key={`lower-dot-${index}`} />
-              ))}
-            </div>
-
-            {/* BOTTOM CENTER META */}
-            <p className="kairos-card-meta bottom-[6.3%] left-1/2 -translate-x-1/2 text-center">
-              CATALOGAZIONE / AI / OCR / SEARCH
-            </p>
-
-            {/* BOTTOM RIGHT BARS */}
-            <div className="kairos-card-bottom-bars bottom-[6.1%] right-[7%]" aria-hidden="true">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <span key={`bottom-bar-${index}`} />
-              ))}
-              <span className="ml-2 h-[12px] w-[12px] border border-fuchsia-400 bg-transparent" />
-            </div>
-
-            {/* SUPPORTING TECH LINES */}
-            <div className="kairos-card-bottom-rule" aria-hidden="true" />
-            <div className="pointer-events-none absolute left-[4.5%] top-1/2 h-px w-[17%] bg-gradient-to-r from-white/18 to-transparent" />
-            <div className="pointer-events-none absolute right-[4.5%] top-1/2 h-px w-[17%] bg-gradient-to-l from-white/18 to-transparent" />
-
-            {/* MICRO NODES */}
-            <span className="kairos-card-node kairos-card-node--cyan left-[4.7%] top-[25%]" />
-            <span className="kairos-card-node kairos-card-node--violet right-[4.7%] bottom-[18%]" />
-
-            <p className="kairos-card-meta right-[6%] bottom-[6.3%] translate-y-[-22px] text-right text-cyan-300/45">
-              SYSTEM STATUS / READY
-            </p>
-          </div>
-
-          {/* ===================================================
-              TRANSITION CORE — parte solo durante lo scroll
-          =================================================== */}
-          <div
-            data-kairos-signal-lead
-            className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center opacity-0"
-          >
-            <h2
-              data-kairos-signal-lead-inner
-              className="avant-legato-font ombra2 whitespace-nowrap text-center text-[11.2vw] uppercase leading-[.7] tracking-[-0.085em] md:text-[9vw]"
-            >
-              KAIROS ARCHIVE.
-            </h2>
-          </div>
-
-          <div
-            data-kairos-signal-circle
-            aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 z-30 h-[30vw] w-[30vw] min-h-[210px] min-w-[210px] max-h-[520px] max-w-[520px] -translate-x-1/2 -translate-y-1/2 border border-white/12 bg-black/82 shadow-[0_0_90px_rgba(53,216,255,.055),0_0_130px_rgba(139,92,246,.035)] backdrop-blur-[3px]"
-          />
-
-          <div
-            data-kairos-signal-core
-            className="pointer-events-none absolute left-1/2 top-1/2 z-40 w-[80vw] max-w-[760px] -translate-x-1/2 -translate-y-1/2 text-center"
-          >
-            <p
-              data-kairos-signal-meta
-              className="avant-legato-font mb-4 text-[8px] uppercase tracking-[0.4em] text-violet-400 md:text-[10px]"
-            >
-              CATALOG / CONNECT / PRESERVE
-            </p>
-
-            <p className="avant-legato-font text-[8.2vw] uppercase leading-[.72] tracking-[-0.065em] text-white md:text-[4.7vw]">
-              KNOWLEDGE
-              <br />
-              ORGANIZED.
-            </p>
-          </div>
-
-          <div
-            data-kairos-signal-cross
-            aria-hidden="true"
-            className="pointer-events-none absolute left-1/2 top-1/2 z-40 h-[22vw] w-[22vw] min-h-[150px] min-w-[150px] max-h-[360px] max-w-[360px] -translate-x-1/2 -translate-y-1/2"
-          >
-            <span className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-cyan-300/60 to-transparent" />
-            <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-gradient-to-r from-transparent via-violet-400/60 to-transparent" />
-            <span className="absolute inset-[24%] rotate-45 border border-white/10" />
-          </div>
-
-          <div
-            data-kairos-signal-rows-wrap
-            className="absolute inset-0 z-10 flex items-center overflow-hidden"
-          >
-            <div className="w-full py-8">
-              {[
-                {
-                  text: "CATALOGARE — CERCARE — CONNETTERE — PRESERVARE —",
-                  className: "text-[16.5vw] text-white/[0.055] md:text-[9vw]",
-                },
-                {
-                  text: "DATI CHIARI — CONOSCENZA ACCESSIBILE —",
-                  className: "text-[15vw] md:text-[10.5vw]",
-                },
-                {
-                  text: "ARCHIVI — BIBLIOTECHE — COLLEZIONI — KAIROS —",
-                  className: "text-[13.5vw] text-white/[0.12] md:text-[9vw]",
-                },
-              ].map((row, index) => (
-                <div
-                  key={row.text}
-                  data-kairos-signal-row
-                  className={`kairos-signal-row avant-legato-font flex w-max whitespace-nowrap uppercase leading-[.72] tracking-[-0.065em] ${row.className}`}
-                  style={{
-                    transform: `translateX(${index % 2 === 0 ? -9 : -22}vw)`,
-                    ...(index === 1
-                      ? {
-                          color: "transparent",
-                          WebkitTextStroke: "1px rgba(139,92,246,.7)",
-                        }
-                      : {}),
-                  }}
-                >
-                  <span>{row.text}&nbsp;</span>
-                  <span>{row.text}&nbsp;</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="pointer-events-none absolute inset-x-[5vw] bottom-[5vh] z-50 flex items-end justify-between">
-            <p
-              data-kairos-signal-meta
-              className="avant-legato-font text-[8px] uppercase tracking-[0.38em] text-white/25 md:text-[10px]"
-            >
-              ONE SYSTEM / MANY COLLECTIONS
-            </p>
-
-            <p
-              data-kairos-signal-meta
-              className="avant-legato-font text-right text-[8px] uppercase tracking-[0.38em] text-white/25 md:text-[10px]"
-            >
-              SCROLL / ENTER KAIROS ↓
-            </p>
-          </div>
-        </section>
+        <OxoCatalogoHero />
 
         {/* =====================================================
             PER CHI
@@ -2232,7 +1637,7 @@ export default function KairosArchive() {
             INTERFACE
         ====================================================== */}
         <section
-          ref={interfaceRef}
+          ref={interfaceRef} id="kairos-pannello"
           className="kairos-section-shell relative bg-[#020203]"
         >
           <div
@@ -2324,7 +1729,7 @@ export default function KairosArchive() {
 
                     <nav className="flex-1 overflow-hidden px-2 py-4 text-[8px] text-white/78 md:text-[9px] lg:text-[10px]">
                       <p className="mb-2 px-1 text-[9px] text-white/42">
-                        Overview
+                        Panoramica
                       </p>
 
                       <div
@@ -2332,7 +1737,7 @@ export default function KairosArchive() {
                         className="kd-nav-item kd-nav-active mb-1 flex items-center gap-3 rounded-sm px-2 py-2"
                       >
                         <span className="w-3 text-center">⌘</span>
-                        <span>Dashboard</span>
+                        <span>Pannello</span>
                       </div>
 
                       <div
@@ -2379,7 +1784,7 @@ export default function KairosArchive() {
 
                       {[
                         ["⌖", "Localizzate"],
-                        ["▱", "Workspaces"],
+                        ["▱", "Aree di lavoro"],
                         ["♙", "Teams"],
                       ].map(([icon, label]) => (
                         <div
@@ -2398,12 +1803,12 @@ export default function KairosArchive() {
                       >
                         <span className="flex items-center gap-3">
                           <span className="w-3 text-center">◉</span>
-                          <span>Account</span>
+                          <span>Utenza</span>
                         </span>
                         <span>⌄</span>
                       </div>
 
-                      {["Profile", "Billing", "Login"].map((item) => (
+                      {["Profilo", "Fatturazione", "Accesso"].map((item) => (
                         <div
                           key={item}
                           data-ui-row
@@ -2438,18 +1843,18 @@ export default function KairosArchive() {
                       </div>
 
                       <div className="flex items-center gap-2 text-[8px] text-white/56">
-                        <span className="border border-[#303030] px-2 py-1">Overview</span>
+                        <span className="border border-[#303030] px-2 py-1">Panoramica</span>
                         <span className="border border-[#303030] px-2 py-1">☰</span>
                       </div>
                     </div>
 
                     <div className="kd-scrollbar flex gap-2 overflow-x-auto border-t border-[#242424] px-3 py-2 text-[8px] text-white/60">
                       {[
-                        "Dashboard",
+                        "Pannello",
                         "Catalogazione",
                         "Digitali",
                         "Localizzate",
-                        "Workspaces",
+                        "Aree di lavoro",
                         "Teams",
                       ].map((item, index) => (
                         <span
@@ -2472,14 +1877,14 @@ export default function KairosArchive() {
                     <div className="flex h-[52px] items-center justify-between border-b border-[#242424] px-3 md:h-[58px] md:px-5">
                       <div className="flex items-center gap-2 text-[8px] text-white/78 md:gap-4 md:text-[10px]">
                         <span className="text-white/80">▣</span>
-                        <span className="text-white/45">Dashboard</span>
+                        <span className="text-white/45">Pannello</span>
                         <span className="text-white/26">/</span>
-                        <span>Overview</span>
+                        <span>Panoramica</span>
                       </div>
 
                       <div className="flex items-center gap-2">
                         <div className="hidden h-9 w-[210px] items-center justify-between rounded-md border border-[#2a2a2a] bg-[#0d0d0e] px-3 text-[9px] text-white/42 lg:flex">
-                          <span>Search...</span>
+                          <span>Cerca...</span>
                           <span className="rounded bg-[#262626] px-1.5 py-1 text-[8px] text-white/70">
                             ⌘ K
                           </span>
@@ -2686,7 +2091,7 @@ export default function KairosArchive() {
                             </div>
 
                             <span className="border border-[#303030] bg-[#1c1c1c] px-2 py-1 text-[7px] uppercase tracking-[0.2em] text-white/46">
-                              LIVE FLOW
+                              ATTIVITÀ RECENTI
                             </span>
                           </div>
 
@@ -2731,7 +2136,7 @@ export default function KairosArchive() {
                   ["01", "CATALOGAZIONE", "Schede / frontespizio / topografia", "#35d8ff"],
                   ["02", "DIGITALI", "Generate / approvate / revisione", "#8b5cf6"],
                   ["03", "LOCALIZZAZIONI", "Invio e tracciamento operativo", "#20f0c7"],
-                  ["04", "WORKSPACE", "Organizzazioni / team / ruoli", "#ff4fd8"],
+                  ["04", "AREA DI LAVORO", "Organizzazioni / team / ruoli", "#ff4fd8"],
                 ].map(([id, title, copy, accent]) => (
                   <div
                     key={id}

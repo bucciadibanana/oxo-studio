@@ -14,7 +14,7 @@ const SECURITY_NODES = [
   ["FORMAT", "UNIMARC", "48%", "28%", "#20f0c7"],
   ["FORMAT", "MARC 21", "64%", "70%", "#ff4fd8"],
   ["ACCESS", "OPAC", "78%", "24%", "#35d8ff"],
-  ["DATA", "METADATI", "88%", "62%", "#8b5cf6"],
+  ["DATI", "METADATI", "88%", "62%", "#8b5cf6"],
 ];
 
 const STACK_LANES = [

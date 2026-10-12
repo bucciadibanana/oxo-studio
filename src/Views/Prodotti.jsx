@@ -10,140 +10,224 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PRODUCTS = [
   {
-    id: "01",
-    category: "CATALOGAZIONE / AI",
-    title: "KAIROSARCHIVE",
-    statement: "KNOWLEDGE, ORGANIZED.",
-    description:
-      "Il sistema OXO per metadatazione, catalogazione bibliografica, ricerca e organizzazione documentale. Integra SBN, MARC 21, Z39.50, BID, ISBN e automazione in un unico flusso operativo.",
-    meta: "ARCHIVE INTELLIGENCE / CATALOGING AUTOMATION",
-    video: "/videos/products/kairosarchive.mp4",
-    link: "/portfolio/kairosarchive",
-    accent: "#35d8ff",
-    accentSoft: "rgba(53,216,255,.18)",
-    objectPosition: "center center",
-    fallback:
-      "radial-gradient(circle at 72% 28%, rgba(53,216,255,.34), transparent 32%), radial-gradient(circle at 18% 78%, rgba(32,240,199,.20), transparent 38%), linear-gradient(135deg, #02121b 0%, #050711 54%, #010101 100%)",
-    specs: [
-      ["FIELD", "BIBLIOGRAPHIC DATA"],
-      ["CORE", "CATALOG / SEARCH / AI"],
-      ["OUTPUT", "VERIFIED RECORDS"],
+    "id": "01",
+    "code": "CATALOGAZIONE_1",
+    "title": "KAIROSARCHIVE",
+    "eyebrow": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "copy": "Catalogazione bibliografica, acquisizione da frontespizi e schede, verifica dei riscontri, inventari e collocazioni. L’intelligenza artificiale affianca il catalogatore, senza sostituire la verifica professionale.",
+    "link": "/portfolio/kairosarchive",
+    "accent": "#35d8ff",
+    "soft": "#35d8ff29",
+    "tags": [
+      "BIBLIOTECHE",
+      "CATALOGHI",
+      "METADATI"
     ],
-    tags: ["MARC 21", "SBN", "Z39.50", "BID", "ISBN"],
+    "background": "radial-gradient(circle at 78% 22%, #35d8ff29, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "statement": "CONOSCERE E ORGANIZZARE.",
+    "description": "Catalogazione bibliografica, acquisizione da frontespizi e schede, verifica dei riscontri, inventari e collocazioni. L’intelligenza artificiale affianca il catalogatore, senza sostituire la verifica professionale.",
+    "meta": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "video": null,
+    "accentSoft": "#35d8ff29",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #35d8ff29, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "CATALOGAZIONE"
+      ],
+      [
+        "ATTIVITÀ",
+        "BIBLIOTECHE / CATALOGHI / METADATI"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
   },
   {
-    id: "02",
-    category: "ARTIFICIAL INTELLIGENCE",
-    title: "AI SYSTEMS",
-    statement: "INTELLIGENCE, APPLIED.",
-    description:
-      "Sistemi di intelligenza artificiale per OCR, classificazione, ricerca semantica, estrazione dati e automazione dei processi, integrati dove producono un vantaggio reale.",
-    meta: "AI / OCR / SEARCH / AUTOMATION",
-    video: "/videos/products/artificial-intelligence.mp4",
-    link: "/portfolio/ai",
-    accent: "#20f0c7",
-    accentSoft: "rgba(32,240,199,.16)",
-    objectPosition: "center center",
-    fallback:
-      "radial-gradient(circle at 76% 54%, rgba(32,240,199,.31), transparent 35%), radial-gradient(circle at 12% 22%, rgba(41,121,255,.26), transparent 38%), linear-gradient(135deg, #001515 0%, #020711 54%, #010101 100%)",
-    specs: [
-      ["FIELD", "INTELLIGENT FLOWS"],
-      ["CORE", "OCR / LLM / SEARCH"],
-      ["OUTPUT", "AUTOMATED SYSTEMS"],
+    "id": "02",
+    "code": "MUSEI_2",
+    "title": "MUSEI",
+    "eyebrow": "ECCLESIASTICI / STATALI / COLLEZIONI",
+    "copy": "Gestione di opere, inventari, immagini, sedi, depositi, prestiti e movimentazioni. Percorsi distinti per il patrimonio ecclesiastico e statale, con riferimenti a CEI/BeWeB e MiC/ICCD.",
+    "link": "/portfolio/musei",
+    "accent": "#20f0c7",
+    "soft": "#20f0c729",
+    "tags": [
+      "ECCLESIASTICI",
+      "STATALI",
+      "COLLEZIONI"
     ],
-    tags: ["AI", "OCR", "SEARCH", "AUTOMATION"],
+    "background": "radial-gradient(circle at 78% 22%, #20f0c729, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "ECCLESIASTICI / STATALI / COLLEZIONI",
+    "statement": "GESTIRE LE COLLEZIONI.",
+    "description": "Gestione di opere, inventari, immagini, sedi, depositi, prestiti e movimentazioni. Percorsi distinti per il patrimonio ecclesiastico e statale, con riferimenti a CEI/BeWeB e MiC/ICCD.",
+    "meta": "ECCLESIASTICI / STATALI / COLLEZIONI",
+    "video": null,
+    "accentSoft": "#20f0c729",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #20f0c729, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "MUSEI"
+      ],
+      [
+        "ATTIVITÀ",
+        "ECCLESIASTICI / STATALI / COLLEZIONI"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
   },
   {
-    id: "03",
-    category: "CUSTOM SOFTWARE",
-    title: "CUSTOM SOFTWARE",
-    statement: "COMPLEXITY, MADE USABLE.",
-    description:
-      "Applicazioni, dashboard, API e sistemi gestionali costruiti intorno ai processi reali del cliente, con architetture solide e strumenti pronti a evolvere.",
-    meta: "PRODUCT / API / DATABASE / CLOUD",
-    video: "/videos/products/custom-software.mp4",
-    link: "/portfolio/software",
-    accent: "#8b5cf6",
-    accentSoft: "rgba(139,92,246,.18)",
-    objectPosition: "center center",
-    fallback:
-      "radial-gradient(circle at 24% 40%, rgba(139,92,246,.37), transparent 36%), radial-gradient(circle at 82% 75%, rgba(255,79,216,.16), transparent 36%), linear-gradient(135deg, #13051f 0%, #080810 55%, #010101 100%)",
-    specs: [
-      ["FIELD", "BUSINESS SYSTEMS"],
-      ["CORE", "API / DATABASE / CLOUD"],
-      ["OUTPUT", "SCALABLE SOFTWARE"],
+    "id": "03",
+    "code": "ARCHEOLOGIA_3",
+    "title": "ARCHEOLOGIA",
+    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
+    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
+    "link": "/portfolio/archeologia",
+    "accent": "#8b5cf6",
+    "soft": "#8b5cf629",
+    "tags": [
+      "REPERTI",
+      "FRAMMENTI",
+      "CONTESTI"
     ],
-    tags: ["WEB APP", "DASHBOARD", "API", "DATABASE"],
+    "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "REPERTI / FRAMMENTI / CONTESTI",
+    "statement": "DAI REPERTI AI CONTESTI.",
+    "description": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
+    "meta": "REPERTI / FRAMMENTI / CONTESTI",
+    "video": null,
+    "accentSoft": "#8b5cf629",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "ARCHEOLOGIA"
+      ],
+      [
+        "ATTIVITÀ",
+        "REPERTI / FRAMMENTI / CONTESTI"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
   },
   {
-    id: "04",
-    category: "WEB / DIGITAL PLATFORM",
-    title: "WEB SYSTEMS",
-    statement: "DATA, MADE ACCESSIBLE.",
-    description:
-      "Piattaforme web e interfacce professionali progettate per rendere cataloghi, archivi, dati e servizi digitali chiari, veloci e utilizzabili su ogni dispositivo.",
-    meta: "WEB / UX / PERFORMANCE / INTERFACE",
-    video: "/videos/products/custom-software.mp4",
-    link: "/portfolio/software",
-    accent: "#ff4fd8",
-    accentSoft: "rgba(255,79,216,.17)",
-    objectPosition: "center center",
-    fallback:
-      "radial-gradient(circle at 30% 34%, rgba(255,79,216,.28), transparent 36%), radial-gradient(circle at 80% 76%, rgba(139,92,246,.25), transparent 38%), linear-gradient(135deg, #1a0418 0%, #08040f 56%, #010101 100%)",
-    specs: [
-      ["FIELD", "DIGITAL ACCESS"],
-      ["CORE", "WEB / UX / DATA"],
-      ["OUTPUT", "USABLE PLATFORMS"],
+    "id": "04",
+    "code": "SCULTOREO_4",
+    "title": "SCULTOREO",
+    "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
+    "link": "/portfolio/archeologia#scultoreo",
+    "accent": "#ff4fd8",
+    "soft": "#ff4fd829",
+    "tags": [
+      "SCULTURE",
+      "RILIEVI",
+      "CONSERVAZIONE"
     ],
-    tags: ["WEB", "UX", "PERFORMANCE", "ACCESSIBILITY"],
-  },
+    "background": "radial-gradient(circle at 78% 22%, #ff4fd829, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "statement": "LA FORMA NEL TEMPO.",
+    "description": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
+    "meta": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "video": null,
+    "accentSoft": "#ff4fd829",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #ff4fd829, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "SCULTOREO"
+      ],
+      [
+        "ATTIVITÀ",
+        "SCULTURE / RILIEVI / CONSERVAZIONE"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
+  }
 ];
 
 const CAPABILITIES = [
   {
-    id: "01",
-    title: "CATALOGAZIONE",
-    eyebrow: "RECORDS / STANDARDS",
-    copy:
-      "SBN, MARC 21, UNIMARC, Z39.50, BID e ISBN entrano in workflow progettati per ridurre errori, duplicazioni e lavoro manuale.",
-    accent: "#35d8ff",
-    tags: ["SBN", "MARC 21", "UNIMARC", "Z39.50"],
-    background:
-      "radial-gradient(circle at 78% 22%, rgba(53,216,255,.26), transparent 34%), linear-gradient(145deg, #07141c, #050507 58%, #010101)",
+    "id": "01",
+    "code": "CATALOGAZIONE_1",
+    "title": "CATALOGAZIONE",
+    "eyebrow": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "copy": "Catalogazione bibliografica, acquisizione da frontespizi e schede, verifica dei riscontri, inventari e collocazioni. L’intelligenza artificiale affianca il catalogatore, senza sostituire la verifica professionale.",
+    "link": "/portfolio/kairosarchive",
+    "accent": "#35d8ff",
+    "soft": "#35d8ff29",
+    "tags": [
+      "BIBLIOTECHE",
+      "CATALOGHI",
+      "METADATI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #35d8ff29, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
   {
-    id: "02",
-    title: "AI",
-    eyebrow: "INTELLIGENCE / AUTOMATION",
-    copy:
-      "OCR, classificazione, ricerca semantica, LLM e automazione vengono integrati nei flussi quando migliorano velocità, precisione e qualità del dato.",
-    accent: "#20f0c7",
-    tags: ["AI", "OCR", "LLM", "AUTOMATION"],
-    background:
-      "radial-gradient(circle at 74% 68%, rgba(32,240,199,.25), transparent 35%), linear-gradient(145deg, #031714, #05070a 58%, #010101)",
+    "id": "02",
+    "code": "MUSEI_2",
+    "title": "MUSEI",
+    "eyebrow": "ECCLESIASTICI / STATALI / COLLEZIONI",
+    "copy": "Gestione di opere, inventari, immagini, sedi, depositi, prestiti e movimentazioni. Percorsi distinti per il patrimonio ecclesiastico e statale, con riferimenti a CEI/BeWeB e MiC/ICCD.",
+    "link": "/portfolio/musei",
+    "accent": "#20f0c7",
+    "soft": "#20f0c729",
+    "tags": [
+      "ECCLESIASTICI",
+      "STATALI",
+      "COLLEZIONI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #20f0c729, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
   {
-    id: "03",
-    title: "ENGINEERING",
-    eyebrow: "SOFTWARE / API / DATA",
-    copy:
-      "Frontend, backend, API e database vengono progettati come un unico sistema, stabile oggi e pronto a crescere domani.",
-    accent: "#8b5cf6",
-    tags: ["REACT", "PYTHON", "API", "DATABASE"],
-    background:
-      "radial-gradient(circle at 24% 30%, rgba(139,92,246,.29), transparent 34%), linear-gradient(145deg, #16071f, #07070b 58%, #010101)",
+    "id": "03",
+    "code": "ARCHEOLOGIA_3",
+    "title": "ARCHEOLOGIA",
+    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
+    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
+    "link": "/portfolio/archeologia",
+    "accent": "#8b5cf6",
+    "soft": "#8b5cf629",
+    "tags": [
+      "REPERTI",
+      "FRAMMENTI",
+      "CONTESTI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
   {
-    id: "04",
-    title: "WEB SYSTEMS",
-    eyebrow: "ACCESS / UX / PERFORMANCE",
-    copy:
-      "Interfacce e piattaforme web progettate per rendere dati, cataloghi e servizi digitali chiari, accessibili e performanti.",
-    accent: "#ff4fd8",
-    tags: ["WEB", "UX", "PERFORMANCE", "ACCESS"],
-    background:
-      "radial-gradient(circle at 28% 30%, rgba(255,79,216,.27), transparent 35%), linear-gradient(145deg, #190617, #08060c 58%, #010101)",
-  },
+    "id": "04",
+    "code": "SCULTOREO_4",
+    "title": "SCULTOREO",
+    "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
+    "link": "/portfolio/archeologia#scultoreo",
+    "accent": "#ff4fd8",
+    "soft": "#ff4fd829",
+    "tags": [
+      "SCULTURE",
+      "RILIEVI",
+      "CONSERVAZIONE"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #ff4fd829, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
+  }
 ];
 
 const PRINCIPLES = [
@@ -2234,10 +2318,7 @@ export default function Prodotti() {
 
   return (
     <>
-      <SeoMetaTags
-        title="Kairos Archive, Catalogazione, Software e Web | OXO Studio"
-        description="Prodotti OXO Studio per catalogazione bibliografica, Kairos Archive, intelligenza artificiale, SBN, MARC 21, Z39.50, software custom e piattaforme web."
-      />
+      <SeoMetaTags title="OXO Studio | Catalogazione, musei, archeologia e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D." />
 
       <main
         key={location.key}
@@ -3128,7 +3209,7 @@ export default function Prodotti() {
             aria-hidden="true"
             className="avant-legato-font pointer-events-none absolute -left-[2vw] top-[18vh] whitespace-nowrap text-[14vw] uppercase leading-none tracking-[-0.075em] text-white/[0.025]"
           >
-            ARCHIVE SYSTEMS
+            ARCHIVI DEL PATRIMONIO
           </p>
 
           {/* top */}
@@ -3155,7 +3236,7 @@ export default function Prodotti() {
             </p>
 
             <h1 className="avant-legato-font ombra2 overflow-hidden text-[13.2vw] uppercase leading-[0.7] tracking-[-0.075em] md:text-[9.6vw] lg:text-[8.6vw]">
-              <SplitLetters text="PRODOTTI" />
+              <SplitLetters text="PATRIMONIO" />
             </h1>
           </div>
 
@@ -3356,7 +3437,7 @@ export default function Prodotti() {
 
                     <div className="overflow-hidden">
                       <p className="oxo-product-view-word avant-legato-font ombra2 whitespace-nowrap text-[13.5vw] uppercase leading-[0.63] tracking-[-0.095em] text-white md:text-[8.2vw] lg:text-[6.3vw]">
-                        VIEW
+                        SCOPRI
                       </p>
                     </div>
 
@@ -3393,7 +3474,7 @@ export default function Prodotti() {
                       className="avant-legato-font text-[8px] uppercase tracking-[0.3em]"
                       style={{ color: product.accent }}
                     >
-                      TAP / VIEW
+                      TOCCA / SCOPRI
                     </span>
                   </div>
                 </div>
@@ -3619,11 +3700,11 @@ export default function Prodotti() {
             <header className="flex min-h-[100svh] w-full shrink-0 flex-col justify-between px-6 py-8 md:px-10 md:py-10 lg:w-[72vw] lg:px-[5vw] lg:py-[5vh]">
               <div className="flex items-start justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.3em] text-gray-500 md:text-[11px]">
                 <span data-static-slide>
-                  THE ARCHIVE ENGINE
+                  IL PATRIMONIO CULTURALE
                 </span>
 
                 <span data-static-slide>
-                  04 CAPABILITIES
+                  04 AMBITI
                 </span>
               </div>
 
@@ -3642,9 +3723,7 @@ export default function Prodotti() {
               </div>
 
               <p data-static-reveal className="avant-legato-font max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
-                Quattro competenze che lavorano insieme:
-                catalogazione, AI, engineering
-                e web diventano un unico sistema.
+                Quattro ambiti collegati: catalogazione bibliografica, gestione museale, archeologia e patrimonio scultoreo.
               </p>
             </header>
 
@@ -3655,6 +3734,16 @@ export default function Prodotti() {
                 <article
                   key={capability.id}
                   data-capability-card
+      role="link"
+      tabIndex={0}
+      aria-label={`Scopri ${capability.title}`}
+      onClick={() => navigate(capability.link)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          navigate(capability.link);
+        }
+      }}
                   data-tilt
                   className="oxo-capability-card relative flex min-h-[78svh] w-full shrink-0 items-center border-t border-white/15 px-5 py-10 sm:px-7 sm:py-12 md:min-h-[82svh] md:px-10 md:py-14 lg:min-h-[100svh] lg:w-[56vw] lg:border-l lg:border-t-0 lg:px-[3vw] lg:py-0"
                 >
@@ -3747,14 +3836,11 @@ export default function Prodotti() {
             <div className="flex min-h-[72svh] w-full shrink-0 items-center justify-center border-t border-white/15 px-6 py-20 md:px-10 lg:min-h-[100svh] lg:w-[58vw] lg:border-l lg:border-t-0 lg:px-[6vw] lg:py-0">
               <div className="max-w-[620px]">
                 <p data-static-reveal className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.34em] text-fuchsia-400 md:text-xs">
-                  One archive / one system
+                  Un patrimonio / più ambiti
                 </p>
 
                 <p data-static-reveal className="avant-legato-font text-[clamp(2.2rem,4.5vw,4.7rem)] leading-[0.96] tracking-[-0.04em]">
-                  La qualità nasce quando
-                  standard bibliografici, dati,
-                  software e interfaccia
-                  vengono progettati insieme.
+                  La qualità nasce dal confronto tra competenze bibliografiche, archeologiche e storico-artistiche, fonti documentate e dati verificabili.
                 </p>
               </div>
             </div>

@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 const SECURITY_NODES = [
   ["AUTH", "CLERK", "12%", "20%", "#35d8ff"],
   ["TENANT", "ISOLATION", "28%", "66%", "#8b5cf6"],
-  ["INPUT", "VALIDATION", "48%", "28%", "#20f0c7"],
+  ["DATI INIZIALI", "VALIDATION", "48%", "28%", "#20f0c7"],
   ["HMAC", "SHA-256", "64%", "70%", "#ff4fd8"],
   ["UPLOAD", "SECURITY", "78%", "24%", "#35d8ff"],
   ["SECRETS", "ENV", "88%", "62%", "#8b5cf6"],
@@ -2138,7 +2138,7 @@ lanes.forEach((lane, index) => {
                 </p>
 
                 <h3 className="avant-legato-font mt-4 text-3xl uppercase leading-[.82] tracking-[-.05em] md:text-5xl">
-                  WORKFLOW
+                  FLUSSO DI LAVORO
                 </h3>
               </div>
 

@@ -1,3 +1,5 @@
+import MuseiPatrimonio from '../Views/portfolio/musei';
+import Archeologia from "../Views/portfolio/archeologia";
 import {
   Routes,
   Route,
@@ -12,7 +14,7 @@ import Contatti from "../Views/Contatti";
 
 
 import KairosArchive from "../Views/portfolio/kairosarchive";
-import Software from "../Views/portfolio/Software";
+
 import Ai from "../Views/portfolio/ai";
 import Game from "../Views/portfolio/game";
 
@@ -66,7 +68,7 @@ export default function Router() {
 
       <Route
         path="/portfolio/software"
-        element={<Software />}
+        element={<Navigate to="/portfolio/archeologia" replace />}
       />
 
 
@@ -156,7 +158,7 @@ export default function Router() {
         path="/AppDeveloper"
         element={
           <Navigate
-            to="/portfolio/software"
+            to="/portfolio/archeologia"
             replace
           />
         }
@@ -167,7 +169,7 @@ export default function Router() {
         path="/WebDeveloper"
         element={
           <Navigate
-            to="/portfolio/software"
+            to="/portfolio/archeologia"
             replace
           />
         }
@@ -221,6 +223,9 @@ export default function Router() {
         }
       />
 
-    </Routes>
+    <Route path="/portfolio/archeologia" element={<Archeologia />} />
+<Route path="/portfolio/musei" element={<MuseiPatrimonio />} />
+<Route path="/portfolio/web" element={<Navigate to="/portfolio/archeologia" replace />} />
+</Routes>
   );
 }

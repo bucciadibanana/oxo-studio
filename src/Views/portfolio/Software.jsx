@@ -26,7 +26,7 @@ const FEATURES = [
   },
   {
     id: "02",
-    title: "DASHBOARD",
+    title: "PANNELLO",
     copy: "Interfacce operative per leggere dati, gestire attività e prendere decisioni più velocemente.",
     meta: "DATA / CONTROL / OPERATIONS",
     accent: "#8b5cf6",
@@ -2229,9 +2229,9 @@ export default function Software() {
               ["AUTH / ACCESS", false],
               ["API / ROUTING", true],
               ["DATA / STORE", false],
-              ["WORKFLOW", true],
+              ["FLUSSO DI LAVORO", true],
               ["CORE / LOGIC", false],
-              ["AUTOMATION", true],
+              ["AUTOMAZIONE", true],
               ["UI / STATE", false],
               ["CLOUD / SCALE", true],
               ["AUDIT / BACKUP", false],
@@ -2480,7 +2480,7 @@ export default function Software() {
 
                     <nav className="flex-1 overflow-hidden px-2 py-4 text-[8px] text-white/78 md:text-[9px] lg:text-[10px]">
                       <p className="mb-2 px-1 text-[9px] text-white/42">
-                        Overview
+                        Panoramica
                       </p>
 
                       <div
@@ -2488,7 +2488,7 @@ export default function Software() {
                         className="kd-nav-item kd-nav-active mb-1 flex items-center gap-3 rounded-sm px-2 py-2"
                       >
                         <span className="w-3 text-center">⌘</span>
-                        <span>Dashboard</span>
+                        <span>Pannello</span>
                       </div>
 
                       <div
@@ -2535,8 +2535,8 @@ export default function Software() {
 
                       {[
                         ["⌖", "Clienti"],
-                        ["▱", "Workspaces"],
-                        ["♙", "Team"],
+                        ["▱", "Aree di lavoro"],
+                        ["♙", "Gruppo"],
                       ].map(([icon, label]) => (
                         <div
                           key={label}
@@ -2554,12 +2554,12 @@ export default function Software() {
                       >
                         <span className="flex items-center gap-3">
                           <span className="w-3 text-center">◉</span>
-                          <span>Account</span>
+                          <span>Utenza</span>
                         </span>
                         <span>⌄</span>
                       </div>
 
-                      {["Profile", "Billing", "Login"].map((item) => (
+                      {["Profilo", "Fatturazione", "Accesso"].map((item) => (
                         <div
                           key={item}
                           data-ui-row
@@ -2594,19 +2594,19 @@ export default function Software() {
                       </div>
 
                       <div className="flex items-center gap-2 text-[8px] text-white/56">
-                        <span className="border border-[#303030] px-2 py-1">Overview</span>
+                        <span className="border border-[#303030] px-2 py-1">Panoramica</span>
                         <span className="border border-[#303030] px-2 py-1">☰</span>
                       </div>
                     </div>
 
                     <div className="kd-scrollbar flex gap-2 overflow-x-auto border-t border-[#242424] px-3 py-2 text-[8px] text-white/60">
                       {[
-                        "Dashboard",
+                        "Pannello",
                         "Progetti",
                         "Automazioni",
                         "Clienti",
-                        "Workspaces",
-                        "Team",
+                        "Aree di lavoro",
+                        "Gruppo",
                       ].map((item, index) => (
                         <span
                           key={item}
@@ -2628,14 +2628,14 @@ export default function Software() {
                     <div className="flex h-[52px] items-center justify-between border-b border-[#242424] px-3 md:h-[58px] md:px-5">
                       <div className="flex items-center gap-2 text-[8px] text-white/78 md:gap-4 md:text-[10px]">
                         <span className="text-white/80">▣</span>
-                        <span className="text-white/45">Dashboard</span>
+                        <span className="text-white/45">Pannello</span>
                         <span className="text-white/26">/</span>
-                        <span>Overview</span>
+                        <span>Panoramica</span>
                       </div>
 
                       <div className="flex items-center gap-2">
                         <div className="hidden h-9 w-[210px] items-center justify-between rounded-md border border-[#2a2a2a] bg-[#0d0d0e] px-3 text-[9px] text-white/42 lg:flex">
-                          <span>Search...</span>
+                          <span>Cerca...</span>
                           <span className="rounded bg-[#262626] px-1.5 py-1 text-[8px] text-white/70">
                             ⌘ K
                           </span>
@@ -2842,7 +2842,7 @@ export default function Software() {
                             </div>
 
                             <span className="border border-[#303030] bg-[#1c1c1c] px-2 py-1 text-[7px] uppercase tracking-[0.2em] text-white/46">
-                              LIVE FLOW
+                              ATTIVITÀ RECENTI
                             </span>
                           </div>
 
@@ -2850,7 +2850,7 @@ export default function Software() {
                             {[
                               ["KA-001842", "Onboarding nuovo cliente", "Completato", "#20f0c7"],
                               ["KA-001841", "Revisione dashboard vendite", "Da verificare", "#8b5cf6"],
-                              ["KA-001840", "Automazione report settimanale", "Automation", "#35d8ff"],
+                              ["KA-001840", "Automazione report settimanale", "Automazione", "#35d8ff"],
                               ["KA-001839", "Importazione dati CRM", "Pianificato", "#ff4fd8"],
                               ["KA-001838", "Deploy nuova release", "Deploy", "#20f0c7"],
                             ].map(([code, title, state, accent]) => (
@@ -2887,7 +2887,7 @@ export default function Software() {
                   ["01", "PROGETTI", "Attività / frontespizio / topografia", "#35d8ff"],
                   ["02", "AUTOMAZIONI", "Attive / approvate / revisione", "#8b5cf6"],
                   ["03", "CLIENTI", "Dati / attività / relazioni", "#20f0c7"],
-                  ["04", "WORKSPACE", "Organizzazioni / team / permessi", "#ff4fd8"],
+                  ["04", "AREA DI LAVORO", "Organizzazioni / team / permessi", "#ff4fd8"],
                 ].map(([id, title, copy, accent]) => (
                   <div
                     key={id}

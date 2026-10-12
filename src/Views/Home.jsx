@@ -15,97 +15,193 @@ const KAIROS_HOVER_LOGO = "data:image/webp;base64,UklGRppiAABXRUJQVlA4II5iAADQFQ
 
 const CAPABILITIES = [
   {
-    id: "01",
-    code: "CATALOG_01",
-    title: "CATALOGAZIONE",
-    eyebrow: "SBN / MARC 21 / Z39.50",
-    copy:
-      "Catalogazione bibliografica, metadatazione e normalizzazione dei record attraverso flussi software progettati per integrare SBN, MARC 21, UNIMARC, Z39.50, BID e ISBN.",
-    accent: "#35d8ff",
-    soft: "rgba(53,216,255,.18)",
+    "id": "01",
+    "code": "CATALOGAZIONE_1",
+    "title": "CATALOGAZIONE",
+    "eyebrow": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "copy": "Catalogazione bibliografica, acquisizione da frontespizi e schede, verifica dei riscontri, inventari e collocazioni. L’intelligenza artificiale affianca il catalogatore, senza sostituire la verifica professionale.",
+    "link": "/portfolio/kairosarchive",
+    "accent": "#35d8ff",
+    "soft": "#35d8ff29",
+    "tags": [
+      "BIBLIOTECHE",
+      "CATALOGHI",
+      "METADATI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #35d8ff29, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
   {
-    id: "02",
-    code: "AI_02",
-    title: "AI",
-    eyebrow: "DATA / AUTOMATION / INTELLIGENCE",
-    copy:
-      "Integriamo intelligenza artificiale, OCR, classificazione, ricerca semantica e automazione nei processi dove producono un vantaggio reale e misurabile.",
-    accent: "#20f0c7",
-    soft: "rgba(32,240,199,.16)",
+    "id": "02",
+    "code": "MUSEI_2",
+    "title": "MUSEI",
+    "eyebrow": "ECCLESIASTICI / STATALI / COLLEZIONI",
+    "copy": "Gestione di opere, inventari, immagini, sedi, depositi, prestiti e movimentazioni. Percorsi distinti per il patrimonio ecclesiastico e statale, con riferimenti a CEI/BeWeB e MiC/ICCD.",
+    "link": "/portfolio/musei",
+    "accent": "#20f0c7",
+    "soft": "#20f0c729",
+    "tags": [
+      "ECCLESIASTICI",
+      "STATALI",
+      "COLLEZIONI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #20f0c729, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
   {
-    id: "03",
-    code: "SOFTWARE_03",
-    title: "SOFTWARE",
-    eyebrow: "PRODUCT / ENGINEERING",
-    copy:
-      "Sviluppiamo software custom, API, dashboard e sistemi gestionali costruiti intorno ai processi reali di biblioteche, archivi, istituzioni e imprese.",
-    accent: "#8b5cf6",
-    soft: "rgba(139,92,246,.18)",
+    "id": "03",
+    "code": "ARCHEOLOGIA_3",
+    "title": "ARCHEOLOGIA",
+    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
+    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
+    "link": "/portfolio/archeologia",
+    "accent": "#8b5cf6",
+    "soft": "#8b5cf629",
+    "tags": [
+      "REPERTI",
+      "FRAMMENTI",
+      "CONTESTI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
   {
-    id: "04",
-    code: "WEB_04",
-    title: "WEB",
-    eyebrow: "PLATFORM / INTERFACE",
-    copy:
-      "Costruiamo piattaforme web e interfacce professionali per rendere cataloghi, archivi, dati e servizi digitali consultabili, veloci e realmente utilizzabili.",
-    accent: "#ff4fd8",
-    soft: "rgba(255,79,216,.16)",
-  },
+    "id": "04",
+    "code": "SCULTOREO_4",
+    "title": "SCULTOREO",
+    "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
+    "link": "/portfolio/archeologia#scultoreo",
+    "accent": "#ff4fd8",
+    "soft": "#ff4fd829",
+    "tags": [
+      "SCULTURE",
+      "RILIEVI",
+      "CONSERVAZIONE"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #ff4fd829, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
+  }
 ];
 
 const PROJECTS = [
   {
-    id: "01",
-    category: "CATALOGAZIONE / AI",
-    title: "KAIROSARCHIVE",
-    statement: "KNOWLEDGE, ORGANIZED.",
-    description:
-      "Un ecosistema intelligente per metadatazione, catalogazione bibliografica, ricerca, BID e organizzazione documentale.",
-    meta: "MARC 21 / SBN / Z39.50 / BID / AUTOMATION",
-    video: "/videos/products/kairosarchive.mp4",
-    link: "/portfolio/kairosarchive",
-    accent: "#35d8ff",
-    fallback:
-      "radial-gradient(circle at 72% 30%, rgba(53,216,255,.34), transparent 34%), radial-gradient(circle at 18% 76%, rgba(32,240,199,.20), transparent 38%), linear-gradient(135deg, #031018 0%, #050711 50%, #010101 100%)",
+    "id": "01",
+    "code": "CATALOGAZIONE_1",
+    "title": "KAIROSARCHIVE",
+    "eyebrow": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "copy": "Catalogazione bibliografica, acquisizione da frontespizi e schede, verifica dei riscontri, inventari e collocazioni. L’intelligenza artificiale affianca il catalogatore, senza sostituire la verifica professionale.",
+    "link": "/portfolio/kairosarchive",
+    "accent": "#35d8ff",
+    "soft": "#35d8ff29",
+    "tags": [
+      "BIBLIOTECHE",
+      "CATALOGHI",
+      "METADATI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #35d8ff29, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "statement": "CONOSCERE E ORGANIZZARE.",
+    "description": "Catalogazione bibliografica, acquisizione da frontespizi e schede, verifica dei riscontri, inventari e collocazioni. L’intelligenza artificiale affianca il catalogatore, senza sostituire la verifica professionale.",
+    "meta": "BIBLIOTECHE / CATALOGHI / METADATI",
+    "video": null,
+    "accentSoft": "#35d8ff29",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #35d8ff29, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "CATALOGAZIONE"
+      ],
+      [
+        "ATTIVITÀ",
+        "BIBLIOTECHE / CATALOGHI / METADATI"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
   },
   {
-    id: "02",
-    category: "CUSTOM SOFTWARE",
-    title: "SOFTWARE SYSTEMS",
-    statement: "COMPLEXITY, MADE USABLE.",
-    description:
-      "Software custom, dashboard, API e sistemi gestionali progettati intorno ai processi reali del cliente.",
-    meta: "PRODUCT / API / DATABASE / CLOUD",
-    video: "/videos/products/custom-software.mp4",
-    link: "/portfolio/software",
-    accent: "#8b5cf6",
-    fallback:
-      "radial-gradient(circle at 24% 38%, rgba(139,92,246,.36), transparent 36%), radial-gradient(circle at 84% 72%, rgba(53,216,255,.16), transparent 36%), linear-gradient(135deg, #10041b 0%, #080810 52%, #010101 100%)",
+    "id": "02",
+    "code": "ARCHEOLOGIA_3",
+    "title": "ARCHEOLOGIA",
+    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
+    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
+    "link": "/portfolio/archeologia",
+    "accent": "#8b5cf6",
+    "soft": "#8b5cf629",
+    "tags": [
+      "REPERTI",
+      "FRAMMENTI",
+      "CONTESTI"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "REPERTI / FRAMMENTI / CONTESTI",
+    "statement": "DAI REPERTI AI CONTESTI.",
+    "description": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
+    "meta": "REPERTI / FRAMMENTI / CONTESTI",
+    "video": null,
+    "accentSoft": "#8b5cf629",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "ARCHEOLOGIA"
+      ],
+      [
+        "ATTIVITÀ",
+        "REPERTI / FRAMMENTI / CONTESTI"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
   },
   {
-    id: "03",
-    category: "WEB / DIGITAL PLATFORM",
-    title: "WEB SYSTEMS",
-    statement: "DATA, MADE ACCESSIBLE.",
-    description:
-      "Piattaforme web e interfacce progettate per trasformare dati complessi in esperienze chiare, veloci e accessibili su ogni dispositivo.",
-    meta: "WEB APP / UX / INTERFACE / PERFORMANCE",
-    video: "/videos/products/artificial-intelligence.mp4",
-    link: "/prodotti",
-    accent: "#ff4fd8",
-    fallback:
-      "radial-gradient(circle at 30% 35%, rgba(255,79,216,.28), transparent 36%), radial-gradient(circle at 78% 75%, rgba(139,92,246,.24), transparent 38%), linear-gradient(135deg, #160315 0%, #08040f 54%, #010101 100%)",
-  },
+    "id": "03",
+    "code": "SCULTOREO_4",
+    "title": "SCULTOREO",
+    "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
+    "link": "/portfolio/archeologia#scultoreo",
+    "accent": "#ff4fd8",
+    "soft": "#ff4fd829",
+    "tags": [
+      "SCULTURE",
+      "RILIEVI",
+      "CONSERVAZIONE"
+    ],
+    "background": "radial-gradient(circle at 78% 22%, #ff4fd829, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "category": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "statement": "LA FORMA NEL TEMPO.",
+    "description": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
+    "meta": "SCULTURE / RILIEVI / CONSERVAZIONE",
+    "video": null,
+    "accentSoft": "#ff4fd829",
+    "objectPosition": "center center",
+    "fallback": "radial-gradient(circle at 78% 22%, #ff4fd829, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
+    "specs": [
+      [
+        "AMBITO",
+        "SCULTOREO"
+      ],
+      [
+        "ATTIVITÀ",
+        "SCULTURE / RILIEVI / CONSERVAZIONE"
+      ],
+      [
+        "OBIETTIVO",
+        "DOCUMENTAZIONE VERIFICABILE"
+      ]
+    ]
+  }
 ];
 
 const SIGNAL_ROWS = [
-  "CATALOGAZIONE — METADATAZIONE — SOFTWARE —",
-  "SBN — MARC 21 — UNIMARC — Z39.50 —",
-  "KAIROS ARCHIVE — BID — ISBN — SEARCH —",
-  "WEB — AUTOMATION — DATA — KNOWLEDGE —",
+  "CATALOGAZIONE — BIBLIOTECHE — MUSEI —",
+  "CEI / BeWeB — MiC / ICCD —",
+  "ARCHEOLOGIA — SCULTOREO — RILIEVI 3D —",
+  "RICERCA — DOCUMENTAZIONE — CONSERVAZIONE —"
 ];
 
 const FULL_CLIP = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
@@ -1799,10 +1895,7 @@ export default function Home() {
 
   return (
     <>
-      <SeoMetaTags
-        title="Catalogazione, Metadatazione, Kairos Archive e Software | OXO Studio"
-        description="OXO Studio sviluppa Kairos Archive, software custom e piattaforme web per catalogazione bibliografica, metadatazione, SBN, MARC 21, UNIMARC, Z39.50, BID, ISBN e gestione documentale."
-      />
+      <SeoMetaTags title="OXO Studio | Catalogazione, musei, archeologia e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D." />
 
       <main
         ref={pageRef}
@@ -2657,12 +2750,12 @@ export default function Home() {
             <p data-home-v2-meta>
               OXO STUDIO®
               <br />
-              INDEPENDENT DIGITAL LAB
+              RICERCA PER IL PATRIMONIO
             </p>
             <p data-home-v2-meta className="text-right">
-              ARCHIVE / SOFTWARE TECHNOLOGY
+              CATALOGAZIONE / PATRIMONIO
               <br />
-              LA SPEZIA / ITALY
+              LA SPEZIA / ITALIA
             </p>
           </div>
 
@@ -2675,7 +2768,7 @@ export default function Home() {
                 data-home-v2-meta
                 className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
               >
-                Catalogazione / AI / Software / Web
+                Catalogazione / Musei / Archeologia / Scultoreo
               </p>
 
               <div className="relative py-[0.6vw] md:py-[0.4vw]">
@@ -2728,16 +2821,14 @@ export default function Home() {
               data-home-v2-meta
               className="avant-legato-font max-w-[980px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.55rem]"
             >
-              Trasformiamo catalogazione, metadatazione e gestione documentale
-              in sistemi software concreti: Kairos Archive, piattaforme web e
-              software custom costruiti intorno ai dati reali.
+              Lavoriamo sul patrimonio culturale: catalogazione bibliografica, gestione museale ecclesiastica e statale, archeologia, scultoreo e documentazione conservativa.
             </p>
 
             <p
               data-home-v2-meta
               className="avant-legato-font shrink-0 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-xs"
             >
-              Scroll / Enter the system ↓
+              Scorri / Scopri il patrimonio ↓
             </p>
           </div>
         </section>
@@ -2796,12 +2887,12 @@ export default function Home() {
             className="absolute left-1/2 top-1/2 z-40 w-[86vw] max-w-[900px] -translate-x-1/2 -translate-y-1/2 text-center"
           >
             <p className="avant-legato-font mb-5 text-[9px] uppercase tracking-[0.4em] text-cyan-300 md:text-xs">
-              One archive / one system
+              Un patrimonio / più ambiti
             </p>
             <h2 className="avant-legato-font ombra2 text-[11.5vw] uppercase leading-[.76] tracking-[-0.07em] md:text-[6.8vw]">
-              DATA IN.
+              DAI DATI.
               <br />
-              KNOWLEDGE OUT.
+              ALLA CONOSCENZA.
             </h2>
           </div>
         </section>
@@ -2819,20 +2910,20 @@ export default function Home() {
                 data-capability-header-text
                 className="mb-5 flex items-center gap-4 text-[9px] uppercase tracking-[0.34em] text-white/42 md:text-xs"
               >
-                <span>CAPABILITIES INDEX</span>
+                <span>AMBITI DI ATTIVITÀ</span>
                 <span className="h-px w-14 bg-cyan-300/65" />
-                <span>04 SYSTEMS</span>
+                <span>04 AMBITI</span>
               </div>
               <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
                 <span className="block overflow-hidden pb-[0.08em]">
                   <SplitLetters
-                    text="BUILT"
+                    text="PER LA"
                     attribute="data-capability-title-letter"
                   />
                 </span>
                 <span className="block overflow-hidden pb-[0.08em]">
                   <SplitLetters
-                    text="FOR DATA."
+                    text="CULTURA."
                     attribute="data-capability-title-letter"
                   />
                 </span>
@@ -2844,8 +2935,7 @@ export default function Home() {
               data-capability-header-text
               className="avant-legato-font max-w-[720px] text-xl leading-snug text-gray-300 md:justify-self-end md:text-3xl"
             >
-              Catalogazione, software e interfaccia non sono reparti separati.
-              Li progettiamo insieme per trasformare documenti e metadati in sistemi realmente operativi.
+              Catalogazione, gestione museale e documentazione delle opere fanno parte dello stesso percorso. Colleghiamo schede, immagini, fonti e rilievi per conoscere e custodire il patrimonio.
             </p>
           </div>
 
@@ -2854,6 +2944,16 @@ export default function Home() {
               <article
                 key={item.id}
                 data-capability-panel
+      role="link"
+      tabIndex={0}
+      aria-label={`Scopri ${item.title}`}
+      onClick={() => navigate(item.link)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          navigate(item.link);
+        }
+      }}
                 onPointerMove={(event) => {
                   if (window.matchMedia("(pointer: coarse)").matches) return;
 
@@ -2991,7 +3091,7 @@ export default function Home() {
                       >
                         <span
                           className={`oxo-capability-v2-title-word inline-block max-w-full whitespace-nowrap ${
-                            item.title === "CATALOGAZIONE"
+                            ["CATALOGAZIONE", "ARCHEOLOGIA"].includes(item.title)
                               ? "oxo-capability-v2-title-catalogazione"
                               : ""
                           }`}
@@ -3023,8 +3123,8 @@ export default function Home() {
             data-capability-header-text
             className="relative z-10 mt-20 flex items-center justify-between border-t border-white/18 pt-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:mt-32 md:text-xs lg:mt-[18vh]"
           >
-            <span>CATALOG / SOFTWARE / WEB</span>
-            <span>SCROLL TO SYSTEMS ↓</span>
+            <span>BIBLIOTECHE / MUSEI / PATRIMONIO</span>
+            <span>SCOPRI GLI AMBITI ↓</span>
           </div>
         </section>
 
@@ -3037,7 +3137,7 @@ export default function Home() {
               data-project-header-text
               className="avant-legato-font mb-5 text-[10px] uppercase tracking-[0.38em] text-fuchsia-400 md:text-xs"
             >
-              Selected archive systems
+              Ambiti del patrimonio culturale
             </p>
             <div className="flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
               <h2 className="avant-legato-font ombra2 text-[12.2vw] uppercase leading-[.69] tracking-[-0.085em] md:text-[9vw] lg:text-[8vw] [perspective:1000px]">
@@ -3045,13 +3145,13 @@ export default function Home() {
                 <span className="block md:hidden">
                   <span className="block whitespace-nowrap overflow-hidden pb-[0.08em]">
                     <SplitLetters
-                      text="WORK THAT"
+                      text="RICERCA"
                       attribute="data-project-header-letter"
                     />
                   </span>
                   <span className="block whitespace-nowrap overflow-hidden pb-[0.08em]">
                     <SplitLetters
-                      text="CHANGES."
+                      text="E CURA."
                       attribute="data-project-header-letter"
                     />
                   </span>
@@ -3061,13 +3161,13 @@ export default function Home() {
                 <span className="hidden md:block">
                   <span className="block overflow-hidden pb-[0.08em]">
                     <SplitLetters
-                      text="WORK THAT"
+                      text="RICERCA"
                       attribute="data-project-header-letter"
                     />
                   </span>
                   <span className="block overflow-hidden pb-[0.08em]">
                     <SplitLetters
-                      text="CHANGES."
+                      text="E CURA."
                       attribute="data-project-header-letter"
                     />
                   </span>
@@ -3077,8 +3177,7 @@ export default function Home() {
                 data-project-header-text
                 className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl"
               >
-                Kairos Archive, software custom e piattaforme web:
-                tre livelli dello stesso sistema, dalla catalogazione all'uso reale del dato.
+                Kairos Archive, archeologia e scultoreo: dalla catalogazione alla documentazione delle opere e allo studio della loro conservazione.
               </p>
             </div>
           </div>
@@ -3220,7 +3319,7 @@ export default function Home() {
 
                     <div className="overflow-hidden">
                       <p className="oxo-home-project-view-word avant-legato-font ombra2 whitespace-nowrap text-[13.5vw] uppercase leading-[0.63] tracking-[-0.095em] text-white md:text-[8.2vw] lg:text-[6.3vw]">
-                        VIEW
+                        SCOPRI
                       </p>
                     </div>
 
@@ -3254,7 +3353,7 @@ export default function Home() {
                       className="avant-legato-font text-[8px] uppercase tracking-[0.3em]"
                       style={{ color: project.accent }}
                     >
-                      TAP / VIEW
+                      TOCCA / SCOPRI
                     </span>
                   </div>
                 </div>
@@ -3284,7 +3383,7 @@ export default function Home() {
                     className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.37em] md:text-xs"
                     style={{ color: project.accent }}
                   >
-                    Selected system / {project.statement}
+                    Ambito / {project.statement}
                   </p>
 
                   <h3 className="oxo-project-v2-title avant-legato-font ombra2 text-[clamp(3rem,8.2vw,8.2rem)] uppercase leading-[.72] tracking-[-0.075em] transition-[letter-spacing] duration-700">
@@ -3377,13 +3476,13 @@ export default function Home() {
     
   }}
 >
-  <span>NO DATA LOSS — NO EMPTY RECORDS — NO LOCK-IN —&nbsp;</span>
-  <span>NO DATA LOSS — NO EMPTY RECORDS — NO LOCK-IN —&nbsp;</span>
+  <span>FONTI DOCUMENTATE — DATI VERIFICATI — CONOSCENZA CONDIVISA — </span>
+  <span>FONTI DOCUMENTATE — DATI VERIFICATI — CONOSCENZA CONDIVISA — </span>
 </div>
           <div className="relative z-10 mx-auto mt-[-2vw] flex min-h-[68vh] max-w-[1500px] items-center px-6 md:px-10 lg:px-[5vw]">
             <div className="max-w-[1250px]">
               <p className="avant-legato-font mb-7 text-[10px] uppercase tracking-[0.38em] text-violet-400 md:text-xs">
-                OXO / Archive point of view
+                OXO / La nostra visione
               </p>
 
               <p className="avant-legato-font text-[clamp(2rem,5.2vw,5.6rem)] leading-[.94] tracking-[-0.045em] text-gray-100 [perspective:900px]">
@@ -3488,11 +3587,11 @@ export default function Home() {
             </span>
 
             <p className="avant-legato-font absolute bottom-[6%] left-[5vw] text-[8px] uppercase tracking-[0.38em] text-white/22 md:text-[10px]">
-              CATALOG / VERIFY / CONNECT
+              CATALOGA / VERIFICA / COLLEGA
             </p>
 
             <p className="avant-legato-font absolute bottom-[6%] right-[5vw] text-right text-[8px] uppercase tracking-[0.38em] text-white/22 md:text-[10px]">
-              ARCHIVE FIELD / POINTER ACTIVE
+              PATRIMONIO / ESPLORAZIONE
             </p>
           </div>
 
@@ -3507,7 +3606,7 @@ export default function Home() {
 
           <div className="relative z-10 w-full">
             <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-[11px]">
-              <span>CATALOGAZIONE / SOFTWARE / WEB</span>
+              <span>CATALOGAZIONE / ARCHEOLOGIA / SCULTOREO</span>
               <span>OXO STUDIO / 2026</span>
             </div>
 
@@ -3518,7 +3617,7 @@ export default function Home() {
                 style={{ opacity: 1, visibility: "visible" }}
               >
                 <StudiogustoText
-                  text="BREAK FORM"
+                  text="DIAMO VALORE"
                   radius={0.92}
                   strength={1}
                   chromatic={1}
@@ -3534,7 +3633,7 @@ export default function Home() {
                 </p>
 
                 <p className="avant-legato-font mt-4 text-[10px] uppercase tracking-[0.32em] text-cyan-300/70 md:text-xs">
-                  SBN / MARC 21 / Z39.50 / BID / METADATA / SOFTWARE / WEB
+                  SBN / MARC 21 / Z39.50 / BID / METADATI / ARCHEOLOGIA / SCULTOREO
                 </p>
               </div>
 

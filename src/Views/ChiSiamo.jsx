@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 const FIELD_PHASES = [
   {
     id: "01",
-    eyebrow: "INPUT",
+    eyebrow: "DATI INIZIALI",
     title: "DOCUMENTI",
     statement: "READ THE RECORD",
     copy:
@@ -30,7 +30,7 @@ const FIELD_PHASES = [
   },
   {
     id: "03",
-    eyebrow: "OUTPUT",
+    eyebrow: "RISULTATO",
     title: "SISTEMA",
     statement: "BUILD THE ARCHIVE",
     copy:
@@ -2245,9 +2245,9 @@ export default function ChiSiamo() {
                 ID / 001
               </span>
               <span className="oxo-about-lens-readout right-[13%] top-[24%] text-right">
-                HUMAN
+                UMANO
                 <br />
-                SYSTEM
+                SISTEMA
               </span>
               <span className="oxo-about-lens-readout bottom-[14%] left-[17%]">
                 OXO / ARCHIVE
@@ -2326,7 +2326,7 @@ export default function ChiSiamo() {
               data-about-meta
               className="avant-legato-font shrink-0 text-[10px] uppercase tracking-[0.3em] text-gray-500 md:text-xs"
             >
-              Scroll / Enter the system ↓
+              Scorri / Scopri il patrimonio ↓
             </p>
           </div>
         </section>
