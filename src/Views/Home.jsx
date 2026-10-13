@@ -52,7 +52,7 @@ const CAPABILITIES = [
     "title": "ARCHEOLOGIA",
     "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
     "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "link": "/portfolio/archeologia",
+    "link": "/portfolio/archeologia#archeologia",
     "accent": "#8b5cf6",
     "soft": "#8b5cf629",
     "tags": [
@@ -68,7 +68,7 @@ const CAPABILITIES = [
     "title": "SCULTOREO",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/ScultoreoStudio",
+    "link": "/portfolio/archeologia#scultoreo",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
