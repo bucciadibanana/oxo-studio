@@ -68,7 +68,7 @@ const CAPABILITIES = [
     "title": "SCULTOREO",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/archeologia#scultoreo",
+    "link": "/portfolio/ScultoreoStudio",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
