@@ -66,6 +66,41 @@ const TEAM = [
   },
   {
     id: "03",
+    name: "ELENA ZAMPERINI",
+    role: "STORICA DELL’ARTE",
+    image: "/img/team/elena.jpeg",
+    link: "/team/elena",
+    accent: "#ff4fd8",
+    description:
+      "Analisi, studio e valorizzazione del patrimonio storico-artistico.",
+    fallback:
+      "radial-gradient(circle at 30% 28%, rgba(255,79,216,.28), transparent 34%), linear-gradient(145deg, #190515, #08060b 56%, #010101)",
+  },
+  {
+    id: "04",
+    name: "FRANCESCO D'ANTONI",
+    role: "ARCHEOLOGO",
+    image: "/img/team/francesco.jpeg",
+    link: "/team/francesco",
+    accent: "#35d8ff",
+    description:
+      "Ricerca, studio e documentazione del patrimonio archeologico.",
+    fallback:
+      "radial-gradient(circle at 70% 25%, rgba(53,216,255,.32), transparent 12%), linear-gradient(145deg, #06141d, #05060b 55%, #010101)",
+  },
+  {
+    id: "05",
+    name: "ANDREA MORUZZO",
+    role: "TEAM OXO",
+    image: "/img/team/andrea.jpeg",
+    link: "/team/andrea",
+    accent: "#8b5cf6",
+    description:"Rapporti con i musei e raccordo tra le esigenze del settore museale e i progetti OXO.",
+    fallback:
+      "radial-gradient(circle at 28% 30%, rgba(139,92,246,.34), transparent 12%), linear-gradient(145deg, #150720, #07070d 56%, #010101)",
+  },
+  {
+    id: "06",
     name: "LUCA ALBANI",
     role: "PHOTOGRAPHER / VISUAL",
     image: "/img/team/luca.jpg",
@@ -2537,7 +2572,7 @@ export default function ChiSiamo() {
             </p>
           </div>
 
-          <div className="relative z-10 grid gap-10 sm:gap-12 md:grid-cols-2 md:gap-8 lg:grid-cols-2 lg:gap-x-[3vw] lg:gap-y-[12vh]">
+          <div className="relative z-10 grid gap-10 sm:gap-12 md:grid-cols-2 md:gap-8 lg:grid-cols-2 lg:gap-x-[3vw] lg:gap-y-[12vh] lg:pb-[18vh]">
             {TEAM.map((member, index) => (
               <article
                 key={member.id}
