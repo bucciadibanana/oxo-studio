@@ -37,10 +37,10 @@ const PAGES = [
     route: "/",
 
     title:
-      "OXO Studio | Catalogazione, musei, archeologia e scultoreo",
+      "OXO Studio | Catalogazione, musei, biblioteche e scultoreo",
 
     description:
-      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D.",
+      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D.",
 
     h1:
       "OXO Studio",
@@ -130,7 +130,7 @@ const PAGES = [
       ],
 
       [
-        "/portfolio/archeologia",
+        "/portfolio/biblioteche",
         "Custom Software",
       ],
 
@@ -204,10 +204,10 @@ const PAGES = [
 
   {
     route:
-      "/portfolio/archeologia",
+      "/portfolio/biblioteche",
 
     title:
-      "Archeologia e scultoreo | OXO Studio",
+      "Biblioteche e Kairos Library | OXO Studio",
 
     description:
       "Software custom, web application, dashboard, API e sistemi gestionali progettati da OXO Studio intorno ai processi reali del cliente.",

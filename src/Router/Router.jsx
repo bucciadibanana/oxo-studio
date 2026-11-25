@@ -1,6 +1,6 @@
 // OXO_SCULTOREO_ROTTA_AUTONOMA_20261013
 import MuseiPatrimonio from '../Views/portfolio/musei';
-import Archeologia from "../Views/portfolio/archeologia";
+import Biblioteche from "../Views/portfolio/biblioteche";
 import ScultoreoStudio from "../Views/portfolio/ScultoreoStudio";
 import {
   Routes,
@@ -60,7 +60,7 @@ function IngressoArcheologia() {
     );
   }
 
-  return <Archeologia />;
+  return <Navigate to="/portfolio/biblioteche" replace />;
 }
 
 function PaginaScultoreo() {
@@ -266,6 +266,7 @@ export default function Router() {
         }
       />
 
+    <Route path="/portfolio/biblioteche" element={<Biblioteche />} />
     <Route path="/portfolio/archeologia" element={<IngressoArcheologia />} />
 <Route path="/portfolio/scultoreo" element={<PaginaScultoreo />} />
 <Route path="/portfolio/musei" element={<MuseiPatrimonio />} />

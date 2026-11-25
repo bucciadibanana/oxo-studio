@@ -15,10 +15,10 @@ const SITE = {
   defaultImage: "/og-default.jpg",
 
   defaultTitle:
-    "OXO Studio | Catalogazione, musei, archeologia e scultoreo",
+    "OXO Studio | Catalogazione, musei, biblioteche e scultoreo",
 
   defaultDescription:
-    "Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D.",
+    "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D.",
 };
 
 
@@ -31,10 +31,10 @@ const SITE = {
 const ROUTE_SEO = {
   "/": {
     title:
-      "OXO Studio | Catalogazione, musei, archeologia e scultoreo",
+      "OXO Studio | Catalogazione, musei, biblioteche e scultoreo",
 
     description:
-      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D.",
+      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D.",
 
     type: "website",
   },
@@ -103,9 +103,9 @@ const ROUTE_SEO = {
   },
 
 
-  "/portfolio/archeologia": {
+  "/portfolio/biblioteche": {
     title:
-      "Archeologia e scultoreo | OXO Studio",
+      "Biblioteche e Kairos Library | OXO Studio",
 
     description:
       "OXO Studio sviluppa software custom, web application, dashboard, API, database e sistemi gestionali progettati intorno ai processi reali del cliente.",

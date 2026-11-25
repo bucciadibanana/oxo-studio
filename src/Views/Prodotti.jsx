@@ -87,23 +87,23 @@ const PRODUCTS = [
   },
   {
     "id": "03",
-    "code": "ARCHEOLOGIA_3",
-    "title": "ARCHEOLOGIA",
-    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
-    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "link": "/portfolio/archeologia",
+    "code": "BIBLIOTECHE_3",
+    "title": "BIBLIOTECHE",
+    "eyebrow": "CATALOGO / PRESTITI / LETTORI",
+    "copy": "Gestione bibliografica, inventario, utenti, prestiti e prenotazioni. Kairos Library connette i lettori al catalogo e ai servizi della biblioteca.",
+    "link": "/portfolio/biblioteche",
     "accent": "#8b5cf6",
     "soft": "#8b5cf629",
     "tags": [
-      "REPERTI",
-      "FRAMMENTI",
-      "CONTESTI"
+      "CATALOGO",
+      "PRESTITI",
+      "LETTORI"
     ],
     "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
-    "category": "REPERTI / FRAMMENTI / CONTESTI",
-    "statement": "DAI REPERTI AI CONTESTI.",
-    "description": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "meta": "REPERTI / FRAMMENTI / CONTESTI",
+    "category": "CATALOGO / PRESTITI / LETTORI",
+    "statement": "DAL CATALOGO AI LETTORI.",
+    "description": "Gestione bibliografica, inventario, utenti, prestiti e prenotazioni. Kairos Library connette i lettori al catalogo e ai servizi della biblioteca.",
+    "meta": "CATALOGO / PRESTITI / LETTORI",
     "video": null,
     "accentSoft": "#8b5cf629",
     "objectPosition": "center center",
@@ -111,11 +111,11 @@ const PRODUCTS = [
     "specs": [
       [
         "AMBITO",
-        "ARCHEOLOGIA"
+        "BIBLIOTECHE"
       ],
       [
         "ATTIVITÀ",
-        "REPERTI / FRAMMENTI / CONTESTI"
+        "CATALOGO / PRESTITI / LETTORI"
       ],
       [
         "OBIETTIVO",
@@ -129,7 +129,7 @@ const PRODUCTS = [
     "title": "SCULTOREO",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/archeologia#scultoreo",
+    "link": "/portfolio/scultoreo",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -198,17 +198,17 @@ const CAPABILITIES = [
   },
   {
     "id": "03",
-    "code": "ARCHEOLOGIA_3",
-    "title": "ARCHEOLOGIA",
-    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
-    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "link": "/portfolio/archeologia",
+    "code": "BIBLIOTECHE_3",
+    "title": "BIBLIOTECHE",
+    "eyebrow": "CATALOGO / PRESTITI / LETTORI",
+    "copy": "Gestione bibliografica, inventario, utenti, prestiti e prenotazioni. Kairos Library connette i lettori al catalogo e ai servizi della biblioteca.",
+    "link": "/portfolio/biblioteche",
     "accent": "#8b5cf6",
     "soft": "#8b5cf629",
     "tags": [
-      "REPERTI",
-      "FRAMMENTI",
-      "CONTESTI"
+      "CATALOGO",
+      "PRESTITI",
+      "LETTORI"
     ],
     "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
@@ -218,7 +218,7 @@ const CAPABILITIES = [
     "title": "SCULTOREO",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/archeologia#scultoreo",
+    "link": "/portfolio/scultoreo",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -2318,7 +2318,7 @@ export default function Prodotti() {
 
   return (
     <>
-      <SeoMetaTags title="OXO Studio | Catalogazione, musei, archeologia e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D." />
+      <SeoMetaTags title="OXO Studio | Catalogazione, musei, biblioteche e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D." />
 
       <main
         key={location.key}
@@ -3723,7 +3723,7 @@ export default function Prodotti() {
               </div>
 
               <p data-static-reveal className="avant-legato-font max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
-                Quattro ambiti collegati: catalogazione bibliografica, gestione museale, archeologia e patrimonio scultoreo.
+                Quattro ambiti collegati: catalogazione bibliografica, gestione museale, biblioteche e patrimonio scultoreo.
               </p>
             </header>
 

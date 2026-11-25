@@ -48,17 +48,17 @@ const CAPABILITIES = [
   },
   {
     "id": "03",
-    "code": "ARCHEOLOGIA_3",
-    "title": "ARCHEOLOGIA",
-    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
-    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "link": "/portfolio/archeologia#archeologia",
+    "code": "BIBLIOTECHE_3",
+    "title": "BIBLIOTECHE",
+    "eyebrow": "CATALOGO / PRESTITI / LETTORI",
+    "copy": "Gestione bibliografica, inventario, utenti, prestiti e prenotazioni. Kairos Library connette i lettori al catalogo e ai servizi della biblioteca.",
+    "link": "/portfolio/biblioteche",
     "accent": "#8b5cf6",
     "soft": "#8b5cf629",
     "tags": [
-      "REPERTI",
-      "FRAMMENTI",
-      "CONTESTI"
+      "CATALOGO",
+      "PRESTITI",
+      "LETTORI"
     ],
     "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)"
   },
@@ -68,7 +68,7 @@ const CAPABILITIES = [
     "title": "SCULTOREO",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/archeologia#scultoreo",
+    "link": "/portfolio/scultoreo",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -121,23 +121,23 @@ const PROJECTS = [
   },
   {
     "id": "02",
-    "code": "ARCHEOLOGIA_3",
-    "title": "ARCHEOLOGIA",
-    "eyebrow": "REPERTI / FRAMMENTI / CONTESTI",
-    "copy": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "link": "/portfolio/archeologia",
+    "code": "BIBLIOTECHE_3",
+    "title": "BIBLIOTECHE",
+    "eyebrow": "CATALOGO / PRESTITI / LETTORI",
+    "copy": "Gestione bibliografica, inventario, utenti, prestiti e prenotazioni. Kairos Library connette i lettori al catalogo e ai servizi della biblioteca.",
+    "link": "/portfolio/biblioteche",
     "accent": "#8b5cf6",
     "soft": "#8b5cf629",
     "tags": [
-      "REPERTI",
-      "FRAMMENTI",
-      "CONTESTI"
+      "CATALOGO",
+      "PRESTITI",
+      "LETTORI"
     ],
     "background": "radial-gradient(circle at 78% 22%, #8b5cf629, transparent 40%), linear-gradient(145deg,#07141c,#050507)",
-    "category": "REPERTI / FRAMMENTI / CONTESTI",
-    "statement": "DAI REPERTI AI CONTESTI.",
-    "description": "Documentazione di reperti, frammenti e strutture. Colleghiamo descrizioni, provenienze, contesti e rilievi tridimensionali, distinguendo le evidenze documentate dalle interpretazioni.",
-    "meta": "REPERTI / FRAMMENTI / CONTESTI",
+    "category": "CATALOGO / PRESTITI / LETTORI",
+    "statement": "DAL CATALOGO AI LETTORI.",
+    "description": "Gestione bibliografica, inventario, utenti, prestiti e prenotazioni. Kairos Library connette i lettori al catalogo e ai servizi della biblioteca.",
+    "meta": "CATALOGO / PRESTITI / LETTORI",
     "video": null,
     "accentSoft": "#8b5cf629",
     "objectPosition": "center center",
@@ -145,11 +145,11 @@ const PROJECTS = [
     "specs": [
       [
         "AMBITO",
-        "ARCHEOLOGIA"
+        "BIBLIOTECHE"
       ],
       [
         "ATTIVITÀ",
-        "REPERTI / FRAMMENTI / CONTESTI"
+        "CATALOGO / PRESTITI / LETTORI"
       ],
       [
         "OBIETTIVO",
@@ -163,7 +163,7 @@ const PROJECTS = [
     "title": "SCULTOREO",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/archeologia#scultoreo",
+    "link": "/portfolio/scultoreo",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -200,7 +200,7 @@ const PROJECTS = [
 const SIGNAL_ROWS = [
   "CATALOGAZIONE — BIBLIOTECHE — MUSEI —",
   "CEI / BeWeB — MiC / ICCD —",
-  "ARCHEOLOGIA — SCULTOREO — RILIEVI 3D —",
+  "BIBLIOTECHE — SCULTOREO — RILIEVI 3D —",
   "RICERCA — DOCUMENTAZIONE — CONSERVAZIONE —"
 ];
 
@@ -1895,7 +1895,7 @@ export default function Home() {
 
   return (
     <>
-      <SeoMetaTags title="OXO Studio | Catalogazione, musei, archeologia e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, documentazione del patrimonio archeologico e scultoreo e progetti di scansione 3D." />
+      <SeoMetaTags title="OXO Studio | Catalogazione, musei, biblioteche e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D." />
 
       <main
         ref={pageRef}
@@ -2768,7 +2768,7 @@ export default function Home() {
                 data-home-v2-meta
                 className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
               >
-                Catalogazione / Musei / Archeologia / Scultoreo
+                Catalogazione / Musei / Biblioteche / Scultoreo
               </p>
 
               <div className="relative py-[0.6vw] md:py-[0.4vw]">
@@ -2821,7 +2821,7 @@ export default function Home() {
               data-home-v2-meta
               className="avant-legato-font max-w-[980px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.55rem]"
             >
-              Lavoriamo sul patrimonio culturale: catalogazione bibliografica, gestione museale ecclesiastica e statale, archeologia, scultoreo e documentazione conservativa.
+              Lavoriamo sul patrimonio culturale: catalogazione bibliografica, gestione museale ecclesiastica e statale, biblioteche, scultoreo e documentazione conservativa.
             </p>
 
             <p
@@ -3091,7 +3091,7 @@ export default function Home() {
                       >
                         <span
                           className={`oxo-capability-v2-title-word inline-block max-w-full whitespace-nowrap ${
-                            ["CATALOGAZIONE", "ARCHEOLOGIA"].includes(item.title)
+                            ["CATALOGAZIONE", "BIBLIOTECHE"].includes(item.title)
                               ? "oxo-capability-v2-title-catalogazione"
                               : ""
                           }`}
@@ -3177,7 +3177,7 @@ export default function Home() {
                 data-project-header-text
                 className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl"
               >
-                Kairos Archive, archeologia e scultoreo: dalla catalogazione alla documentazione delle opere e allo studio della loro conservazione.
+                Kairos Archive, biblioteche e scultoreo: dalla catalogazione alla documentazione delle opere e allo studio della loro conservazione.
               </p>
             </div>
           </div>
@@ -3606,7 +3606,7 @@ export default function Home() {
 
           <div className="relative z-10 w-full">
             <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-[11px]">
-              <span>CATALOGAZIONE / ARCHEOLOGIA / SCULTOREO</span>
+              <span>CATALOGAZIONE / BIBLIOTECHE / SCULTOREO</span>
               <span>OXO STUDIO / 2026</span>
             </div>
 
@@ -3633,7 +3633,7 @@ export default function Home() {
                 </p>
 
                 <p className="avant-legato-font mt-4 text-[10px] uppercase tracking-[0.32em] text-cyan-300/70 md:text-xs">
-                  SBN / MARC 21 / Z39.50 / BID / METADATI / ARCHEOLOGIA / SCULTOREO
+                  SBN / MARC 21 / Z39.50 / BID / METADATI / BIBLIOTECHE / SCULTOREO
                 </p>
               </div>
 
