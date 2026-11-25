@@ -18,12 +18,12 @@ const FOTO = [
   {
     id: 'rilievo-3d', sigla: '01 / RILIEVO TRIDIMENSIONALE',
     titolo: 'La forma, prima di ogni intervento.',
-    immagine: '/img/scultoreo/strumento-3d.jpg',
-    alt: 'Scanner a luce strutturata DAVID SLS-2, con proiettore e fotocamera.',
-    didascalia: 'Scanner DAVID SLS-2: esempio fotografico di strumentazione 3D, non Artec.',
-    autore: 'Creative Tools', licenza: 'CC BY 2.0', licenzaUrl: 'https://creativecommons.org/licenses/by/2.0/',
-    fonte: 'https://commons.wikimedia.org/wiki/File:DAVID_SLS-2_Bild01.jpg',
-    testo: 'Il rilievo tridimensionale documenta volumi, dettagli e superfici della scultura. Nel percorso previsto con scanner Artec, i modelli vengono associati alla campagna di acquisizione e alla storia del bene.',
+    immagine: 'https://cdn.artec3d.com/styles/688x688/s3/block-images/space-spider-main.png?VersionId=rqWoEzc1n3QsvAkomi9Veh85mcvNIPNy&itok=L0hXDILg',
+    alt: 'Scanner 3D portatile Artec Space Spider a luce strutturata.',
+    didascalia: 'Artec Space Spider: immagine di riferimento del produttore, non attestazione di dotazione OXO.',
+    autore: 'Artec 3D', licenza: 'Immagine del produttore', licenzaUrl: 'https://www.artec3d.com/portable-3d-scanners/old/spider',
+    fonte: 'https://www.artec3d.com/portable-3d-scanners/old/spider',
+    testo: 'Il rilievo tridimensionale documenta volumi, dettagli e superfici della scultura. Nel percorso previsto con scanner Artec Space Spider, i modelli vengono associati alla campagna di acquisizione e alla storia del bene.',
     cura: 'Un riferimento geometrico permette di pianificare nuove acquisizioni e confrontare nel tempo le zone di interesse. Allineamento, scala e condizioni di rilievo devono essere controllati.',
     limite: 'Una differenza tra scansioni non dimostra da sola un deterioramento: va confrontata con l’incertezza di misura. Il rilievo 3D non identifica la composizione chimica.'
   },
