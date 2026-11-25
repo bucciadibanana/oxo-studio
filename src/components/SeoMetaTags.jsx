@@ -15,10 +15,10 @@ const SITE = {
   defaultImage: "/og-default.jpg",
 
   defaultTitle:
-    "OXO Studio | Catalogazione, musei, biblioteche e scultoreo",
+    "OXO Studio | Catalogazione, musei, biblioteche e arte",
 
   defaultDescription:
-    "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D.",
+    "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio artistico e progetti di scansione 3D.",
 };
 
 
@@ -31,10 +31,10 @@ const SITE = {
 const ROUTE_SEO = {
   "/": {
     title:
-      "OXO Studio | Catalogazione, musei, biblioteche e scultoreo",
+      "OXO Studio | Catalogazione, musei, biblioteche e arte",
 
     description:
-      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D.",
+      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio artistico e progetti di scansione 3D.",
 
     type: "website",
   },
@@ -103,6 +103,7 @@ const ROUTE_SEO = {
   },
 
 
+  "/portfolio/arte": { title: "Arte | OXO Studio", description: "Studio, documentazione e conservazione delle opere d’arte, rilievi 3D e diagnostica.", type: "website" },
   "/portfolio/biblioteche": {
     title:
       "Biblioteche e Kairos Library | OXO Studio",

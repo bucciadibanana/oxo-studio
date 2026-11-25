@@ -37,10 +37,10 @@ const PAGES = [
     route: "/",
 
     title:
-      "OXO Studio | Catalogazione, musei, biblioteche e scultoreo",
+      "OXO Studio | Catalogazione, musei, biblioteche e arte",
 
     description:
-      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D.",
+      "Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio artistico e progetti di scansione 3D.",
 
     h1:
       "OXO Studio",

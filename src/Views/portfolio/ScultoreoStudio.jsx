@@ -436,8 +436,8 @@ export default function Scultoreo({ embedded = true, fullWidth = true }) {
         </div>
 
         <div className="osc-copy">
-          <p className="osc-enter osc-eyebrow">OXO STUDIO / SCULTOREO</p>
-          <Heading className="osc-title" id="scultoreo-titolo" aria-label="Scultoreo. Studio e conservazione.">
+          <p className="osc-enter osc-eyebrow">OXO STUDIO / ARTE</p>
+          <Heading className="osc-title" id="scultoreo-titolo" aria-label="Arte. Studio e conservazione.">
             <span className="osc-word" aria-hidden="true">
               <span className="osc-outline">FORMA.</span>
               {[0, 1, 2].map((n) => (
@@ -483,7 +483,7 @@ export default function Scultoreo({ embedded = true, fullWidth = true }) {
         </div>
 
         <div className="osc-footer">
-          <p>SCULTOREO · STUDIO · CURA DELLE OPERE</p>
+          <p>ARTE · STUDIO · CURA DELLE OPERE</p>
           <span>SCORRI PER ESPLORARE ↓</span>
           <i className="osc-progress" aria-hidden="true" />
         </div>

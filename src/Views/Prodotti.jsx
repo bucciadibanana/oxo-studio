@@ -125,11 +125,11 @@ const PRODUCTS = [
   },
   {
     "id": "04",
-    "code": "SCULTOREO_4",
-    "title": "SCULTOREO",
+    "code": "ARTE_4",
+    "title": "ARTE",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/scultoreo",
+    "link": "/portfolio/arte",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -149,7 +149,7 @@ const PRODUCTS = [
     "specs": [
       [
         "AMBITO",
-        "SCULTOREO"
+        "ARTE"
       ],
       [
         "ATTIVITÀ",
@@ -214,11 +214,11 @@ const CAPABILITIES = [
   },
   {
     "id": "04",
-    "code": "SCULTOREO_4",
-    "title": "SCULTOREO",
+    "code": "ARTE_4",
+    "title": "ARTE",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/scultoreo",
+    "link": "/portfolio/arte",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -2318,7 +2318,7 @@ export default function Prodotti() {
 
   return (
     <>
-      <SeoMetaTags title="OXO Studio | Catalogazione, musei, biblioteche e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D." />
+      <SeoMetaTags title="OXO Studio | Catalogazione, musei, biblioteche e arte" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio artistico e progetti di scansione 3D." />
 
       <main
         key={location.key}
@@ -3723,7 +3723,7 @@ export default function Prodotti() {
               </div>
 
               <p data-static-reveal className="avant-legato-font max-w-[690px] border-t border-white/20 pt-6 text-xl leading-snug text-gray-300 md:text-3xl">
-                Quattro ambiti collegati: catalogazione bibliografica, gestione museale, biblioteche e patrimonio scultoreo.
+                Quattro ambiti collegati: catalogazione bibliografica, gestione museale, biblioteche e patrimonio artistico.
               </p>
             </header>
 

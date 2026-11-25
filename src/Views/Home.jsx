@@ -64,11 +64,11 @@ const CAPABILITIES = [
   },
   {
     "id": "04",
-    "code": "SCULTOREO_4",
-    "title": "SCULTOREO",
+    "code": "ARTE_4",
+    "title": "ARTE",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/scultoreo",
+    "link": "/portfolio/arte",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -159,11 +159,11 @@ const PROJECTS = [
   },
   {
     "id": "03",
-    "code": "SCULTOREO_4",
-    "title": "SCULTOREO",
+    "code": "ARTE_4",
+    "title": "ARTE",
     "eyebrow": "SCULTURE / RILIEVI / CONSERVAZIONE",
     "copy": "Documentazione delle sculture, progetti di scansione 3D e organizzazione della storia conservativa. Schede, fotografie, modelli e relazioni per lo studio e i controlli nel tempo.",
-    "link": "/portfolio/scultoreo",
+    "link": "/portfolio/arte",
     "accent": "#ff4fd8",
     "soft": "#ff4fd829",
     "tags": [
@@ -183,7 +183,7 @@ const PROJECTS = [
     "specs": [
       [
         "AMBITO",
-        "SCULTOREO"
+        "ARTE"
       ],
       [
         "ATTIVITÀ",
@@ -200,7 +200,7 @@ const PROJECTS = [
 const SIGNAL_ROWS = [
   "CATALOGAZIONE — BIBLIOTECHE — MUSEI —",
   "CEI / BeWeB — MiC / ICCD —",
-  "BIBLIOTECHE — SCULTOREO — RILIEVI 3D —",
+  "BIBLIOTECHE — ARTE — RILIEVI 3D —",
   "RICERCA — DOCUMENTAZIONE — CONSERVAZIONE —"
 ];
 
@@ -1895,7 +1895,7 @@ export default function Home() {
 
   return (
     <>
-      <SeoMetaTags title="OXO Studio | Catalogazione, musei, biblioteche e scultoreo" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio scultoreo e progetti di scansione 3D." />
+      <SeoMetaTags title="OXO Studio | Catalogazione, musei, biblioteche e arte" description="Catalogazione bibliografica, gestione museale ecclesiastica e statale, gestione delle biblioteche e documentazione del patrimonio artistico e progetti di scansione 3D." />
 
       <main
         ref={pageRef}
@@ -2768,7 +2768,7 @@ export default function Home() {
                 data-home-v2-meta
                 className="avant-legato-font mb-3 text-[9px] uppercase tracking-[0.38em] text-cyan-300 md:text-xs"
               >
-                Catalogazione / Musei / Biblioteche / Scultoreo
+                Catalogazione / Musei / Biblioteche / Arte
               </p>
 
               <div className="relative py-[0.6vw] md:py-[0.4vw]">
@@ -2821,7 +2821,7 @@ export default function Home() {
               data-home-v2-meta
               className="avant-legato-font max-w-[980px] text-xl leading-snug text-gray-200 md:text-3xl lg:text-[2.55rem]"
             >
-              Lavoriamo sul patrimonio culturale: catalogazione bibliografica, gestione museale ecclesiastica e statale, biblioteche, scultoreo e documentazione conservativa.
+              Lavoriamo sul patrimonio culturale: catalogazione bibliografica, gestione museale ecclesiastica e statale, biblioteche, arte e documentazione conservativa.
             </p>
 
             <p
@@ -3177,7 +3177,7 @@ export default function Home() {
                 data-project-header-text
                 className="avant-legato-font max-w-[640px] text-xl leading-snug text-gray-300 md:text-3xl"
               >
-                Kairos Archive, biblioteche e scultoreo: dalla catalogazione alla documentazione delle opere e allo studio della loro conservazione.
+                Kairos Archive, biblioteche e arte: dalla catalogazione alla documentazione delle opere e allo studio della loro conservazione.
               </p>
             </div>
           </div>
@@ -3606,7 +3606,7 @@ export default function Home() {
 
           <div className="relative z-10 w-full">
             <div className="mb-8 flex items-center justify-between border-b border-white/20 pb-5 text-[9px] uppercase tracking-[0.31em] text-white/38 md:text-[11px]">
-              <span>CATALOGAZIONE / BIBLIOTECHE / SCULTOREO</span>
+              <span>CATALOGAZIONE / BIBLIOTECHE / ARTE</span>
               <span>OXO STUDIO / 2026</span>
             </div>
 
@@ -3633,7 +3633,7 @@ export default function Home() {
                 </p>
 
                 <p className="avant-legato-font mt-4 text-[10px] uppercase tracking-[0.32em] text-cyan-300/70 md:text-xs">
-                  SBN / MARC 21 / Z39.50 / BID / METADATI / BIBLIOTECHE / SCULTOREO
+                  SBN / MARC 21 / Z39.50 / BID / METADATI / BIBLIOTECHE / ARTE
                 </p>
               </div>
 

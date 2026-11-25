@@ -50,7 +50,7 @@ function IngressoArcheologia() {
     return (
       <Navigate
         to={{
-          pathname: "/portfolio/scultoreo",
+          pathname: "/portfolio/arte",
           search: location.search,
           hash: ancora === "scultoreo" ? "" : "#" + encodeURIComponent(ancora),
         }}
@@ -63,6 +63,7 @@ function IngressoArcheologia() {
   return <Navigate to="/portfolio/biblioteche" replace />;
 }
 
+function LegacyArte() { const location = useLocation(); return <Navigate to={{ pathname: "/portfolio/arte", search: location.search, hash: location.hash }} replace />; }
 function PaginaScultoreo() {
   return <ScultoreoStudio embedded={false} fullWidth={false} />;
 }
@@ -268,7 +269,8 @@ export default function Router() {
 
     <Route path="/portfolio/biblioteche" element={<Biblioteche />} />
     <Route path="/portfolio/archeologia" element={<IngressoArcheologia />} />
-<Route path="/portfolio/scultoreo" element={<PaginaScultoreo />} />
+<Route path="/portfolio/arte" element={<PaginaScultoreo />} />
+<Route path="/portfolio/scultoreo" element={<LegacyArte />} />
 <Route path="/portfolio/musei" element={<MuseiPatrimonio />} />
 <Route path="/portfolio/web" element={<Navigate to="/portfolio/archeologia" replace />} />
 </Routes>
