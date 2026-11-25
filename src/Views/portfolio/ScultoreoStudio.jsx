@@ -106,10 +106,14 @@ function useScultoreoHero(ref) {
 
       if (!stage || !tilt || !glow || !arrow || !link) return;
 
+      const curtains = q('.osc-curtain');
+      const curtainLayer = hero.querySelector('.osc-curtains');
+      // Opening is time-driven, independent of pin/scroll restoration.
       const intro = gsap.timeline({
         defaults: { ease: 'expo.out' },
-        scrollTrigger: { trigger: hero, start: 'top 90%', once: true }
+        onComplete: () => gsap.set(curtainLayer, { autoAlpha: 0 })
       });
+      gsap.set(curtainLayer, { autoAlpha: 1 });
 
       intro.fromTo(
         q('.osc-curtain'),
@@ -214,7 +218,13 @@ function useScultoreoHero(ref) {
       );
 
       const off = [];
-
+      // Fail open if a refresh, route change or throttled animation stalls the intro.
+      const watchdog = window.setTimeout(() => {
+        if (intro.progress() < 1) intro.progress(1).pause();
+        gsap.set(curtains, { scaleY: 0 });
+        gsap.set(curtainLayer, { autoAlpha: 0 });
+      }, 1800);
+      off.push(() => window.clearTimeout(watchdog));
 
       if (c.fine) {
         const rx = gsap.quickTo(tilt, 'rotationX', {
@@ -581,7 +591,7 @@ const SCULTOREO_CSS = String.raw`
 .osc-hero:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:linear-gradient(115deg,transparent 20%,#8b5cf60d,transparent 75%),repeating-linear-gradient(90deg,transparent 0 calc(20% - 1px),#ffffff08 calc(20% - 1px) 20%)}
 .osc-light{position:absolute;left:0;top:0;width:650px;height:650px;margin:-325px;pointer-events:none;z-index:0;background:radial-gradient(ellipse,#8b5cf624,transparent 68%)}
 .osc-curtains{display:flex;position:absolute;inset:0;pointer-events:none;z-index:10}
-.osc-curtain{flex:1;transform:scaleY(0);background:#131019;border-right:1px solid #2c253d}
+.osc-curtain{flex:1;transform:scaleY(0);transform-origin:50% 0%;background:#131019;border-right:1px solid #2c253d}
 .osc-copy{position:relative;z-index:3;min-width:0}
 .osc-eyebrow{font-size:10px;letter-spacing:.28em;color:#76d9ed}
 .osc-copy .osc-title{margin:22px 0 25px;font-weight:400}
